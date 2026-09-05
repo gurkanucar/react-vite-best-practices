@@ -1,11 +1,14 @@
 import {
   AppstoreOutlined,
+  BgColorsOutlined,
   BellOutlined,
   DashboardOutlined,
+  DatabaseOutlined,
+  FolderOpenOutlined,
   SettingOutlined,
 } from '@ant-design/icons'
 import { Avatar, Badge, Button, Flex, Layout, Menu, Tooltip, Typography } from 'antd'
-import { useEffect, useMemo, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
@@ -21,6 +24,7 @@ function App() {
   const location = useLocation()
   const navigate = useNavigate()
   const messages = useMessages()
+  const [collapsed, setCollapsed] = useState(false)
   const language = usePreferencesStore((state) => state.language)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const backgroundImage = officialThemeBackgrounds[visualTheme]
@@ -32,39 +36,86 @@ function App() {
     document.documentElement.lang = language
   }, [language])
 
+  useEffect(() => {
+    const target = document.getElementById(location.hash.slice(1))
+
+    if (!target) return
+
+    const targetBounds = target.getBoundingClientRect()
+    const headerBottom = document.querySelector('header')?.getBoundingClientRect().bottom ?? 0
+    const isVisible = targetBounds.top >= headerBottom && targetBounds.bottom <= window.innerHeight
+
+    if (!isVisible) {
+      target.scrollIntoView({ block: 'nearest' })
+    }
+  }, [location.hash])
+
   const navigationItems = useMemo(
     () => [
       {
-        key: '/dashboard',
-        icon: <DashboardOutlined />,
-        label: messages.navigation.dashboard,
+        key: 'workspace',
+        className: 'admin-navigation__section',
+        icon: <FolderOpenOutlined />,
+        label: messages.navigation.workspace,
+        children: [
+          {
+            key: '/dashboard',
+            icon: <DashboardOutlined />,
+            label: messages.navigation.dashboard,
+          },
+          {
+            key: '/components',
+            icon: <AppstoreOutlined />,
+            label: messages.navigation.components,
+          },
+        ],
       },
       {
-        key: '/components',
-        icon: <AppstoreOutlined />,
-        label: messages.navigation.components,
-      },
-      {
-        key: '/settings',
+        key: 'configuration',
+        className: 'admin-navigation__section',
         icon: <SettingOutlined />,
-        label: messages.navigation.settings,
+        label: messages.navigation.configuration,
+        children: [
+          {
+            key: '/settings#appearance',
+            icon: <BgColorsOutlined />,
+            label: messages.navigation.appearance,
+          },
+          {
+            key: '/settings#state',
+            icon: <DatabaseOutlined />,
+            label: messages.navigation.persistedState,
+          },
+        ],
       },
     ],
     [messages],
   )
 
+  const selectedNavigationKey =
+    location.pathname === '/settings'
+      ? `/settings${location.hash === '#state' ? '#state' : '#appearance'}`
+      : location.pathname
+
   const navigation = (
     <>
-      <Link className="admin-brand" to="/dashboard" aria-label={`${messages.shell.product} home`}>
+      <Link
+        className={`admin-brand${collapsed ? ' admin-brand--collapsed' : ''}`}
+        to="/dashboard"
+        aria-label={`${messages.shell.product} home`}
+      >
         <img src="/favicon.svg" alt="" width="42" height="42" />
-        <span>
-          <Typography.Text strong>{messages.shell.product}</Typography.Text>
-          <Typography.Text type="secondary">{messages.shell.workspace}</Typography.Text>
-        </span>
+        {!collapsed && (
+          <span>
+            <Typography.Text strong>{messages.shell.product}</Typography.Text>
+            <Typography.Text type="secondary">{messages.shell.workspace}</Typography.Text>
+          </span>
+        )}
       </Link>
       <Menu
+        defaultOpenKeys={['workspace', 'configuration']}
         mode="inline"
-        selectedKeys={[location.pathname]}
+        selectedKeys={[selectedNavigationKey]}
         items={navigationItems}
         onClick={({ key }) => {
           void navigate(key)
@@ -75,7 +126,15 @@ function App() {
 
   return (
     <Layout className="admin-shell">
-      <Sider className="admin-sider" breakpoint="lg" collapsedWidth="0" theme="light" width={252}>
+      <Sider
+        breakpoint="lg"
+        className="admin-sider"
+        collapsed={collapsed}
+        collapsible
+        theme="light"
+        width={252}
+        onCollapse={setCollapsed}
+      >
         {navigation}
       </Sider>
 

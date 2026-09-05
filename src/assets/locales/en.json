@@ -1,8 +1,11 @@
 {
   "navigation": {
+    "workspace": "Workspace",
     "dashboard": "Dashboard",
     "components": "Components",
-    "settings": "Settings"
+    "configuration": "Configuration",
+    "appearance": "Appearance",
+    "persistedState": "Persisted state"
   },
   "shell": {
     "product": "RVBP Console",

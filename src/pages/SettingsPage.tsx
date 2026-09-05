@@ -25,7 +25,7 @@ export function SettingsPage() {
 
       <Row gutter={[16, 16]}>
         <Col xs={24} xl={15}>
-          <Card className="settings-panel" title={messages.settings.appearance}>
+          <Card id="appearance" className="settings-panel" title={messages.settings.appearance}>
             <Typography.Paragraph type="secondary">
               {messages.settings.appearanceDescription}
             </Typography.Paragraph>
@@ -42,6 +42,7 @@ export function SettingsPage() {
         </Col>
         <Col span={24}>
           <Card
+            id="state"
             className="settings-panel"
             title={messages.settings.state}
             extra={<Button onClick={reset}>{messages.settings.reset}</Button>}

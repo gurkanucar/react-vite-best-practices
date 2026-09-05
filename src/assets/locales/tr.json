@@ -1,8 +1,11 @@
 {
   "navigation": {
+    "workspace": "Çalışma alanı",
     "dashboard": "Kontrol paneli",
     "components": "Bileşenler",
-    "settings": "Ayarlar"
+    "configuration": "Yapılandırma",
+    "appearance": "Görünüm",
+    "persistedState": "Kalıcı durum"
   },
   "shell": {
     "product": "RVBP Konsolu",

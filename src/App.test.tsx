@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 import { describe, expect, it, vi } from 'vitest'
@@ -59,6 +59,30 @@ describe('admin application', () => {
       await router.navigate('/missing')
     })
     expect(screen.getByText('Page not found')).toBeInTheDocument()
+  })
+
+  it('renders nested navigation and collapses the sidebar', () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
+
+    expect(screen.getByRole('menuitem', { name: /Workspace/ })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
+    expect(screen.getByRole('menuitem', { name: /Dashboard/ })).toBeVisible()
+
+    const sidebar = screen.getByRole('complementary')
+    const collapseTrigger = sidebar.querySelector<HTMLElement>('.ant-layout-sider-trigger')
+
+    expect(collapseTrigger).not.toBeNull()
+    fireEvent.click(collapseTrigger!)
+
+    expect(sidebar).toHaveClass('ant-layout-sider-collapsed')
+    expect(screen.queryByText('Foundation workspace')).not.toBeInTheDocument()
   })
 })
 
