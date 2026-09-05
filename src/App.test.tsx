@@ -54,6 +54,8 @@ describe('admin application', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: 'Component workspace' }),
     ).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Inputs' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByPlaceholderText('Workspace owner')).toBeInTheDocument()
 
     await act(async () => {
       await router.navigate('/missing')
@@ -83,6 +85,23 @@ describe('admin application', () => {
 
     expect(sidebar).toHaveClass('ant-layout-sider-collapsed')
     expect(screen.queryByText('Foundation workspace')).not.toBeInTheDocument()
+  })
+
+  it('opens interactive component examples', () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/components'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Feedback' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Open modal' }))
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText('Review workspace changes')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
   })
 })
 

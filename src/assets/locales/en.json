@@ -59,7 +59,11 @@
   },
   "components": {
     "title": "Component workspace",
-    "description": "A practical Ant Design playground for common admin interactions.",
+    "description": "A practical catalog of theme-aware Ant Design components and admin interactions.",
+    "inputs": "Inputs",
+    "dataDisplay": "Data display",
+    "navigation": "Navigation",
+    "feedback": "Feedback",
     "actions": "Actions and feedback",
     "actionsDescription": "Buttons, status messages, and progressive disclosure.",
     "primaryAction": "Create workspace",

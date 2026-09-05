@@ -59,7 +59,11 @@
   },
   "components": {
     "title": "Bileşen çalışma alanı",
-    "description": "Yaygın yönetim etkileşimleri için pratik bir Ant Design alanı.",
+    "description": "Tema uyumlu Ant Design bileşenleri ve yönetim etkileşimleri için pratik bir katalog.",
+    "inputs": "Girdiler",
+    "dataDisplay": "Veri gösterimi",
+    "navigation": "Navigasyon",
+    "feedback": "Geri bildirim",
     "actions": "Aksiyonlar ve bildirimler",
     "actionsDescription": "Butonlar, durum mesajları ve aşamalı gösterim.",
     "primaryAction": "Çalışma alanı oluştur",
