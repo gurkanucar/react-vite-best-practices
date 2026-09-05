@@ -44,7 +44,7 @@ Check formatting without modifying files:
 pnpm format:check
 ```
 
-Run all non-test quality checks:
+Run the complete quality suite, including tests:
 
 ```bash
 pnpm check

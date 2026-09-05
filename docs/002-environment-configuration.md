@@ -10,6 +10,7 @@ This project uses Vite modes and a small typed configuration layer so applicatio
 ├── .env.development
 ├── .env.example
 ├── .env.production
+├── .env.test
 └── src/
     ├── config/
     │   └── env.ts
@@ -32,6 +33,7 @@ The committed files in this project are:
 - `.env`: shared, non-sensitive application values.
 - `.env.development`: development defaults.
 - `.env.production`: production defaults.
+- `.env.test`: automated-test defaults.
 - `.env.example`: a reference for developers and deployment configuration.
 
 Files ending in `.local` are ignored by Git through the existing `*.local` rule.

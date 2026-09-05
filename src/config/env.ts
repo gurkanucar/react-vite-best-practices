@@ -1,7 +1,9 @@
 type RequiredEnvKey = 'VITE_APP_NAME' | 'VITE_API_BASE_URL'
 
-function getRequiredEnv(key: RequiredEnvKey): string {
-  const value = import.meta.env[key]?.trim()
+export type EnvironmentSource = Pick<ImportMetaEnv, RequiredEnvKey | 'MODE' | 'DEV' | 'PROD'>
+
+function getRequiredEnv(source: EnvironmentSource, key: RequiredEnvKey): string {
+  const value = source[key]?.trim()
 
   if (!value) {
     throw new Error(`Missing required environment variable: ${key}`)
@@ -10,10 +12,14 @@ function getRequiredEnv(key: RequiredEnvKey): string {
   return value
 }
 
-export const env = Object.freeze({
-  appName: getRequiredEnv('VITE_APP_NAME'),
-  apiBaseUrl: getRequiredEnv('VITE_API_BASE_URL'),
-  mode: import.meta.env.MODE,
-  isDevelopment: import.meta.env.DEV,
-  isProduction: import.meta.env.PROD,
-})
+export function createEnvironment(source: EnvironmentSource) {
+  return Object.freeze({
+    appName: getRequiredEnv(source, 'VITE_APP_NAME'),
+    apiBaseUrl: getRequiredEnv(source, 'VITE_API_BASE_URL'),
+    mode: source.MODE,
+    isDevelopment: source.DEV,
+    isProduction: source.PROD,
+  })
+}
+
+export const env = createEnvironment(import.meta.env)
