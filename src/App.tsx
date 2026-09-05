@@ -54,7 +54,6 @@ function App() {
     () => [
       {
         key: 'workspace',
-        className: 'admin-navigation__section',
         icon: <FolderOpenOutlined />,
         label: messages.navigation.workspace,
         children: [
@@ -72,7 +71,6 @@ function App() {
       },
       {
         key: 'configuration',
-        className: 'admin-navigation__section',
         icon: <SettingOutlined />,
         label: messages.navigation.configuration,
         children: [

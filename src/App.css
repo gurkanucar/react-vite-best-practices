@@ -10,6 +10,7 @@
   height: 100vh;
   height: 100dvh;
   overflow-y: auto;
+  border-inline-end: var(--ant-line-width) solid var(--ant-color-border);
 }
 
 .admin-brand {
@@ -38,23 +39,6 @@
 .admin-brand--collapsed {
   justify-content: center;
   padding-inline: 0;
-}
-
-/* Ant Design 6 does not currently forward Menu.styles.subMenu.list to inline submenu lists. */
-.admin-navigation__section {
-  position: relative;
-}
-
-.admin-navigation__section::after {
-  position: absolute;
-  inset-block: calc(var(--ant-menu-item-height) + var(--ant-menu-item-margin-block)) 0;
-  inset-inline-start: calc(
-    var(--ant-menu-item-margin-inline) + var(--ant-menu-item-padding-inline)
-  );
-  width: var(--ant-line-width-bold);
-  background: var(--ant-color-border-secondary);
-  content: '';
-  pointer-events: none;
 }
 
 .admin-workspace {
