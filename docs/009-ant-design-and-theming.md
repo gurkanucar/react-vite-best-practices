@@ -77,15 +77,17 @@ The source-derived hooks live in `src/theme/official-presets`. `useOfficialTheme
 
 ## User preferences
 
-The color control is available in both the admin navigation bar and the full theme controls while the base `Ant Design` visual theme is selected. It offers:
+The color control is available in both the admin navigation bar and the full theme controls for every theme that supports switching. The navbar uses a compact Ant Design `Dropdown`; the settings and landing controls use `Segmented`. Both offer:
 
 - `System`: follows `prefers-color-scheme` and reacts to operating-system changes.
 - `Light`: always uses the default light algorithm.
 - `Dark`: always uses the dark algorithm.
 
-Compact density is controlled independently. The base Ant Design theme follows the selected system, light, or dark mode. Its light showcase background is removed in dark mode so the page background and dark component tokens cannot conflict.
+Compact density is controlled independently. The base Ant Design theme follows the selected system, light, or dark mode. Light showcase backgrounds are removed in dark mode so the page background and dark component tokens cannot conflict.
 
-Homepage showcase presets preserve the algorithms from their official source. They do not expose the color control because applying a second light or dark algorithm would change the preset instead of switching a supported mode. `Dark` and `Geek` identify as dark; the remaining showcase presets identify as light. The stored Ant Design color preference remains unchanged and becomes active again when the user returns to the base theme.
+Homepage showcase presets preserve their official light-mode identity, component styles, brand colors, spacing, shapes, and interactions. MUI, shadcn, Bootstrap, Cartoon, Illustration, Glass, Document, Blossom, Ant Design V4, and Serene Icon also accept the selected Ant Design color algorithm. Their generated dark variants replace light neutral surfaces with dark semantic tokens while retaining each preset's distinguishing design choices.
+
+The dedicated `Dark` and `Geek` presets are intrinsically dark and therefore do not expose a redundant color selector. All other presets support System, Light, and Dark.
 
 Preferences are stored by Zustand under `rvbp-preferences` in `localStorage`. Invalid fields fall back safely to the defaults. See document 012 for the store and persistence design.
 

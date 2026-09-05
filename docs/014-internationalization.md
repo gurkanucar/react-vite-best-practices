@@ -72,6 +72,15 @@ The dictionary is a plain object, so keys are autocompleted and type-checked. Pr
 
 `LanguageSelect` writes the selected language to the preferences store. Because `useMessages` subscribes to that store, every component re-renders with the new dictionary immediately, and the choice persists across browser sessions. See [012 — Zustand State Management](./012-zustand-state-management.md).
 
+English and Turkish options include locally bundled SVG flags from `country-flag-icons`. The package has no runtime dependencies, includes TypeScript declarations, and allows direct imports so only the `GB` and `TR` assets enter the application bundle:
+
+```tsx
+import GB from 'country-flag-icons/react/3x2/GB'
+import TR from 'country-flag-icons/react/3x2/TR'
+```
+
+The flags are presentational; the translated language name remains the accessible option label. No flag asset is loaded from a CDN at runtime.
+
 ## Adding a new key
 
 1. Add the key to `src/assets/locales/en.json`.
@@ -101,5 +110,6 @@ The current approach covers static copy. Adopt `react-i18next` or FormatJS when 
 
 ## Reference
 
+- [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
 - [Vite: JSON imports](https://vite.dev/guide/features.html#json)
 - [TypeScript: resolveJsonModule](https://www.typescriptlang.org/tsconfig/#resolveJsonModule)

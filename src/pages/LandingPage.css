@@ -5,7 +5,8 @@
   background-size: cover;
 }
 
-html[data-visual-theme='ant-design'][data-theme='dark'] .landing-shell {
+html[data-theme='dark']:not([data-visual-theme='dark']):not([data-visual-theme='geek'])
+  .landing-shell {
   background-image: none;
 }
 

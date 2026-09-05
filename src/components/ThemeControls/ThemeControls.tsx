@@ -5,7 +5,7 @@ import {
   MoonOutlined,
   SunOutlined,
 } from '@ant-design/icons'
-import { Button, Flex, Popover, Segmented, Switch, Tooltip, Typography } from 'antd'
+import { Button, Dropdown, Flex, Popover, Segmented, Switch, Tooltip, Typography } from 'antd'
 import { useState, type CSSProperties } from 'react'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
@@ -18,10 +18,14 @@ import {
 import './ThemeControls.css'
 
 interface ColorModeControlProps {
+  variant?: 'menu' | 'segmented'
   size?: 'small' | 'middle' | 'large'
 }
 
-export function ColorModeControl({ size = 'middle' }: ColorModeControlProps) {
+export function ColorModeControl({
+  variant = 'segmented',
+  size = 'middle',
+}: ColorModeControlProps) {
   const messages = useMessages()
   const colorMode = usePreferencesStore((state) => state.colorMode)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
@@ -31,14 +35,45 @@ export function ColorModeControl({ size = 'middle' }: ColorModeControlProps) {
     return null
   }
 
+  const options = [
+    { label: messages.common.system, value: 'system', icon: <DesktopOutlined /> },
+    { label: messages.common.light, value: 'light', icon: <SunOutlined /> },
+    { label: messages.common.dark, value: 'dark', icon: <MoonOutlined /> },
+  ]
+
+  if (variant === 'menu') {
+    const selected = options.find((option) => option.value === colorMode) ?? options[0]
+
+    return (
+      <Dropdown
+        menu={{
+          items: options.map((option) => ({
+            key: option.value,
+            icon: option.icon,
+            label: option.label,
+          })),
+          selectable: true,
+          selectedKeys: [colorMode],
+          onClick: ({ key }) => setColorMode(key as ColorMode),
+        }}
+        placement="bottomRight"
+        trigger={['click']}
+      >
+        <Tooltip title={`${messages.common.colorTheme}: ${selected.label}`}>
+          <Button
+            aria-label={`${messages.common.colorTheme}: ${selected.label}`}
+            icon={selected.icon}
+            size={size}
+          />
+        </Tooltip>
+      </Dropdown>
+    )
+  }
+
   return (
     <Segmented
       aria-label={messages.common.colorTheme}
-      options={[
-        { label: messages.common.system, value: 'system', icon: <DesktopOutlined /> },
-        { label: messages.common.light, value: 'light', icon: <SunOutlined /> },
-        { label: messages.common.dark, value: 'dark', icon: <MoonOutlined /> },
-      ]}
+      options={options}
       size={size}
       value={colorMode}
       onChange={(value) => setColorMode(value as ColorMode)}
@@ -87,7 +122,7 @@ export function ThemeControls() {
   )
 
   return (
-    <Flex className="theme-controls" align="center" gap={12}>
+    <Flex className="theme-controls" align="center" gap={12} wrap>
       <Popover
         arrow={false}
         content={themeGallery}

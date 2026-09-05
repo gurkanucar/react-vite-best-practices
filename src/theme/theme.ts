@@ -72,5 +72,5 @@ export function resolveVisualThemeColorMode(
 }
 
 export function supportsColorMode(visualTheme: VisualTheme): boolean {
-  return visualTheme === 'ant-design'
+  return visualTheme !== 'dark' && visualTheme !== 'geek'
 }

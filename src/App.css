@@ -1,5 +1,15 @@
 .admin-shell {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* The sidebar stays pinned while the page content scrolls. */
+.admin-sider {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
 }
 
 .admin-brand {
@@ -32,11 +42,15 @@
   background-size: cover;
 }
 
-html[data-visual-theme='ant-design'][data-theme='dark'] .admin-workspace {
+html[data-theme='dark']:not([data-visual-theme='dark']):not([data-visual-theme='geek'])
+  .admin-workspace {
   background-image: none;
 }
 
 .admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: flex-end;

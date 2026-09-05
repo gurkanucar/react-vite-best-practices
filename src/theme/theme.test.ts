@@ -11,17 +11,20 @@ describe('resolveColorMode', () => {
 })
 
 describe('resolveVisualThemeColorMode', () => {
-  it('uses the selected mode only for the base Ant Design theme', () => {
+  it('uses the selected mode for themes that support color switching', () => {
     expect(resolveVisualThemeColorMode('light', 'ant-design')).toBe('light')
     expect(resolveVisualThemeColorMode('dark', 'ant-design')).toBe('dark')
     expect(resolveVisualThemeColorMode('light', 'dark')).toBe('dark')
     expect(resolveVisualThemeColorMode('light', 'geek')).toBe('dark')
-    expect(resolveVisualThemeColorMode('dark', 'blossom')).toBe('light')
+    expect(resolveVisualThemeColorMode('dark', 'blossom')).toBe('dark')
+    expect(resolveVisualThemeColorMode('light', 'illustration')).toBe('light')
   })
 
   it('reports whether a visual theme supports color mode switching', () => {
     expect(supportsColorMode('ant-design')).toBe(true)
-    expect(supportsColorMode('illustration')).toBe(false)
+    expect(supportsColorMode('illustration')).toBe(true)
+    expect(supportsColorMode('mui')).toBe(true)
     expect(supportsColorMode('dark')).toBe(false)
+    expect(supportsColorMode('geek')).toBe(false)
   })
 })

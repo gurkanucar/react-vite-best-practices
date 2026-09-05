@@ -1,0 +1,11 @@
+.language-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-option__flag {
+  width: 20px;
+  height: auto;
+  flex: none;
+}

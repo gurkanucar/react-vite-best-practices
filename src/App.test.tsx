@@ -39,7 +39,7 @@ describe('admin application', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: 'Operational overview' }),
     ).toBeInTheDocument()
-    expect(screen.getByRole('radiogroup', { name: 'Color theme' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
     expect(screen.getByText('Monthly revenue')).toBeInTheDocument()
     await act(async () => {
       await router.navigate('/settings')

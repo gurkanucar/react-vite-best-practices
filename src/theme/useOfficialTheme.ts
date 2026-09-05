@@ -59,6 +59,65 @@ const darkComponents: NonNullable<ThemeConfig['components']> = {
   },
 }
 
+const darkVariantToken: NonNullable<ThemeConfig['token']> = {
+  colorBgBase: '#000000',
+  colorBgContainer: '#141414',
+  colorBgElevated: '#1f1f1f',
+  colorBgLayout: '#000000',
+  colorBgTextActive: 'rgba(255, 255, 255, 0.15)',
+  colorBgTextHover: 'rgba(255, 255, 255, 0.12)',
+  colorBorder: '#424242',
+  colorBorderSecondary: '#303030',
+  colorFill: 'rgba(255, 255, 255, 0.18)',
+  colorFillQuaternary: 'rgba(255, 255, 255, 0.04)',
+  colorFillSecondary: 'rgba(255, 255, 255, 0.12)',
+  colorFillTertiary: 'rgba(255, 255, 255, 0.08)',
+  colorIcon: 'rgba(255, 255, 255, 0.65)',
+  colorIconHover: 'rgba(255, 255, 255, 0.85)',
+  colorSplit: '#303030',
+  colorText: 'rgba(255, 255, 255, 0.85)',
+  colorTextBase: '#ffffff',
+  colorTextDescription: 'rgba(255, 255, 255, 0.65)',
+  colorTextDisabled: 'rgba(255, 255, 255, 0.25)',
+  colorTextHeading: 'rgba(255, 255, 255, 0.85)',
+  colorTextLabel: 'rgba(255, 255, 255, 0.65)',
+  colorTextPlaceholder: 'rgba(255, 255, 255, 0.25)',
+  colorTextQuaternary: 'rgba(255, 255, 255, 0.25)',
+  colorTextSecondary: 'rgba(255, 255, 255, 0.65)',
+  colorTextTertiary: 'rgba(255, 255, 255, 0.45)',
+}
+
+const preservedBrandColorTokens = new Set([
+  'colorError',
+  'colorInfo',
+  'colorLink',
+  'colorPrimary',
+  'colorSuccess',
+  'colorWarning',
+])
+
+function retainDarkSafeTokens<T extends object>(tokens: T | undefined): T {
+  if (!tokens) return {} as T
+
+  return Object.fromEntries(
+    Object.entries(tokens).filter(
+      ([name]) =>
+        preservedBrandColorTokens.has(name) || !/(?:color|bg$|background|fill|shadow)/i.test(name),
+    ),
+  ) as T
+}
+
+function createDarkSafeComponents(
+  components: NonNullable<ThemeConfig['components']>,
+): NonNullable<ThemeConfig['components']> {
+  return Object.fromEntries(
+    Object.entries(components).map(([name, config]) => [
+      name,
+      config && typeof config === 'object' ? retainDarkSafeTokens(config) : config,
+    ]),
+  ) as NonNullable<ThemeConfig['components']>
+}
+
 const sharedProviderProps: ConfigProviderProps = {
   wave: {},
   app: {},
@@ -147,13 +206,63 @@ export function useOfficialTheme(
             } as const
           )[visualTheme]
 
-  if (!compact || !selected.theme) return selected
+  if (!selected.theme) return selected
 
   const algorithm = selected.theme.algorithm
   const algorithms = Array.isArray(algorithm) ? algorithm : algorithm ? [algorithm] : []
+  const supportsDynamicColor = visualTheme !== 'dark' && visualTheme !== 'geek'
+  const colorAlgorithm = resolvedColorMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm
+  const hasColorAlgorithm = algorithms.some(
+    (currentAlgorithm) =>
+      currentAlgorithm === theme.defaultAlgorithm || currentAlgorithm === theme.darkAlgorithm,
+  )
+  const mappedAlgorithms = algorithms.map((currentAlgorithm) =>
+    currentAlgorithm === theme.defaultAlgorithm || currentAlgorithm === theme.darkAlgorithm
+      ? supportsDynamicColor
+        ? colorAlgorithm
+        : currentAlgorithm
+      : currentAlgorithm,
+  )
+  const colorAwareAlgorithms =
+    supportsDynamicColor && !hasColorAlgorithm
+      ? [colorAlgorithm, ...mappedAlgorithms]
+      : mappedAlgorithms
+
+  if (compact) {
+    colorAwareAlgorithms.push(theme.compactAlgorithm)
+  }
+
+  const applyDarkVariant = supportsDynamicColor && resolvedColorMode === 'dark'
+  const selectedComponents = selected.theme.components ?? {}
+  const colorSafeComponents = applyDarkVariant
+    ? createDarkSafeComponents(selectedComponents)
+    : selectedComponents
+  const darkVariantComponents: NonNullable<ThemeConfig['components']> = applyDarkVariant
+    ? {
+        ...colorSafeComponents,
+        Card: { ...colorSafeComponents.Card, colorBgContainer: '#141414' },
+        Layout: { ...colorSafeComponents.Layout, ...darkComponents.Layout },
+        Menu: { ...colorSafeComponents.Menu, ...darkComponents.Menu },
+        Progress: {
+          ...colorSafeComponents.Progress,
+          circleTextColor: 'rgba(255, 255, 255, 0.85)',
+          remainingColor: 'rgba(255, 255, 255, 0.12)',
+        },
+      }
+    : colorSafeComponents
 
   return {
-    ...selected,
-    theme: { ...selected.theme, algorithm: [...algorithms, theme.compactAlgorithm] },
+    ...(applyDarkVariant ? sharedProviderProps : selected),
+    theme: {
+      ...selected.theme,
+      algorithm: colorAwareAlgorithms,
+      components: darkVariantComponents,
+      token: {
+        ...(applyDarkVariant
+          ? retainDarkSafeTokens(selected.theme.token ?? {})
+          : selected.theme.token),
+        ...(applyDarkVariant ? darkVariantToken : {}),
+      },
+    },
   }
 }

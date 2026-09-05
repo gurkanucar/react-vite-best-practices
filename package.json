@@ -31,6 +31,7 @@
     "antd": "^6.6.2",
     "antd-style": "^4.1.0",
     "clsx": "^2.1.1",
+    "country-flag-icons": "^1.6.20",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router": "^8.3.1",
