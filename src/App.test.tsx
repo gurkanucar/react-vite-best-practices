@@ -27,6 +27,9 @@ describe('admin application', () => {
       }),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Explore the dashboard' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
+    expect(screen.queryByRole('switch', { name: 'Compact density' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /Visual theme:/ })).not.toBeInTheDocument()
     expect(screen.queryByText('Operational overview')).not.toBeInTheDocument()
   })
 

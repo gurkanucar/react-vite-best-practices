@@ -71,13 +71,13 @@ The source-derived hooks live in `src/theme/official-presets`. `useOfficialTheme
 
 ## User preferences
 
-The color control is available in both the admin navigation bar and the full theme controls for every theme that supports switching. The navbar uses a compact Ant Design `Dropdown`; the settings and landing controls use `Segmented`. Both offer:
+The color control is available in the admin navbar, landing page, authentication pages, and full settings controls. The navbar, landing, and authentication layouts use the same compact Ant Design `Dropdown`; Settings uses `Segmented`. Both offer:
 
 - `System`: follows `prefers-color-scheme` and reacts to operating-system changes.
 - `Light`: always uses the default light algorithm.
 - `Dark`: always uses the dark algorithm.
 
-Compact density is controlled independently. The base Ant Design theme follows the selected system, light, or dark mode. Light showcase backgrounds are removed in dark mode so the page background and dark component tokens cannot conflict.
+Visual preset and compact-density controls remain in Settings, where the complete appearance configuration belongs. The base Ant Design theme follows the selected system, light, or dark mode. Light showcase backgrounds are removed in dark mode so the page background and dark component tokens cannot conflict.
 
 Homepage showcase presets preserve their official light-mode identity, component styles, brand colors, spacing, shapes, and interactions. MUI, shadcn, Bootstrap, Illustration, Glass, and Serene Icon also accept the selected Ant Design color algorithm. Their generated dark variants replace light neutral surfaces with dark semantic tokens while retaining each preset's distinguishing design choices.
 

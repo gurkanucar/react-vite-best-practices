@@ -13,7 +13,7 @@ import type { CSSProperties } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
-import { ThemeControls } from '@/components/ThemeControls/ThemeControls'
+import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
@@ -63,8 +63,8 @@ export function LandingPage() {
             <Typography.Text strong>React Vite Best Practices</Typography.Text>
           </Link>
           <Space wrap>
+            <ColorModeControl variant="menu" />
             <LanguageSelect />
-            <ThemeControls />
             <Button icon={<LoginOutlined />} onClick={() => void navigate('/login')}>
               {messages.auth.signIn}
             </Button>
