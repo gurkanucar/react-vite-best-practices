@@ -48,7 +48,12 @@ describe('ThemeControls', () => {
       </AppThemeProvider>,
     )
 
-    await user.click(screen.getByRole('button', { name: 'Color theme: System' }))
+    const themeButton = screen.getByRole('button', { name: 'Color theme: System' })
+
+    await user.hover(themeButton)
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+    await user.click(themeButton)
     await user.click(await screen.findByText('Dark'))
 
     await waitFor(() => {

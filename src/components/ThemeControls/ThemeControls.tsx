@@ -49,13 +49,11 @@ export function ColorModeControl({
         placement="bottomRight"
         trigger={['click']}
       >
-        <Tooltip title={`${messages.common.colorTheme}: ${selected.label}`}>
-          <Button
-            aria-label={`${messages.common.colorTheme}: ${selected.label}`}
-            icon={selected.icon}
-            size={size}
-          />
-        </Tooltip>
+        <Button
+          aria-label={`${messages.common.colorTheme}: ${selected.label}`}
+          icon={selected.icon}
+          size={size}
+        />
       </Dropdown>
     )
   }
