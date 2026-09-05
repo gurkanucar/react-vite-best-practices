@@ -73,7 +73,7 @@ Admin child routes use the content-area variant:
 }
 ```
 
-`RouteLoading` uses Ant Design `Spin`, has a live-region status for assistive technology, and is centered by application layout CSS. It contains no artificial delay: on a fast connection the fallback may appear only briefly or not be perceptible.
+`RouteLoading` uses Ant Design `Spin`, reads its status text from the active locale, has a live-region status for assistive technology, and is centered by application layout CSS. It contains no artificial delay: on a fast connection the fallback may appear only briefly or not be perceptible.
 
 ## What Suspense covers
 
