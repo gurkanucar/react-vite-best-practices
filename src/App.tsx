@@ -82,7 +82,7 @@ function App() {
       <Layout className="admin-workspace" style={backgroundStyle}>
         <Header className="admin-header">
           <Flex className="admin-header__actions" align="center" gap={10}>
-            <ColorModeControl size="small" variant="menu" />
+            <ColorModeControl variant="menu" />
             <LanguageSelect />
             <Tooltip title="Notifications">
               <Badge dot offset={[-5, 5]}>

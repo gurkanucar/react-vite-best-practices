@@ -28,6 +28,7 @@ export function LanguageSelect() {
     <Select
       aria-label={messages.shell.language}
       className="language-select"
+      styles={{ root: { height: 'var(--ant-select-height)' } }}
       value={language}
       options={[
         {
