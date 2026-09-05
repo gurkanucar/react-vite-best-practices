@@ -11,6 +11,24 @@
     "menu": "Open navigation",
     "profile": "Demo administrator"
   },
+  "landing": {
+    "ready": "Production-ready foundation",
+    "title": "Start with a React foundation you can understand and trust.",
+    "description": "A documented Vite workspace with typed configuration, routing, state management, testing, quality gates, and the official Ant Design theme gallery already connected.",
+    "openDashboard": "Open dashboard",
+    "exploreDashboard": "Explore the dashboard",
+    "viewComponents": "View components",
+    "foundationTitle": "Foundation at a glance",
+    "included": "Included from day one",
+    "includedItems": ["Environment validation", "Error recovery", "Commit quality hooks"],
+    "typedTitle": "Typed by default",
+    "typedDescription": "Strict TypeScript, typed environment variables, aliases, router definitions, and state actions.",
+    "qualityTitle": "Quality is executable",
+    "qualityDescription": "Formatting, linting, tests, coverage, production builds, and commit checks are part of the workflow.",
+    "uiTitle": "Real component system",
+    "uiDescription": "Ant Design components, official homepage presets, responsive layouts, and Ant Design Charts.",
+    "footer": "Documented incrementally for teams that want to know how their foundation works."
+  },
   "dashboard": {
     "title": "Operational overview",
     "description": "A compact view of product health, delivery pace, and account activity.",
@@ -59,7 +77,7 @@
     "title": "Workspace preferences",
     "description": "Language and visual preferences are shared across routes and browser sessions.",
     "appearance": "Appearance",
-    "appearanceDescription": "Choose a visual preset, color mode, and interface density.",
+    "appearanceDescription": "Choose a visual preset, the available color mode, and interface density.",
     "language": "Language",
     "languageDescription": "The selected language updates the admin shell immediately.",
     "state": "Persisted state",
@@ -70,6 +88,10 @@
   "common": {
     "english": "English",
     "turkish": "Turkish",
-    "version": "Version"
+    "version": "Version",
+    "colorTheme": "Color theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
   }
 }

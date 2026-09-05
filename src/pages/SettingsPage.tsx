@@ -51,6 +51,7 @@ export function SettingsPage() {
             </Typography.Paragraph>
             <Descriptions
               bordered
+              layout="vertical"
               column={{ xs: 1, sm: 2, lg: 4 }}
               items={[
                 { key: 'language', label: 'language', children: <code>{language}</code> },

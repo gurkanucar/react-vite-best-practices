@@ -7,22 +7,49 @@ import {
 } from '@ant-design/icons'
 import { Button, Flex, Popover, Segmented, Switch, Tooltip, Typography } from 'antd'
 import { useState, type CSSProperties } from 'react'
+import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
-import { visualThemeOptions, type ColorMode, type VisualTheme } from '@/theme/theme'
+import {
+  supportsColorMode,
+  visualThemeOptions,
+  type ColorMode,
+  type VisualTheme,
+} from '@/theme/theme'
 import './ThemeControls.css'
 
-const colorModeOptions = [
-  { label: 'System', value: 'system', icon: <DesktopOutlined /> },
-  { label: 'Light', value: 'light', icon: <SunOutlined /> },
-  { label: 'Dark', value: 'dark', icon: <MoonOutlined /> },
-]
+interface ColorModeControlProps {
+  size?: 'small' | 'middle' | 'large'
+}
+
+export function ColorModeControl({ size = 'middle' }: ColorModeControlProps) {
+  const messages = useMessages()
+  const colorMode = usePreferencesStore((state) => state.colorMode)
+  const visualTheme = usePreferencesStore((state) => state.visualTheme)
+  const setColorMode = usePreferencesStore((state) => state.setColorMode)
+
+  if (!supportsColorMode(visualTheme)) {
+    return null
+  }
+
+  return (
+    <Segmented
+      aria-label={messages.common.colorTheme}
+      options={[
+        { label: messages.common.system, value: 'system', icon: <DesktopOutlined /> },
+        { label: messages.common.light, value: 'light', icon: <SunOutlined /> },
+        { label: messages.common.dark, value: 'dark', icon: <MoonOutlined /> },
+      ]}
+      size={size}
+      value={colorMode}
+      onChange={(value) => setColorMode(value as ColorMode)}
+    />
+  )
+}
 
 export function ThemeControls() {
   const [themeGalleryOpen, setThemeGalleryOpen] = useState(false)
-  const colorMode = usePreferencesStore((state) => state.colorMode)
   const compact = usePreferencesStore((state) => state.compact)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
-  const setColorMode = usePreferencesStore((state) => state.setColorMode)
   const setCompact = usePreferencesStore((state) => state.setCompact)
   const setVisualTheme = usePreferencesStore((state) => state.setVisualTheme)
   const selectedTheme = visualThemeOptions.find((option) => option.value === visualTheme)
@@ -78,12 +105,7 @@ export function ThemeControls() {
           {selectedTheme?.label ?? 'Ant Design'}
         </Button>
       </Popover>
-      <Segmented
-        aria-label="Color theme"
-        options={colorModeOptions}
-        value={colorMode}
-        onChange={(value) => setColorMode(value as ColorMode)}
-      />
+      <ColorModeControl />
       <Tooltip title="Use Ant Design's compact spacing algorithm">
         <Flex align="center" gap={7}>
           <CompressOutlined aria-hidden="true" />

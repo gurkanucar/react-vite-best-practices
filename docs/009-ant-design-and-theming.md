@@ -77,13 +77,15 @@ The source-derived hooks live in `src/theme/official-presets`. `useOfficialTheme
 
 ## User preferences
 
-The color control offers:
+The color control is available in both the admin navigation bar and the full theme controls while the base `Ant Design` visual theme is selected. It offers:
 
 - `System`: follows `prefers-color-scheme` and reacts to operating-system changes.
 - `Light`: always uses the default light algorithm.
 - `Dark`: always uses the dark algorithm.
 
-Compact density is controlled independently. Ant Design follows the selected system, light, or dark mode. Homepage showcase presets use their own official algorithm, and the dedicated Dark preset always uses the dark algorithm.
+Compact density is controlled independently. The base Ant Design theme follows the selected system, light, or dark mode. Its light showcase background is removed in dark mode so the page background and dark component tokens cannot conflict.
+
+Homepage showcase presets preserve the algorithms from their official source. They do not expose the color control because applying a second light or dark algorithm would change the preset instead of switching a supported mode. `Dark` and `Geek` identify as dark; the remaining showcase presets identify as light. The stored Ant Design color preference remains unchanged and becomes active again when the user returns to the base theme.
 
 Preferences are stored by Zustand under `rvbp-preferences` in `localStorage`. Invalid fields fall back safely to the defaults. See document 012 for the store and persistence design.
 
@@ -102,6 +104,8 @@ The `AntApp` wrapper supplies context for components and APIs that need it, such
 ## Styling ownership
 
 The application does not target Ant Design's internal `.ant-*` classes. Application CSS is limited to structural page layout and the tiny color swatches in the theme picker. Component appearance comes from Ant Design or the selected official homepage preset. The dashboard chart is provided by Ant Design Charts rather than custom CSS.
+
+Responsive data layout fixes also stay on Ant Design's public API. The project uses responsive `Descriptions` columns, vertical key/value layout, explicit `Table` column widths, and horizontal table scrolling instead of overriding internal selectors. See document 015 for the rationale and reusable patterns.
 
 ## CSS reset
 

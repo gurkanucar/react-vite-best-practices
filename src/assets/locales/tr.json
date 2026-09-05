@@ -11,6 +11,24 @@
     "menu": "Navigasyonu aç",
     "profile": "Demo yöneticisi"
   },
+  "landing": {
+    "ready": "Production-ready altyapı",
+    "title": "Anlayabileceğiniz ve güvenebileceğiniz bir React altyapısıyla başlayın.",
+    "description": "Tipli yapılandırma, routing, state management, testler, kalite kontrolleri ve resmi Ant Design tema galerisi hazır olan belgelenmiş bir Vite çalışma alanı.",
+    "openDashboard": "Dashboard'u aç",
+    "exploreDashboard": "Dashboard'u incele",
+    "viewComponents": "Bileşenleri görüntüle",
+    "foundationTitle": "Altyapıya genel bakış",
+    "included": "İlk günden dahil",
+    "includedItems": ["Ortam doğrulaması", "Hata kurtarma", "Commit kalite hook'ları"],
+    "typedTitle": "Varsayılan olarak tipli",
+    "typedDescription": "Strict TypeScript, tipli ortam değişkenleri, alias'lar, router tanımları ve state aksiyonları.",
+    "qualityTitle": "Çalıştırılabilir kalite",
+    "qualityDescription": "Formatlama, lint, test, coverage, production build ve commit kontrolleri iş akışının parçasıdır.",
+    "uiTitle": "Gerçek bileşen sistemi",
+    "uiDescription": "Ant Design bileşenleri, resmi ana sayfa presetleri, responsive yerleşimler ve Ant Design Charts.",
+    "footer": "Altyapısının nasıl çalıştığını bilmek isteyen ekipler için adım adım belgelendi."
+  },
   "dashboard": {
     "title": "Operasyon özeti",
     "description": "Ürün sağlığı, teslimat hızı ve hesap hareketlerinin kompakt görünümü.",
@@ -59,7 +77,7 @@
     "title": "Çalışma alanı tercihleri",
     "description": "Dil ve görünüm tercihleri rotalar ve tarayıcı oturumları arasında paylaşılır.",
     "appearance": "Görünüm",
-    "appearanceDescription": "Görsel preset, renk modu ve arayüz yoğunluğunu seçin.",
+    "appearanceDescription": "Görsel preset, kullanılabilir renk modu ve arayüz yoğunluğunu seçin.",
     "language": "Dil",
     "languageDescription": "Seçilen dil yönetim arayüzünü anında günceller.",
     "state": "Kalıcı durum",
@@ -70,6 +88,10 @@
   "common": {
     "english": "İngilizce",
     "turkish": "Türkçe",
-    "version": "Sürüm"
+    "version": "Sürüm",
+    "colorTheme": "Renk teması",
+    "system": "Sistem",
+    "light": "Açık",
+    "dark": "Koyu"
   }
 }

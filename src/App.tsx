@@ -5,10 +5,11 @@ import {
   SettingOutlined,
 } from '@ant-design/icons'
 import { Avatar, Badge, Button, Flex, Layout, Menu, Tooltip, Typography } from 'antd'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
+import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
@@ -23,6 +24,9 @@ function App() {
   const language = usePreferencesStore((state) => state.language)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const backgroundImage = officialThemeBackgrounds[visualTheme]
+  const backgroundStyle = backgroundImage
+    ? ({ '--official-theme-background': `url(${backgroundImage})` } as CSSProperties)
+    : undefined
 
   useEffect(() => {
     document.documentElement.lang = language
@@ -75,12 +79,10 @@ function App() {
         {navigation}
       </Sider>
 
-      <Layout
-        className="admin-workspace"
-        style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
-      >
+      <Layout className="admin-workspace" style={backgroundStyle}>
         <Header className="admin-header">
           <Flex className="admin-header__actions" align="center" gap={10}>
+            <ColorModeControl size="small" />
             <LanguageSelect />
             <Tooltip title="Notifications">
               <Badge dot offset={[-5, 5]}>

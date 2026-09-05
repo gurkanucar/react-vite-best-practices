@@ -14,13 +14,14 @@ The router is created outside the React tree in `src/router/router.tsx`, as reco
 
 ```text
 /
-├── dashboard   Operational metrics, chart, health, and activity
-├── components  Interactive Ant Design component examples
-├── settings    Language, theme, and density preferences
-└── *           Friendly not-found page
+├── /             Standalone product landing page
+├── /dashboard    Operational metrics, chart, health, and activity
+├── /components   Interactive Ant Design component examples
+├── /settings     Language, theme, and density preferences
+└── *             Friendly not-found page
 ```
 
-`App.tsx` is the shared layout. Its `<Outlet />` renders the active child route while the navigation, header, and footer remain mounted. The root route also has an `errorElement`, so route failures have a dedicated recovery screen.
+`LandingPage.tsx` owns `/` and remains separate from the administration shell. `App.tsx` is the shared layout for the three admin routes. Its `<Outlet />` renders the active child route while the navigation, header, and footer remain mounted. Route failures have a dedicated recovery screen.
 
 Unknown URLs render an Ant Design `Result` with status `404` and a router-powered return action. This keeps the recovery experience consistent with the rest of the component system without forcing a full page reload.
 

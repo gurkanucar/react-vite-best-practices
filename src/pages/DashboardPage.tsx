@@ -62,18 +62,19 @@ export function DashboardPage() {
   ]
 
   const columns: ColumnsType<ActivityRow> = [
-    { title: messages.dashboard.event, dataIndex: 'event', key: 'event' },
-    { title: messages.dashboard.actor, dataIndex: 'actor', key: 'actor' },
+    { title: messages.dashboard.event, dataIndex: 'event', key: 'event', width: 320 },
+    { title: messages.dashboard.actor, dataIndex: 'actor', key: 'actor', width: 180 },
     {
       title: messages.dashboard.status,
       dataIndex: 'status',
       key: 'status',
+      width: 140,
       render: (status: ActivityRow['status']) => {
         const color = status === 'Completed' ? 'success' : status === 'Processing' ? 'blue' : 'gold'
         return <Tag color={color}>{status}</Tag>
       },
     },
-    { title: messages.dashboard.time, dataIndex: 'time', key: 'time' },
+    { title: messages.dashboard.time, dataIndex: 'time', key: 'time', width: 140 },
   ]
 
   const metrics = [
@@ -193,7 +194,7 @@ export function DashboardPage() {
           columns={columns}
           dataSource={activities}
           pagination={false}
-          scroll={{ x: 680 }}
+          scroll={{ x: 'max-content' }}
           size="middle"
         />
       </Card>

@@ -23,7 +23,9 @@ pnpm build
 - Typed environment configuration
 - Source path aliases
 - Ant Design and persistent visual themes
+- Responsive Ant Design data-layout patterns without internal CSS overrides
 - React Router data routing and an admin dashboard demo
+- A standalone landing page at `/`, separate from the admin dashboard
 - Zustand state management for language and appearance preferences
 - JSON-based internationalization (English and Turkish)
 - Oxlint and Oxfmt

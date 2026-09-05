@@ -27,6 +27,13 @@
 
 .admin-workspace {
   min-width: 0;
+  background-image: var(--official-theme-background, none);
+  background-position: center;
+  background-size: cover;
+}
+
+html[data-visual-theme='ant-design'][data-theme='dark'] .admin-workspace {
+  background-image: none;
 }
 
 .admin-header {

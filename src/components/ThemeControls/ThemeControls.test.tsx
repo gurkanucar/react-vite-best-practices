@@ -6,7 +6,7 @@ import { AppThemeProvider } from '@/theme/AppThemeProvider'
 import { preferencesStorageKey } from '@/store/preferences-store'
 
 describe('ThemeControls', () => {
-  it('switches color and density themes and persists the preference', async () => {
+  it('switches supported color and density themes and persists the preference', async () => {
     const user = userEvent.setup()
 
     render(
@@ -25,6 +25,11 @@ describe('ThemeControls', () => {
 
     await user.click(screen.getByRole('button', { name: 'Visual theme: Ant Design' }))
     await user.click(screen.getByRole('button', { name: 'Blossom' }))
+
+    expect(screen.queryByRole('radiogroup', { name: 'Color theme' })).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(document.documentElement).toHaveAttribute('data-theme', 'light')
+    })
 
     expect(JSON.parse(window.localStorage.getItem(preferencesStorageKey) ?? '{}').state).toEqual({
       language: 'en',

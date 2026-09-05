@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { resolveColorMode, resolveVisualThemeColorMode } from '@/theme/theme'
+import { resolveColorMode, resolveVisualThemeColorMode, supportsColorMode } from '@/theme/theme'
 
 describe('resolveColorMode', () => {
   it('resolves the system preference and preserves explicit choices', () => {
@@ -11,9 +11,17 @@ describe('resolveColorMode', () => {
 })
 
 describe('resolveVisualThemeColorMode', () => {
-  it('keeps the selected mode except for the dedicated dark preset', () => {
+  it('uses the selected mode only for the base Ant Design theme', () => {
     expect(resolveVisualThemeColorMode('light', 'ant-design')).toBe('light')
+    expect(resolveVisualThemeColorMode('dark', 'ant-design')).toBe('dark')
     expect(resolveVisualThemeColorMode('light', 'dark')).toBe('dark')
-    expect(resolveVisualThemeColorMode('dark', 'blossom')).toBe('dark')
+    expect(resolveVisualThemeColorMode('light', 'geek')).toBe('dark')
+    expect(resolveVisualThemeColorMode('dark', 'blossom')).toBe('light')
+  })
+
+  it('reports whether a visual theme supports color mode switching', () => {
+    expect(supportsColorMode('ant-design')).toBe(true)
+    expect(supportsColorMode('illustration')).toBe(false)
+    expect(supportsColorMode('dark')).toBe(false)
   })
 })

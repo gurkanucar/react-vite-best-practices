@@ -64,5 +64,13 @@ export function resolveVisualThemeColorMode(
   resolvedColorMode: ResolvedColorMode,
   visualTheme: VisualTheme,
 ): ResolvedColorMode {
-  return visualTheme === 'dark' ? 'dark' : resolvedColorMode
+  if (supportsColorMode(visualTheme)) {
+    return resolvedColorMode
+  }
+
+  return visualTheme === 'dark' || visualTheme === 'geek' ? 'dark' : 'light'
+}
+
+export function supportsColorMode(visualTheme: VisualTheme): boolean {
+  return visualTheme === 'ant-design'
 }
