@@ -125,6 +125,10 @@ describe('admin application', () => {
     expect(
       await screen.findByRole('heading', { level: 2, name: 'Welcome back' }),
     ).toBeInTheDocument()
+    expect(screen.queryByRole('banner')).not.toBeInTheDocument()
+    expect(screen.queryByRole('contentinfo')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
+    expect(screen.getByRole('combobox', { name: 'Language' })).toBeInTheDocument()
     await user.type(screen.getByLabelText('Email address'), 'owner@example.com')
     await user.type(screen.getByLabelText('Password'), 'Password123')
     await user.click(screen.getByRole('button', { name: 'Sign in' }))

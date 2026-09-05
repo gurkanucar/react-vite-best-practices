@@ -116,6 +116,7 @@
     "didNotReceive": "Did not receive a code?",
     "resend": "Resend code",
     "backToSignIn": "Back to sign in",
+    "returnHome": "Return to home",
     "nameRequired": "Enter your full name.",
     "emailRequired": "Enter your email address.",
     "emailInvalid": "Enter a valid email address.",

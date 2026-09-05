@@ -25,7 +25,7 @@ The router is created outside the React tree in `src/router/router.tsx`, as reco
 └── *             Friendly not-found page
 ```
 
-`LandingPage.tsx` owns `/` and remains separate from the administration shell. The authentication examples are standalone routes and share `AuthPageLayout`. `App.tsx` is the shared layout for the administration routes. Its `<Outlet />` renders the active child route while the navigation, header, and footer remain mounted. Route failures have a dedicated recovery screen.
+`LandingPage.tsx` owns `/` and remains separate from the administration shell. The authentication examples are standalone routes and share `AuthPageLayout`. Their cards are centered independently of the document flow, with no application navbar or footer; only language and color-mode controls remain in the top corner. `App.tsx` is the shared layout for the administration routes. Its `<Outlet />` renders the active child route while the navigation, header, and footer remain mounted. Route failures have a dedicated recovery screen.
 
 Every page module is loaded on demand with React `lazy`. A route-level `Suspense` boundary renders a centered Ant Design spinner while its chunk loads. See document 016 for the implementation and extension checklist.
 

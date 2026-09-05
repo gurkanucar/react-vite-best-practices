@@ -116,6 +116,7 @@
     "didNotReceive": "Kod gelmedi mi?",
     "resend": "Kodu yeniden gönder",
     "backToSignIn": "Girişe dön",
+    "returnHome": "Ana sayfaya dön",
     "nameRequired": "Adınızı ve soyadınızı girin.",
     "emailRequired": "E-posta adresinizi girin.",
     "emailInvalid": "Geçerli bir e-posta adresi girin.",
