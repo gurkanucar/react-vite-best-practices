@@ -72,6 +72,9 @@ describe('admin application', () => {
       await router.navigate('/missing')
     })
     expect(await screen.findByText('Page not found')).toBeInTheDocument()
+    expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Return to dashboard' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Go to home page' })).toBeInTheDocument()
   })
 
   it('renders nested navigation and collapses the sidebar', async () => {

@@ -165,7 +165,6 @@
   "notFound": {
     "title": "Sayfa bulunamadı",
     "description": "İstediğiniz sayfa mevcut değil veya taşınmış olabilir.",
-    "dashboard": "Kontrol paneline dön",
     "home": "Ana sayfaya git"
   },
   "common": {

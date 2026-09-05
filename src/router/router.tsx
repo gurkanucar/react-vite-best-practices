@@ -106,15 +106,16 @@ export const routes: RouteObject[] = [
         ),
         errorElement: adminErrorElement,
       },
-      {
-        path: '*',
-        element: (
-          <RouteSuspense>
-            <NotFoundPage />
-          </RouteSuspense>
-        ),
-      },
     ],
+  },
+  {
+    path: '*',
+    element: (
+      <RouteSuspense fullPage>
+        <NotFoundPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
   },
 ]
 

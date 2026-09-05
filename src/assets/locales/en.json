@@ -165,7 +165,6 @@
   "notFound": {
     "title": "Page not found",
     "description": "The page you requested does not exist or may have moved.",
-    "dashboard": "Return to dashboard",
     "home": "Go to home page"
   },
   "common": {

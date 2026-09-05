@@ -29,7 +29,7 @@ The router is created outside the React tree in `src/router/router.tsx`, as reco
 
 Every page module is loaded on demand with React `lazy`. A route-level `Suspense` boundary renders a centered Ant Design spinner while its chunk loads. See document 016 for the implementation and extension checklist.
 
-Unknown URLs render an Ant Design `Result` with status `404` and a router-powered return action. This keeps the recovery experience consistent with the rest of the component system without forcing a full page reload.
+Unknown URLs render a standalone Ant Design `Result` with status `404` and a router-powered home action. The catch-all route sits outside the admin layout, so a missing page never mounts the dashboard sidebar, header, or footer.
 
 Use `Link` for normal links and `useNavigate` for navigation initiated by component behavior. Tests use `createMemoryRouter`, which keeps routing deterministic without changing the browser URL.
 
