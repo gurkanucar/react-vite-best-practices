@@ -2,6 +2,8 @@ import { useState } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
+import { AppVersion } from './components/AppVersion/AppVersion'
+import { env } from './config/env'
 import './App.css'
 
 function App() {
@@ -16,11 +18,12 @@ function App() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>Get started</h1>
+          <h1>{env.appName}</h1>
           <p>
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
+        <AppVersion />
         <button
           type="button"
           className="counter"
