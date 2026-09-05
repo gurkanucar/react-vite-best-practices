@@ -24,7 +24,7 @@ describe('ThemeControls', () => {
     await user.click(screen.getByRole('switch', { name: 'Compact density' }))
 
     await user.click(screen.getByRole('button', { name: 'Visual theme: Ant Design' }))
-    await user.click(screen.getByRole('button', { name: 'Blossom' }))
+    await user.click(screen.getByRole('button', { name: 'Illustration' }))
 
     expect(screen.getByRole('radiogroup', { name: 'Color theme' })).toBeInTheDocument()
     await waitFor(() => {
@@ -35,7 +35,7 @@ describe('ThemeControls', () => {
       language: 'en',
       colorMode: 'dark',
       compact: true,
-      visualTheme: 'blossom',
+      visualTheme: 'illustration',
     })
   })
 

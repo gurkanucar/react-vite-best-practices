@@ -6,14 +6,14 @@ import { AppThemeProvider } from '@/theme/AppThemeProvider'
 describe('AppThemeProvider', () => {
   beforeEach(() => usePreferencesStore.setState(initialPreferences))
   it('applies preferences from the Zustand store', () => {
-    usePreferencesStore.setState({ colorMode: 'light', compact: true, visualTheme: 'blossom' })
+    usePreferencesStore.setState({ colorMode: 'light', compact: true, visualTheme: 'illustration' })
     render(
       <AppThemeProvider>
         <p>Preview</p>
       </AppThemeProvider>,
     )
     expect(document.documentElement).toHaveAttribute('data-theme', 'light')
-    expect(document.documentElement).toHaveAttribute('data-visual-theme', 'blossom')
+    expect(document.documentElement).toHaveAttribute('data-visual-theme', 'illustration')
   })
   it('tracks the operating-system color preference', () => {
     let handler: ((event: MediaQueryListEvent) => void) | undefined

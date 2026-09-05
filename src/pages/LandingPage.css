@@ -5,8 +5,7 @@
   background-size: cover;
 }
 
-html[data-theme='dark']:not([data-visual-theme='dark']):not([data-visual-theme='geek'])
-  .landing-shell {
+html[data-theme='dark'] .landing-shell {
   background-image: none;
 }
 

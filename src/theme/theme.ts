@@ -5,14 +5,8 @@ export type VisualTheme =
   | 'mui'
   | 'shadcn'
   | 'bootstrap'
-  | 'cartoon'
-  | 'dark'
   | 'illustration'
   | 'glass'
-  | 'geek'
-  | 'document'
-  | 'blossom'
-  | 'ant-design-v4'
   | 'serene'
 
 export interface VisualThemeOption {
@@ -26,14 +20,8 @@ export const visualThemeOptions: VisualThemeOption[] = [
   { value: 'mui', label: 'MUI', color: '#1976d2' },
   { value: 'shadcn', label: 'shadcn', color: '#18181b' },
   { value: 'bootstrap', label: 'Bootstrap', color: '#7952b3' },
-  { value: 'cartoon', label: 'Cartoon', color: '#ffb300' },
-  { value: 'dark', label: 'Dark', color: '#111827' },
   { value: 'illustration', label: 'Illustration', color: '#6d5dfc' },
   { value: 'glass', label: 'Glass', color: '#06b6d4' },
-  { value: 'geek', label: 'Geek', color: '#13c2c2' },
-  { value: 'document', label: 'Document', color: '#2f54eb' },
-  { value: 'blossom', label: 'Blossom', color: '#eb2f96' },
-  { value: 'ant-design-v4', label: 'Ant Design V4', color: '#1890ff' },
   { value: 'serene', label: 'Serene Icon', color: '#5b8c85' },
 ]
 
@@ -58,19 +46,4 @@ export function resolveColorMode(
   }
 
   return colorMode
-}
-
-export function resolveVisualThemeColorMode(
-  resolvedColorMode: ResolvedColorMode,
-  visualTheme: VisualTheme,
-): ResolvedColorMode {
-  if (supportsColorMode(visualTheme)) {
-    return resolvedColorMode
-  }
-
-  return visualTheme === 'dark' || visualTheme === 'geek' ? 'dark' : 'light'
-}
-
-export function supportsColorMode(visualTheme: VisualTheme): boolean {
-  return visualTheme !== 'dark' && visualTheme !== 'geek'
 }

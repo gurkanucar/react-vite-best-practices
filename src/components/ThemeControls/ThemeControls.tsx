@@ -9,12 +9,7 @@ import { Button, Dropdown, Flex, Popover, Segmented, Switch, Tooltip, Typography
 import { useState, type CSSProperties } from 'react'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
-import {
-  supportsColorMode,
-  visualThemeOptions,
-  type ColorMode,
-  type VisualTheme,
-} from '@/theme/theme'
+import { visualThemeOptions, type ColorMode, type VisualTheme } from '@/theme/theme'
 import './ThemeControls.css'
 
 interface ColorModeControlProps {
@@ -28,12 +23,7 @@ export function ColorModeControl({
 }: ColorModeControlProps) {
   const messages = useMessages()
   const colorMode = usePreferencesStore((state) => state.colorMode)
-  const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const setColorMode = usePreferencesStore((state) => state.setColorMode)
-
-  if (!supportsColorMode(visualTheme)) {
-    return null
-  }
 
   const options = [
     { label: messages.common.system, value: 'system', icon: <DesktopOutlined /> },

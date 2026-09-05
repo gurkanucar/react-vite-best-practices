@@ -1,16 +1,11 @@
 import { theme, type ConfigProviderProps, type ThemeConfig } from 'antd'
 import {
-  useBlossomTheme,
   useBootstrapTheme,
-  useCartoonTheme,
-  useGeekTheme,
   useGlassTheme,
   useIllustrationTheme,
-  useLarkTheme,
   useMuiTheme,
   useSereneTheme,
   useShadcnTheme,
-  useV4Theme,
 } from '@/theme/official-presets'
 import type { ResolvedColorMode, VisualTheme } from '@/theme/theme'
 
@@ -147,16 +142,8 @@ export const officialThemeBackgrounds: Partial<Record<VisualTheme, string>> = {
   mui: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*IFkZRpIKEEkAAAAAQzAAAAgAegCCAQ/original',
   shadcn:
     'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*56tPQbwgFyEAAAAARuAAAAgAegCCAQ/original',
-  cartoon:
-    'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*tgpBT7vYIUsAAAAAQ-AAAAgAegCCAQ/original',
-  dark: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*ETkNSJ-oUGwAAAAAQ_AAAAgAegCCAQ/original',
   illustration:
     'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*HuVGQKqOER0AAAAARsAAAAgAegCCAQ/original',
-  geek: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*fzA2T4ms154AAAAARtAAAAgAegCCAQ/original',
-  document:
-    'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*iM6CQ496P3oAAAAAAAAAAAAADrJ8AQ/fmt.webp',
-  blossom:
-    'https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*s5OdR6wZZIkAAAAAAAAAAAAADrJ8AQ/fmt.webp',
 }
 
 export function useOfficialTheme(
@@ -164,17 +151,12 @@ export function useOfficialTheme(
   resolvedColorMode: ResolvedColorMode,
   compact: boolean,
 ): ConfigProviderProps {
-  const blossom = useBlossomTheme()
   const bootstrap = useBootstrapTheme()
-  const cartoon = useCartoonTheme()
-  const geek = useGeekTheme()
   const glass = useGlassTheme()
   const illustration = useIllustrationTheme()
-  const document = useLarkTheme()
   const mui = useMuiTheme()
   const serene = useSereneTheme()
   const shadcn = useShadcnTheme()
-  const v4 = useV4Theme()
 
   const selected =
     visualTheme === 'ant-design'
@@ -185,32 +167,12 @@ export function useOfficialTheme(
             components: resolvedColorMode === 'dark' ? darkComponents : baseComponents,
           },
         }
-      : visualTheme === 'dark'
-        ? {
-            ...sharedProviderProps,
-            theme: { algorithm: theme.darkAlgorithm, components: darkComponents },
-          }
-        : (
-            {
-              blossom,
-              bootstrap,
-              cartoon,
-              geek,
-              glass,
-              illustration,
-              document,
-              mui,
-              serene,
-              shadcn,
-              'ant-design-v4': v4,
-            } as const
-          )[visualTheme]
+      : ({ bootstrap, glass, illustration, mui, serene, shadcn } as const)[visualTheme]
 
   if (!selected.theme) return selected
 
   const algorithm = selected.theme.algorithm
   const algorithms = Array.isArray(algorithm) ? algorithm : algorithm ? [algorithm] : []
-  const supportsDynamicColor = visualTheme !== 'dark' && visualTheme !== 'geek'
   const colorAlgorithm = resolvedColorMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm
   const hasColorAlgorithm = algorithms.some(
     (currentAlgorithm) =>
@@ -218,21 +180,18 @@ export function useOfficialTheme(
   )
   const mappedAlgorithms = algorithms.map((currentAlgorithm) =>
     currentAlgorithm === theme.defaultAlgorithm || currentAlgorithm === theme.darkAlgorithm
-      ? supportsDynamicColor
-        ? colorAlgorithm
-        : currentAlgorithm
+      ? colorAlgorithm
       : currentAlgorithm,
   )
-  const colorAwareAlgorithms =
-    supportsDynamicColor && !hasColorAlgorithm
-      ? [colorAlgorithm, ...mappedAlgorithms]
-      : mappedAlgorithms
+  const colorAwareAlgorithms = !hasColorAlgorithm
+    ? [colorAlgorithm, ...mappedAlgorithms]
+    : mappedAlgorithms
 
   if (compact) {
     colorAwareAlgorithms.push(theme.compactAlgorithm)
   }
 
-  const applyDarkVariant = supportsDynamicColor && resolvedColorMode === 'dark'
+  const applyDarkVariant = resolvedColorMode === 'dark'
   const selectedComponents = selected.theme.components ?? {}
   const colorSafeComponents = applyDarkVariant
     ? createDarkSafeComponents(selectedComponents)

@@ -61,14 +61,8 @@ This project recreates the complete current gallery as typed presets:
 - MUI
 - shadcn
 - Bootstrap
-- Cartoon
-- Dark
 - Illustration
 - Glass
-- Geek
-- Document
-- Blossom
-- Ant Design V4
 - Serene Icon
 
 The Settings page's style button opens the gallery. A selection applies the preset's complete `ConfigProviderProps`: theme algorithm, global and component tokens, semantic `classNames`, component styles, wave behavior, and the official preview background asset where one exists.
@@ -85,9 +79,9 @@ The color control is available in both the admin navigation bar and the full the
 
 Compact density is controlled independently. The base Ant Design theme follows the selected system, light, or dark mode. Light showcase backgrounds are removed in dark mode so the page background and dark component tokens cannot conflict.
 
-Homepage showcase presets preserve their official light-mode identity, component styles, brand colors, spacing, shapes, and interactions. MUI, shadcn, Bootstrap, Cartoon, Illustration, Glass, Document, Blossom, Ant Design V4, and Serene Icon also accept the selected Ant Design color algorithm. Their generated dark variants replace light neutral surfaces with dark semantic tokens while retaining each preset's distinguishing design choices.
+Homepage showcase presets preserve their official light-mode identity, component styles, brand colors, spacing, shapes, and interactions. MUI, shadcn, Bootstrap, Illustration, Glass, and Serene Icon also accept the selected Ant Design color algorithm. Their generated dark variants replace light neutral surfaces with dark semantic tokens while retaining each preset's distinguishing design choices.
 
-The dedicated `Dark` and `Geek` presets are intrinsically dark and therefore do not expose a redundant color selector. All other presets support System, Light, and Dark.
+Every available preset supports System, Light, and Dark color modes.
 
 Preferences are stored by Zustand under `rvbp-preferences` in `localStorage`. Invalid fields fall back safely to the defaults. See document 012 for the store and persistence design.
 

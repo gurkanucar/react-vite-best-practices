@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { App as AntApp, ConfigProvider } from 'antd'
-import { resolveColorMode, resolveVisualThemeColorMode } from '@/theme/theme'
+import { resolveColorMode } from '@/theme/theme'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { useOfficialTheme } from '@/theme/useOfficialTheme'
 
@@ -19,10 +19,7 @@ export function AppThemeProvider({ children }: AppThemeProviderProps) {
   const compact = usePreferencesStore((state) => state.compact)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const [prefersDark, setPrefersDark] = useState(systemPrefersDark)
-  const resolvedColorMode = resolveVisualThemeColorMode(
-    resolveColorMode(colorMode, prefersDark),
-    visualTheme,
-  )
+  const resolvedColorMode = resolveColorMode(colorMode, prefersDark)
   const providerProps = useOfficialTheme(visualTheme, resolvedColorMode, compact)
 
   useEffect(() => {

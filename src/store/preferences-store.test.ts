@@ -11,12 +11,12 @@ describe('preferences store', () => {
     state.setLanguage('tr')
     state.setColorMode('dark')
     state.setCompact(true)
-    state.setVisualTheme('blossom')
+    state.setVisualTheme('illustration')
     expect(usePreferencesStore.getState()).toMatchObject({
       language: 'tr',
       colorMode: 'dark',
       compact: true,
-      visualTheme: 'blossom',
+      visualTheme: 'illustration',
     })
     expect(JSON.parse(localStorage.getItem(preferencesStorageKey) ?? '{}').state.language).toBe(
       'tr',
@@ -32,7 +32,7 @@ describe('preferences store', () => {
     localStorage.setItem(
       preferencesStorageKey,
       JSON.stringify({
-        state: { language: 'de', colorMode: 'sepia', compact: 'yes', visualTheme: 'unknown' },
+        state: { language: 'de', colorMode: 'sepia', compact: 'yes', visualTheme: 'blossom' },
         version: 1,
       }),
     )

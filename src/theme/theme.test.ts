@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { resolveColorMode, resolveVisualThemeColorMode, supportsColorMode } from '@/theme/theme'
+import { resolveColorMode, visualThemeOptions } from '@/theme/theme'
 
 describe('resolveColorMode', () => {
   it('resolves the system preference and preserves explicit choices', () => {
@@ -10,21 +10,16 @@ describe('resolveColorMode', () => {
   })
 })
 
-describe('resolveVisualThemeColorMode', () => {
-  it('uses the selected mode for themes that support color switching', () => {
-    expect(resolveVisualThemeColorMode('light', 'ant-design')).toBe('light')
-    expect(resolveVisualThemeColorMode('dark', 'ant-design')).toBe('dark')
-    expect(resolveVisualThemeColorMode('light', 'dark')).toBe('dark')
-    expect(resolveVisualThemeColorMode('light', 'geek')).toBe('dark')
-    expect(resolveVisualThemeColorMode('dark', 'blossom')).toBe('dark')
-    expect(resolveVisualThemeColorMode('light', 'illustration')).toBe('light')
-  })
-
-  it('reports whether a visual theme supports color mode switching', () => {
-    expect(supportsColorMode('ant-design')).toBe(true)
-    expect(supportsColorMode('illustration')).toBe(true)
-    expect(supportsColorMode('mui')).toBe(true)
-    expect(supportsColorMode('dark')).toBe(false)
-    expect(supportsColorMode('geek')).toBe(false)
+describe('visualThemeOptions', () => {
+  it('contains only the supported visual presets', () => {
+    expect(visualThemeOptions.map(({ value }) => value)).toEqual([
+      'ant-design',
+      'mui',
+      'shadcn',
+      'bootstrap',
+      'illustration',
+      'glass',
+      'serene',
+    ])
   })
 })

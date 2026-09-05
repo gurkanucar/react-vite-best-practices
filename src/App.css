@@ -64,8 +64,7 @@
   background-size: cover;
 }
 
-html[data-theme='dark']:not([data-visual-theme='dark']):not([data-visual-theme='geek'])
-  .admin-workspace {
+html[data-theme='dark'] .admin-workspace {
   background-image: none;
 }
 
