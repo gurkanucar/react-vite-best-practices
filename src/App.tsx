@@ -1,104 +1,108 @@
-import { useState } from 'react'
-import heroImg from '@/assets/hero.png'
-import reactLogo from '@/assets/react.svg'
-import viteLogo from '@/assets/vite.svg'
+import {
+  AppstoreOutlined,
+  BellOutlined,
+  DashboardOutlined,
+  SettingOutlined,
+} from '@ant-design/icons'
+import { Avatar, Badge, Button, Flex, Layout, Menu, Tooltip, Typography } from 'antd'
+import { useEffect, useMemo } from 'react'
+import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
-import { env } from '@/config/env'
+import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
+import { useMessages } from '@/i18n/messages'
+import { usePreferencesStore } from '@/store/preferences-store'
+import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
 import './App.css'
 
+const { Content, Footer, Header, Sider } = Layout
+
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const messages = useMessages()
+  const language = usePreferencesStore((state) => state.language)
+  const visualTheme = usePreferencesStore((state) => state.visualTheme)
+  const backgroundImage = officialThemeBackgrounds[visualTheme]
+
+  useEffect(() => {
+    document.documentElement.lang = language
+  }, [language])
+
+  const navigationItems = useMemo(
+    () => [
+      {
+        key: '/dashboard',
+        icon: <DashboardOutlined />,
+        label: messages.navigation.dashboard,
+      },
+      {
+        key: '/components',
+        icon: <AppstoreOutlined />,
+        label: messages.navigation.components,
+      },
+      {
+        key: '/settings',
+        icon: <SettingOutlined />,
+        label: messages.navigation.settings,
+      },
+    ],
+    [messages],
+  )
+
+  const navigation = (
+    <>
+      <Link className="admin-brand" to="/dashboard" aria-label={`${messages.shell.product} home`}>
+        <img src="/favicon.svg" alt="" width="42" height="42" />
+        <span>
+          <Typography.Text strong>{messages.shell.product}</Typography.Text>
+          <Typography.Text type="secondary">{messages.shell.workspace}</Typography.Text>
+        </span>
+      </Link>
+      <Menu
+        mode="inline"
+        selectedKeys={[location.pathname]}
+        items={navigationItems}
+        onClick={({ key }) => {
+          void navigate(key)
+        }}
+      />
+    </>
+  )
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>{env.appName}</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <AppVersion />
-        <button type="button" className="counter" onClick={() => setCount((count) => count + 1)}>
-          Count is {count}
-        </button>
-      </section>
+    <Layout className="admin-shell">
+      <Sider breakpoint="lg" collapsedWidth="0" theme="light" width={252}>
+        {navigation}
+      </Sider>
 
-      <div className="ticks"></div>
+      <Layout
+        className="admin-workspace"
+        style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
+      >
+        <Header className="admin-header">
+          <Flex className="admin-header__actions" align="center" gap={10}>
+            <LanguageSelect />
+            <Tooltip title="Notifications">
+              <Badge dot offset={[-5, 5]}>
+                <Button aria-label="Notifications" icon={<BellOutlined />} />
+              </Badge>
+            </Tooltip>
+            <Tooltip title={messages.shell.profile}>
+              <Avatar className="admin-profile">DA</Avatar>
+            </Tooltip>
+          </Flex>
+        </Header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg className="button-icon" role="presentation" aria-hidden="true">
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <Content className="admin-content">
+          <Outlet />
+        </Content>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <Footer className="admin-footer">
+          <span>React Vite Best Practices</span>
+          <AppVersion />
+        </Footer>
+      </Layout>
+    </Layout>
   )
 }
 

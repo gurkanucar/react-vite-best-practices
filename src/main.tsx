@@ -1,8 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from '@/App'
+import { RouterProvider } from 'react-router/dom'
+import 'antd/dist/reset.css'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { reportError } from '@/errors/error'
+import { router } from '@/router/router'
+import { AppThemeProvider } from '@/theme/AppThemeProvider'
 import '@/index.css'
 
 const rootElement = document.getElementById('root')
@@ -24,7 +27,9 @@ createRoot(rootElement, {
 }).render(
   <StrictMode>
     <ErrorBoundary>
-      <App />
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

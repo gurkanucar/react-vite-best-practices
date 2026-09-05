@@ -1,0 +1,75 @@
+{
+  "navigation": {
+    "dashboard": "Kontrol paneli",
+    "components": "Bileşenler",
+    "settings": "Ayarlar"
+  },
+  "shell": {
+    "product": "RVBP Konsolu",
+    "workspace": "Altyapı çalışma alanı",
+    "language": "Dil",
+    "menu": "Navigasyonu aç",
+    "profile": "Demo yöneticisi"
+  },
+  "dashboard": {
+    "title": "Operasyon özeti",
+    "description": "Ürün sağlığı, teslimat hızı ve hesap hareketlerinin kompakt görünümü.",
+    "period": "Son 7 gün",
+    "revenue": "Aylık gelir",
+    "workspaces": "Aktif çalışma alanı",
+    "conversion": "Deneme dönüşümü",
+    "incidents": "Açık olay",
+    "revenueDelta": "Geçen aya göre %12,8",
+    "workspaceDelta": "Bu hafta 38 eklendi",
+    "conversionDelta": "2,1 puan yükseldi",
+    "incidentDelta": "Tümü düşük öncelikli",
+    "throughput": "Haftalık işlem hacmi",
+    "throughputDescription": "Platformun başarıyla işlediği operasyonlar.",
+    "health": "Sistem sağlığı",
+    "healthy": "Sağlıklı",
+    "api": "API erişilebilirliği",
+    "jobs": "Arka plan görevleri",
+    "storage": "Depolama kapasitesi",
+    "activity": "Son hareketler",
+    "event": "Olay",
+    "actor": "Kullanıcı",
+    "status": "Durum",
+    "time": "Zaman"
+  },
+  "components": {
+    "title": "Bileşen çalışma alanı",
+    "description": "Yaygın yönetim etkileşimleri için pratik bir Ant Design alanı.",
+    "actions": "Aksiyonlar ve bildirimler",
+    "actionsDescription": "Butonlar, durum mesajları ve aşamalı gösterim.",
+    "primaryAction": "Çalışma alanı oluştur",
+    "secondaryAction": "Raporu dışa aktar",
+    "created": "Demo çalışma alanı oluşturuldu",
+    "form": "Hesap formu",
+    "formDescription": "Doğrulamaya hazır kontrollere sahip kompakt bir form.",
+    "company": "Şirket adı",
+    "companyPlaceholder": "Acme Operasyon",
+    "plan": "Plan",
+    "notifications": "E-posta bildirimleri",
+    "save": "Değişiklikleri kaydet",
+    "saved": "Hesap ayarları kaydedildi",
+    "release": "Sürüm hazırlığı",
+    "releaseDescription": "Durum bileşenleri bir sonraki adımı açıkça belirtir."
+  },
+  "settings": {
+    "title": "Çalışma alanı tercihleri",
+    "description": "Dil ve görünüm tercihleri rotalar ve tarayıcı oturumları arasında paylaşılır.",
+    "appearance": "Görünüm",
+    "appearanceDescription": "Görsel preset, renk modu ve arayüz yoğunluğunu seçin.",
+    "language": "Dil",
+    "languageDescription": "Seçilen dil yönetim arayüzünü anında günceller.",
+    "state": "Kalıcı durum",
+    "stateDescription": "Bu salt okunur görünüm Zustand'ın sakladığı değerleri gösterir.",
+    "reset": "Tercihleri sıfırla",
+    "resetDone": "Tercihler varsayılan değerlere döndürüldü"
+  },
+  "common": {
+    "english": "İngilizce",
+    "turkish": "Türkçe",
+    "version": "Sürüm"
+  }
+}

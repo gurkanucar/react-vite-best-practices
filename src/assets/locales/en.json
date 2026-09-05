@@ -1,0 +1,75 @@
+{
+  "navigation": {
+    "dashboard": "Dashboard",
+    "components": "Components",
+    "settings": "Settings"
+  },
+  "shell": {
+    "product": "RVBP Console",
+    "workspace": "Foundation workspace",
+    "language": "Language",
+    "menu": "Open navigation",
+    "profile": "Demo administrator"
+  },
+  "dashboard": {
+    "title": "Operational overview",
+    "description": "A compact view of product health, delivery pace, and account activity.",
+    "period": "Last 7 days",
+    "revenue": "Monthly revenue",
+    "workspaces": "Active workspaces",
+    "conversion": "Trial conversion",
+    "incidents": "Open incidents",
+    "revenueDelta": "12.8% from last month",
+    "workspaceDelta": "38 added this week",
+    "conversionDelta": "2.1 points higher",
+    "incidentDelta": "All low priority",
+    "throughput": "Weekly throughput",
+    "throughputDescription": "Successful operations processed by the platform.",
+    "health": "System health",
+    "healthy": "Healthy",
+    "api": "API availability",
+    "jobs": "Background jobs",
+    "storage": "Storage capacity",
+    "activity": "Recent activity",
+    "event": "Event",
+    "actor": "Actor",
+    "status": "Status",
+    "time": "Time"
+  },
+  "components": {
+    "title": "Component workspace",
+    "description": "A practical Ant Design playground for common admin interactions.",
+    "actions": "Actions and feedback",
+    "actionsDescription": "Buttons, status messages, and progressive disclosure.",
+    "primaryAction": "Create workspace",
+    "secondaryAction": "Export report",
+    "created": "Demo workspace created",
+    "form": "Account form",
+    "formDescription": "A compact form with validation-ready controls.",
+    "company": "Company name",
+    "companyPlaceholder": "Acme Operations",
+    "plan": "Plan",
+    "notifications": "Email notifications",
+    "save": "Save changes",
+    "saved": "Account settings saved",
+    "release": "Release readiness",
+    "releaseDescription": "Status components communicate the next action clearly."
+  },
+  "settings": {
+    "title": "Workspace preferences",
+    "description": "Language and visual preferences are shared across routes and browser sessions.",
+    "appearance": "Appearance",
+    "appearanceDescription": "Choose a visual preset, color mode, and interface density.",
+    "language": "Language",
+    "languageDescription": "The selected language updates the admin shell immediately.",
+    "state": "Persisted state",
+    "stateDescription": "This read-only preview shows the values stored by Zustand.",
+    "reset": "Reset preferences",
+    "resetDone": "Preferences restored to their defaults"
+  },
+  "common": {
+    "english": "English",
+    "turkish": "Turkish",
+    "version": "Version"
+  }
+}

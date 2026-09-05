@@ -1,10 +1,12 @@
-import './AppVersion.css'
+import { CodeOutlined } from '@ant-design/icons'
+import { Space, Tag, Typography } from 'antd'
 
 export function AppVersion() {
   return (
-    <p className="app-version" aria-label={`Application version ${__APP_VERSION__}`}>
-      <span className="app-version__label">Current build</span>
-      <code className="app-version__value">v{__APP_VERSION__}</code>
-    </p>
+    <Space aria-label={`Application version ${__APP_VERSION__}`} size="small">
+      <CodeOutlined aria-hidden="true" />
+      <Typography.Text type="secondary">Current build</Typography.Text>
+      <Tag>v{__APP_VERSION__}</Tag>
+    </Space>
   )
 }

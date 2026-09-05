@@ -1,21 +1,55 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
-import App from '@/App'
+import { act, render, screen } from '@testing-library/react'
+import { createMemoryRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
+import { describe, expect, it, vi } from 'vitest'
+import { routes } from '@/router/router'
+import { usePreferencesStore } from '@/store/preferences-store'
+import { AppThemeProvider } from '@/theme/AppThemeProvider'
 
-describe('App', () => {
-  it('renders the configured app name and updates the counter', async () => {
-    const user = userEvent.setup()
+vi.mock('@ant-design/charts', () => ({
+  Column: () => <div data-testid="weekly-throughput-chart" />,
+}))
 
-    render(<App />)
-
+describe('admin application', () => {
+  it('renders and navigates between routed pages', async () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
     expect(
-      screen.getByRole('heading', { level: 1, name: 'React Vite Best Practices' }),
+      screen.getByRole('heading', { level: 1, name: 'Operational overview' }),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Monthly revenue')).toBeInTheDocument()
+    await act(async () => {
+      await router.navigate('/settings')
+    })
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Workspace preferences' }),
     ).toBeInTheDocument()
 
-    const counter = screen.getByRole('button', { name: 'Count is 0' })
-    await user.click(counter)
+    await act(async () => {
+      await router.navigate('/components')
+    })
+    expect(
+      screen.getByRole('heading', { level: 1, name: 'Component workspace' }),
+    ).toBeInTheDocument()
 
-    expect(counter).toHaveTextContent('Count is 1')
+    await act(async () => {
+      await router.navigate('/missing')
+    })
+    expect(screen.getByText('Page not found')).toBeInTheDocument()
   })
+})
+
+it('uses the persistent sidebar on desktop screens', () => {
+  usePreferencesStore.setState({ visualTheme: 'glass' })
+  const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
+  render(
+    <AppThemeProvider>
+      <RouterProvider router={router} />
+    </AppThemeProvider>,
+  )
+  expect(screen.getByRole('link', { name: /RVBP/ })).toBeInTheDocument()
 })
