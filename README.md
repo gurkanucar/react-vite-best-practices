@@ -26,6 +26,8 @@ pnpm build
 - Responsive Ant Design data-layout patterns without internal CSS overrides
 - React Router data routing and an admin dashboard demo
 - A standalone landing page at `/`, separate from the admin dashboard
+- Lazy-loaded route modules with shared Suspense loading states
+- Login, registration, OTP, survey, and 404 example pages
 - Zustand state management for language and appearance preferences
 - JSON-based internationalization (English and Turkish)
 - Oxlint and Oxfmt

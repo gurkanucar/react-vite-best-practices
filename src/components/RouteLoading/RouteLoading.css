@@ -1,0 +1,14 @@
+.route-loading {
+  width: 100%;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ant-margin-md);
+}
+
+.route-loading--full-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+}

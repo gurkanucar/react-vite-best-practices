@@ -17,10 +17,15 @@ interface AppThemeProviderProps {
 export function AppThemeProvider({ children }: AppThemeProviderProps) {
   const colorMode = usePreferencesStore((state) => state.colorMode)
   const compact = usePreferencesStore((state) => state.compact)
+  const language = usePreferencesStore((state) => state.language)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const [prefersDark, setPrefersDark] = useState(systemPrefersDark)
   const resolvedColorMode = resolveColorMode(colorMode, prefersDark)
   const providerProps = useOfficialTheme(visualTheme, resolvedColorMode, compact)
+
+  useEffect(() => {
+    document.documentElement.lang = language
+  }, [language])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia?.(colorSchemeQuery)

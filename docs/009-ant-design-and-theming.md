@@ -111,6 +111,15 @@ The official reset is imported once in the browser entry point before applicatio
 import 'antd/dist/reset.css'
 ```
 
+## Keeping component APIs current
+
+Ant Design deprecation warnings should be treated as migration tasks instead of hidden in the console. The component catalog uses the Ant Design 6 APIs:
+
+- `Space` uses `orientation="vertical"` instead of the deprecated `direction="vertical"`.
+- Numeric units use `InputNumber`'s supported `suffix` API. For a separate input/button group, use `Space.Compact` instead of the deprecated `addonAfter` prop.
+
+After an API migration, restart the development server before validating the console so an old hot-update module cannot make a removed prop appear to remain in use.
+
 ## Production bundle
 
 Ant Design and its supporting packages are split into bounded vendor chunks through Vite's current `build.rolldownOptions.output.codeSplitting` configuration. This keeps the application entry small and removes the oversized single-chunk warning without changing minification or tree shaking.

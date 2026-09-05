@@ -5,6 +5,7 @@ import {
   DashboardOutlined,
   DatabaseOutlined,
   FolderOpenOutlined,
+  FormOutlined,
   SettingOutlined,
 } from '@ant-design/icons'
 import { Avatar, Badge, Button, Flex, Layout, Menu, Tooltip, Typography } from 'antd'
@@ -25,16 +26,11 @@ function App() {
   const navigate = useNavigate()
   const messages = useMessages()
   const [collapsed, setCollapsed] = useState(false)
-  const language = usePreferencesStore((state) => state.language)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const backgroundImage = officialThemeBackgrounds[visualTheme]
   const backgroundStyle = backgroundImage
     ? ({ '--official-theme-background': `url(${backgroundImage})` } as CSSProperties)
     : undefined
-
-  useEffect(() => {
-    document.documentElement.lang = language
-  }, [language])
 
   useEffect(() => {
     const target = document.getElementById(location.hash.slice(1))
@@ -66,6 +62,11 @@ function App() {
             key: '/components',
             icon: <AppstoreOutlined />,
             label: messages.navigation.components,
+          },
+          {
+            key: '/survey',
+            icon: <FormOutlined />,
+            label: messages.navigation.survey,
           },
         ],
       },

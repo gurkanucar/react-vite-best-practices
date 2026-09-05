@@ -4,7 +4,9 @@ import {
   CodeOutlined,
   DashboardOutlined,
   ExperimentOutlined,
+  LoginOutlined,
   SafetyCertificateOutlined,
+  UserAddOutlined,
 } from '@ant-design/icons'
 import { Button, Card, Col, Descriptions, Flex, Layout, Row, Space, Tag, Typography } from 'antd'
 import type { CSSProperties } from 'react'
@@ -63,6 +65,16 @@ export function LandingPage() {
           <Space wrap>
             <LanguageSelect />
             <ThemeControls />
+            <Button icon={<LoginOutlined />} onClick={() => void navigate('/login')}>
+              {messages.auth.signIn}
+            </Button>
+            <Button
+              type="primary"
+              icon={<UserAddOutlined />}
+              onClick={() => void navigate('/register')}
+            >
+              {messages.auth.createAccount}
+            </Button>
             <Button icon={<DashboardOutlined />} onClick={() => void navigate('/dashboard')}>
               {messages.landing.openDashboard}
             </Button>

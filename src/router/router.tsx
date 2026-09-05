@@ -1,22 +1,119 @@
 import { createBrowserRouter, type RouteObject } from 'react-router'
-import App from '@/App'
-import { ComponentsPage } from '@/pages/ComponentsPage'
-import { DashboardPage } from '@/pages/DashboardPage'
-import { LandingPage } from '@/pages/LandingPage'
-import { NotFoundPage } from '@/pages/NotFoundPage'
-import { RouteErrorPage } from '@/pages/RouteErrorPage'
-import { SettingsPage } from '@/pages/SettingsPage'
+import {
+  AdminLayout,
+  ComponentsPage,
+  DashboardPage,
+  LandingPage,
+  LoginPage,
+  NotFoundPage,
+  OtpPage,
+  RegisterPage,
+  RouteErrorPage,
+  SettingsPage,
+  SurveyPage,
+} from '@/router/LazyPages'
+import { RouteSuspense } from '@/router/RouteSuspense'
+
+const standaloneErrorElement = (
+  <RouteSuspense fullPage>
+    <RouteErrorPage />
+  </RouteSuspense>
+)
+const adminErrorElement = (
+  <RouteSuspense>
+    <RouteErrorPage />
+  </RouteSuspense>
+)
 
 export const routes: RouteObject[] = [
-  { path: '/', element: <LandingPage />, errorElement: <RouteErrorPage /> },
   {
-    element: <App />,
-    errorElement: <RouteErrorPage />,
+    path: '/',
+    element: (
+      <RouteSuspense fullPage>
+        <LandingPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/login',
+    element: (
+      <RouteSuspense fullPage>
+        <LoginPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/register',
+    element: (
+      <RouteSuspense fullPage>
+        <RegisterPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/otp',
+    element: (
+      <RouteSuspense fullPage>
+        <OtpPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    element: (
+      <RouteSuspense fullPage>
+        <AdminLayout />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
     children: [
-      { path: 'dashboard', element: <DashboardPage /> },
-      { path: 'components', element: <ComponentsPage /> },
-      { path: 'settings', element: <SettingsPage /> },
-      { path: '*', element: <NotFoundPage /> },
+      {
+        path: 'dashboard',
+        element: (
+          <RouteSuspense>
+            <DashboardPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'components',
+        element: (
+          <RouteSuspense>
+            <ComponentsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'survey',
+        element: (
+          <RouteSuspense>
+            <SurveyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'settings',
+        element: (
+          <RouteSuspense>
+            <SettingsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: '*',
+        element: (
+          <RouteSuspense>
+            <NotFoundPage />
+          </RouteSuspense>
+        ),
+      },
     ],
   },
 ]

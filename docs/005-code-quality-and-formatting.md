@@ -89,6 +89,12 @@ Oxfmt reads `.gitignore`, so generated output and installed dependencies are not
 
 The formatter remains the final authority for supported source formats.
 
+## Development console messages
+
+`Download the React DevTools for a better development experience` is an informational message from React's development runtime, not an application warning. It is useful during local development and is absent from the optimized production build, so the application does not suppress it.
+
+Library warnings are different: fix the reported API usage and restart the development server before checking again. For example, this project migrated Ant Design `Space.direction` to `orientation` and removed the deprecated `InputNumber.addonAfter` usage. A fresh browser session on the component catalog should have no warning or error entries.
+
 ## References
 
 - [Oxlint documentation](https://oxc.rs/docs/guide/usage/linter)
