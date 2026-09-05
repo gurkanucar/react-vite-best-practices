@@ -1,14 +1,19 @@
 {
   "name": "react-vite-best-practices",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "pnpm run build:production",
-    "build:development": "tsc -b && vite build --mode development",
-    "build:production": "tsc -b && vite build --mode production",
-    "lint": "oxlint",
+    "build:development": "pnpm typecheck && vite build --mode development",
+    "build:production": "pnpm typecheck && vite build --mode production",
+    "typecheck": "tsc -b",
+    "lint": "oxlint --deny-warnings .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -20,7 +25,8 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
-    "oxlint": "^1.79.0",
+    "oxfmt": "^0.66.0",
+    "oxlint": "^1.81.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
   }

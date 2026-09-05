@@ -23,7 +23,7 @@ The component can then render it safely:
 ```tsx
 import { AppVersion } from './components/AppVersion/AppVersion'
 
-<AppVersion />
+;<AppVersion />
 ```
 
 ## Source files
