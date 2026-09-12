@@ -1,6 +1,7 @@
 import { createBrowserRouter, type RouteObject } from 'react-router'
 import {
   AdminLayout,
+  AssistantPage,
   ComponentsPage,
   DashboardPage,
   DocumentsPage,
@@ -144,6 +145,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <ProductDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'assistant',
+        element: (
+          <RouteSuspense>
+            <AssistantPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

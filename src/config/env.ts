@@ -3,6 +3,7 @@ type RequiredEnvKey =
   | 'VITE_API_BASE_URL'
   | 'VITE_DUMMYJSON_API_BASE_URL'
   | 'VITE_FEATURE_MOCK_POSTS_API'
+  | 'VITE_FEATURE_MOCK_ASSISTANT_API'
 
 export type EnvironmentSource = Pick<ImportMetaEnv, RequiredEnvKey | 'MODE' | 'DEV' | 'PROD'>
 
@@ -32,6 +33,7 @@ export function createEnvironment(source: EnvironmentSource) {
     apiBaseUrl: getRequiredEnv(source, 'VITE_API_BASE_URL'),
     dummyJsonApiBaseUrl: getRequiredEnv(source, 'VITE_DUMMYJSON_API_BASE_URL'),
     mockPostsApi: getBooleanEnv(source, 'VITE_FEATURE_MOCK_POSTS_API'),
+    mockAssistantApi: getBooleanEnv(source, 'VITE_FEATURE_MOCK_ASSISTANT_API'),
     mode: source.MODE,
     isDevelopment: source.DEV,
     isProduction: source.PROD,

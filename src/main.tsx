@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router/dom'
 import 'antd/dist/reset.css'
 import { QueryProvider } from '@/app/providers/QueryProvider'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import { isAnyApiMocked } from '@/config/featureFlags'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { reportError } from '@/errors/error'
 import { router } from '@/router/router'
@@ -42,7 +42,7 @@ async function enableApiMocking() {
     return
   }
 
-  if (!isFeatureEnabled('mockPostsApi')) {
+  if (!isAnyApiMocked()) {
     await removeApiMocking()
     return
   }

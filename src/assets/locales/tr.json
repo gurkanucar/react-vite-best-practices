@@ -9,7 +9,8 @@
     "configuration": "Yapılandırma",
     "appearance": "Görünüm",
     "persistedState": "Kalıcı durum",
-    "documents": "PDF belgeleri"
+    "documents": "PDF belgeleri",
+    "assistant": "Yapay zekâ asistanı"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -518,5 +519,22 @@
     "zoomOut": "Uzaklaştır",
     "loadError": "Belge yüklenemedi",
     "retry": "Tekrar dene"
+  },
+  "assistant": {
+    "title": "Yapay zekâ asistanı",
+    "description": "Ant Design X bileşenleriyle kurulmuş bir sohbet arayüzü.",
+    "notice": "Yanıtlar bir modelden değil, MSW handler’ından kelime kelime akar. Hiçbir veri tarayıcıdan çıkmaz.",
+    "disabledNotice": "Asistan uç noktası yalnızca mock worker’da bulunur. Denemek için VITE_FEATURE_MOCK_ASSISTANT_API değerini açın.",
+    "welcomeTitle": "Bu depo hakkında soru sorun",
+    "welcomeDescription": "Yanıtlar hazır metindir, ama akış, iptal ve render gerçektir.",
+    "promptsTitle": "Bunlardan birini deneyin",
+    "promptFilters": "Tablo filtreleme ve sıralama nasıl yapılıyor?",
+    "promptMocking": "MSW ne zaman gerçek API yerine yanıt veriyor?",
+    "promptPdf": "PDF neden iframe yerine pdf.js ile render ediliyor?",
+    "promptDocker": "Production imajı nasıl build ediliyor?",
+    "placeholder": "Bir soru yazın, sonra Enter’a basın",
+    "clear": "Sohbeti temizle",
+    "cancelled": "Yanıt durduruldu.",
+    "error": "Asistan yanıt veremedi"
   }
 }

@@ -1,0 +1,16 @@
+.assistant-conversation {
+  /* Tall enough to read a streamed answer without the page jumping around. */
+  height: min(720px, calc(100vh - 320px));
+  min-height: 420px;
+}
+
+/* Takes the leftover height so the composer stays pinned to the bottom. */
+.assistant-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.assistant-bubbles {
+  height: 100%;
+}

@@ -10,6 +10,7 @@ import {
   FormOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  RobotOutlined,
   SettingOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
@@ -91,6 +92,11 @@ function App() {
             key: '/documents',
             icon: <FilePdfOutlined />,
             label: messages.navigation.documents,
+          },
+          {
+            key: '/assistant',
+            icon: <RobotOutlined />,
+            label: messages.navigation.assistant,
           },
         ],
       },

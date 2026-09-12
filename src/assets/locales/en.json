@@ -9,7 +9,8 @@
     "configuration": "Configuration",
     "appearance": "Appearance",
     "persistedState": "Persisted state",
-    "documents": "PDF documents"
+    "documents": "PDF documents",
+    "assistant": "AI assistant"
   },
   "shell": {
     "product": "RVBP Console",
@@ -518,5 +519,22 @@
     "zoomOut": "Zoom out",
     "loadError": "The document could not be loaded",
     "retry": "Try again"
+  },
+  "assistant": {
+    "title": "AI assistant",
+    "description": "A conversational interface built from the Ant Design X components.",
+    "notice": "Replies are streamed word by word from an MSW handler, not from a model. Nothing leaves the browser.",
+    "disabledNotice": "The assistant endpoint only exists in the mock worker. Turn on VITE_FEATURE_MOCK_ASSISTANT_API to try it.",
+    "welcomeTitle": "Ask about this repository",
+    "welcomeDescription": "The answers are canned, but the streaming, cancelling, and rendering are real.",
+    "promptsTitle": "Try one of these",
+    "promptFilters": "How is table filtering and sorting handled?",
+    "promptMocking": "When does MSW answer instead of the real API?",
+    "promptPdf": "Why render PDFs with pdf.js instead of an iframe?",
+    "promptDocker": "How is the production image built?",
+    "placeholder": "Ask a question, then press Enter",
+    "clear": "Clear the conversation",
+    "cancelled": "The reply was stopped.",
+    "error": "The assistant could not answer"
   }
 }
