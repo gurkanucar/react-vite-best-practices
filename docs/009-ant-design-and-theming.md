@@ -69,6 +69,38 @@ Glass and Serene were removed because they expanded the vendored surface without
 
 The four homepage background images are stored in `src/assets/theme-backgrounds` and fingerprinted by Vite. They total about 381 KB, so keeping them locally avoids a runtime dependency on Ant Design's CDN without materially inflating the build.
 
+## A preset that owns both palettes
+
+The presets under `src/theme/official-presets/` are adapted from the Ant Design website and
+are light-only. `useOfficialTheme` derives a dark variant for them: it strips every colour
+token out of the preset — keeping only the brand colours — and applies one shared dark
+palette on top.
+
+That works for a preset whose character is its primary colour. It does not work for one
+whose character _is_ its greys. The Gurkan preset in `src/theme/presets/gurkanTheme.ts`
+therefore ships both palettes itself and is left alone:
+
+```ts
+const ownsDarkMode = visualTheme === 'gurkan'
+…
+const applyDarkVariant = resolvedColorMode === 'dark' && !ownsDarkMode
+```
+
+Its dark surfaces are blue-grey (`#141a21` behind `#1c252e` cards) rather than the generic
+near-black, which is what keeps it recognisable as the same theme in both modes. Tests pin
+both halves: that the Gurkan preset keeps its own container colour in dark mode, and that
+a light-only preset still gets the derived one.
+
+It lives outside `official-presets/` on purpose. That folder carries a source notice for
+code adapted from Ant Design's repository; this one is not adapted from anything.
+
+### Fonts are named, not shipped
+
+The preset names `DM Sans` first and falls back to the system stack. No web font is loaded:
+a font file would cost a request for every reader on every other theme too, and a binary in
+a repository that otherwise has none. Anyone with the face installed — or willing to add the
+link themselves — gets the exact look.
+
 ## User preferences
 
 The color control is available in the admin navbar, landing page, authentication pages, and full settings controls. The navbar, landing, and authentication layouts use the same compact Ant Design `Dropdown`; Settings uses `Segmented`. Both offer:

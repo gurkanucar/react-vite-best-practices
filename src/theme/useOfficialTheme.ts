@@ -9,6 +9,7 @@ import {
   useMuiTheme,
   useShadcnTheme,
 } from '@/theme/official-presets'
+import { useGurkanTheme } from '@/theme/presets'
 import type { ResolvedColorMode, VisualTheme } from '@/theme/theme'
 
 const baseComponents: NonNullable<ThemeConfig['components']> = {
@@ -152,6 +153,7 @@ export function useOfficialTheme(
 ): ConfigProviderProps {
   const bootstrap = useBootstrapTheme()
   const illustration = useIllustrationTheme()
+  const gurkan = useGurkanTheme(resolvedColorMode)
   const mui = useMuiTheme()
   const shadcn = useShadcnTheme()
 
@@ -164,7 +166,15 @@ export function useOfficialTheme(
             components: resolvedColorMode === 'dark' ? darkComponents : baseComponents,
           },
         }
-      : ({ bootstrap, illustration, mui, shadcn } as const)[visualTheme]
+      : ({ bootstrap, gurkan, illustration, mui, shadcn } as const)[visualTheme]
+
+  /*
+   * The presets adapted from the Ant Design website are light-only, so a dark variant is
+   * derived for them below by stripping their colours and applying a shared dark palette.
+   * A preset that ships both palettes has to be left alone, or that stripping would throw
+   * away the very greys that make it what it is.
+   */
+  const ownsDarkMode = visualTheme === 'gurkan'
 
   if (!selected.theme) return selected
 
@@ -188,7 +198,7 @@ export function useOfficialTheme(
     colorAwareAlgorithms.push(theme.compactAlgorithm)
   }
 
-  const applyDarkVariant = resolvedColorMode === 'dark'
+  const applyDarkVariant = resolvedColorMode === 'dark' && !ownsDarkMode
   const selectedComponents = selected.theme.components ?? {}
   const colorSafeComponents = applyDarkVariant
     ? createDarkSafeComponents(selectedComponents)

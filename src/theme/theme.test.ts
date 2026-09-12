@@ -14,6 +14,7 @@ describe('visualThemeOptions', () => {
   it('contains only the supported visual presets', () => {
     expect(visualThemeOptions.map(({ value }) => value)).toEqual([
       'ant-design',
+      'gurkan',
       'mui',
       'shadcn',
       'bootstrap',

@@ -1,6 +1,6 @@
 export type ColorMode = 'system' | 'light' | 'dark'
 export type ResolvedColorMode = Exclude<ColorMode, 'system'>
-export type VisualTheme = 'ant-design' | 'mui' | 'shadcn' | 'bootstrap' | 'illustration'
+export type VisualTheme = 'ant-design' | 'gurkan' | 'mui' | 'shadcn' | 'bootstrap' | 'illustration'
 
 export interface VisualThemeOption {
   value: VisualTheme
@@ -10,6 +10,7 @@ export interface VisualThemeOption {
 
 export const visualThemeOptions: VisualThemeOption[] = [
   { value: 'ant-design', label: 'Ant Design', color: '#1677ff' },
+  { value: 'gurkan', label: 'Gurkan', color: '#1877f2' },
   { value: 'mui', label: 'MUI', color: '#1976d2' },
   { value: 'shadcn', label: 'shadcn', color: '#18181b' },
   { value: 'bootstrap', label: 'Bootstrap', color: '#7952b3' },
