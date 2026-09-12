@@ -20,7 +20,10 @@
     "shopSection": "E-ticaret",
     "productDetail": "Ürün detayı",
     "orderDetail": "Sipariş",
-    "invoiceDetail": "Fatura"
+    "invoiceDetail": "Fatura",
+    "toursSection": "Turlar",
+    "tourList": "Liste",
+    "tourDetail": "Detay"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -1104,5 +1107,108 @@
     "shipping": "Kargo",
     "tax": "Vergi",
     "total": "Toplam"
+  },
+  "tours": {
+    "listTitle": "Turlar",
+    "addTour": "Tur ekle",
+    "addHint": "Yeni tur formu burada açılırdı.",
+    "searchPlaceholder": "Tur ara",
+    "filters": "Filtreler",
+    "clearFilters": "Temizle",
+    "country": "Ülke",
+    "minRating": "En düşük puan",
+    "sortBy": "Sırala",
+    "sorts": {
+      "latest": "En yeni",
+      "oldest": "En eski",
+      "priceLow": "Fiyat: artan",
+      "priceHigh": "Fiyat: azalan",
+      "rating": "Puan"
+    },
+    "noResults": "Bu filtrelere uyan tur yok",
+    "postedAt": "Yayınlanma",
+    "bookedCount": "{count} rezervasyon",
+    "actions": "Tur işlemleri",
+    "view": "Görüntüle",
+    "edit": "Düzenle",
+    "editHint": "Düzenleme formu burada açılırdı.",
+    "delete": "Sil",
+    "deleteHint": "Onay penceresi burada açılırdı.",
+    "back": "Geri",
+    "backToList": "Listeye dön",
+    "preview": "Önizle",
+    "previewHint": "Herkese açık sayfa burada açılırdı.",
+    "statuses": {
+      "published": "Yayında",
+      "draft": "Taslak"
+    },
+    "tourContent": "Tur içeriği",
+    "booker": "Rezervasyonlar",
+    "bookedAt": "Rezervasyon",
+    "guests": "Kişi",
+    "status": "Durum",
+    "bookerStatuses": {
+      "confirmed": "Onaylandı",
+      "pending": "Beklemede",
+      "cancelled": "İptal"
+    },
+    "share": "Paylaş",
+    "favourite": "Favori",
+    "reviewCount": "({count} değerlendirme)",
+    "guideBy": "Rehber",
+    "available": "Uygun tarihler",
+    "contactName": "İletişim kişisi",
+    "duration": "Süre",
+    "durationValue": "{days} gün {nights} gece",
+    "contactPhone": "İletişim telefonu",
+    "description": "Açıklama",
+    "descriptionBody": "İki gün denizde, bir gün tepelerde; her sabah erken çıkış ve tekneler dolmadan yüzmek için zaman. Küçük grup, yerel rehberler ve tüm transferler dahil.",
+    "highlightsTitle": "Öne çıkanlar",
+    "highlights": {
+      "sunrise": "Gün doğmadan çıkış, kalabalık basmadan dönüş",
+      "guide": "Adada yaşayan yerel bir rehber",
+      "smallGroup": "En fazla on iki kişi",
+      "transfers": "Tüm transferler ayarlanmış ve ödenmiş",
+      "museums": "Üç müzede sırada beklemeden giriş",
+      "wildlife": "İki rehberli doğa yürüyüşü"
+    },
+    "program": "Program",
+    "day": "{number}. gün",
+    "programDays": {
+      "day1": "Limanda buluşma, ilk adaya geçiş ve öğle öncesi yüzme. Öğleden sonrası serbest; rehber şapele çıkan yürüyüşü öneriyor.",
+      "day2": "Mağaralara erken tekne, ardından güvertede öğle molasıyla üç saat denizde. Akşam pazarına yetişecek şekilde dönüş.",
+      "day3": "Karayoluyla teraslara, köyler arasında uzun bir yürüyüş ve grubu ağırlayan aileyle akşam yemeği."
+    },
+    "servicesTitle": "Hizmetler",
+    "services": {
+      "audioGuide": "Sesli rehber",
+      "foodAndDrinks": "Yiyecek ve içecek",
+      "lunch": "Öğle yemeği",
+      "privateTour": "Özel tur",
+      "specialActivities": "Özel aktiviteler",
+      "entranceFees": "Giriş ücretleri",
+      "gratuities": "Bahşişler",
+      "pickUp": "Alış ve bırakış",
+      "professionalGuide": "Profesyonel rehber",
+      "transport": "Klimalı ulaşım"
+    },
+    "names": {
+      "mountain": "Muhteşem Dağ Maceraları",
+      "island": "Ada Ada Gezi Turu",
+      "cultural": "Avrupa'nın Kültür Harikaları",
+      "safari": "Afrika Safari Keşfi",
+      "canyon": "Büyük Kanyon Keşfi",
+      "historic": "Asya'nın Tarihî Şehirleri"
+    },
+    "countries": {
+      "unitedStates": "Amerika Birleşik Devletleri",
+      "canada": "Kanada",
+      "unitedKingdom": "Birleşik Krallık",
+      "australia": "Avustralya",
+      "india": "Hindistan",
+      "germany": "Almanya"
+    },
+    "notFound": "Böyle bir tur yok",
+    "notFoundHint": "Bağlantı eski olabilir ya da tur kaldırılmış olabilir."
   }
 }

@@ -27,6 +27,8 @@ import {
   ShopOrderPage,
   ShopProductPage,
   SurveyPage,
+  TourDetailPage,
+  TourListPage,
 } from '@/router/LazyPages'
 import { RouteSuspense } from '@/router/RouteSuspense'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
@@ -258,6 +260,24 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <ShopInvoicePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'tours',
+        element: (
+          <RouteSuspense>
+            <TourListPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'tours/:tourId',
+        element: (
+          <RouteSuspense>
+            <TourDetailPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

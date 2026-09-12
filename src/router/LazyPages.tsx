@@ -102,6 +102,14 @@ export const SettingsPage = lazy(async () => ({
   default: (await import('@/pages/SettingsPage')).SettingsPage,
 }))
 
+export const TourDetailPage = lazy(async () => ({
+  default: (await import('@/features/tours/pages/TourDetailPage')).TourDetailPage,
+}))
+
+export const TourListPage = lazy(async () => ({
+  default: (await import('@/features/tours/pages/TourListPage')).TourListPage,
+}))
+
 export const SurveyPage = lazy(async () => ({
   default: (await import('@/pages/SurveyPage')).SurveyPage,
 }))

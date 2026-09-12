@@ -6,6 +6,7 @@ import {
   DashboardOutlined,
   DatabaseOutlined,
   FilePdfOutlined,
+  FlagOutlined,
   FolderOpenOutlined,
   FormOutlined,
   HddOutlined,
@@ -17,7 +18,9 @@ import {
   FileTextOutlined,
   SettingOutlined,
   ShopOutlined,
+  CompassOutlined,
   TagOutlined,
+  UnorderedListOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
@@ -94,6 +97,19 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/shop/invoice',
             icon: <FileTextOutlined />,
             label: messages.navigation.invoiceDetail,
+          },
+        ],
+      },
+      {
+        key: 'tours',
+        icon: <CompassOutlined />,
+        label: messages.navigation.toursSection,
+        children: [
+          { key: '/tours', icon: <UnorderedListOutlined />, label: messages.navigation.tourList },
+          {
+            key: '/tours/island-hopping',
+            icon: <FlagOutlined />,
+            label: messages.navigation.tourDetail,
           },
         ],
       },

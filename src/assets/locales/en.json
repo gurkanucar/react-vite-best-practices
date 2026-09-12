@@ -20,7 +20,10 @@
     "shopSection": "E-commerce",
     "productDetail": "Product detail",
     "orderDetail": "Order",
-    "invoiceDetail": "Invoice"
+    "invoiceDetail": "Invoice",
+    "toursSection": "Tours",
+    "tourList": "List",
+    "tourDetail": "Details"
   },
   "shell": {
     "product": "RVBP Console",
@@ -1104,5 +1107,108 @@
     "shipping": "Shipping",
     "tax": "Tax",
     "total": "Total"
+  },
+  "tours": {
+    "listTitle": "Tours",
+    "addTour": "Add tour",
+    "addHint": "The new tour form would open here.",
+    "searchPlaceholder": "Search tours",
+    "filters": "Filters",
+    "clearFilters": "Clear",
+    "country": "Country",
+    "minRating": "Minimum rating",
+    "sortBy": "Sort by",
+    "sorts": {
+      "latest": "Latest",
+      "oldest": "Oldest",
+      "priceLow": "Price: low to high",
+      "priceHigh": "Price: high to low",
+      "rating": "Rating"
+    },
+    "noResults": "No tour matches those filters",
+    "postedAt": "Posted",
+    "bookedCount": "{count} booked",
+    "actions": "Tour actions",
+    "view": "View",
+    "edit": "Edit",
+    "editHint": "The edit form would open here.",
+    "delete": "Delete",
+    "deleteHint": "A confirmation would open here.",
+    "back": "Back",
+    "backToList": "Back to the list",
+    "preview": "Preview",
+    "previewHint": "The public page would open here.",
+    "statuses": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "tourContent": "Tour content",
+    "booker": "Bookers",
+    "bookedAt": "Booked",
+    "guests": "Guests",
+    "status": "Status",
+    "bookerStatuses": {
+      "confirmed": "Confirmed",
+      "pending": "Pending",
+      "cancelled": "Cancelled"
+    },
+    "share": "Share",
+    "favourite": "Favourite",
+    "reviewCount": "({count} reviews)",
+    "guideBy": "Guided by",
+    "available": "Available",
+    "contactName": "Contact name",
+    "duration": "Duration",
+    "durationValue": "{days} days {nights} nights",
+    "contactPhone": "Contact phone",
+    "description": "Description",
+    "descriptionBody": "Two days on the water and one in the hills, with an early start each morning and time to swim before the boats fill up. Small group, local guides, and every transfer arranged.",
+    "highlightsTitle": "Highlights",
+    "highlights": {
+      "sunrise": "Out before sunrise, back before the crowds",
+      "guide": "A local guide who lives on the island",
+      "smallGroup": "Never more than twelve people",
+      "transfers": "Every transfer arranged and paid for",
+      "museums": "Skip-the-line entry at three museums",
+      "wildlife": "Two guided wildlife walks"
+    },
+    "program": "Program",
+    "day": "Day {number}",
+    "programDays": {
+      "day1": "Meet at the harbour, cross to the first island and swim before lunch. The afternoon is free; the guide suggests the walk up to the chapel.",
+      "day2": "An early boat to the caves, then three hours on the water with a stop for lunch on deck. Back in time for the evening market.",
+      "day3": "Inland by road to the terraces, a long walk through the villages, and dinner with the family that hosts the group."
+    },
+    "servicesTitle": "Services",
+    "services": {
+      "audioGuide": "Audio guide",
+      "foodAndDrinks": "Food and drinks",
+      "lunch": "Lunch",
+      "privateTour": "Private tour",
+      "specialActivities": "Special activities",
+      "entranceFees": "Entrance fees",
+      "gratuities": "Gratuities",
+      "pickUp": "Pick-up and drop-off",
+      "professionalGuide": "Professional guide",
+      "transport": "Air-conditioned transport"
+    },
+    "names": {
+      "mountain": "Majestic Mountain Adventures",
+      "island": "Island Hopping Extravaganza",
+      "cultural": "Cultural Wonders of Europe",
+      "safari": "Safari Expedition in Africa",
+      "canyon": "Grand Canyon Explorer",
+      "historic": "Historic Cities of Asia"
+    },
+    "countries": {
+      "unitedStates": "United States",
+      "canada": "Canada",
+      "unitedKingdom": "United Kingdom",
+      "australia": "Australia",
+      "india": "India",
+      "germany": "Germany"
+    },
+    "notFound": "That tour does not exist",
+    "notFoundHint": "The link may be out of date, or the tour was removed."
   }
 }

@@ -965,3 +965,157 @@ html[data-theme='dark'] .admin-workspace {
 .shop-party-line {
   margin-bottom: 0 !important;
 }
+
+/* ---------------------------------------------------------------------------
+ * Tours
+ *
+ * The mosaic is the design: a lead frame beside a stack of smaller ones. There is
+ * no component for that shape, so it is a grid — everything else is antd.
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The class is doubled on purpose. Ant Design lays out a card cover with
+ * `.ant-card-cover > *`, which is specific enough to win against one class and force
+ * `display: block` — the grid then stacks every frame at full width.
+ */
+.tour-mosaic.tour-mosaic {
+  display: grid;
+  gap: 8px;
+  position: relative;
+}
+
+/* Doubled for the same reason as the container: antd styles `.ant-image-img` itself. */
+.tour-mosaic.tour-mosaic img {
+  border-radius: var(--ant-border-radius);
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.tour-mosaic--card {
+  aspect-ratio: 16 / 9;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  padding: 8px;
+}
+
+.tour-mosaic--card .tour-mosaic__lead {
+  grid-row: 1 / 3;
+}
+
+.tour-mosaic--detail {
+  aspect-ratio: 2 / 1;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.tour-mosaic--detail .tour-mosaic__lead {
+  grid-row: 1 / 3;
+}
+
+/* antd's Image wraps its img, so the wrapper is what has to fill the grid cell. */
+.tour-mosaic--detail .ant-image {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.tour-mosaic--detail .ant-image:first-child {
+  grid-row: 1 / 3;
+}
+
+.tour-price,
+.tour-rating {
+  border-radius: var(--ant-border-radius);
+  padding: 2px 8px;
+  position: absolute;
+  top: 16px;
+}
+
+.tour-price {
+  background: rgb(0 0 0 / 55%);
+  inset-inline-start: 16px;
+}
+
+.tour-price__was {
+  color: rgb(255 255 255 / 65%) !important;
+  margin-inline-end: 6px;
+}
+
+.tour-price__now {
+  color: #fff !important;
+}
+
+.tour-rating {
+  background: var(--ant-gold-2);
+  color: var(--ant-gold-9);
+  font-weight: 600;
+  inset-inline-end: 16px;
+}
+
+.tour-star,
+.tour-rating .anticon {
+  color: var(--ant-gold-6);
+}
+
+.tour-posted {
+  font-size: var(--ant-font-size-sm);
+}
+
+.tour-card__title {
+  margin: 8px 0 12px !important;
+}
+
+.tour-fact__icon--place {
+  color: var(--ant-color-error);
+}
+
+.tour-fact__icon--time {
+  color: var(--ant-blue-6);
+}
+
+.tour-fact__icon--people {
+  color: var(--ant-color-success);
+}
+
+.tour-toolbar {
+  margin-bottom: 16px;
+}
+
+.tour-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tour-detail__heading {
+  margin-top: 24px;
+}
+
+.tour-detail__meta {
+  margin-bottom: 8px;
+}
+
+.tour-service--on {
+  color: var(--ant-color-success);
+}
+
+.tour-service--off {
+  color: var(--ant-color-text-quaternary);
+}
+
+/* Below this the mosaic's small frames are too small to show anything. */
+@media (max-width: 575px) {
+  .tour-mosaic--card,
+  .tour-mosaic--detail {
+    aspect-ratio: 3 / 2;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .tour-mosaic--card img:not(.tour-mosaic__lead),
+  .tour-mosaic--detail .ant-image:not(:first-child) {
+    display: none;
+  }
+}
