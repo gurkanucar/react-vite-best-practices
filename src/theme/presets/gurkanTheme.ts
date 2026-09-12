@@ -26,6 +26,7 @@ const lightTokens: Tokens = {
   colorBgContainer: '#ffffff',
   colorBgElevated: '#ffffff',
   colorBgLayout: '#f9fafb',
+  colorBgSpotlight: '#212b36',
 
   colorText: '#1c252e',
   colorTextBase: '#1c252e',
@@ -40,6 +41,7 @@ const lightTokens: Tokens = {
   colorFillQuaternary: '#f9fafb',
   colorFillTertiary: '#f4f6f8',
   colorFillSecondary: `rgba(${palette.grey}, 0.12)`,
+  controlOutline: 'rgba(24, 119, 242, 0.12)',
 
   boxShadow: `0 0 2px rgba(${palette.grey}, 0.2), 0 12px 24px -4px rgba(${palette.grey}, 0.12)`,
   boxShadowSecondary: `0 0 2px rgba(${palette.grey}, 0.2), 0 12px 24px -4px rgba(${palette.grey}, 0.12)`,
@@ -59,6 +61,7 @@ const darkTokens: Tokens = {
   colorBgContainer: '#1c252e',
   colorBgElevated: '#212b36',
   colorBgLayout: '#141a21',
+  colorBgSpotlight: '#ffffff',
 
   colorText: '#ffffff',
   colorTextBase: '#ffffff',
@@ -73,6 +76,7 @@ const darkTokens: Tokens = {
   colorFillQuaternary: `rgba(${palette.grey}, 0.06)`,
   colorFillTertiary: `rgba(${palette.grey}, 0.1)`,
   colorFillSecondary: `rgba(${palette.grey}, 0.16)`,
+  controlOutline: 'rgba(91, 156, 255, 0.2)',
 
   boxShadow: '0 0 2px rgba(0, 0, 0, 0.2), 0 12px 24px -4px rgba(0, 0, 0, 0.36)',
   boxShadowSecondary: '0 0 2px rgba(0, 0, 0, 0.2), 0 12px 24px -4px rgba(0, 0, 0, 0.36)',
@@ -102,6 +106,9 @@ const sharedTokens: Tokens = {
 function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['components']> {
   const dark = mode === 'dark'
   const tokens = dark ? darkTokens : lightTokens
+  const fieldBackground = dark ? `rgba(${palette.grey}, 0.08)` : '#f4f6f8'
+  const fieldHoverBackground = dark ? `rgba(${palette.grey}, 0.12)` : '#eef1f4'
+  const selectedBackground = dark ? 'rgba(24, 119, 242, 0.16)' : 'rgba(24, 119, 242, 0.08)'
 
   return {
     Layout: {
@@ -131,7 +138,7 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
       itemHoverColor: tokens.colorText,
       itemHoverBg: dark ? `rgba(${palette.grey}, 0.08)` : '#f4f6f8',
       itemSelectedColor: tokens.colorText,
-      itemSelectedBg: dark ? 'rgba(24, 119, 242, 0.16)' : 'rgba(24, 119, 242, 0.08)',
+      itemSelectedBg: selectedBackground,
       darkItemBg: 'transparent',
       darkSubMenuItemBg: 'transparent',
       darkItemColor: tokens.colorTextSecondary,
@@ -151,6 +158,42 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
     },
     Input: {
       borderRadius: 10,
+      colorBgContainer: fieldBackground,
+      colorBorder: 'transparent',
+      hoverBg: fieldHoverBackground,
+      activeBg: fieldBackground,
+      hoverBorderColor: 'transparent',
+      activeBorderColor: palette.primary,
+      activeShadow: '0 0 0 2px rgba(24, 119, 242, 0.12)',
+    },
+    InputNumber: {
+      borderRadius: 10,
+      colorBgContainer: fieldBackground,
+      colorBorder: 'transparent',
+      hoverBg: fieldHoverBackground,
+      activeBg: fieldBackground,
+      hoverBorderColor: 'transparent',
+      activeBorderColor: palette.primary,
+      activeShadow: '0 0 0 2px rgba(24, 119, 242, 0.12)',
+    },
+    Select: {
+      borderRadius: 10,
+      selectorBg: fieldBackground,
+      colorBorder: 'transparent',
+      hoverBorderColor: 'transparent',
+      activeBorderColor: palette.primary,
+      activeOutlineColor: 'rgba(24, 119, 242, 0.12)',
+      optionActiveBg: fieldHoverBackground,
+      optionSelectedBg: selectedBackground,
+    },
+    DatePicker: {
+      borderRadius: 10,
+      colorBgContainer: fieldBackground,
+      colorBorder: 'transparent',
+      hoverBg: fieldHoverBackground,
+      activeBg: fieldBackground,
+      hoverBorderColor: 'transparent',
+      activeBorderColor: palette.primary,
       activeShadow: '0 0 0 2px rgba(24, 119, 242, 0.12)',
     },
     Button: {
@@ -170,6 +213,22 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
     Segmented: {
       itemSelectedBg: tokens.colorBgContainer,
       trackBg: dark ? `rgba(${palette.grey}, 0.12)` : '#f4f6f8',
+    },
+    Dropdown: {
+      borderRadiusLG: 12,
+      boxShadowSecondary: tokens.boxShadow,
+      controlItemBgHover: fieldHoverBackground,
+      controlItemBgActive: selectedBackground,
+    },
+    Modal: {
+      borderRadiusLG: 16,
+      contentBg: tokens.colorBgElevated,
+      headerBg: tokens.colorBgElevated,
+      boxShadow: tokens.boxShadow,
+    },
+    Popover: {
+      borderRadiusLG: 12,
+      boxShadowSecondary: tokens.boxShadow,
     },
   }
 }

@@ -21,6 +21,17 @@ describe('useGurkanTheme', () => {
     expect(result.current.theme?.token?.borderRadiusLG).toBe(16)
     expect(result.current.theme?.token?.controlHeight).toBe(40)
   })
+
+  it('carries the reference surface language into form and overlay components', () => {
+    const { result } = renderHook(() => useGurkanTheme('light'))
+
+    expect(result.current.theme?.components?.Input?.colorBgContainer).toBe('#f4f6f8')
+    expect(result.current.theme?.components?.Input?.colorBorder).toBe('transparent')
+    expect(result.current.theme?.components?.Select?.optionSelectedBg).toBe(
+      'rgba(24, 119, 242, 0.08)',
+    )
+    expect(result.current.theme?.components?.Modal?.borderRadiusLG).toBe(16)
+  })
 })
 
 describe('useOfficialTheme with the Gurkan preset', () => {

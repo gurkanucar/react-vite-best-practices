@@ -78,7 +78,11 @@ palette on top.
 
 That works for a preset whose character is its primary colour. It does not work for one
 whose character _is_ its greys. The Gurkan preset in `src/theme/presets/gurkanTheme.ts`
-therefore ships both palettes itself and is left alone:
+therefore ships both palettes itself and is left alone. Its light palette and component
+treatment follow the supplied `minimal-antdesign-demo.html` reference: quiet grey form
+surfaces, borderless shadow-led cards, rounded menu rows, soft selected states, and
+restrained overlay shadows are expressed through public `ConfigProvider` tokens rather
+than global `.ant-*` overrides:
 
 ```ts
 const ownsDarkMode = visualTheme === 'gurkan'
