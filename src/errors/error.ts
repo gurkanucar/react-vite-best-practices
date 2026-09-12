@@ -1,6 +1,6 @@
 import { env } from '@/config/env'
 
-export type ErrorKind = 'caught' | 'uncaught' | 'recoverable'
+export type ErrorKind = 'api-mocking-startup' | 'caught' | 'uncaught' | 'recoverable'
 
 export interface ErrorContext {
   kind: ErrorKind

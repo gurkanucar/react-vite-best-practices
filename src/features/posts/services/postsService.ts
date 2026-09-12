@@ -1,5 +1,5 @@
-import { createPostRequest } from '@/features/posts/api'
-import type { CreatePostRequest, PostDto } from '@/features/posts/types'
+import { createPostRequest, deletePostRequest, updatePostRequest } from '@/features/posts/api'
+import type { CreatePostRequest, PostDto, UpdatePostRequest } from '@/features/posts/types'
 
 export class PostValidationError extends Error {
   constructor(message: string) {
@@ -27,6 +27,26 @@ export function preparePostForCreation(input: CreatePostRequest): CreatePostRequ
   return { body, title, userId: input.userId }
 }
 
+export function preparePostForUpdate(input: UpdatePostRequest): UpdatePostRequest {
+  if (!Number.isInteger(input.id) || input.id <= 0) {
+    throw new PostValidationError('Post ID must be a positive integer.')
+  }
+
+  return { ...preparePostForCreation(input), id: input.id }
+}
+
 export function createPost(input: CreatePostRequest): Promise<PostDto> {
   return createPostRequest(preparePostForCreation(input))
+}
+
+export function updatePost(input: UpdatePostRequest): Promise<PostDto> {
+  return updatePostRequest(preparePostForUpdate(input))
+}
+
+export function deletePost(postId: number): Promise<void> {
+  if (!Number.isInteger(postId) || postId <= 0) {
+    throw new PostValidationError('Post ID must be a positive integer.')
+  }
+
+  return deletePostRequest(postId)
 }

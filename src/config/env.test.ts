@@ -5,6 +5,7 @@ const validSource: EnvironmentSource = {
   VITE_APP_NAME: 'React Vite Best Practices',
   VITE_API_BASE_URL: 'https://api.example.com',
   VITE_DUMMYJSON_API_BASE_URL: 'https://dummy.example.com',
+  VITE_FEATURE_MOCK_POSTS_API: 'false',
   MODE: 'test',
   DEV: true,
   PROD: false,
@@ -21,6 +22,7 @@ describe('createEnvironment', () => {
       appName: 'React Vite Best Practices',
       apiBaseUrl: 'https://api.example.com',
       dummyJsonApiBaseUrl: 'https://dummy.example.com',
+      mockPostsApi: false,
       mode: 'test',
       isDevelopment: true,
       isProduction: false,
@@ -35,5 +37,14 @@ describe('createEnvironment', () => {
         VITE_API_BASE_URL: ' ',
       }),
     ).toThrow('Missing required environment variable: VITE_API_BASE_URL')
+  })
+
+  it('parses feature flags strictly', () => {
+    expect(
+      createEnvironment({ ...validSource, VITE_FEATURE_MOCK_POSTS_API: ' TRUE ' }).mockPostsApi,
+    ).toBe(true)
+    expect(() => createEnvironment({ ...validSource, VITE_FEATURE_MOCK_POSTS_API: 'yes' })).toThrow(
+      'Environment variable VITE_FEATURE_MOCK_POSTS_API must be either "true" or "false"',
+    )
   })
 })

@@ -1,14 +1,36 @@
 import { readFileSync } from 'node:fs'
+import { rm } from 'node:fs/promises'
+import path from 'node:path'
 import react from '@vitejs/plugin-react'
+import type { Plugin } from 'vite'
 import { defineConfig } from 'vitest/config'
 
 const packageJson = JSON.parse(
   readFileSync(new URL('./package.json', import.meta.url), 'utf8'),
 ) as { version: string }
 
+/**
+ * MSW serves its worker from `public/`, so Vite copies it into every build output.
+ * The worker only ever starts in the dev server, so drop it instead of shipping it.
+ */
+function excludeMockServiceWorker(): Plugin {
+  let outDir = 'dist'
+
+  return {
+    name: 'exclude-mock-service-worker',
+    apply: 'build',
+    configResolved(config) {
+      outDir = path.resolve(config.root, config.build.outDir)
+    },
+    async closeBundle() {
+      await rm(path.join(outDir, 'mockServiceWorker.js'), { force: true })
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), excludeMockServiceWorker()],
   resolve: {
     tsconfigPaths: true,
   },

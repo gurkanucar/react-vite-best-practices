@@ -7,7 +7,10 @@ import {
   LoginPage,
   NotFoundPage,
   OtpPage,
+  PostDetailPage,
+  PostEditPage,
   PostsListPage,
+  ProductDetailPage,
   ProductsListPage,
   RegisterPage,
   RouteErrorPage,
@@ -109,10 +112,37 @@ export const routes: RouteObject[] = [
         errorElement: adminErrorElement,
       },
       {
+        path: 'posts/:postId',
+        element: (
+          <RouteSuspense>
+            <PostDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'posts/:postId/edit',
+        element: (
+          <RouteSuspense>
+            <PostEditPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
         path: 'products',
         element: (
           <RouteSuspense>
             <ProductsListPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'products/:productId',
+        element: (
+          <RouteSuspense>
+            <ProductDetailPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

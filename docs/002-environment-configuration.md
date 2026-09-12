@@ -53,6 +53,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_API_BASE_URL: string
   readonly VITE_DUMMYJSON_API_BASE_URL: string
+  readonly VITE_FEATURE_MOCK_POSTS_API: string
 }
 ```
 
@@ -64,6 +65,7 @@ import { env } from './config/env'
 console.log(env.appName)
 console.log(env.apiBaseUrl)
 console.log(env.dummyJsonApiBaseUrl)
+console.log(env.mockPostsApi)
 console.log(env.mode)
 ```
 
@@ -217,6 +219,12 @@ For a deployed application, define the same variable in the hosting or CI enviro
 | `src/config/env.test.ts` | Covers required values and transformation rules      |
 | Feature/component file   | Reads only the normalized `env` property             |
 | CI or hosting settings   | Supplies the deployed value when it is not committed |
+
+## Feature-flag environment values
+
+`VITE_FEATURE_MOCK_POSTS_API` is a concrete build-time feature-flag example. It must be the string `true` or `false`; the environment layer parses it into the boolean `env.mockPostsApi` and rejects ambiguous values such as `yes`.
+
+Development enables the MSW-backed posts API, while test and production modes disable browser mocking. Because Vite embeds `VITE_*` values while building, changing this flag requires restarting the development server or producing a new deployment image. It is configuration, not a user preference, so it does not belong in Zustand or local storage.
 
 The only intentional exception is HTML metadata. Vite supports `%VITE_VARIABLE_NAME%` replacement directly in `index.html`, as used by `%VITE_APP_NAME%` for this project's page title. JavaScript and TypeScript application code should continue using the central `env` object.
 

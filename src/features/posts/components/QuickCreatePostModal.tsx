@@ -1,5 +1,6 @@
-import { App, Form, Input, InputNumber, Modal } from 'antd'
-import { usePostsMutations } from '@/features/posts/hooks'
+import { App, Form, Modal } from 'antd'
+import { PostFormFields } from '@/features/posts/components/PostFormFields'
+import { useCreatePostMutation } from '@/features/posts/hooks'
 import type { CreatePostRequest } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
 
@@ -12,7 +13,7 @@ export function QuickCreatePostModal({ open, onClose }: QuickCreatePostModalProp
   const messages = useMessages()
   const { message } = App.useApp()
   const [form] = Form.useForm<CreatePostRequest>()
-  const { createPost } = usePostsMutations()
+  const createPost = useCreatePostMutation()
 
   const submit = (values: CreatePostRequest) => {
     createPost.mutate(values, {
@@ -42,27 +43,7 @@ export function QuickCreatePostModal({ open, onClose }: QuickCreatePostModalProp
         initialValues={{ userId: 1 }}
         onFinish={submit}
       >
-        <Form.Item
-          label={messages.posts.titleLabel}
-          name="title"
-          rules={[{ required: true, message: messages.posts.titleRequired }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label={messages.posts.bodyLabel}
-          name="body"
-          rules={[{ required: true, message: messages.posts.bodyRequired }]}
-        >
-          <Input.TextArea rows={4} />
-        </Form.Item>
-        <Form.Item
-          label={messages.posts.userLabel}
-          name="userId"
-          rules={[{ required: true, message: messages.posts.userRequired }]}
-        >
-          <InputNumber className="full-width" min={1} precision={0} />
-        </Form.Item>
+        <PostFormFields />
       </Form>
     </Modal>
   )

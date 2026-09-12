@@ -26,8 +26,20 @@ export const OtpPage = lazy(async () => ({
   default: (await import('@/pages/OtpPage')).OtpPage,
 }))
 
+export const PostDetailPage = lazy(async () => ({
+  default: (await import('@/features/posts/pages')).PostDetailPage,
+}))
+
+export const PostEditPage = lazy(async () => ({
+  default: (await import('@/features/posts/pages')).PostEditPage,
+}))
+
 export const PostsListPage = lazy(async () => ({
   default: (await import('@/features/posts/pages')).PostsListPage,
+}))
+
+export const ProductDetailPage = lazy(async () => ({
+  default: (await import('@/features/products/pages')).ProductDetailPage,
 }))
 
 export const ProductsListPage = lazy(async () => ({

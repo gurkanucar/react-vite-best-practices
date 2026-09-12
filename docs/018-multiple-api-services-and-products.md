@@ -53,6 +53,8 @@ src/features/products/
 
 The API request uses DummyJSON's `select` parameter to request only the fields displayed by the table. This reduces unnecessary response data while keeping the response contract explicit.
 
+The product page also uses DummyJSON's real `/products/search?q=...` endpoint. MSW only owns the posts handlers in development, so product requests demonstrate that mocked and real APIs can run side by side.
+
 ## Server-side pagination keys
 
 DummyJSON supports `limit` and `skip`. Both values affect the response, so both must be included in the cache key:
@@ -65,6 +67,8 @@ PRODUCT_QUERY_KEYS.list({ limit: 10, skip: 20 })
 Page 1 and page 2 then occupy different cache entries. Returning to an already loaded page can use cached data while its freshness policy remains valid.
 
 `keepPreviousData` is used as placeholder data. During a page change, the previous table remains available while the next page loads instead of being replaced by an empty layout.
+
+The optional search value is part of the same filter object and cache key. See `docs/021-url-search-params.md` for the URL synchronization example.
 
 ## Invalidation scopes remain independent
 
