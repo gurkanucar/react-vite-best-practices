@@ -158,6 +158,14 @@ export const SurveyPage = lazy(async () => ({
   default: (await import('@/pages/SurveyPage')).SurveyPage,
 }))
 
+export const TechParkCompaniesPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkCompaniesPage')).TechParkCompaniesPage,
+}))
+
+export const TechParkCompanyPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkCompanyPage')).TechParkCompanyPage,
+}))
+
 export const TechParkLandingPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/TechParkLandingPage')).TechParkLandingPage,
 }))

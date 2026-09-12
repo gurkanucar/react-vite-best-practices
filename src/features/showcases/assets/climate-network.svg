@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Supplier climate network</title>
+  <desc id="desc">Connected circular nodes forming a leaf-shaped network.</desc>
+  <rect width="1200" height="720" fill="#e9f0ed"/>
+  <path d="M230 585C235 185 570 80 980 145c-30 390-360 560-750 440z" fill="#31574b"/>
+  <g fill="none" stroke="#a8d9c8" stroke-width="5">
+    <path d="M290 530 480 390 680 450 885 235M480 390 530 210M680 450 820 560M680 450 760 300"/>
+  </g>
+  <g fill="#e7fff6" stroke="#79bba4" stroke-width="8">
+    <circle cx="290" cy="530" r="42"/><circle cx="480" cy="390" r="54"/><circle cx="680" cy="450" r="48"/>
+    <circle cx="885" cy="235" r="62"/><circle cx="530" cy="210" r="38"/><circle cx="820" cy="560" r="34"/><circle cx="760" cy="300" r="30"/>
+  </g>
+</svg>

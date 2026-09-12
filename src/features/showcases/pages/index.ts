@@ -6,4 +6,6 @@ export {
   CorporateNewsDetailPage,
   CorporateNewsPage,
 } from './CorporatePublicationPages'
+export { TechParkCompaniesPage } from './TechParkCompaniesPage'
+export { TechParkCompanyPage } from './TechParkCompanyPage'
 export { TechParkLandingPage } from './TechParkLandingPage'

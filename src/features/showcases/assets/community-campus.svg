@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Campus community</title>
+  <desc id="desc">A green campus plaza with colorful gathering points.</desc>
+  <rect width="1200" height="720" fill="#dce9ff"/>
+  <circle cx="1050" cy="90" r="240" fill="#fff1c9"/>
+  <path d="M0 510 370 320l260 150 250-220 320 250v220H0z" fill="#8fbca8"/>
+  <path d="M170 510h860v210H170z" fill="#f7f9ff"/>
+  <g fill="#3157d5"><circle cx="340" cy="475" r="48"/><circle cx="620" cy="520" r="42"/><circle cx="875" cy="455" r="52"/></g>
+  <g fill="#00b8d9"><path d="M308 530h64v110h-64zM592 570h56v90h-56zM840 520h70v125h-70z"/></g>
+  <path d="M240 650c190-100 500-100 720 0" fill="none" stroke="#182a69" stroke-width="16" stroke-linecap="round"/>
+</svg>

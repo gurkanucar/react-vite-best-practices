@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Connected mobility grid</title>
+  <desc id="desc">A modern city grid linked by cobalt transit routes.</desc>
+  <rect width="1200" height="720" fill="#e8ecff"/>
+  <g fill="#fff" stroke="#c8d4ff" stroke-width="4">
+    <path d="M80 120h240v180H80zM390 80h300v240H390zM760 150h350v190H760zM110 390h340v230H110zM520 390h220v250H520zM810 410h310v210H810z"/>
+  </g>
+  <path d="M120 540C350 210 535 590 730 280s300 110 390-95" fill="none" stroke="#3157d5" stroke-width="24" stroke-linecap="round"/>
+  <g fill="#00b8d9" stroke="#fff" stroke-width="12"><circle cx="236" cy="418" r="34"/><circle cx="570" cy="450" r="34"/><circle cx="835" cy="215" r="34"/><circle cx="1058" cy="220" r="34"/></g>
+</svg>

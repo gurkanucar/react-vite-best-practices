@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Low-carbon data center</title>
+  <desc id="desc">A geometric data center surrounded by green energy rings.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#dfe7df"/>
+      <stop offset="1" stop-color="#819d90"/>
+    </linearGradient>
+    <linearGradient id="building" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#2f463e"/>
+      <stop offset="1" stop-color="#18251f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="720" fill="url(#sky)"/>
+  <circle cx="980" cy="110" r="260" fill="#f4d9c8" opacity=".76"/>
+  <path d="M0 600c210-120 340-90 520-10s380 90 680-40v170H0z" fill="#4d6f61"/>
+  <g fill="none" stroke="#fff" stroke-width="4" opacity=".65">
+    <ellipse cx="650" cy="350" rx="420" ry="210"/>
+    <ellipse cx="650" cy="350" rx="330" ry="150" transform="rotate(-16 650 350)"/>
+  </g>
+  <path d="M310 265h560l70 90v260H260V355z" fill="url(#building)"/>
+  <g fill="#8fc7c0">
+    <path d="M330 350h120v180H330z"/><path d="M500 350h120v180H500z"/><path d="M670 350h120v180H670z"/>
+  </g>
+  <g fill="#d9fff7"><circle cx="390" cy="410" r="14"/><circle cx="560" cy="410" r="14"/><circle cx="730" cy="410" r="14"/></g>
+</svg>

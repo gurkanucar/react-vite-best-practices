@@ -37,6 +37,8 @@ import {
   ShopOrderPage,
   ShopProductPage,
   SurveyPage,
+  TechParkCompaniesPage,
+  TechParkCompanyPage,
   TechParkLandingPage,
   TourDetailPage,
   TourListPage,
@@ -97,6 +99,24 @@ export const routes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <TechParkLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/companies',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkCompaniesPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/companies/:companySlug',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkCompanyPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -222,6 +242,24 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <TechParkLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/companies',
+        element: (
+          <RouteSuspense>
+            <TechParkCompaniesPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/companies/:companySlug',
+        element: (
+          <RouteSuspense>
+            <TechParkCompanyPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

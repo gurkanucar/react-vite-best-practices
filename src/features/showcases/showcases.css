@@ -256,9 +256,12 @@
   background: #182a69;
 }
 
-.techpark-program h2,
-.techpark-program p {
+.techpark-program h2 {
   color: #fff;
+}
+
+.techpark-program .techpark-program__description {
+  color: rgb(255 255 255 / 78%);
 }
 
 .techpark-program .ant-tag {
@@ -276,9 +279,262 @@
   background: rgb(255 255 255 / 9%);
 }
 
-.techpark-steps h4,
-.techpark-steps span {
+.techpark-steps h4 {
   color: #fff;
+}
+
+.techpark-steps .techpark-step__number {
+  color: #bed0ff;
+}
+
+.techpark-stats .showcase-section__heading .ant-tag {
+  margin-bottom: 16px;
+}
+
+.techpark-stat {
+  height: 100%;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+.techpark-stat h3 {
+  margin-block: 6px 4px;
+  font-size: 1.9rem;
+  letter-spacing: -0.03em;
+}
+
+.techpark-share {
+  margin-top: 20px;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+.techpark-share__row {
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+
+/*
+ * Full-bleed: the section wrappers are a centred 1180px column, and the strip is the one
+ * element on the page that has to ignore it.
+ */
+.techpark-strip {
+  width: 100%;
+  max-width: none;
+  margin-block: 4px 8px;
+  overflow: hidden;
+  /* Both ends fade out, so names enter and leave instead of being cut off mid-letter. */
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.techpark-strip__track {
+  width: max-content;
+  display: flex;
+  /* No gap here: the two groups must measure the same, and a gap between them would belong
+     to neither. Each group carries its own trailing space instead. */
+  gap: 0;
+  /* Travels exactly half the track, so the jump back to 0 lands on an identical frame. */
+  animation: techpark-marquee 110s linear infinite;
+}
+
+.techpark-strip__group {
+  display: flex;
+  gap: 12px;
+  padding-right: 12px;
+}
+
+.techpark-strip:hover .techpark-strip__track,
+.techpark-strip:focus-within .techpark-strip__track {
+  animation-play-state: paused;
+}
+
+.techpark-strip__chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 10px 10px;
+  border: 1px solid #e3e8f7;
+  border-radius: 999px;
+  background: #fff;
+  white-space: nowrap;
+}
+
+.techpark-strip__mark {
+  flex: none;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@keyframes techpark-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* With the animation off the strip would be a dead end, so it becomes a real scroller. */
+  .techpark-strip {
+    overflow-x: auto;
+  }
+
+  .techpark-strip__track {
+    animation: none;
+  }
+}
+
+.techpark-directory-hero {
+  padding-block: 48px 0;
+}
+
+.techpark-directory-hero .ant-btn {
+  margin-bottom: 8px;
+  padding-inline: 0;
+}
+
+.techpark-directory-hero h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  letter-spacing: -0.04em;
+}
+
+.techpark-directory-hero > .ant-typography {
+  max-width: 620px;
+}
+
+.techpark-companies__filter {
+  min-width: 220px;
+}
+
+.techpark-companies .ant-row {
+  margin-top: 28px;
+}
+
+.techpark-company {
+  height: 100%;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+/* The monogram carries the sector colour, which arrives as an inline style from the data. */
+.techpark-company__mark {
+  flex: none;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.techpark-company__tags {
+  margin-top: 16px;
+}
+
+.techpark-company .ant-divider {
+  margin-block: 16px;
+}
+
+.techpark-company__link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.techpark-company__link:hover .ant-typography:first-child {
+  color: var(--ant-color-primary);
+}
+
+.techpark-company-hero {
+  padding-block: 48px 0;
+}
+
+.techpark-company-hero .ant-btn {
+  margin-bottom: 20px;
+  padding-inline: 0;
+}
+
+.techpark-company-hero h1 {
+  margin-bottom: 0;
+  font-size: clamp(2.2rem, 3.6vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+
+.techpark-company-hero__mark {
+  border-radius: 20px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+/* A page heading and the content it introduces are one block, so they do not each get the
+   80px a standalone section is given. */
+.techpark-directory-hero + .techpark-companies,
+.techpark-company-hero + .techpark-company-detail {
+  padding-top: 36px;
+}
+
+.techpark-company-detail__card {
+  margin-bottom: 20px;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+.techpark-company-detail__roles {
+  margin-block: 10px 22px;
+}
+
+.techpark-neighbours {
+  width: 100%;
+}
+
+.techpark-neighbour {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.techpark-neighbour:hover .ant-typography:first-child {
+  color: var(--ant-color-primary);
+}
+
+.techpark-companies__foot {
+  margin-top: 36px;
+}
+
+.techpark-updates .ant-typography + .ant-row {
+  margin-top: 28px;
+}
+
+.techpark-update {
+  height: 100%;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+.techpark-update__cover {
+  width: 100%;
+  height: auto;
+  margin-bottom: 18px;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  object-fit: cover;
+  background: #eef2fb;
+}
+
+.techpark-update__cover--empty {
+  display: grid;
+  place-items: center;
+  color: #a6b4d4;
+  font-size: 30px;
+}
+
+.techpark-update h4 {
+  margin-block: 14px 8px;
+}
+
+.techpark-update__date {
+  font-size: 0.85rem;
 }
 
 .techpark-site .showcase-cta {
@@ -286,9 +542,12 @@
   background: linear-gradient(120deg, #3157d5, #5936bb);
 }
 
-.techpark-site .showcase-cta h2,
-.techpark-site .showcase-cta p {
+.techpark-site .showcase-cta h2 {
   color: #fff;
+}
+
+.techpark-site .showcase-cta .techpark-cta__description {
+  color: rgb(255 255 255 / 78%);
 }
 
 /* Mira Dental */
@@ -500,21 +759,173 @@
   height: 100%;
   border-top: 4px solid #b64b32;
   border-radius: 2px 2px 16px 16px;
+  overflow: hidden;
+}
+
+.publication-card > .ant-card-body {
+  height: 100%;
+}
+
+.publication-card__layout,
+.publication-card__content {
+  height: 100%;
+}
+
+.publication-card__layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.publication-card__cover {
+  width: calc(100% + 48px);
+  aspect-ratio: 16 / 8;
+  margin: -24px -24px 24px;
+  object-fit: cover;
+}
+
+.publication-card__content {
+  display: flex;
+  flex-direction: column;
+}
+
+.publication-card__content > p {
+  flex: 1;
+}
+
+.publication-card__meta {
+  margin-bottom: 20px;
+}
+
+.publication-tags {
+  margin-block: 8px 18px;
 }
 
 .publication-card--lead {
   min-height: 330px;
-  background:
-    linear-gradient(90deg, #fff 58%, transparent 58%),
-    linear-gradient(140deg, #283a34 0 70%, #b64b32 70%);
+}
+
+.publication-card--lead .publication-card__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+  gap: 40px;
+}
+
+.publication-card--lead .publication-card__cover {
+  grid-column: 2;
+  grid-row: 1;
+  width: calc(100% + 24px);
+  height: calc(100% + 48px);
+  margin: -24px -24px -24px 0;
+  aspect-ratio: auto;
 }
 
 .publication-card--lead .publication-card__content {
-  max-width: 52%;
+  grid-column: 1;
+  grid-row: 1;
 }
 
-.publication-card__meta {
-  margin-bottom: 28px;
+.publication-pagination {
+  margin-top: 44px;
+}
+
+/* Aurora announcement portal */
+.announcement-site {
+  background: linear-gradient(180deg, #f4f7ff 0, #fff 620px), #fff;
+}
+
+.publication-hero--modern {
+  margin-top: 40px;
+  padding: 64px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 36px;
+  color: #fff;
+  background:
+    linear-gradient(135deg, rgb(24 42 105 / 96%), rgb(49 87 213 / 88%)),
+    radial-gradient(circle at 85% 15%, #00b8d9, transparent 32%);
+}
+
+.publication-hero--modern h1 {
+  color: #fff;
+}
+
+.publication-hero--modern .publication-hero__description {
+  color: rgb(255 255 255 / 78%);
+}
+
+.announcement-overview {
+  margin-top: 40px;
+}
+
+.announcement-overview .ant-card {
+  height: 100%;
+  border-color: rgb(255 255 255 / 20%);
+  background: rgb(255 255 255 / 10%);
+  box-shadow: none;
+}
+
+.announcement-overview .ant-typography {
+  color: #fff;
+}
+
+.announcement-overview h3 {
+  margin: 6px 0 0;
+}
+
+.announcement-card {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #dfe5fa;
+  box-shadow: 0 12px 36px rgb(24 42 105 / 8%);
+}
+
+.announcement-card > .ant-card-body {
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.announcement-card__cover,
+.announcement-card__placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+}
+
+.announcement-card__cover {
+  object-fit: cover;
+}
+
+.announcement-card__placeholder {
+  display: grid;
+  place-items: center;
+  color: #3157d5;
+  background-color: #e8ecff;
+  background-image:
+    linear-gradient(rgb(49 87 213 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(49 87 213 / 8%) 1px, transparent 1px);
+  background-size: 24px 24px;
+  font-size: 36px;
+}
+
+.announcement-card__content {
+  height: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.announcement-card__content > h3 {
+  margin-top: 22px;
+}
+
+.announcement-card__content > p {
+  flex: 1;
+}
+
+.announcement-card__footer {
+  min-height: 36px;
+  margin-top: auto;
 }
 
 .publication-detail {
@@ -537,12 +948,27 @@
   font-size: 1.2rem;
 }
 
+.publication-detail__heading .publication-tags {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.publication-detail__cover,
 .publication-detail__visual {
+  width: 100%;
   height: 420px;
+  border-radius: 2px 60px 2px 2px;
+}
+
+.publication-detail__cover {
+  display: block;
+  object-fit: cover;
+}
+
+.publication-detail__visual {
   padding: 28px;
   display: flex;
   align-items: end;
-  border-radius: 2px 60px 2px 2px;
   color: #fff;
   background:
     linear-gradient(120deg, rgb(32 40 34 / 92%), rgb(32 40 34 / 20%)),
@@ -551,15 +977,93 @@
   letter-spacing: 0.14em;
 }
 
+.publication-detail__content {
+  max-width: 960px;
+  margin: 52px auto 0;
+}
+
+.publication-detail__content--with-aside {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+  gap: 48px;
+}
+
 .publication-detail__body {
   max-width: 720px;
-  margin: 52px auto 0;
+  margin-inline: auto;
 }
 
 .publication-detail__body p {
   margin-bottom: 24px;
   font-size: 1.08rem;
   line-height: 1.85;
+}
+
+.publication-attachments {
+  position: sticky;
+  top: 24px;
+}
+
+.publication-attachments > .ant-card-body > .ant-space {
+  width: 100%;
+}
+
+.publication-attachment {
+  width: 100%;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.publication-attachment:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.publication-gallery {
+  margin-block: 40px;
+}
+
+.publication-gallery figure {
+  margin: 0;
+}
+
+.publication-gallery .ant-image,
+.publication-gallery img {
+  width: 100%;
+}
+
+.publication-gallery img {
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.publication-gallery figure > span:last-child {
+  display: block;
+  margin-top: 8px;
+}
+
+.publication-detail--modern .publication-detail__heading {
+  max-width: 920px;
+  margin-inline: 0;
+  text-align: left;
+}
+
+.publication-detail--modern .publication-detail__heading .publication-tags {
+  justify-content: flex-start;
+}
+
+.publication-detail--modern .publication-detail__cover,
+.publication-detail--modern .publication-detail__visual {
+  border-radius: 32px;
+}
+
+.publication-detail--modern .publication-detail__visual {
+  background:
+    linear-gradient(135deg, rgb(24 42 105 / 96%), rgb(49 87 213 / 72%)),
+    radial-gradient(circle at 80% 20%, #00b8d9, transparent 36%), #182a69;
 }
 
 .publication-empty {
@@ -589,8 +1093,45 @@
     grid-template-columns: 1fr;
   }
 
+  /* The label column costs more than it gives once the bar has no room left. */
+  .techpark-share__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .techpark-companies__filter {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
   .showcase-cta {
     padding: 40px;
+  }
+
+  .publication-card--lead .publication-card__layout,
+  .publication-detail__content--with-aside {
+    grid-template-columns: 1fr;
+  }
+
+  .publication-card--lead .publication-card__cover,
+  .publication-card--lead .publication-card__content {
+    grid-column: 1;
+  }
+
+  .publication-card--lead .publication-card__cover {
+    grid-row: 1;
+    width: calc(100% + 48px);
+    height: auto;
+    margin: -24px -24px 24px;
+    aspect-ratio: 16 / 8;
+  }
+
+  .publication-card--lead .publication-card__content {
+    grid-row: 2;
+  }
+
+  .publication-attachments {
+    position: static;
   }
 }
 
@@ -620,11 +1161,12 @@
 
   .publication-card--lead {
     min-height: 0;
-    background: #fff;
   }
 
-  .publication-card--lead .publication-card__content {
-    max-width: none;
+  .publication-hero--modern {
+    margin-top: 24px;
+    padding: 40px 24px;
+    border-radius: 24px;
   }
 
   .publication-detail__heading {
@@ -632,6 +1174,7 @@
     text-align: left;
   }
 
+  .publication-detail__cover,
   .publication-detail__visual {
     height: 280px;
   }
