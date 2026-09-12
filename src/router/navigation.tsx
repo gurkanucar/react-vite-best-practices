@@ -12,6 +12,7 @@ import {
   ShoppingOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
+import { FEATURE_FLAGS } from '@/config/featureFlags'
 import { useMessages } from '@/i18n/messages'
 
 export interface NavigationEntry {
@@ -52,7 +53,15 @@ export function useNavigationSections(): NavigationSection[] {
           { key: '/posts', icon: <CloudServerOutlined />, label: messages.navigation.postsApi },
           { key: '/products', icon: <ShoppingOutlined />, label: messages.navigation.productsApi },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
-          { key: '/assistant', icon: <RobotOutlined />, label: messages.navigation.assistant },
+          ...(FEATURE_FLAGS.assistant
+            ? [
+                {
+                  key: '/assistant',
+                  icon: <RobotOutlined />,
+                  label: messages.navigation.assistant,
+                },
+              ]
+            : []),
         ],
       },
       {

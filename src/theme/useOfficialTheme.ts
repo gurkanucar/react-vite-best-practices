@@ -1,10 +1,12 @@
 import { theme, type ConfigProviderProps, type ThemeConfig } from 'antd'
+import antDesignBackground from '@/assets/theme-backgrounds/ant-design.jpg'
+import illustrationBackground from '@/assets/theme-backgrounds/illustration.jpg'
+import muiBackground from '@/assets/theme-backgrounds/mui.jpg'
+import shadcnBackground from '@/assets/theme-backgrounds/shadcn.jpg'
 import {
   useBootstrapTheme,
-  useGlassTheme,
   useIllustrationTheme,
   useMuiTheme,
-  useSereneTheme,
   useShadcnTheme,
 } from '@/theme/official-presets'
 import type { ResolvedColorMode, VisualTheme } from '@/theme/theme'
@@ -137,13 +139,10 @@ const sharedProviderProps: ConfigProviderProps = {
 }
 
 export const officialThemeBackgrounds: Partial<Record<VisualTheme, string>> = {
-  'ant-design':
-    'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*T8IlRaNez08AAAAARwAAAAgAegCCAQ/original',
-  mui: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*IFkZRpIKEEkAAAAAQzAAAAgAegCCAQ/original',
-  shadcn:
-    'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*56tPQbwgFyEAAAAARuAAAAgAegCCAQ/original',
-  illustration:
-    'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*HuVGQKqOER0AAAAARsAAAAgAegCCAQ/original',
+  'ant-design': antDesignBackground,
+  mui: muiBackground,
+  shadcn: shadcnBackground,
+  illustration: illustrationBackground,
 }
 
 export function useOfficialTheme(
@@ -152,10 +151,8 @@ export function useOfficialTheme(
   compact: boolean,
 ): ConfigProviderProps {
   const bootstrap = useBootstrapTheme()
-  const glass = useGlassTheme()
   const illustration = useIllustrationTheme()
   const mui = useMuiTheme()
-  const serene = useSereneTheme()
   const shadcn = useShadcnTheme()
 
   const selected =
@@ -167,7 +164,7 @@ export function useOfficialTheme(
             components: resolvedColorMode === 'dark' ? darkComponents : baseComponents,
           },
         }
-      : ({ bootstrap, glass, illustration, mui, serene, shadcn } as const)[visualTheme]
+      : ({ bootstrap, illustration, mui, shadcn } as const)[visualTheme]
 
   if (!selected.theme) return selected
 

@@ -3,7 +3,7 @@ import { lazy } from 'react'
 export const AdminLayout = lazy(() => import('@/App'))
 
 export const AssistantPage = lazy(async () => ({
-  default: (await import('@/features/assistant/pages')).AssistantPage,
+  default: (await import('@/features/assistant/pages/AssistantPage')).AssistantPage,
 }))
 
 export const ComponentsPage = lazy(async () => ({
@@ -15,7 +15,7 @@ export const DashboardPage = lazy(async () => ({
 }))
 
 export const DocumentsPage = lazy(async () => ({
-  default: (await import('@/features/documents/pages')).DocumentsPage,
+  default: (await import('@/features/documents/pages/DocumentsPage')).DocumentsPage,
 }))
 
 export const LandingPage = lazy(async () => ({
@@ -35,23 +35,23 @@ export const OtpPage = lazy(async () => ({
 }))
 
 export const PostDetailPage = lazy(async () => ({
-  default: (await import('@/features/posts/pages')).PostDetailPage,
+  default: (await import('@/features/posts/pages/PostDetailPage')).PostDetailPage,
 }))
 
 export const PostEditPage = lazy(async () => ({
-  default: (await import('@/features/posts/pages')).PostEditPage,
+  default: (await import('@/features/posts/pages/PostEditPage')).PostEditPage,
 }))
 
 export const PostsListPage = lazy(async () => ({
-  default: (await import('@/features/posts/pages')).PostsListPage,
+  default: (await import('@/features/posts/pages/PostsListPage')).PostsListPage,
 }))
 
 export const ProductDetailPage = lazy(async () => ({
-  default: (await import('@/features/products/pages')).ProductDetailPage,
+  default: (await import('@/features/products/pages/ProductDetailPage')).ProductDetailPage,
 }))
 
 export const ProductsListPage = lazy(async () => ({
-  default: (await import('@/features/products/pages')).ProductsListPage,
+  default: (await import('@/features/products/pages/ProductsListPage')).ProductsListPage,
 }))
 
 export const RegisterPage = lazy(async () => ({

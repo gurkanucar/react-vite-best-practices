@@ -51,7 +51,7 @@ describe('preferences store', () => {
       language: 'tr',
       colorMode: 'dark',
       compact: true,
-      visualTheme: 'glass',
+      visualTheme: 'ant-design',
     })
   })
 })

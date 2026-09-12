@@ -31,6 +31,16 @@ const SurveyPage = lazy(async () => ({
 }))
 ```
 
+Import the concrete page module, not a feature barrel:
+
+```tsx
+const PostDetailPage = lazy(async () => ({
+  default: (await import('@/features/posts/pages/PostDetailPage')).PostDetailPage,
+}))
+```
+
+Importing `@/features/posts/pages` makes the barrel load every page it re-exports. The list, detail, and edit routes then collapse into the same chunk even though each call uses `lazy`. Barrels remain useful to expose a feature API to normal consumers; route boundaries must point at the leaf page file.
+
 If a page uses a default export, the shorter form is enough:
 
 ```tsx
@@ -94,7 +104,7 @@ Use `findBy...` for the first assertion after initial rendering or navigation. O
 ## Adding another lazy route
 
 1. Create the page in `src/pages`.
-2. Add its top-level `lazy` declaration in `src/router/router.tsx`.
+2. Add its top-level `lazy` declaration in `src/router/LazyPages.tsx` and import the concrete page file.
 3. Add the route and wrap its element with `RouteSuspense`.
 4. Choose `fullPage: true` for standalone pages and the default for admin children.
 5. Add navigation and both locale entries when the route is user-facing.

@@ -20,6 +20,7 @@ import {
   SurveyPage,
 } from '@/router/LazyPages'
 import { RouteSuspense } from '@/router/RouteSuspense'
+import { FEATURE_FLAGS } from '@/config/featureFlags'
 
 const standaloneErrorElement = (
   <RouteSuspense fullPage>
@@ -149,15 +150,19 @@ export const routes: RouteObject[] = [
         ),
         errorElement: adminErrorElement,
       },
-      {
-        path: 'assistant',
-        element: (
-          <RouteSuspense>
-            <AssistantPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
-      },
+      ...(FEATURE_FLAGS.assistant
+        ? [
+            {
+              path: 'assistant',
+              element: (
+                <RouteSuspense>
+                  <AssistantPage />
+                </RouteSuspense>
+              ),
+              errorElement: adminErrorElement,
+            },
+          ]
+        : []),
       {
         path: 'documents',
         element: (

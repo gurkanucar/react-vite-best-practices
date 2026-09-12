@@ -149,10 +149,6 @@ html[data-theme='dark'] .admin-workspace {
     width: 96px;
   }
 
-  .admin-profile {
-    display: none;
-  }
-
   .admin-footer {
     align-items: flex-start;
     flex-direction: column;

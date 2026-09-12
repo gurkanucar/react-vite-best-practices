@@ -6,6 +6,6 @@ describe('AppVersion', () => {
   it('renders the version injected from package.json', () => {
     render(<AppVersion />)
 
-    expect(screen.getByLabelText('Application version 0.0.0')).toHaveTextContent('v0.0.0')
+    expect(screen.getByLabelText('Application version 0.1.0')).toHaveTextContent('v0.1.0')
   })
 })

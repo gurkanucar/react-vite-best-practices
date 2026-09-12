@@ -65,18 +65,23 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 Pointing `workerSrc` at a CDN instead is common and fragile: the worker version has to match
 the `pdfjs-dist` version exactly, and nothing in the build checks that it still does.
 
-## Scrolling, not paging
+## Render one page at a time
 
-Every page renders into one scrolling column, so the reader scrolls the way they would in any
-other viewer. The page controls jump to a page rather than being the only way to reach it, and
-the indicator follows the scroll position — it reports the last page whose top edge has passed
-the top of the viewport.
+The reader renders only the active page. Previous and next controls change that page, while a
+`ResizeObserver` keeps its width aligned with the available card space. Zoom multiplies the
+requested page width and the viewport scrolls only when the enlarged canvas no longer fits.
+
+This matters for real reports: rendering every page creates one canvas and text layer per page,
+which multiplies memory and layout work before the user reaches most of the document. Single-page
+rendering keeps work bounded while preserving download, page count, zoom, translated labels, and
+the fingerprinted worker.
 
 ## Testing
 
-pdf.js needs a worker and a canvas, and jsdom provides neither. The viewer itself is verified
-in a browser; the test covers what surrounds it — that the document is requested as a blob with
-the right `Accept` header, and that the download revokes its object URL.
+pdf.js needs a worker and a canvas, and jsdom provides neither. The component test replaces
+react-pdf with a narrow double and verifies that only one active page is mounted, pagination
+changes its number, and zoom changes its requested width. Browser verification covers the real
+canvas. API tests still verify the blob request and object-URL cleanup.
 
 ## Reference
 

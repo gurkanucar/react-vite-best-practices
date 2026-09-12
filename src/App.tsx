@@ -1,10 +1,12 @@
-import { BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Avatar, Badge, Button, Flex, Grid, Layout, Menu, Tooltip, Typography } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { Button, Flex, Grid, Layout, Menu, Tooltip, Typography } from 'antd'
 import { useEffect, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { GlobalSearch } from '@/components/GlobalSearch/GlobalSearch'
+import { HeaderNotifications } from '@/components/HeaderNotifications/HeaderNotifications'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
+import { ProfileMenu } from '@/components/ProfileMenu/ProfileMenu'
 import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
 import { env } from '@/config/env'
 import { useMessages } from '@/i18n/messages'
@@ -120,14 +122,8 @@ function App() {
           <Flex className="admin-header__actions" align="center" gap={10}>
             <ColorModeControl variant="menu" />
             <LanguageSelect />
-            <Tooltip title={messages.common.notifications}>
-              <Badge dot offset={[-5, 5]}>
-                <Button aria-label={messages.common.notifications} icon={<BellOutlined />} />
-              </Badge>
-            </Tooltip>
-            <Tooltip title={messages.shell.profile}>
-              <Avatar className="admin-profile">DA</Avatar>
-            </Tooltip>
+            <HeaderNotifications />
+            <ProfileMenu />
           </Flex>
         </Header>
 

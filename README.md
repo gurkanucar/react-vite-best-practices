@@ -60,9 +60,9 @@ filters and scroll position. Both read the same detail query.
   <img src="docs/images/posts-quick-edit.jpg" alt="The quick edit drawer" width="49%">
 </p>
 
-### A catalog covering every Ant Design component
+### A broad Ant Design component catalog
 
-`/components` demonstrates the whole Ant Design catalog across six groups, so a component
+`/components` demonstrates commonly used Ant Design components across five groups, so a component
 can be seen working in this theme before it is reached for.
 
 ![The component catalog's layout group](docs/images/component-catalog.jpg)

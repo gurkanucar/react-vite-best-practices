@@ -1,5 +1,10 @@
-import { describe, expect, it, vi } from 'vitest'
-import { normalizeError, reportError } from '@/errors/error'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { configureErrorReporter, normalizeError, reportError } from '@/errors/error'
+
+afterEach(() => {
+  configureErrorReporter()
+  vi.restoreAllMocks()
+})
 
 describe('normalizeError', () => {
   it('keeps Error instances unchanged', () => {
@@ -22,9 +27,25 @@ describe('reportError', () => {
 
     expect(consoleError).toHaveBeenCalledWith(
       '[caught] Render failed',
-      expect.objectContaining({ componentStack: 'in App' }),
+      expect.objectContaining({
+        context: { kind: 'caught', componentStack: 'in App' },
+        release: __APP_VERSION__,
+      }),
     )
+  })
 
-    consoleError.mockRestore()
+  it('passes normalized, release-aware reports to a configured adapter', () => {
+    const reporter = vi.fn<(report: unknown) => void>()
+    configureErrorReporter(reporter)
+
+    reportError('Request failed', { kind: 'recoverable' })
+
+    expect(reporter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        error: expect.objectContaining({ message: 'Request failed' }),
+        environment: 'test',
+        release: __APP_VERSION__,
+      }),
+    )
   })
 })

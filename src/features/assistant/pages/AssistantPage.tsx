@@ -21,9 +21,7 @@ export function AssistantPage() {
   const { message } = App.useApp()
   const chat = useAssistantChat()
   const [draft, setDraft] = useState('')
-  // The endpoint exists only in the mock worker, so the page says so rather than
-  // offering an input that could not reach anything.
-  const assistantEnabled = FEATURE_FLAGS.mockAssistantApi
+  const assistantEnabled = FEATURE_FLAGS.assistant
 
   const suggestions = [
     { key: 'filters', icon: <TableOutlined />, description: messages.assistant.promptFilters },
@@ -55,7 +53,11 @@ export function AssistantPage() {
         <Alert
           showIcon
           type="info"
-          title={assistantEnabled ? messages.assistant.notice : messages.assistant.disabledNotice}
+          title={
+            FEATURE_FLAGS.mockAssistantApi
+              ? messages.assistant.notice
+              : messages.assistant.realApiNotice
+          }
         />
 
         {chat.error && (

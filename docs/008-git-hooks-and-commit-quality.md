@@ -81,7 +81,9 @@ Git supports `--no-verify`, but bypassing checks should be reserved for exceptio
 
 ## CI responsibility
 
-Local Git hooks improve feedback time but can be skipped and are not a security boundary. CI should run `pnpm check` and `pnpm build` independently before accepting changes.
+Local Git hooks improve feedback time but can be skipped and are not a security boundary. The committed `.github/workflows/ci.yml` runs `pnpm check`, coverage, and `pnpm build:production` independently on pull requests and pushes to `main`.
+
+This does not disable `--no-verify`. It keeps emergency/local bypasses available while making the remote merge decision depend on the same reproducible checks.
 
 ## References
 

@@ -50,32 +50,30 @@ A streamed transcript is local, ordered, append-only state, so it lives in the c
 than in TanStack Query. There is nothing to cache, invalidate, or refetch: re-running the
 request would produce a different answer, not the same one.
 
-## Its own flag
+## Capability and transport flags
 
-The endpoint exists only in the mock worker, so the assistant has its own flag,
-`VITE_FEATURE_MOCK_ASSISTANT_API`, separate from the posts one. The worker is shared, so it
-starts when any mocked feature is on:
+`VITE_FEATURE_ASSISTANT` owns the product decision: it adds or removes the route and navigation
+entry. `VITE_FEATURE_MOCK_ASSISTANT_API` owns the transport decision: it makes MSW answer the
+request during development. Keeping them separate allows the feature to point at a real API.
+
+The worker is shared, so it starts when posts are mocked or when the enabled assistant uses its
+mock transport:
 
 ```ts
 export function isAnyApiMocked(): boolean {
-  return Object.values(FEATURE_FLAGS).some(Boolean)
+  return FEATURE_FLAGS.mockPostsApi || (FEATURE_FLAGS.assistant && FEATURE_FLAGS.mockAssistantApi)
 }
 ```
 
-With the flag off, the page says so and disables the composer rather than offering an input that
-could not reach anything.
+Development enables both assistant switches. Production disables the feature by default; a real
+deployment can enable it while leaving the mock flag off and serving `/chat` from its configured
+API.
 
 ## Keeping it off everyone else's pages
 
-X is only used by this route, so it must not land in a chunk that every page loads. It is
-excluded from the Ant Design vendor group by name:
-
-```ts
-test: /node_modules\/(?:antd|@ant-design\/(?!x\/)|@rc-component|rc-)/,
-```
-
-Forcing a lazily reachable dependency into a shared vendor group is what makes it eager —
-measured on the dashboard, the library was downloaded before this exclusion and is not after.
+X is only used by this route. `LazyPages.tsx` imports the concrete `AssistantPage` module, and no
+manual Ant Design vendor group forces it into the initial graph. Vite/Rolldown can therefore keep
+the X dependency behind the assistant route's dynamic-import boundary.
 
 ## Reference
 

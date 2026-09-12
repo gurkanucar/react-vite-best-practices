@@ -1,6 +1,6 @@
 import { LeftOutlined, RightOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons'
 import { Alert, Button, Card, Flex, Tooltip, Typography } from 'antd'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import 'react-pdf/dist/Page/AnnotationLayer.css'
 import 'react-pdf/dist/Page/TextLayer.css'
@@ -27,45 +27,37 @@ interface PdfViewerProps {
 
 export function PdfViewer({ file, title }: PdfViewerProps) {
   const messages = useMessages()
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const viewportRef = useRef<HTMLDivElement>(null)
   const [pageCount, setPageCount] = useState(0)
   const [page, setPage] = useState(1)
   const [zoom, setZoom] = useState(1)
-  const [loadFailed, setLoadFailed] = useState(false)
+  const [pageWidth, setPageWidth] = useState(720)
 
-  // Every page is rendered into one scrolling column, so the reader scrolls freely and
-  // the controls only jump to a page rather than being the only way to reach it.
-  const scrollToPage = (target: number) => {
-    const nextPage = Math.min(Math.max(target, 1), pageCount || 1)
-    scrollRef.current
-      ?.querySelector(`[data-page="${nextPage}"]`)
-      ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    setPage(nextPage)
-  }
+  useEffect(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return undefined
 
-  // The indicator follows the scroll position: the current page is the last one whose
-  // top edge has passed the top of the viewport.
-  const trackVisiblePage = () => {
-    const container = scrollRef.current
-    if (!container) return
+    const updatePageWidth = () => {
+      if (viewport.clientWidth > 0) {
+        setPageWidth(Math.max(280, viewport.clientWidth - 32))
+      }
+    }
+    const observer = new ResizeObserver(updatePageWidth)
 
-    const pages = [...container.querySelectorAll<HTMLElement>('[data-page]')]
-    const containerTop = container.getBoundingClientRect().top
-    const visible = pages.findLast(
-      (element) => element.getBoundingClientRect().top <= containerTop + 8,
-    )
+    updatePageWidth()
+    observer.observe(viewport)
 
-    setPage(visible ? Number(visible.dataset.page) : 1)
+    return () => observer.disconnect()
+  }, [])
+
+  const goToPage = (target: number) => {
+    setPage(Math.min(Math.max(target, 1), pageCount || 1))
   }
 
   const changeZoom = (delta: number) =>
     setZoom((current) =>
       Math.min(Math.max(Number((current + delta).toFixed(2)), PDF_ZOOM.min), PDF_ZOOM.max),
     )
-
-  if (loadFailed) {
-    return <Alert showIcon type="error" title={messages.documents.loadError} />
-  }
 
   return (
     <Card
@@ -78,7 +70,7 @@ export function PdfViewer({ file, title }: PdfViewerProps) {
               aria-label={messages.documents.previousPage}
               disabled={page <= 1}
               icon={<LeftOutlined aria-hidden="true" />}
-              onClick={() => scrollToPage(page - 1)}
+              onClick={() => goToPage(page - 1)}
             />
           </Tooltip>
           <Typography.Text aria-live="polite">
@@ -91,7 +83,7 @@ export function PdfViewer({ file, title }: PdfViewerProps) {
               aria-label={messages.documents.nextPage}
               disabled={page >= pageCount}
               icon={<RightOutlined aria-hidden="true" />}
-              onClick={() => scrollToPage(page + 1)}
+              onClick={() => goToPage(page + 1)}
             />
           </Tooltip>
 
@@ -115,19 +107,21 @@ export function PdfViewer({ file, title }: PdfViewerProps) {
         </Flex>
       }
     >
-      <div className="pdf-viewer__scroll" ref={scrollRef} onScroll={trackVisiblePage}>
+      <div className="pdf-viewer__viewport" ref={viewportRef}>
         <Document
           file={file}
           loading={<LoadingState />}
           error={<Alert showIcon type="error" title={messages.documents.loadError} />}
-          onLoadSuccess={({ numPages }) => setPageCount(numPages)}
-          onLoadError={() => setLoadFailed(true)}
+          onLoadSuccess={({ numPages }) => {
+            setPageCount(numPages)
+            setPage(1)
+          }}
         >
-          {Array.from({ length: pageCount }, (_, index) => (
-            <div className="pdf-viewer__page" data-page={index + 1} key={index + 1}>
-              <Page pageNumber={index + 1} scale={zoom} loading={<LoadingState />} />
+          {pageCount > 0 && (
+            <div className="pdf-viewer__page">
+              <Page pageNumber={page} width={pageWidth * zoom} loading={<LoadingState />} />
             </div>
-          ))}
+          )}
         </Document>
       </div>
     </Card>

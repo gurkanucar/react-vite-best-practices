@@ -55,19 +55,19 @@ algorithm: [theme.darkAlgorithm, theme.compactAlgorithm]
 
 The Ant Design homepage demonstrates a gallery of visual styles. These showcase configurations are not exported from the `antd` package. This project vendors the current implementations from Ant Design's official website source instead of approximating them with a few seed tokens.
 
-This project recreates the complete current gallery as typed presets:
+This project keeps the focused presets used by the demo:
 
 - Ant Design
 - MUI
 - shadcn
 - Bootstrap
 - Illustration
-- Glass
-- Serene Icon
 
 The Settings page's style button opens the gallery. A selection applies the preset's complete `ConfigProviderProps`: theme algorithm, global and component tokens, semantic `classNames`, component styles, wave behavior, and the official preview background asset where one exists.
 
-The source-derived hooks live in `src/theme/official-presets`. `useOfficialTheme.ts` selects them without rewriting their component appearance. The source notice links to the exact upstream directory and records Ant Design's MIT license.
+Glass and Serene were removed because they expanded the vendored surface without adding a distinct application use case. The source-derived hooks live in `src/theme/official-presets`. `useOfficialTheme.ts` selects them without rewriting their component appearance. The source notice links to the exact upstream directory and records Ant Design's MIT license.
+
+The four homepage background images are stored in `src/assets/theme-backgrounds` and fingerprinted by Vite. They total about 381 KB, so keeping them locally avoids a runtime dependency on Ant Design's CDN without materially inflating the build.
 
 ## User preferences
 
@@ -79,7 +79,7 @@ The color control is available in the admin navbar, landing page, authentication
 
 Visual preset and compact-density controls remain in Settings, where the complete appearance configuration belongs. The base Ant Design theme follows the selected system, light, or dark mode. Light showcase backgrounds are removed in dark mode so the page background and dark component tokens cannot conflict.
 
-Homepage showcase presets preserve their official light-mode identity, component styles, brand colors, spacing, shapes, and interactions. MUI, shadcn, Bootstrap, Illustration, Glass, and Serene Icon also accept the selected Ant Design color algorithm. Their generated dark variants replace light neutral surfaces with dark semantic tokens while retaining each preset's distinguishing design choices.
+Homepage showcase presets preserve their official light-mode identity, component styles, brand colors, spacing, shapes, and interactions. MUI, shadcn, Bootstrap, and Illustration also accept the selected Ant Design color algorithm. Their generated dark variants replace light neutral surfaces with dark semantic tokens while retaining each preset's distinguishing design choices.
 
 Every available preset supports System, Light, and Dark color modes.
 
@@ -122,7 +122,7 @@ After an API migration, restart the development server before validating the con
 
 ## Production bundle
 
-Ant Design and its supporting packages are split into bounded vendor chunks through Vite's current `build.rolldownOptions.output.codeSplitting` configuration. This keeps the application entry small and removes the oversized single-chunk warning without changing minification or tree shaking.
+Vite/Rolldown owns production chunking, minification, and tree shaking. The previous forced Ant Design vendor group was removed because it pulled otherwise route-local code into one large shared chunk. Route-level dynamic imports are the meaningful application boundaries; the bundler can split their dependencies without a hand-maintained package regex.
 
 ## Application composition
 

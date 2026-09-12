@@ -1,13 +1,6 @@
 export type ColorMode = 'system' | 'light' | 'dark'
 export type ResolvedColorMode = Exclude<ColorMode, 'system'>
-export type VisualTheme =
-  | 'ant-design'
-  | 'mui'
-  | 'shadcn'
-  | 'bootstrap'
-  | 'illustration'
-  | 'glass'
-  | 'serene'
+export type VisualTheme = 'ant-design' | 'mui' | 'shadcn' | 'bootstrap' | 'illustration'
 
 export interface VisualThemeOption {
   value: VisualTheme
@@ -21,8 +14,6 @@ export const visualThemeOptions: VisualThemeOption[] = [
   { value: 'shadcn', label: 'shadcn', color: '#18181b' },
   { value: 'bootstrap', label: 'Bootstrap', color: '#7952b3' },
   { value: 'illustration', label: 'Illustration', color: '#6d5dfc' },
-  { value: 'glass', label: 'Glass', color: '#06b6d4' },
-  { value: 'serene', label: 'Serene Icon', color: '#5b8c85' },
 ]
 
 export interface ThemePreferences {

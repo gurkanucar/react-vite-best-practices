@@ -112,6 +112,65 @@ describe('admin application', () => {
     expect(sidebar).not.toHaveClass('ant-layout-sider-collapsed')
   })
 
+  it('makes the notification control actionable', async () => {
+    const user = userEvent.setup()
+    const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
+
+    await screen.findByRole(
+      'heading',
+      { level: 1, name: 'Operational overview' },
+      { timeout: 5_000 },
+    )
+    await user.click(screen.getByRole('button', { name: 'Notifications' }))
+    expect(await screen.findByText('The weekly report is ready to review.')).toBeInTheDocument()
+
+    const markAllRead = screen.getByRole('button', { name: 'Mark all as read' })
+    await user.click(markAllRead)
+    await user.click(screen.getByRole('button', { name: 'Notifications' }))
+    expect(screen.getByRole('button', { name: 'Mark all as read' })).toBeDisabled()
+  })
+
+  it('navigates from the profile menu', async () => {
+    const user = userEvent.setup()
+    const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
+
+    await screen.findByRole(
+      'heading',
+      { level: 1, name: 'Operational overview' },
+      { timeout: 5_000 },
+    )
+    await user.click(screen.getByRole('button', { name: 'Demo administrator' }))
+    await user.click(await screen.findByText('Profile settings'))
+    await waitFor(() => expect(router.state.location.pathname).toBe('/settings'))
+    expect(router.state.location.hash).toBe('#appearance')
+  })
+
+  it('uses the reset destination language for the confirmation toast', async () => {
+    const user = userEvent.setup()
+    usePreferencesStore.setState({ language: 'tr' })
+    const router = createMemoryRouter(routes, { initialEntries: ['/settings'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
+
+    await screen.findByRole('heading', { level: 1, name: 'Çalışma alanı tercihleri' })
+    await user.click(screen.getByRole('button', { name: 'Tercihleri sıfırla' }))
+
+    expect(await screen.findByText('Preferences restored to their defaults')).toBeInTheDocument()
+  })
+
   it('opens interactive component examples', async () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/components'] })
     render(
@@ -222,7 +281,7 @@ describe('admin application', () => {
 })
 
 it('uses the persistent sidebar on desktop screens', async () => {
-  usePreferencesStore.setState({ visualTheme: 'glass' })
+  usePreferencesStore.setState({ visualTheme: 'illustration' })
   const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
   render(
     <AppThemeProvider>

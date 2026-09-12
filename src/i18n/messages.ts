@@ -13,8 +13,12 @@ export const messages = {
   tr: tr satisfies Messages,
 } as const satisfies Record<Language, Messages>
 
+export function getMessages(language: Language): Messages {
+  return messages[language]
+}
+
 export function useMessages(): Messages {
   const language = usePreferencesStore((state) => state.language)
 
-  return messages[language]
+  return getMessages(language)
 }

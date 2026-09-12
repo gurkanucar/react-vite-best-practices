@@ -2,8 +2,8 @@ import { App, Button, Card, Col, Descriptions, Row, Typography } from 'antd'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { ThemeControls } from '@/components/ThemeControls/ThemeControls'
-import { useMessages } from '@/i18n/messages'
-import { usePreferencesStore } from '@/store/preferences-store'
+import { getMessages, useMessages } from '@/i18n/messages'
+import { initialPreferences, usePreferencesStore } from '@/store/preferences-store'
 
 export function SettingsPage() {
   const messages = useMessages()
@@ -16,7 +16,9 @@ export function SettingsPage() {
 
   const reset = () => {
     resetPreferences()
-    void message.success(messages.settings.resetDone)
+    // The reset also changes the language. Read the destination locale explicitly so
+    // the toast does not use the stale language captured by this render.
+    void message.success(getMessages(initialPreferences.language).settings.resetDone)
   }
 
   return (

@@ -2,6 +2,7 @@ type RequiredEnvKey =
   | 'VITE_APP_NAME'
   | 'VITE_API_BASE_URL'
   | 'VITE_DUMMYJSON_API_BASE_URL'
+  | 'VITE_FEATURE_ASSISTANT'
   | 'VITE_FEATURE_MOCK_POSTS_API'
   | 'VITE_FEATURE_MOCK_ASSISTANT_API'
 
@@ -32,6 +33,7 @@ export function createEnvironment(source: EnvironmentSource) {
     appName: getRequiredEnv(source, 'VITE_APP_NAME'),
     apiBaseUrl: getRequiredEnv(source, 'VITE_API_BASE_URL'),
     dummyJsonApiBaseUrl: getRequiredEnv(source, 'VITE_DUMMYJSON_API_BASE_URL'),
+    assistantEnabled: getBooleanEnv(source, 'VITE_FEATURE_ASSISTANT'),
     mockPostsApi: getBooleanEnv(source, 'VITE_FEATURE_MOCK_POSTS_API'),
     mockAssistantApi: getBooleanEnv(source, 'VITE_FEATURE_MOCK_ASSISTANT_API'),
     mode: source.MODE,

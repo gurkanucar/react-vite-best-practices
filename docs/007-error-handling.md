@@ -10,7 +10,7 @@ Unknown thrown value
         ▼
 normalizeError()
         │
-        ├── reportError() ──► development console / future monitoring service
+        ├── reportError() ──► console fallback / configured monitoring adapter
         │
         └── ErrorBoundary ──► accessible ErrorFallback UI
 ```
@@ -37,7 +37,31 @@ React 19 root callbacks send caught, uncaught, and recoverable render errors thr
 - `onUncaughtError`
 - `onRecoverableError`
 
-The reporter currently writes development diagnostics. Its API is the integration point for a production observability service later.
+The reporter creates one normalized payload with the error, error kind, component stack, URL, timestamp, build version, and environment. Development writes it to the console. Production also uses the console until an adapter is installed, so a missing monitoring integration never makes failures silent.
+
+## Production reporter responsibility
+
+`configureErrorReporter` accepts a small vendor-neutral adapter. A Sentry, Datadog, Rollbar, or OpenTelemetry integration should:
+
+- send the normalized `Error` and preserve its stack;
+- attach `kind`, release, environment, route, and React component stack as context;
+- group repeated errors and sample noisy recoverable events;
+- scrub tokens, form values, personal information, and request bodies;
+- add an authenticated user id only after consent and never attach the whole user object;
+- flush asynchronously in the provider SDK without blocking rendering.
+
+Configure it once before rendering:
+
+```ts
+configureErrorReporter(({ error, context, release, environment, url }) => {
+  monitoring.captureException(error, {
+    tags: { kind: context.kind, release, environment },
+    extra: { componentStack: context.componentStack, url },
+  })
+})
+```
+
+Feature code continues calling `reportError`; it never imports the monitoring vendor directly. If the adapter itself throws, the failure is caught and written to the console to avoid an error-reporting loop.
 
 ## Error Boundary
 
@@ -85,7 +109,7 @@ Expected failures should normally be represented as UI state. Reserve Error Boun
 The test suite verifies:
 
 - Unknown thrown values are normalized.
-- Development errors reach the reporter.
+- Errors reach the console fallback and a configured adapter receives release-aware context.
 - Healthy children render normally.
 - A render error displays a fallback.
 - A custom boundary can recover through its reset callback.

@@ -1,6 +1,7 @@
 import { env } from '@/config/env'
 
 export const FEATURE_FLAGS = Object.freeze({
+  assistant: env.assistantEnabled,
   mockPostsApi: env.mockPostsApi,
   mockAssistantApi: env.mockAssistantApi,
 })
@@ -16,5 +17,5 @@ export function isFeatureEnabled(flag: FeatureFlagName): boolean {
  * stay off — and be removed — when none of them are.
  */
 export function isAnyApiMocked(): boolean {
-  return Object.values(FEATURE_FLAGS).some(Boolean)
+  return FEATURE_FLAGS.mockPostsApi || (FEATURE_FLAGS.assistant && FEATURE_FLAGS.mockAssistantApi)
 }

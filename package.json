@@ -1,6 +1,6 @@
 {
   "name": "react-vite-best-practices",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "description": "A documented and tested foundation for production-ready React applications.",
   "type": "module",

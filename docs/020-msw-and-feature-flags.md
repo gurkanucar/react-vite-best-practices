@@ -69,11 +69,13 @@ A feature flag is a named switch around optional application behavior. It lets e
 
 ```ts
 export const FEATURE_FLAGS = Object.freeze({
+  assistant: env.assistantEnabled,
   mockPostsApi: env.mockPostsApi,
+  mockAssistantApi: env.mockAssistantApi,
 })
 ```
 
-The current flag is supplied through:
+The posts mock flag is supplied through:
 
 ```dotenv
 VITE_FEATURE_MOCK_POSTS_API=true
@@ -89,6 +91,15 @@ if (import.meta.env.DEV && isFeatureEnabled('mockPostsApi')) {
 ```
 
 This flag answers “should this build use the mocked posts backend?” It is not a user setting like language or theme, so it must not be stored in Zustand.
+
+The assistant demonstrates why a product capability and a transport choice must be separate:
+
+```dotenv
+VITE_FEATURE_ASSISTANT=true
+VITE_FEATURE_MOCK_ASSISTANT_API=true
+```
+
+`VITE_FEATURE_ASSISTANT` controls whether the route and navigation entry exist. `VITE_FEATURE_MOCK_ASSISTANT_API` controls whether MSW supplies its endpoint. The same assistant can therefore be enabled against a real production API without pretending that “mock enabled” means “feature enabled.” The worker starts for the assistant only when both switches are on.
 
 ## Build-time versus runtime flags
 

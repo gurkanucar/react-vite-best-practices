@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_API_BASE_URL: string
   readonly VITE_DUMMYJSON_API_BASE_URL: string
+  readonly VITE_FEATURE_ASSISTANT: string
   readonly VITE_FEATURE_MOCK_POSTS_API: string
   readonly VITE_FEATURE_MOCK_ASSISTANT_API: string
 }

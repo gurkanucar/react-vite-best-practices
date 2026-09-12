@@ -494,7 +494,7 @@ function DataDisplayShowcase({ messages }: { messages: Messages }) {
               {
                 key: 'release',
                 label: messages.components.release,
-                children: <Tag color="blue">v0.0.0</Tag>,
+                children: <Tag color="blue">v{__APP_VERSION__}</Tag>,
               },
             ]}
           />
@@ -891,7 +891,10 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
                   onClick={() =>
                     notification.success({
                       title: messages.components.deploymentComplete,
-                      description: messages.components.deploymentCompleteDetail,
+                      description: messages.components.deploymentCompleteDetail.replace(
+                        '{version}',
+                        __APP_VERSION__,
+                      ),
                       showProgress: true,
                     })
                   }

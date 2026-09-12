@@ -18,8 +18,6 @@ describe('visualThemeOptions', () => {
       'shadcn',
       'bootstrap',
       'illustration',
-      'glass',
-      'serene',
     ])
   })
 })

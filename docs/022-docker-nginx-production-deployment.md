@@ -51,7 +51,9 @@ Supply deployment values as build arguments:
 docker build \
   --build-arg VITE_API_BASE_URL=https://api.example.com \
   --build-arg VITE_DUMMYJSON_API_BASE_URL=https://catalog.example.com \
+  --build-arg VITE_FEATURE_ASSISTANT=false \
   --build-arg VITE_FEATURE_MOCK_POSTS_API=false \
+  --build-arg VITE_FEATURE_MOCK_ASSISTANT_API=false \
   -t react-vite-best-practices .
 ```
 
