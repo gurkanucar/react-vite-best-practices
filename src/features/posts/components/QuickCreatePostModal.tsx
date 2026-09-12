@@ -1,6 +1,6 @@
 import { App, Form, Input, InputNumber, Modal } from 'antd'
 import { usePostsMutations } from '@/features/posts/hooks'
-import type { CreatePostInput } from '@/features/posts/types'
+import type { CreatePostRequest } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
 
 interface QuickCreatePostModalProps {
@@ -11,10 +11,10 @@ interface QuickCreatePostModalProps {
 export function QuickCreatePostModal({ open, onClose }: QuickCreatePostModalProps) {
   const messages = useMessages()
   const { message } = App.useApp()
-  const [form] = Form.useForm<CreatePostInput>()
+  const [form] = Form.useForm<CreatePostRequest>()
   const { createPost } = usePostsMutations()
 
-  const submit = (values: CreatePostInput) => {
+  const submit = (values: CreatePostRequest) => {
     createPost.mutate(values, {
       onSuccess: () => {
         form.resetFields()
@@ -36,7 +36,7 @@ export function QuickCreatePostModal({ open, onClose }: QuickCreatePostModalProp
       onCancel={onClose}
       onOk={() => form.submit()}
     >
-      <Form<CreatePostInput>
+      <Form<CreatePostRequest>
         form={form}
         layout="vertical"
         initialValues={{ userId: 1 }}

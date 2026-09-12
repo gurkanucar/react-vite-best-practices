@@ -20,13 +20,13 @@ These values are shipped to the browser. They may contain public service origins
 `apiRequest` uses the primary API by default:
 
 ```ts
-apiRequest<Post[]>('/posts')
+apiRequest<PostDto[]>('/posts')
 ```
 
 A feature that belongs to another service supplies its normalized origin:
 
 ```ts
-apiRequest<ProductListResponse>('/products', {
+apiRequest<ProductListResponseDto>('/products', {
   baseUrl: env.dummyJsonApiBaseUrl,
   query: { limit, skip },
 })
@@ -38,12 +38,17 @@ Transport behavior remains shared while ownership of the service selection stays
 
 ```text
 src/features/products/
-├── api/productsApi.ts
+├── api/
+│   ├── index.ts
+│   └── productsApi.ts
 ├── hooks/
 │   ├── index.ts
 │   └── useProductsQueries.ts
-├── pages/ProductsListPage.tsx
-└── types.ts
+├── pages/
+│   ├── index.ts
+│   └── ProductsListPage.tsx
+├── types/index.ts
+└── index.ts
 ```
 
 The API request uses DummyJSON's `select` parameter to request only the fields displayed by the table. This reduces unnecessary response data while keeping the response contract explicit.
@@ -53,7 +58,7 @@ The API request uses DummyJSON's `select` parameter to request only the fields d
 DummyJSON supports `limit` and `skip`. Both values affect the response, so both must be included in the cache key:
 
 ```ts
-productQueryKeys.list({ limit: 10, skip: 20 })
+PRODUCT_QUERY_KEYS.list({ limit: 10, skip: 20 })
 // ['products', 'list', { limit: 10, skip: 20 }]
 ```
 
@@ -66,14 +71,14 @@ Page 1 and page 2 then occupy different cache entries. Returning to an already l
 The product feature owns a separate key root:
 
 ```ts
-await queryClient.invalidateQueries({ queryKey: productQueryKeys.lists() })
+await queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEYS.lists() })
 ```
 
 This invalidates all paginated product lists without touching JSONPlaceholder post queries. To invalidate only the current page:
 
 ```ts
 await queryClient.invalidateQueries({
-  queryKey: productQueryKeys.list({ limit: 10, skip: 20 }),
+  queryKey: PRODUCT_QUERY_KEYS.list({ limit: 10, skip: 20 }),
   exact: true,
 })
 ```

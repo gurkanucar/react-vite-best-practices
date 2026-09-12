@@ -1,19 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createPost } from '@/features/posts/api/postsApi'
-import { postQueryKeys } from '@/features/posts/hooks/usePostsQueries'
-
-export const postMutationKeys = {
-  create: [...postQueryKeys.all, 'create'] as const,
-}
+import { createPost } from '@/features/posts/services'
+import { POST_MUTATION_KEYS, POST_QUERY_KEYS } from '@/features/posts/types'
 
 export function useCreatePostMutation() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: postMutationKeys.create,
+    mutationKey: POST_MUTATION_KEYS.create,
     mutationFn: createPost,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: postQueryKeys.lists() })
+      await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.lists() })
     },
   })
 }

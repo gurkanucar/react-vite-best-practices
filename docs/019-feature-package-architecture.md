@@ -7,16 +7,24 @@ Feature packages should make ownership obvious without splitting every concept i
 ```text
 src/features/posts/
 ├── api/
+│   ├── index.ts
 │   └── postsApi.ts
 ├── components/
+│   ├── index.ts
 │   └── QuickCreatePostModal.tsx
 ├── hooks/
 │   ├── index.ts
 │   ├── usePostsMutations.ts
 │   └── usePostsQueries.ts
 ├── pages/
+│   ├── index.ts
 │   └── PostsListPage.tsx
-└── types.ts
+├── services/
+│   ├── index.ts
+│   └── postsService.ts
+├── types/
+│   └── index.ts
+└── index.ts
 ```
 
 Only create directories that contain real code. For example, the products feature currently has queries but no product mutation, so it does not contain an empty `useProductsMutations.ts` file.
@@ -61,8 +69,8 @@ The API module should remain easy to read. It owns operations such as:
 - mapping or validating the raw response at the network boundary.
 
 ```ts
-export function createPost(input: CreatePostInput): Promise<Post> {
-  return apiRequest<Post>('/posts', {
+export function createPostRequest(input: CreatePostRequest): Promise<PostDto> {
+  return apiRequest<PostDto>('/posts', {
     body: input,
     method: 'POST',
   })
@@ -81,8 +89,6 @@ hooks/usePostsQueries.ts
 
 This file contains:
 
-- query-key factories;
-- shared filter defaults;
 - `queryOptions` factories;
 - query hooks such as `usePostsQuery`.
 
@@ -94,11 +100,70 @@ hooks/usePostsMutations.ts
 
 This file contains:
 
-- mutation keys;
 - mutation hooks;
 - cache updates and invalidation rules.
 
-An optional `hooks/index.ts` exposes the public hook API to pages and components. Keep the barrel local to the feature; do not build a global barrel that imports every feature.
+Query keys, mutation keys, and shared filter defaults live with the feature contracts under `types/index.ts`. This makes stable cache identities importable without importing a React hook module.
+
+`hooks/index.ts` exposes the public hook API to pages and components. Keep the barrel local to the feature; do not build a global barrel that imports every feature.
+
+## `types`: contracts and stable constants
+
+The types package keeps DTOs, request types, filter types, and stable feature constants together. Use visible sections so a single compact file remains easy to scan:
+
+```ts
+// ─── Query and mutation keys ───────────────────────────
+export const POST_QUERY_KEYS = {
+  all: ['posts'] as const,
+  lists: () => [...POST_QUERY_KEYS.all, 'list'] as const,
+  list: (params: PostFilterParams) => [...POST_QUERY_KEYS.lists(), params] as const,
+  detail: (id: number) => [...POST_QUERY_KEYS.all, 'detail', id] as const,
+}
+
+export const POST_MUTATION_KEYS = {
+  create: [...POST_QUERY_KEYS.all, 'create'] as const,
+}
+
+// ─── DTOs ──────────────────────────────────────────────
+export interface PostDto {
+  id: number
+  title: string
+  body: string
+  userId: number
+}
+
+// ─── Request types ─────────────────────────────────────
+export type CreatePostRequest = Omit<PostDto, 'id'>
+
+// ─── Filter types ──────────────────────────────────────
+export interface PostFilterParams {
+  limit: number
+}
+```
+
+Use suffixes consistently:
+
+- `Dto` describes data returned by an API;
+- `Request` describes an API command body;
+- `Params` describes query-string, filter, or pagination input.
+
+Constants that are purely private implementation details may stay near their consumer. For example, the DummyJSON `select` field list remains inside `productsApi.ts`; callers do not need it.
+
+## Barrel exports
+
+Every populated feature directory has an `index.ts`, and the feature root exposes the package's public surface:
+
+```ts
+// src/features/posts/index.ts
+export * from './api'
+export * from './components'
+export * from './hooks'
+export * from './pages'
+export * from './services'
+export * from './types'
+```
+
+Inside a feature, import from the closest directory barrel, such as `@/features/posts/services`. Code outside the feature may import from `@/features/posts`. Do not create empty directories or empty barrels for capabilities the feature does not have yet.
 
 ## Should there be a `services` directory?
 
@@ -110,14 +175,42 @@ Not by default. A `services` directory is useful when a feature gains real busin
 - domain validation is more complex than required fields or input formatting;
 - raw API data must be combined into a business result.
 
-Example future structure:
+The posts feature now provides a concrete example:
 
 ```text
 services/
-├── calculateOrderTotal.ts
-├── validatePostPublication.ts
-└── publishPost.ts
+├── index.ts
+└── postsService.ts
 ```
+
+The quick-create form provides immediate required-field feedback. The service independently trims the submitted strings, rejects whitespace-only content, verifies that the user ID is a positive integer, and only then calls the API:
+
+```ts
+export function preparePostForCreation(input: CreatePostRequest): CreatePostRequest {
+  const title = input.title.trim()
+  const body = input.body.trim()
+
+  if (!title) {
+    throw new PostValidationError('Post title cannot be empty.')
+  }
+
+  if (!body) {
+    throw new PostValidationError('Post body cannot be empty.')
+  }
+
+  if (!Number.isInteger(input.userId) || input.userId <= 0) {
+    throw new PostValidationError('User ID must be a positive integer.')
+  }
+
+  return { body, title, userId: input.userId }
+}
+
+export function createPost(input: CreatePostRequest): Promise<PostDto> {
+  return createPostRequest(preparePostForCreation(input))
+}
+```
+
+`usePostsMutations` calls this service rather than calling `createPostRequest` directly. The service has no React or Ant Design dependency, so its business rules can also be used by a full create page, another modal, an import flow, or focused unit tests.
 
 The boundaries would be:
 
@@ -134,7 +227,7 @@ Do not create `services` merely to rename an API call:
 export const fetchPostsService = () => getPosts()
 ```
 
-Until business logic exists, calling the feature API from the query or mutation hook is clearer.
+When business logic does not exist, calling the feature API from the query or mutation hook remains clearer. That is why the products feature has no `services` directory.
 
 ## Where validation belongs
 

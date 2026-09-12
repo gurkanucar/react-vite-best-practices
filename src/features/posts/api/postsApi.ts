@@ -1,19 +1,19 @@
-import type { CreatePostInput, Post, PostListFilters } from '@/features/posts/types'
+import type { CreatePostRequest, PostDto, PostFilterParams } from '@/features/posts/types'
 import { apiRequest } from '@/lib/api/api-client'
 
-export function getPosts(filters: PostListFilters, signal?: AbortSignal): Promise<Post[]> {
-  return apiRequest<Post[]>('/posts', {
+export function getPosts(filters: PostFilterParams, signal?: AbortSignal): Promise<PostDto[]> {
+  return apiRequest<PostDto[]>('/posts', {
     query: { _limit: filters.limit },
     signal,
   })
 }
 
-export function getPost(postId: number, signal?: AbortSignal): Promise<Post> {
-  return apiRequest<Post>(`/posts/${postId}`, { signal })
+export function getPost(postId: number, signal?: AbortSignal): Promise<PostDto> {
+  return apiRequest<PostDto>(`/posts/${postId}`, { signal })
 }
 
-export function createPost(input: CreatePostInput): Promise<Post> {
-  return apiRequest<Post>('/posts', {
+export function createPostRequest(input: CreatePostRequest): Promise<PostDto> {
+  return apiRequest<PostDto>('/posts', {
     body: input,
     method: 'POST',
   })

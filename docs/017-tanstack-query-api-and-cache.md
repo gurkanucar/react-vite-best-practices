@@ -13,19 +13,22 @@ src/
 │   └── query/query-client.ts
 └── features/
     ├── posts/
-    │   ├── api/postsApi.ts
-    │   ├── components/QuickCreatePostModal.tsx
+    │   ├── api/{index.ts,postsApi.ts}
+    │   ├── components/{index.ts,QuickCreatePostModal.tsx}
     │   ├── hooks/
     │   │   ├── index.ts
     │   │   ├── usePostsMutations.ts
     │   │   └── usePostsQueries.ts
-    │   ├── pages/PostsListPage.tsx
-    │   └── types.ts
+    │   ├── pages/{index.ts,PostsListPage.tsx}
+    │   ├── services/{index.ts,postsService.ts}
+    │   ├── types/index.ts
+    │   └── index.ts
     └── products/
-        ├── api/productsApi.ts
-        ├── hooks/useProductsQueries.ts
-        ├── pages/ProductsListPage.tsx
-        └── types.ts
+        ├── api/{index.ts,productsApi.ts}
+        ├── hooks/{index.ts,useProductsQueries.ts}
+        ├── pages/{index.ts,ProductsListPage.tsx}
+        ├── types/index.ts
+        └── index.ts
 ```
 
 - `lib/api` owns transport concerns shared by every feature: base URL, query strings, JSON bodies, response parsing, and HTTP errors.
@@ -59,7 +62,7 @@ The project sets a one-minute `staleTime`, retries failed queries once, and does
 Feature code calls `apiRequest` instead of repeating `fetch` setup:
 
 ```ts
-return apiRequest<Post[]>('/posts', {
+return apiRequest<PostDto[]>('/posts', {
   query: { _limit: filters.limit },
   signal,
 })
@@ -81,12 +84,12 @@ Replace this value for a real backend without changing feature code.
 Do not scatter string arrays such as `['posts']` across components. The post feature exposes a hierarchical key factory:
 
 ```ts
-export const postQueryKeys = {
+export const POST_QUERY_KEYS = {
   all: ['posts'] as const,
-  lists: () => [...postQueryKeys.all, 'list'] as const,
-  list: (filters: PostListFilters) => [...postQueryKeys.lists(), filters] as const,
-  details: () => [...postQueryKeys.all, 'detail'] as const,
-  detail: (postId: number) => [...postQueryKeys.details(), postId] as const,
+  lists: () => [...POST_QUERY_KEYS.all, 'list'] as const,
+  list: (filters: PostFilterParams) => [...POST_QUERY_KEYS.lists(), filters] as const,
+  details: () => [...POST_QUERY_KEYS.all, 'detail'] as const,
+  detail: (postId: number) => [...POST_QUERY_KEYS.details(), postId] as const,
 }
 ```
 
@@ -94,19 +97,19 @@ The hierarchy creates useful invalidation scopes:
 
 ```ts
 // Every post query, including lists and details
-await queryClient.invalidateQueries({ queryKey: postQueryKeys.all })
+await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.all })
 
 // Every filtered post list, but no post details
-await queryClient.invalidateQueries({ queryKey: postQueryKeys.lists() })
+await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.lists() })
 
 // Only the list with these filters
 await queryClient.invalidateQueries({
-  queryKey: postQueryKeys.list({ limit: 10 }),
+  queryKey: POST_QUERY_KEYS.list({ limit: 10 }),
   exact: true,
 })
 
 // Only one post detail
-await queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(postId) })
+await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.detail(postId) })
 ```
 
 Any feature that changes post data can import this factory. It does not need to know which pages currently consume the data.
@@ -116,9 +119,9 @@ Any feature that changes post data can import this factory. It does not need to 
 `queryOptions` keeps the key and function together with end-to-end type inference:
 
 ```ts
-export function postsQueryOptions(filters: PostListFilters) {
+export function postsQueryOptions(filters: PostFilterParams) {
   return queryOptions({
-    queryKey: postQueryKeys.list(filters),
+    queryKey: POST_QUERY_KEYS.list(filters),
     queryFn: ({ signal }) => getPosts(filters, signal),
   })
 }
@@ -143,10 +146,10 @@ export function useCreatePostMutation() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: postMutationKeys.create,
+    mutationKey: POST_MUTATION_KEYS.create,
     mutationFn: createPost,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: postQueryKeys.lists() })
+      await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.lists() })
     },
   })
 }
@@ -157,8 +160,8 @@ This is the “one place changes another place” case: the mutation can run in 
 For a mutation that returns the complete updated entity, update that detail cache directly and invalidate only affected collections:
 
 ```ts
-queryClient.setQueryData(postQueryKeys.detail(updated.id), updated)
-await queryClient.invalidateQueries({ queryKey: postQueryKeys.lists() })
+queryClient.setQueryData(POST_QUERY_KEYS.detail(updated.id), updated)
+await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.lists() })
 ```
 
 ## JSONPlaceholder limitation
@@ -183,7 +186,7 @@ Do not copy successful query results into Zustand. That creates two sources of t
 
 ## Adding another API feature
 
-1. Create `src/features/<feature>/types.ts` for the feature contracts.
+1. Create `src/features/<feature>/types/index.ts` for DTOs, requests, filters, and key constants.
 2. Add endpoint functions under `api` using `apiRequest`.
 3. Keep query keys, options, and read hooks together in `hooks/use<Feature>Queries.ts`.
 4. Keep mutation keys, mutation hooks, and invalidation rules in `hooks/use<Feature>Mutations.ts`.

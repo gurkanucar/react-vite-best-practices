@@ -1,5 +1,5 @@
 import { env } from '@/config/env'
-import type { ProductListFilters, ProductListResponse } from '@/features/products/types'
+import type { ProductFilterParams, ProductListResponseDto } from '@/features/products/types'
 import { apiRequest } from '@/lib/api/api-client'
 
 const PRODUCT_FIELDS = [
@@ -14,10 +14,10 @@ const PRODUCT_FIELDS = [
 ].join(',')
 
 export function getProducts(
-  filters: ProductListFilters,
+  filters: ProductFilterParams,
   signal?: AbortSignal,
-): Promise<ProductListResponse> {
-  return apiRequest<ProductListResponse>('/products', {
+): Promise<ProductListResponseDto> {
+  return apiRequest<ProductListResponseDto>('/products', {
     baseUrl: env.dummyJsonApiBaseUrl,
     query: {
       limit: filters.limit,

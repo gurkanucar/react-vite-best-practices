@@ -4,9 +4,9 @@ import { Alert, App, Button, Card, Empty, Flex, Spin, Table, Tag, Typography } f
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
-import { QuickCreatePostModal } from '@/features/posts/components/QuickCreatePostModal'
-import { DEFAULT_POST_FILTERS, postQueryKeys, usePostsQuery } from '@/features/posts/hooks'
-import type { Post } from '@/features/posts/types'
+import { QuickCreatePostModal } from '@/features/posts/components'
+import { usePostsQuery } from '@/features/posts/hooks'
+import { DEFAULT_POST_FILTERS, POST_QUERY_KEYS, type PostDto } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
 
 export function PostsListPage() {
@@ -16,7 +16,7 @@ export function PostsListPage() {
   const postsQuery = usePostsQuery()
   const [quickCreateOpen, setQuickCreateOpen] = useState(false)
 
-  const columns: ColumnsType<Post> = [
+  const columns: ColumnsType<PostDto> = [
     { title: messages.posts.id, dataIndex: 'id', key: 'id', width: 80 },
     { title: messages.posts.titleColumn, dataIndex: 'title', key: 'title', width: 300 },
     { title: messages.posts.body, dataIndex: 'body', key: 'body' },
@@ -24,7 +24,7 @@ export function PostsListPage() {
   ]
 
   const invalidatePosts = async () => {
-    await queryClient.invalidateQueries({ queryKey: postQueryKeys.lists() })
+    await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.lists() })
     void message.success(messages.posts.invalidated)
   }
 
@@ -59,7 +59,7 @@ export function PostsListPage() {
           <Typography.Text type="secondary">
             {messages.posts.cacheKey}:{' '}
             <Typography.Text code>
-              {JSON.stringify(postQueryKeys.list(DEFAULT_POST_FILTERS))}
+              {JSON.stringify(POST_QUERY_KEYS.list(DEFAULT_POST_FILTERS))}
             </Typography.Text>
           </Typography.Text>
 
@@ -96,7 +96,7 @@ export function PostsListPage() {
                   {messages.posts.resultCount.replace('{count}', String(postsQuery.data.length))}
                 </Typography.Text>
               </Flex>
-              <Table<Post>
+              <Table<PostDto>
                 columns={columns}
                 dataSource={postsQuery.data}
                 pagination={false}

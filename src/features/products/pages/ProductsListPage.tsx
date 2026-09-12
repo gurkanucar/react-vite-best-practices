@@ -16,8 +16,13 @@ import {
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
-import { PRODUCT_PAGE_SIZE, productQueryKeys, useProductsQuery } from '@/features/products/hooks'
-import type { Product, ProductListFilters } from '@/features/products/types'
+import { useProductsQuery } from '@/features/products/hooks'
+import {
+  PRODUCT_PAGE_SIZE,
+  PRODUCT_QUERY_KEYS,
+  type ProductDto,
+  type ProductFilterParams,
+} from '@/features/products/types'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 
@@ -27,7 +32,7 @@ export function ProductsListPage() {
   const { message } = App.useApp()
   const queryClient = useQueryClient()
   const [page, setPage] = useState(1)
-  const filters: ProductListFilters = {
+  const filters: ProductFilterParams = {
     limit: PRODUCT_PAGE_SIZE,
     skip: (page - 1) * PRODUCT_PAGE_SIZE,
   }
@@ -37,7 +42,7 @@ export function ProductsListPage() {
     style: 'currency',
   })
 
-  const columns: ColumnsType<Product> = [
+  const columns: ColumnsType<ProductDto> = [
     { title: messages.products.id, dataIndex: 'id', key: 'id', width: 72 },
     { title: messages.products.name, dataIndex: 'title', key: 'title', width: 280 },
     {
@@ -59,7 +64,7 @@ export function ProductsListPage() {
   ]
 
   const invalidateProducts = async () => {
-    await queryClient.invalidateQueries({ queryKey: productQueryKeys.lists() })
+    await queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEYS.lists() })
     void message.success(messages.products.invalidated)
   }
 
@@ -84,7 +89,9 @@ export function ProductsListPage() {
           <Alert showIcon type="info" title={messages.products.demoNotice} />
           <Typography.Text type="secondary">
             {messages.products.cacheKey}:{' '}
-            <Typography.Text code>{JSON.stringify(productQueryKeys.list(filters))}</Typography.Text>
+            <Typography.Text code>
+              {JSON.stringify(PRODUCT_QUERY_KEYS.list(filters))}
+            </Typography.Text>
           </Typography.Text>
 
           {productsQuery.isPending && (
@@ -116,7 +123,7 @@ export function ProductsListPage() {
 
           {productsQuery.isSuccess && productsQuery.data.products.length > 0 && (
             <>
-              <Table<Product>
+              <Table<ProductDto>
                 columns={columns}
                 dataSource={productsQuery.data.products}
                 loading={productsQuery.isFetching}
