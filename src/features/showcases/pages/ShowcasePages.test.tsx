@@ -4,6 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import {
   campusUpdates,
+  companySectorRoles,
   corporateAnnouncements,
   corporateNews,
   residentCompanies,
@@ -137,9 +138,99 @@ describe('showcase pages', () => {
 
     expect(screen.getByRole('heading', { name: 'Aurora Orbital' })).toBeVisible()
     expect(screen.getByText('268 people')).toBeVisible()
+    // Its own description, not its sector's.
+    expect(screen.getByText(/builds small satellite payloads/)).toBeVisible()
+    // Products and projects read as one list, told apart by a label.
+    expect(screen.getByText('Aurora Ground')).toBeVisible()
+    expect(screen.getByText('Asia ground network')).toBeVisible()
     // Same sector, never itself.
     expect(screen.getByRole('link', { name: /Sidereal Optics/ })).toBeVisible()
     expect(screen.queryByRole('link', { name: /^Aurora Orbital/ })).not.toBeInTheDocument()
+  })
+
+  it('reaches a company by its own contact details', () => {
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/companies/aurora-orbital']}>
+        <Routes>
+          <Route
+            path="/preview/technopark/companies/:companySlug"
+            element={<TechParkCompanyPage standalone />}
+          />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByText('aurora-orbital.example.com')).toBeVisible()
+    // tel: cannot carry the spaces the printed number keeps.
+    expect(screen.getByText('+90 312 555 0106').closest('a')).toHaveAttribute(
+      'href',
+      'tel:+903125550106',
+    )
+  })
+
+  it('lets each open role be opened and applied to on its own', async () => {
+    const user = userEvent.setup()
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/companies/aurora-orbital']}>
+        <Routes>
+          <Route
+            path="/preview/technopark/companies/:companySlug"
+            element={<TechParkCompanyPage standalone />}
+          />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    // Closed to begin with: the skills belong behind the heading, not above it.
+    expect(screen.queryByText('Zemax')).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /Optical systems engineer/ }))
+
+    /*
+     * In the document rather than visible: antd's collapse motion settles through CSS, which
+     * jsdom does not run, so the panel is mounted but never reports a height.
+     */
+    expect(await screen.findByText('Zemax')).toBeInTheDocument()
+    // The subject line is what tells the team which posting a mail is about.
+    expect(screen.getByRole('link', { name: /Apply for this role/ })).toHaveAttribute(
+      'href',
+      'mailto:hello@aurora-orbital.example.com?subject=Optical%20systems%20engineer%20%E2%80%94%20Aurora%20Orbital',
+    )
+  })
+
+  it('advertises no more roles than a company is actually filling', () => {
+    // Cellwise Bio is not hiring; Sablon AI has fewer vacancies than its sector has roles.
+    const sablon = residentCompanies.find((company) => company.slug === 'sablon-ai')
+    expect(sablon?.openRoles).toBeLessThan(companySectorRoles.ai.length)
+
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/companies/sablon-ai']}>
+        <Routes>
+          <Route
+            path="/preview/technopark/companies/:companySlug"
+            element={<TechParkCompanyPage standalone />}
+          />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(screen.getAllByText(/position/)).toHaveLength(sablon?.openRoles ?? 0)
+  })
+
+  it('says plainly when a resident is not hiring', () => {
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/companies/cellwise-bio']}>
+        <Routes>
+          <Route
+            path="/preview/technopark/companies/:companySlug"
+            element={<TechParkCompanyPage standalone />}
+          />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByText('This team is not hiring at the moment.')).toBeVisible()
+    expect(screen.queryByRole('link', { name: /Apply for this role/ })).not.toBeInTheDocument()
   })
 
   it('says so plainly when the slug matches no resident', () => {

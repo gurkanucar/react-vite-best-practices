@@ -121,14 +121,37 @@ is how the paging is tested. The observer is rebuilt after each page on purpose:
 reports a crossing, not a state, so one that stayed mounted would go quiet after the first
 page on a screen tall enough that the sentinel never leaves the viewport.
 
-### Sector prose, company facts
+### What belongs to a company and what belongs to its sector
 
-Every company has a detail route. The description on it is written per sector, not per
-company: forty-two hand-written biographies would go stale the day the directory grows, and a
-demo that invents a paragraph per row teaches the wrong lesson. What makes each page its own
-is the company's facts — stage, size, year founded, year it moved onto the campus, building,
-open roles — and the list of its neighbours in the same sector, which is navigation the data
-already supports.
+Every company has a detail route, and the page is a running answer to one question: which
+facts are this company's own, and which are true of anything in its sector?
+
+Its own: the about text, contact details, products, delivered projects, headcount, stage, the
+year it moved onto the campus, its building, and how many people it is hiring. Forty-two
+descriptions is a lot of prose to carry, and it is carried anyway, because a directory where
+every entry says the same thing is not a directory.
+
+Its sector's: the vacancy postings. A perception engineer needs the same things at either
+robotics company on the campus, so the posting — title, level, what the work is, what you
+will need — is written once per sector in `companySectorRoles`. What the company supplies is
+how many of each it is filling:
+
+```ts
+const share = Math.floor(company.openRoles / roleCount)
+return { role, positions: share + (index < company.openRoles % roleCount ? 1 : 0) }
+```
+
+Roles the count does not reach are dropped, so a team with two vacancies advertises two
+rather than three with a zero beside one of them. Each posting expands on its own and applies
+on its own: the `mailto:` carries the role title and the company name in its subject, which
+is the only thing that tells the team which posting an application is about.
+
+Products and delivered projects are rendered as one list. They answer the same question —
+what has this team actually made — and the discriminated union is what keeps a year on the
+entries that have one instead of making every product carry an empty field.
+
+Contact details use `example.com`, a domain reserved for exactly this, so nothing on the page
+resolves to a real company. The `tel:` link strips the spaces the printed number keeps.
 
 ## Ant Design boundaries
 

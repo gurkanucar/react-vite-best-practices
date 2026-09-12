@@ -66,6 +66,15 @@ export interface ResidentCompany {
   building: string
   hiring: boolean
   openRoles: number
+  /** A reserved documentation domain, so nothing here resolves to a real company. */
+  website: string
+  email: string
+  phone: string
+  /** The company's own description, not its sector's. */
+  about: LocalizedText
+  expertise: LocalizedText[]
+  products: { name: string; summary: LocalizedText }[]
+  projects: { name: string; year: number; summary: LocalizedText }[]
 }
 
 /**
@@ -84,4 +93,21 @@ export interface CampusUpdate {
    * maintenance notice, so the card has to look finished either way.
    */
   image?: PublicationImage
+}
+
+export type RoleLevel = 'junior' | 'mid' | 'senior'
+
+/**
+ * A vacancy, described once per sector.
+ *
+ * A perception engineer needs the same things at either robotics company on the campus, so
+ * the posting is written at the sector level and each company supplies what is actually its
+ * own: how many of the role it is filling, which building it sits in, and where to apply.
+ */
+export interface SectorRole {
+  id: string
+  title: LocalizedText
+  level: RoleLevel
+  summary: LocalizedText
+  skills: LocalizedText[]
 }

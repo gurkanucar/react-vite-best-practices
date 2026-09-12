@@ -4,11 +4,11 @@ export {
   campusStatistics,
   campusUpdates,
   companySectorAccents,
-  companySectorDescriptions,
   companySectorLabels,
   companySectorRoles,
   companyStageLabels,
   findCompany,
   residentCompanies,
+  roleLevelLabels,
 } from './techPark'
 export { techParkCopy, techParkLinks, techParkMonogram } from './techParkCopy'

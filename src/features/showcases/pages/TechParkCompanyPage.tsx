@@ -1,15 +1,33 @@
-import { ArrowLeftOutlined, ArrowRightOutlined, MailOutlined } from '@ant-design/icons'
-import { Avatar, Button, Card, Col, Descriptions, Flex, Row, Space, Tag, Typography } from 'antd'
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  GlobalOutlined,
+  MailOutlined,
+  PhoneOutlined,
+} from '@ant-design/icons'
+import {
+  Avatar,
+  Button,
+  Card,
+  Col,
+  Collapse,
+  Descriptions,
+  Flex,
+  Row,
+  Space,
+  Tag,
+  Typography,
+} from 'antd'
 import { useParams } from 'react-router'
 import { PublicSiteShell, ShowcasePreviewFrame } from '@/features/showcases/components'
 import {
   companySectorAccents,
-  companySectorDescriptions,
   companySectorLabels,
   companySectorRoles,
   companyStageLabels,
   findCompany,
   residentCompanies,
+  roleLevelLabels,
   techParkCopy,
   techParkLinks,
   techParkMonogram,
@@ -38,6 +56,34 @@ export function TechParkCompanyPage({ standalone = false }: TechParkCompanyPageP
     ? residentCompanies
         .filter((other) => other.sector === company.sector && other.slug !== company.slug)
         .slice(0, NEIGHBOUR_LIMIT)
+    : []
+
+  /*
+   * Shipped products and delivered projects answer the same question — what has this team
+   * actually made — so they read as one list. The discriminant is what keeps the year on the
+   * entries that have one, rather than making every product carry an empty field.
+   */
+  const work = company
+    ? [
+        ...company.products.map((product) => ({ kind: 'product' as const, ...product })),
+        ...company.projects.map((project) => ({ kind: 'project' as const, ...project })),
+      ]
+    : []
+
+  /*
+   * The company says how many people it is hiring; the sector says what the roles are. Spread
+   * the count over those roles and drop the ones it does not reach, so a team with two
+   * vacancies advertises two rather than three with a zero beside one of them.
+   */
+  const vacancies = company?.hiring
+    ? companySectorRoles[company.sector]
+        .map((role, index) => {
+          const roleCount = companySectorRoles[company.sector].length
+          const share = Math.floor(company.openRoles / roleCount)
+
+          return { role, positions: share + (index < company.openRoles % roleCount ? 1 : 0) }
+        })
+        .filter((vacancy) => vacancy.positions > 0)
     : []
 
   const body = company ? (
@@ -74,38 +120,139 @@ export function TechParkCompanyPage({ standalone = false }: TechParkCompanyPageP
         <Row gutter={[24, 24]}>
           <Col xs={24} lg={15}>
             <Card className="techpark-company-detail__card" variant="borderless">
-              <Typography.Title level={3}>{text.whatTheyDo}</Typography.Title>
-              <Typography.Paragraph>
-                {localize(companySectorDescriptions[company.sector], language)}
-              </Typography.Paragraph>
+              <Typography.Title level={3}>{text.about}</Typography.Title>
+              <Typography.Paragraph>{localize(company.about, language)}</Typography.Paragraph>
+
+              <Typography.Text type="secondary">{text.expertiseTitle}</Typography.Text>
+              <Flex gap={8} wrap className="techpark-company-detail__expertise">
+                {company.expertise.map((area) => (
+                  <Tag key={area.en}>{localize(area, language)}</Tag>
+                ))}
+              </Flex>
+            </Card>
+
+            <Card className="techpark-company-detail__card" variant="borderless">
+              <Typography.Title level={3}>{text.workTitle}</Typography.Title>
+              {work.map((entry) => (
+                <div className="techpark-entry" key={entry.name}>
+                  <Flex justify="space-between" align="center" gap={12} wrap>
+                    <Flex align="center" gap={8} wrap>
+                      <Typography.Text strong>{entry.name}</Typography.Text>
+                      <Tag variant="filled">
+                        {entry.kind === 'product' ? text.productLabel : text.projectLabel}
+                      </Tag>
+                    </Flex>
+                    {/* Only a project is dated: a product is still being sold. */}
+                    {entry.kind === 'project' ? (
+                      <Typography.Text type="secondary">{entry.year}</Typography.Text>
+                    ) : null}
+                  </Flex>
+                  <Typography.Text type="secondary">
+                    {localize(entry.summary, language)}
+                  </Typography.Text>
+                </div>
+              ))}
             </Card>
 
             <Card className="techpark-company-detail__card" variant="borderless">
               <Typography.Title level={3}>{text.openRolesTitle}</Typography.Title>
-              {company.hiring ? (
+              {vacancies.length > 0 ? (
                 <>
                   <Typography.Paragraph>
                     {language === 'tr'
                       ? `${company.openRoles} açık pozisyon, ${company.building} binasında.`
-                      : `${company.openRoles} open roles, in building ${company.building}.`}
+                      : `${company.openRoles} open roles, in building ${company.building}.`}{' '}
+                    {text.openRolesLead}
                   </Typography.Paragraph>
-                  <Typography.Text type="secondary">{text.typicalRoles}</Typography.Text>
-                  <Flex gap={8} wrap className="techpark-company-detail__roles">
-                    {companySectorRoles[company.sector].map((role) => (
-                      <Tag key={role.en}>{localize(role, language)}</Tag>
-                    ))}
-                  </Flex>
+                  <Collapse
+                    className="techpark-vacancies"
+                    items={vacancies.map(({ role, positions }) => ({
+                      key: role.id,
+                      label: (
+                        <Flex justify="space-between" align="center" gap={12} wrap>
+                          <Typography.Text strong>{localize(role.title, language)}</Typography.Text>
+                          <Flex gap={8} wrap>
+                            <Tag variant="filled">
+                              {localize(roleLevelLabels[role.level], language)}
+                            </Tag>
+                            <Tag variant="filled">
+                              {positions === 1
+                                ? text.positionsOne
+                                : `${positions} ${text.positionsMany}`}
+                            </Tag>
+                          </Flex>
+                        </Flex>
+                      ),
+                      children: (
+                        <>
+                          <Typography.Paragraph>
+                            {localize(role.summary, language)}
+                          </Typography.Paragraph>
+                          <Typography.Text type="secondary">{text.skillsLabel}</Typography.Text>
+                          <Flex gap={8} wrap className="techpark-vacancy__skills">
+                            {role.skills.map((skill) => (
+                              <Tag key={skill.en}>{localize(skill, language)}</Tag>
+                            ))}
+                          </Flex>
+                          {/*
+                            One address per role rather than one for the company: the subject
+                            line is what tells the team which posting the mail is about.
+                          */}
+                          <Button
+                            type="primary"
+                            icon={<MailOutlined />}
+                            href={`mailto:${company.email}?subject=${encodeURIComponent(
+                              `${localize(role.title, language)} — ${company.name}`,
+                            )}`}
+                          >
+                            {text.applyLabel}
+                          </Button>
+                        </>
+                      ),
+                    }))}
+                  />
                 </>
               ) : (
                 <Typography.Paragraph type="secondary">{text.openRolesNone}</Typography.Paragraph>
               )}
-              <Button type="primary" icon={<MailOutlined />}>
-                {text.contactCompany}
-              </Button>
             </Card>
           </Col>
 
           <Col xs={24} lg={9}>
+            <Card className="techpark-company-detail__card" variant="borderless">
+              <Typography.Title level={4}>{text.contactTitle}</Typography.Title>
+              <Space orientation="vertical" size={12} className="techpark-contact">
+                <a className="techpark-contact__row" href={`https://${company.website}`}>
+                  <GlobalOutlined />
+                  <span>
+                    <Typography.Text type="secondary">{text.websiteLabel}</Typography.Text>
+                    <Typography.Text strong>{company.website}</Typography.Text>
+                  </span>
+                </a>
+                <a className="techpark-contact__row" href={`mailto:${company.email}`}>
+                  <MailOutlined />
+                  <span>
+                    <Typography.Text type="secondary">{text.emailLabel}</Typography.Text>
+                    <Typography.Text strong>{company.email}</Typography.Text>
+                  </span>
+                </a>
+                {/* tel: strips the spaces the printed number keeps for readability. */}
+                <a
+                  className="techpark-contact__row"
+                  href={`tel:${company.phone.replace(/\s/g, '')}`}
+                >
+                  <PhoneOutlined />
+                  <span>
+                    <Typography.Text type="secondary">{text.phoneLabel}</Typography.Text>
+                    <Typography.Text strong>{company.phone}</Typography.Text>
+                  </span>
+                </a>
+              </Space>
+              <Button type="primary" icon={<MailOutlined />} href={`mailto:${company.email}`}>
+                {text.contactCompany}
+              </Button>
+            </Card>
+
             <Card className="techpark-company-detail__card" variant="borderless">
               <Typography.Title level={4}>{text.atAGlance}</Typography.Title>
               <Descriptions

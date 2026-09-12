@@ -477,8 +477,69 @@
   box-shadow: none;
 }
 
-.techpark-company-detail__roles {
-  margin-block: 10px 22px;
+.techpark-vacancies {
+  margin-top: 8px;
+  background: transparent;
+}
+
+/* The header carries a title and two tags, so it needs the full width of the panel. */
+.techpark-vacancies .ant-collapse-header-text {
+  flex: 1;
+}
+
+.techpark-vacancy__skills {
+  margin-block: 10px 20px;
+}
+
+.techpark-company-detail__expertise {
+  margin-top: 10px;
+}
+
+/* Products and projects are the same shape: a name, and a line saying what it is. */
+.techpark-entry {
+  padding-block: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--ant-color-border-secondary);
+}
+
+.techpark-entry:last-child {
+  padding-bottom: 0;
+}
+
+.techpark-contact {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.techpark-contact__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+  /* The address can be longer than the card; it wraps rather than widening it. */
+  overflow-wrap: anywhere;
+}
+
+.techpark-contact__row > span:last-child > .ant-typography {
+  display: block;
+}
+
+.techpark-contact__row:hover .ant-typography:last-child {
+  color: var(--ant-color-primary);
+}
+
+.techpark-contact__row .anticon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  color: var(--ant-color-primary);
+  background: color-mix(in srgb, var(--ant-color-primary) 10%, white);
 }
 
 .techpark-neighbours {
