@@ -38,6 +38,37 @@ Two events at the same hour have to share the column. The rule:
 than by looking at the screen: a lane is reused once its event ends, back-to-back events
 stay full width, and an event shorter than 30 minutes is lifted to a readable height.
 
+## All-day events, including the ones that span days
+
+An all-day event has no place on an hour axis, so it lives in its own row above the grid.
+It may also end on a later date than it starts on, which is the difference between a public
+holiday, a three-day conference, and a week of leave.
+
+Membership is a string comparison rather than a date-library call, because `YYYY-MM-DD` is
+already ordered:
+
+```ts
+export function occursOn(event: CalendarEvent, day: string): boolean {
+  if (!event.allDay) return isoDate(event.start) === day
+
+  return day >= isoDate(event.start) && day <= isoDate(event.end)
+}
+```
+
+A multi-day event is stored as **one** event with a later end date, not as one event per
+day. That is what lets the week view draw it as a single band: `layoutAllDay()` finds the
+first and last visible day it covers and returns a grid span, so the markup is one element
+across three columns rather than three chips with seams between them.
+
+It also clips. An event that started before the first visible day keeps the part of it that
+is in view instead of disappearing — which is why `eventsInRange` generates the week before
+the range and filters on overlap rather than on where an event starts.
+
+Bands that overlap take their own lane, by the same greedy rule the timed events use.
+
+The month grid does not span; a chip appears on each day the event covers. Spanning there
+would mean breaking out of the cell each chip lives in, for a row that is already dense.
+
 ## Minutes to pixels
 
 One constant does the conversion:

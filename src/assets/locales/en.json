@@ -745,7 +745,9 @@
       "dentist": "Dentist",
       "offsite": "Team offsite",
       "holiday": "Public holiday",
-      "conference": "React conference"
-    }
+      "conference": "React conference",
+      "vacation": "Annual leave"
+    },
+    "dayCount": "{count} days"
   }
 }

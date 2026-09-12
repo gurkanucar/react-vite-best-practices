@@ -59,7 +59,8 @@ export function FilesPage() {
 
   return (
     <div className="admin-page">
-      <PageHeader title={messages.files.title} description={messages.files.description} />
+      {/* Description commented out rather than deleted: not worth the space on this screen. */}
+      <PageHeader title={messages.files.title} /* description={messages.files.description} */ />
 
       <Row gutter={[16, 16]}>
         <Col xs={24} lg={7} xl={6}>

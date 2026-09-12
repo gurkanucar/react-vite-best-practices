@@ -15,7 +15,8 @@ export function DocumentsPage() {
     <div className="admin-page">
       <PageHeader
         title={messages.documents.title}
-        description={messages.documents.description}
+        // Commented out rather than deleted: available, just not worth the space on this screen.
+        // description={messages.documents.description}
         extra={
           documentQuery.data && (
             <Button

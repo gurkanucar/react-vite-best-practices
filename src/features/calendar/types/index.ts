@@ -9,12 +9,73 @@ export interface CalendarEvent {
   /** A translation key under `calendar.events`. */
   titleId: string
   category: EventCategory
-  /** Local ISO instants, `YYYY-MM-DDTHH:mm`. */
+  /**
+   * Local ISO instants, `YYYY-MM-DDTHH:mm`. An all-day event may end on a later date than
+   * it starts on; a timed one may not.
+   */
   start: string
   end: string
   location?: string
   attendees: string[]
   allDay?: boolean
+}
+
+/** The date part of a local ISO stamp, which is also a sortable, comparable string. */
+export function isoDate(stamp: string): string {
+  return stamp.slice(0, 10)
+}
+
+/**
+ * Whether an event belongs on a given day. A timed event belongs to the one day it starts
+ * on; an all-day event belongs to every day from its start date through its end date, which
+ * is what lets one span a week. Comparing `YYYY-MM-DD` strings is exact and ordered, so no
+ * date library is needed to answer it.
+ */
+export function occursOn(event: CalendarEvent, day: string): boolean {
+  if (!event.allDay) return isoDate(event.start) === day
+
+  return day >= isoDate(event.start) && day <= isoDate(event.end)
+}
+
+export interface AllDayBand {
+  event: CalendarEvent
+  /** Index into the visible days where the band starts, and how many it covers. */
+  from: number
+  span: number
+  /** Row within the all-day area; bands that overlap get their own. */
+  lane: number
+}
+
+/**
+ * Places all-day events across a set of visible days. An event that started before the
+ * first visible day is clipped to it rather than dropped, which is what keeps the middle
+ * of a week-long event visible in a week that does not contain its start.
+ */
+export function layoutAllDay(events: CalendarEvent[], days: string[]): AllDayBand[] {
+  const laneEnds: number[] = []
+
+  return events
+    .filter((event) => event.allDay && days.some((day) => occursOn(event, day)))
+    .sort((left, right) => left.start.localeCompare(right.start))
+    .map((event) => {
+      const from = days.findIndex((day) => occursOn(event, day))
+      const lastIndex = days.findLastIndex((day) => occursOn(event, day))
+      const span = lastIndex - from + 1
+      const lane = laneEnds.findIndex((end) => end <= from)
+      const index = lane === -1 ? laneEnds.length : lane
+
+      laneEnds[index] = from + span
+
+      return { event, from, span, lane: index }
+    })
+}
+
+/** How many days an all-day event covers, used to size it across a week. */
+export function spanInDays(event: CalendarEvent): number {
+  const start = Date.parse(`${isoDate(event.start)}T00:00:00`)
+  const end = Date.parse(`${isoDate(event.end)}T00:00:00`)
+
+  return Math.round((end - start) / 86_400_000) + 1
 }
 
 /** An event placed in a day column: where it sits and how wide it is when it overlaps. */

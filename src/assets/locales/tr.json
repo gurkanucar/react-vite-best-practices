@@ -745,7 +745,9 @@
       "dentist": "Diş hekimi",
       "offsite": "Takım kampı",
       "holiday": "Resmî tatil",
-      "conference": "React konferansı"
-    }
+      "conference": "React konferansı",
+      "vacation": "Yıllık izin"
+    },
+    "dayCount": "{count} gün"
   }
 }

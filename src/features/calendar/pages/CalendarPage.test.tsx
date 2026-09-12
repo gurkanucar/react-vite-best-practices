@@ -91,6 +91,28 @@ describe('CalendarPage', () => {
     expect(screen.getByRole('radio', { name: 'Day' })).toBeChecked()
   })
 
+  it('draws a multi-day event as one band across the days it covers', () => {
+    // The React conference runs Wednesday to Friday of this week.
+    const { container } = renderAt('?view=week&date=2026-09-16')
+
+    const band = within(container.querySelector('.calendar-allday-track') as HTMLElement).getByText(
+      'React conference',
+    )
+
+    expect(band.style.gridColumn).toBe('4 / span 3')
+  })
+
+  it('clips a band to the visible week rather than dropping it', () => {
+    // Annual leave starts on the Monday of the week before and runs seven days.
+    const { container } = renderAt('?view=week&date=2026-09-09')
+
+    const band = within(container.querySelector('.calendar-allday-track') as HTMLElement).getByText(
+      'Annual leave',
+    )
+
+    expect(band.style.gridColumn).toBe('1 / span 1')
+  })
+
   it('shows all-day events in their own row, out of the time grid', () => {
     const { container } = renderAt('?view=week&date=2026-09-25')
 

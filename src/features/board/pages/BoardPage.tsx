@@ -53,7 +53,8 @@ export function BoardPage() {
   if (boardQuery.isPending) {
     return (
       <div className="admin-page">
-        <PageHeader title={messages.board.title} description={messages.board.description} />
+        {/* Commented out rather than deleted: the description is available, just not worth the space here. */}
+        <PageHeader title={messages.board.title} /* description={messages.board.description} */ />
         <LoadingState />
       </div>
     )
@@ -138,7 +139,8 @@ export function BoardPage() {
     <div className="admin-page">
       <PageHeader
         title={messages.board.title}
-        description={messages.board.description}
+        // Commented out rather than deleted: available, just not worth the space on this screen.
+        // description={messages.board.description}
         extra={
           <Tooltip title={messages.board.simulateFailureHint}>
             <Flex align="center" gap={8}>

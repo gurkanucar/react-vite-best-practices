@@ -81,11 +81,20 @@ html[data-theme='dark'] .admin-workspace {
 }
 
 .page-heading {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .page-heading > div:first-child {
   max-width: 700px;
+}
+
+/*
+ * The title and its description carry Ant Design's own bottom margins, which stack with
+ * the gap below the header. Dropping the last one keeps the heading close to the content
+ * it introduces — and closer still on the screens that show no description at all.
+ */
+.page-heading :where(h1, .ant-typography):last-child {
+  margin-bottom: 0;
 }
 
 .metric-panel,
@@ -355,10 +364,23 @@ html[data-theme='dark'] .admin-workspace {
 }
 
 .calendar-timegrid__header,
-.calendar-timegrid__allday,
 .calendar-timegrid__canvas {
   display: grid;
   grid-template-columns: 64px repeat(var(--day-count), minmax(0, 1fr));
+}
+
+/* The gutter, then one track holding the bands so they can span across days. */
+.calendar-timegrid__allday {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+}
+
+.calendar-allday-track {
+  display: grid;
+  grid-template-columns: repeat(var(--day-count), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--lane-count), auto);
+  gap: 2px;
+  padding: 4px 0;
 }
 
 .calendar-timegrid__header {
@@ -427,10 +449,6 @@ html[data-theme='dark'] .admin-workspace {
 
 .calendar-allday-cell {
   border-inline-start: 1px solid var(--ant-color-border-secondary);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 4px;
 }
 
 /* The body scrolls, the header above it does not, so the days stay in view. */

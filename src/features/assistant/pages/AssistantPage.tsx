@@ -39,7 +39,8 @@ export function AssistantPage() {
     <div className="admin-page">
       <PageHeader
         title={messages.assistant.title}
-        description={messages.assistant.description}
+        // Commented out rather than deleted: available, just not worth the space on this screen.
+        // description={messages.assistant.description}
         extra={
           chat.messages.length > 0 && (
             <Button icon={<ClearOutlined aria-hidden="true" />} onClick={chat.clear}>

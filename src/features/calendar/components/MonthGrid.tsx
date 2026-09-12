@@ -1,6 +1,6 @@
 import { Typography } from 'antd'
 import dayjs from 'dayjs'
-import { categoryTokens, type CalendarEvent } from '@/features/calendar/types'
+import { categoryTokens, occursOn, type CalendarEvent } from '@/features/calendar/types'
 import { useMessages } from '@/i18n/messages'
 
 /** Past this many a cell shows a counter instead, so rows keep an even height. */
@@ -37,7 +37,8 @@ export function MonthGrid({ days, events, month, onSelectEvent, onOpenDay }: Mon
       <div className="calendar-month__grid">
         {days.map((day) => {
           const dayEvents = events
-            .filter((event) => dayjs(event.start).isSame(day, 'day'))
+            // An all-day event belongs to every day it covers, not only the one it starts on.
+            .filter((event) => occursOn(event, day.format('YYYY-MM-DD')))
             .sort((left, right) => {
               if (left.allDay !== right.allDay) return left.allDay ? -1 : 1
               return left.start.localeCompare(right.start)

@@ -44,7 +44,10 @@ export function CalendarPage() {
 
   return (
     <div className="admin-page">
-      <PageHeader title={messages.calendar.title} description={messages.calendar.description} />
+      {/* Description commented out rather than deleted: not worth the space on this screen. */}
+      <PageHeader
+        title={messages.calendar.title} /* description={messages.calendar.description} */
+      />
 
       <Card className="dashboard-panel calendar-panel">
         <CalendarToolbar

@@ -23,6 +23,8 @@ interface EventTemplate {
   location?: string
   attendees: string[]
   allDay?: boolean
+  /** How many days an all-day event covers, counting the day it starts on. */
+  spanDays?: number
   /** Repeat every N weeks rather than every week, so a month does not read as one week copied six times. */
   everyNWeeks?: number
   /** Which of those N weeks it falls in. */
@@ -172,16 +174,54 @@ const templates: EventTemplate[] = [
     weekOffset: 2,
   },
 
+  // All-day events, one of each shape: a single day, a long weekend, and a whole week.
+  {
+    titleId: 'holiday',
+    category: 'personal',
+    weekdays: [MONDAY],
+    start: '00:00',
+    end: '23:59',
+    attendees: [],
+    allDay: true,
+    everyNWeeks: 4,
+    weekOffset: 1,
+  },
   {
     titleId: 'offsite',
     category: 'personal',
     weekdays: [FRIDAY],
     start: '00:00',
     end: '23:59',
-    attendees: [],
+    location: 'Lisbon',
+    attendees: ['Maya Chen', 'Noah Williams', 'Ava Patel'],
     allDay: true,
     everyNWeeks: 4,
     weekOffset: 3,
+  },
+  {
+    titleId: 'conference',
+    category: 'review',
+    weekdays: [WEDNESDAY],
+    start: '00:00',
+    end: '23:59',
+    location: 'Berlin',
+    attendees: ['Maya Chen', 'Ava Patel'],
+    allDay: true,
+    spanDays: 3,
+    everyNWeeks: 4,
+    weekOffset: 2,
+  },
+  {
+    titleId: 'vacation',
+    category: 'personal',
+    weekdays: [MONDAY],
+    start: '00:00',
+    end: '23:59',
+    attendees: ['Noah Williams'],
+    allDay: true,
+    spanDays: 7,
+    everyNWeeks: 4,
+    weekOffset: 0,
   },
 ]
 
@@ -216,14 +256,18 @@ export function eventsForWeek(weekStart: dayjs.Dayjs): CalendarEvent[] {
       // The offset into this week that lands on the wanted weekday, whichever day the
       // locale starts the week on.
       const offset = (weekday - weekStart.day() + 7) % 7
-      const date = weekStart.add(offset, 'day').format('YYYY-MM-DD')
+      const startDay = weekStart.add(offset, 'day')
+      const date = startDay.format('YYYY-MM-DD')
+      // A multi-day event is one event with a later end date, not one event per day: that
+      // is what lets the week view draw it as a single band and the detail show a range.
+      const endDate = startDay.add((template.spanDays ?? 1) - 1, 'day').format('YYYY-MM-DD')
 
       events.push({
         id: `${template.titleId}-${date}`,
         titleId: template.titleId,
         category: template.category,
         start: `${date}T${template.start}`,
-        end: `${date}T${template.end}`,
+        end: `${endDate}T${template.end}`,
         location: template.location,
         attendees: template.attendees,
         allDay: template.allDay,
@@ -234,19 +278,32 @@ export function eventsForWeek(weekStart: dayjs.Dayjs): CalendarEvent[] {
   return events
 }
 
-/** Every event starting inside the given range, assembled week by week. */
+/**
+ * Every event overlapping the given range, assembled week by week. Overlap rather than
+ * "starts inside": a week-long event that began before the range still belongs on the days
+ * of it that fall inside. The week before is generated too, for the same reason.
+ */
 export function eventsInRange(rangeStart: dayjs.Dayjs, rangeEnd: dayjs.Dayjs): CalendarEvent[] {
   const events: CalendarEvent[] = []
-  let cursor = rangeStart.startOf('day')
+  let cursor = rangeStart.startOf('day').subtract(7, 'day')
 
   while (cursor.isBefore(rangeEnd)) {
     events.push(...eventsForWeek(cursor))
     cursor = cursor.add(7, 'day')
   }
 
-  return events.filter((event) => {
-    const start = dayjs(event.start)
+  const seen = new Set<string>()
 
-    return !start.isBefore(rangeStart) && start.isBefore(rangeEnd)
+  return events.filter((event) => {
+    if (seen.has(event.id)) return false
+
+    const start = dayjs(event.start)
+    const end = dayjs(event.end)
+
+    if (start.isAfter(rangeEnd) || end.isBefore(rangeStart)) return false
+
+    seen.add(event.id)
+
+    return true
   })
 }

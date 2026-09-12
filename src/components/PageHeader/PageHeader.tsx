@@ -3,7 +3,8 @@ import type { ReactNode } from 'react'
 
 interface PageHeaderProps {
   title: string
-  description: string
+  /** Optional: screens where the title carries enough leave it off to save the space. */
+  description?: string
   extra?: ReactNode
 }
 
@@ -12,7 +13,7 @@ export function PageHeader({ title, description, extra }: PageHeaderProps) {
     <Flex className="page-heading" align="start" justify="space-between" gap={24} wrap>
       <div>
         <Typography.Title level={1}>{title}</Typography.Title>
-        <Typography.Paragraph>{description}</Typography.Paragraph>
+        {description && <Typography.Paragraph>{description}</Typography.Paragraph>}
       </div>
       {extra}
     </Flex>

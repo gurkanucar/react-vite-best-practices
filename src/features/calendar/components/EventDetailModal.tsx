@@ -1,12 +1,27 @@
 import { ClockCircleOutlined, EnvironmentOutlined, TeamOutlined } from '@ant-design/icons'
 import { Descriptions, Modal, Tag } from 'antd'
 import dayjs from 'dayjs'
-import { categoryTokens, type CalendarEvent } from '@/features/calendar/types'
+import { categoryTokens, spanInDays, type CalendarEvent } from '@/features/calendar/types'
 import { useMessages } from '@/i18n/messages'
 
 interface EventDetailModalProps {
   event: CalendarEvent | null
   onClose: () => void
+}
+
+/** A one-day event names its day; a multi-day one names both ends and how long it runs. */
+function formatWhen(event: CalendarEvent, allDayLabel: string, dayCountLabel: string): string {
+  if (!event.allDay) {
+    return `${dayjs(event.start).format('D MMMM YYYY HH:mm')} – ${dayjs(event.end).format('HH:mm')}`
+  }
+
+  const days = spanInDays(event)
+
+  if (days === 1) {
+    return `${dayjs(event.start).format('D MMMM YYYY')} · ${allDayLabel}`
+  }
+
+  return `${dayjs(event.start).format('D MMM')} – ${dayjs(event.end).format('D MMM YYYY')} · ${dayCountLabel.replace('{count}', String(days))}`
 }
 
 export function EventDetailModal({ event, onClose }: EventDetailModalProps) {
@@ -32,9 +47,7 @@ export function EventDetailModal({ event, onClose }: EventDetailModalProps) {
               </>
             }
           >
-            {event.allDay
-              ? `${dayjs(event.start).format('D MMMM YYYY')} · ${messages.calendar.allDay}`
-              : `${dayjs(event.start).format('D MMMM YYYY HH:mm')} – ${dayjs(event.end).format('HH:mm')}`}
+            {formatWhen(event, messages.calendar.allDay, messages.calendar.dayCount)}
           </Descriptions.Item>
 
           {event.location && (
