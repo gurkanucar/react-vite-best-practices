@@ -7,6 +7,7 @@ import {
   LoginPage,
   NotFoundPage,
   OtpPage,
+  PostsPage,
   RegisterPage,
   RouteErrorPage,
   SettingsPage,
@@ -93,6 +94,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <SurveyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'posts',
+        element: (
+          <RouteSuspense>
+            <PostsPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

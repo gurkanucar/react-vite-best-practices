@@ -52,16 +52,23 @@ Keeping the mapping in TypeScript avoids maintaining separate alias definitions 
 
 ```text
 src/
-├── assets/       # Images and other imported static assets
-├── components/   # Reusable UI components
+├── app/          # Application providers and composition
+├── assets/       # Images, locale files, and imported static assets
+├── components/   # Reusable cross-feature UI components
 ├── config/       # Validated application configuration
-├── App.tsx       # Current application shell
-├── index.css     # Global styles and design tokens
+├── features/     # Domain packages with their own API, model, queries, and UI
+├── lib/          # Framework and transport infrastructure shared by features
+├── pages/        # Route pages not owned by one domain feature
+├── router/       # Lazy route definitions and Suspense boundaries
+├── store/        # Client-owned Zustand state
+├── theme/        # Ant Design providers and theme presets
+├── App.tsx       # Admin application shell
+├── index.css     # Global layout styles
 ├── main.tsx      # Browser entry point
 └── vite-env.d.ts # Vite and application global types
 ```
 
-Add directories such as `features`, `pages`, `hooks`, or `services` only when the application has code that belongs in them. Empty architecture folders add ceremony without improving structure.
+Add directories only when the application has code that belongs in them. Empty architecture folders add ceremony without improving structure. The `posts` package in `src/features` is the reference for feature-owned server state; see [017 — TanStack Query, API Access, and Cache Keys](./017-tanstack-query-api-and-cache.md).
 
 ## Reference
 

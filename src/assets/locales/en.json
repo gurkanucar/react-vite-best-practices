@@ -4,6 +4,7 @@
     "dashboard": "Dashboard",
     "components": "Components",
     "survey": "Survey",
+    "apiData": "API data",
     "configuration": "Configuration",
     "appearance": "Appearance",
     "persistedState": "Persisted state"
@@ -161,6 +162,27 @@
     "reset": "Reset form",
     "submitted": "Example feedback submitted.",
     "exampleNotice": "This page is a front-end example and does not send data to a server."
+  },
+  "posts": {
+    "title": "TanStack Query API",
+    "description": "Server state, caching, mutations, and targeted invalidation in a feature-based package.",
+    "listTitle": "JSONPlaceholder posts",
+    "demoNotice": "JSONPlaceholder is a public demo API. Write operations are simulated and are not persisted on its server.",
+    "cacheKey": "Active cache key",
+    "invalidate": "Invalidate cache",
+    "invalidated": "The post-list cache was invalidated and refreshed.",
+    "create": "Create demo post",
+    "created": "The simulated post was created and related lists were invalidated.",
+    "createError": "The demo post could not be created.",
+    "loadError": "Posts could not be loaded",
+    "empty": "No posts were returned.",
+    "retry": "Try again",
+    "cached": "Cached by TanStack Query",
+    "resultCount": "{count} posts returned",
+    "id": "ID",
+    "titleColumn": "Title",
+    "body": "Body",
+    "user": "User"
   },
   "notFound": {
     "title": "Page not found",

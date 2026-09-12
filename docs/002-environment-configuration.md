@@ -65,6 +65,8 @@ console.log(env.apiBaseUrl)
 console.log(env.mode)
 ```
 
+The checked-in demo modes currently use JSONPlaceholder as `apiBaseUrl`. API features consume the normalized value through `src/lib/api/api-client.ts`, so switching to a real service only requires changing environment configuration rather than endpoint components.
+
 `src/config/env.ts` validates required values immediately. A missing value therefore produces a clear startup error instead of failing later in an unrelated feature.
 
 ## Adding a new environment variable

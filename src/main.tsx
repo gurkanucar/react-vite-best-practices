@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router/dom'
 import 'antd/dist/reset.css'
+import { QueryProvider } from '@/app/providers/QueryProvider'
 import { ErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary'
 import { reportError } from '@/errors/error'
 import { router } from '@/router/router'
@@ -27,9 +28,11 @@ createRoot(rootElement, {
 }).render(
   <StrictMode>
     <ErrorBoundary>
-      <AppThemeProvider>
-        <RouterProvider router={router} />
-      </AppThemeProvider>
+      <QueryProvider>
+        <AppThemeProvider>
+          <RouterProvider router={router} />
+        </AppThemeProvider>
+      </QueryProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

@@ -27,6 +27,7 @@
     "@ant-design/charts": "^2.6.7",
     "@ant-design/icons": "^6.3.4",
     "@rc-component/util": "^1.13.0",
+    "@tanstack/react-query": "^5.102.8",
     "antd": "^6.6.2",
     "antd-style": "^4.1.0",
     "clsx": "^2.1.1",

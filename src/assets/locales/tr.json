@@ -4,6 +4,7 @@
     "dashboard": "Kontrol paneli",
     "components": "Bileşenler",
     "survey": "Anket",
+    "apiData": "API verileri",
     "configuration": "Yapılandırma",
     "appearance": "Görünüm",
     "persistedState": "Kalıcı durum"
@@ -161,6 +162,27 @@
     "reset": "Formu sıfırla",
     "submitted": "Örnek geri bildirim gönderildi.",
     "exampleNotice": "Bu sayfa bir ön yüz örneğidir ve sunucuya veri göndermez."
+  },
+  "posts": {
+    "title": "TanStack Query API",
+    "description": "Feature-based bir paket içinde sunucu durumu, önbellekleme, mutation ve hedefli invalidation.",
+    "listTitle": "JSONPlaceholder gönderileri",
+    "demoNotice": "JSONPlaceholder herkese açık bir demo API'dir. Yazma işlemleri simüle edilir ve sunucuda kalıcı olmaz.",
+    "cacheKey": "Aktif cache key",
+    "invalidate": "Cache'i geçersiz kıl",
+    "invalidated": "Gönderi listesi cache'i geçersiz kılındı ve yenilendi.",
+    "create": "Demo gönderi oluştur",
+    "created": "Demo gönderi oluşturuldu ve ilgili listeler geçersiz kılındı.",
+    "createError": "Demo gönderi oluşturulamadı.",
+    "loadError": "Gönderiler yüklenemedi",
+    "empty": "Hiç gönderi dönmedi.",
+    "retry": "Tekrar dene",
+    "cached": "TanStack Query tarafından cache'lendi",
+    "resultCount": "{count} gönderi döndü",
+    "id": "ID",
+    "titleColumn": "Başlık",
+    "body": "İçerik",
+    "user": "Kullanıcı"
   },
   "notFound": {
     "title": "Sayfa bulunamadı",
