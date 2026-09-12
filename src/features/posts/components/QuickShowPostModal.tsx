@@ -1,5 +1,6 @@
-import { Alert, Button, Flex, Modal, Spin, Typography } from 'antd'
+import { Alert, Button, Flex, Modal } from 'antd'
 import { Link } from 'react-router'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PostDetails } from '@/features/posts/components/PostDetails'
 import { usePostQuery } from '@/features/posts/hooks'
 import { useMessages } from '@/i18n/messages'
@@ -31,14 +32,7 @@ export function QuickShowPostModal({ postId, onClose }: QuickShowPostModalProps)
         </Flex>
       }
     >
-      {postQuery.isPending && (
-        <output>
-          <Flex align="center" justify="center" gap={12}>
-            <Spin />
-            <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-          </Flex>
-        </output>
-      )}
+      {postQuery.isPending && <LoadingState />}
 
       {postQuery.isError && (
         <Alert

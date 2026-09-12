@@ -14,6 +14,8 @@ export interface PreferencesState {
   colorMode: ColorMode
   compact: boolean
   visualTheme: VisualTheme
+  /** Column keys the reader has hidden, keyed by table. */
+  hiddenColumns: Record<string, string[]>
 }
 
 interface PreferencesActions {
@@ -21,6 +23,7 @@ interface PreferencesActions {
   setColorMode: (colorMode: ColorMode) => void
   setCompact: (compact: boolean) => void
   setVisualTheme: (visualTheme: VisualTheme) => void
+  setHiddenColumns: (tableKey: string, columnKeys: string[]) => void
   resetPreferences: () => void
 }
 
@@ -28,6 +31,7 @@ export type PreferencesStore = PreferencesState & PreferencesActions
 
 export const initialPreferences: PreferencesState = {
   language: 'en',
+  hiddenColumns: {},
   ...defaultThemePreferences,
 }
 
@@ -45,6 +49,17 @@ function isVisualTheme(value: unknown): value is VisualTheme {
   return visualThemeOptions.some((option) => option.value === value)
 }
 
+function isHiddenColumns(value: unknown): value is Record<string, string[]> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    !Array.isArray(value) &&
+    Object.values(value).every(
+      (entry) => Array.isArray(entry) && entry.every((key) => typeof key === 'string'),
+    )
+  )
+}
+
 function mergePersistedPreferences(
   persistedState: unknown,
   currentState: PreferencesStore,
@@ -59,6 +74,9 @@ function mergePersistedPreferences(
     visualTheme: isVisualTheme(persisted.visualTheme)
       ? persisted.visualTheme
       : currentState.visualTheme,
+    hiddenColumns: isHiddenColumns(persisted.hiddenColumns)
+      ? persisted.hiddenColumns
+      : currentState.hiddenColumns,
   }
 }
 
@@ -70,6 +88,8 @@ export const usePreferencesStore = create<PreferencesStore>()(
       setColorMode: (colorMode) => set({ colorMode }),
       setCompact: (compact) => set({ compact }),
       setVisualTheme: (visualTheme) => set({ visualTheme }),
+      setHiddenColumns: (tableKey, columnKeys) =>
+        set((state) => ({ hiddenColumns: { ...state.hiddenColumns, [tableKey]: columnKeys } })),
       resetPreferences: () => set(initialPreferences),
     }),
     {
@@ -77,11 +97,12 @@ export const usePreferencesStore = create<PreferencesStore>()(
       version: 1,
       storage: createJSONStorage(() => localStorage),
       merge: mergePersistedPreferences,
-      partialize: ({ language, colorMode, compact, visualTheme }) => ({
+      partialize: ({ language, colorMode, compact, visualTheme, hiddenColumns }) => ({
         language,
         colorMode,
         compact,
         visualTheme,
+        hiddenColumns,
       }),
     },
   ),

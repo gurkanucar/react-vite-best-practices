@@ -10,7 +10,6 @@ import {
   Input,
   Pagination,
   Space,
-  Spin,
   Table,
   Tag,
   Typography,
@@ -19,6 +18,9 @@ import type { TableProps } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
+import { ColumnVisibilityButton } from '@/components/ColumnVisibility/ColumnVisibilityButton'
+import { useColumnVisibility } from '@/components/ColumnVisibility/useColumnVisibility'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { QuickShowProductModal } from '@/features/products/components'
 import { useProductCategoriesQuery, useProductsQuery } from '@/features/products/hooks'
@@ -39,6 +41,8 @@ export function ProductsListPage() {
   const queryClient = useQueryClient()
   const [searchParams, setSearchParams] = useSearchParams()
   const [quickShowProductId, setQuickShowProductId] = useState<number | null>(null)
+  const { hiddenKeys, resetColumns, toggleColumn, visibleColumns } =
+    useColumnVisibility<ProductDto>('products', ['id'])
 
   const pageParam = Number(searchParams.get('page'))
   const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1
@@ -140,6 +144,10 @@ export function ProductsListPage() {
     },
   ]
 
+  const columnOptions = columns
+    .filter((column) => column.key !== 'actions')
+    .map((column) => ({ key: String(column.key), label: String(column.title) }))
+
   const invalidateProducts = async () => {
     await queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEYS.lists() })
     void message.success(messages.products.invalidated)
@@ -213,13 +221,21 @@ export function ProductsListPage() {
         className="dashboard-panel"
         title={messages.products.listTitle}
         extra={
-          <Button
-            icon={<ReloadOutlined aria-hidden="true" />}
-            loading={productsQuery.isFetching}
-            onClick={() => void invalidateProducts()}
-          >
-            {messages.products.invalidate}
-          </Button>
+          <Flex gap={8} wrap>
+            <ColumnVisibilityButton
+              hiddenKeys={hiddenKeys}
+              options={columnOptions}
+              onReset={resetColumns}
+              onToggle={toggleColumn}
+            />
+            <Button
+              icon={<ReloadOutlined aria-hidden="true" />}
+              loading={productsQuery.isFetching}
+              onClick={() => void invalidateProducts()}
+            >
+              {messages.products.invalidate}
+            </Button>
+          </Flex>
         }
       >
         <Flex vertical gap={16}>
@@ -240,14 +256,7 @@ export function ProductsListPage() {
             </Typography.Text>
           </Typography.Text>
 
-          {productsQuery.isPending && (
-            <output>
-              <Flex align="center" justify="center" gap={12}>
-                <Spin />
-                <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-              </Flex>
-            </output>
-          )}
+          {productsQuery.isPending && <LoadingState />}
 
           {productsQuery.isError && (
             <Alert
@@ -270,7 +279,7 @@ export function ProductsListPage() {
           {productsQuery.isSuccess && productsQuery.data.products.length > 0 && (
             <>
               <Table<ProductDto>
-                columns={columns}
+                columns={visibleColumns(columns)}
                 dataSource={productsQuery.data.products}
                 loading={productsQuery.isFetching}
                 pagination={false}

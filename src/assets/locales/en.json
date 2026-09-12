@@ -276,6 +276,9 @@
     "colorTheme": "Color theme",
     "system": "System",
     "light": "Light",
-    "dark": "Dark"
+    "dark": "Dark",
+    "columns": "Columns",
+    "resetColumns": "Reset to defaults",
+    "apply": "Apply"
   }
 }

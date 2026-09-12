@@ -1,5 +1,6 @@
-import { Alert, App, Button, Drawer, Flex, Form, Spin, Typography } from 'antd'
+import { Alert, App, Button, Drawer, Flex, Form } from 'antd'
 import { useEffect } from 'react'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PostFormFields } from '@/features/posts/components/PostFormFields'
 import { usePostQuery, useUpdatePostMutation } from '@/features/posts/hooks'
 import type { UpdatePostRequest } from '@/features/posts/types'
@@ -63,14 +64,7 @@ export function QuickEditPostDrawer({ postId, onClose }: QuickEditPostDrawerProp
         </Flex>
       }
     >
-      {postQuery.isPending && (
-        <output>
-          <Flex align="center" justify="center" gap={12}>
-            <Spin />
-            <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-          </Flex>
-        </output>
-      )}
+      {postQuery.isPending && <LoadingState />}
 
       {postQuery.isError && (
         <Alert

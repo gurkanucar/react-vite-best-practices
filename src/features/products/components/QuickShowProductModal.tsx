@@ -1,5 +1,6 @@
-import { Alert, Button, Flex, Modal, Spin, Typography } from 'antd'
+import { Alert, Button, Flex, Modal } from 'antd'
 import { Link } from 'react-router'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { ProductDetails } from '@/features/products/components/ProductDetails'
 import { useProductQuery } from '@/features/products/hooks'
 import { useMessages } from '@/i18n/messages'
@@ -31,14 +32,7 @@ export function QuickShowProductModal({ productId, onClose }: QuickShowProductMo
         </Flex>
       }
     >
-      {productQuery.isPending && (
-        <output>
-          <Flex align="center" justify="center" gap={12}>
-            <Spin />
-            <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-          </Flex>
-        </output>
-      )}
+      {productQuery.isPending && <LoadingState />}
 
       {productQuery.isError && (
         <Alert

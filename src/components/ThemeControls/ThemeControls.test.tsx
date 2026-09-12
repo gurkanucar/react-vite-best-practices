@@ -36,6 +36,7 @@ describe('ThemeControls', () => {
       colorMode: 'dark',
       compact: true,
       visualTheme: 'illustration',
+      hiddenColumns: {},
     })
   })
 

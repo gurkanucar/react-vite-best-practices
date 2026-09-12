@@ -8,11 +8,26 @@ import {
   ThunderboltOutlined,
 } from '@ant-design/icons'
 import { useQueryClient } from '@tanstack/react-query'
-import { Alert, App, Button, Card, Dropdown, Empty, Flex, Spin, Table, Tag, Typography } from 'antd'
+import {
+  Alert,
+  App,
+  Button,
+  Card,
+  Dropdown,
+  Empty,
+  Flex,
+  InputNumber,
+  Table,
+  Tag,
+  Typography,
+} from 'antd'
 import type { MenuProps, TableProps } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { ColumnVisibilityButton } from '@/components/ColumnVisibility/ColumnVisibilityButton'
+import { useColumnVisibility } from '@/components/ColumnVisibility/useColumnVisibility'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
 import {
@@ -21,7 +36,12 @@ import {
   QuickEditPostDrawer,
   QuickShowPostModal,
 } from '@/features/posts/components'
-import { useDeletePostMutation, usePostFilterParams, usePostsQuery } from '@/features/posts/hooks'
+import {
+  useDeletePostMutation,
+  usePostCategoriesQuery,
+  usePostFilterParams,
+  usePostsQuery,
+} from '@/features/posts/hooks'
 import { isPostSortField, POST_QUERY_KEYS, type PostDto } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
 
@@ -34,7 +54,13 @@ export function PostsListPage() {
   // instead of showing controls that would silently do nothing.
   const filteringEnabled = FEATURE_FLAGS.mockPostsApi
   const { clearFilters, filters, hasActiveFilters, updateFilters, values } = usePostFilterParams()
+  // The ID is rarely what a reader needs, so it ships hidden and stays one click away.
+  const { hiddenKeys, resetColumns, toggleColumn, visibleColumns } = useColumnVisibility<PostDto>(
+    'posts',
+    ['id'],
+  )
   const postsQuery = usePostsQuery(filters)
+  const categoriesQuery = usePostCategoriesQuery(filteringEnabled)
   const deletePost = useDeletePostMutation()
   const [quickCreateOpen, setQuickCreateOpen] = useState(false)
   const [quickShowPostId, setQuickShowPostId] = useState<number | null>(null)
@@ -57,16 +83,47 @@ export function PostsListPage() {
       title: messages.posts.categoryColumn,
       dataIndex: 'category',
       key: 'category',
-      width: 160,
+      width: 180,
+      // The same filter is offered twice: here in the header and in the panel above.
+      // Both write `categories` to the URL, so neither can drift out of sync.
+      filters: (categoriesQuery.data ?? []).map((category: string) => ({
+        text: category,
+        value: category,
+      })),
+      filteredValue: values.categories.length > 0 ? values.categories : null,
       render: (category?: string) => (category ? <Tag>{category}</Tag> : '—'),
     },
     {
       title: messages.posts.viewsColumn,
       dataIndex: 'views',
       key: 'views',
-      width: 120,
+      width: 140,
       sorter: filteringEnabled,
       sortOrder: sortOrderFor('views'),
+      // A range does not fit the checkbox list antd renders by default, so the header
+      // filter supplies its own dropdown and writes the same parameters as the panel.
+      filteredValue: (values.minViews ?? values.maxViews) ? ['range'] : null,
+      filterDropdown: filteringEnabled
+        ? ({ confirm }) => (
+            <Flex vertical gap={8} style={{ padding: 8 }}>
+              <InputNumber
+                min={0}
+                placeholder={messages.posts.minPlaceholder}
+                value={values.minViews}
+                onChange={(minViews) => updateFilters({ minViews: minViews?.toString() })}
+              />
+              <InputNumber
+                min={0}
+                placeholder={messages.posts.maxPlaceholder}
+                value={values.maxViews}
+                onChange={(maxViews) => updateFilters({ maxViews: maxViews?.toString() })}
+              />
+              <Button size="small" type="primary" onClick={() => confirm({ closeDropdown: true })}>
+                {messages.common.apply}
+              </Button>
+            </Flex>
+          )
+        : undefined,
       render: (views?: number) => views?.toLocaleString() ?? '—',
     },
     {
@@ -149,17 +206,28 @@ export function PostsListPage() {
     })
   }
 
-  // Sorting is applied by the handler, so the table only reports it and the URL keeps it.
-  const updateSort: TableProps<PostDto>['onChange'] = (_pagination, _tableFilters, sorter) => {
+  // Sorting and header filters are applied by the handler, so the table only reports
+  // them and the URL keeps them.
+  const updateSortAndFilters: TableProps<PostDto>['onChange'] = (
+    _pagination,
+    tableFilters,
+    sorter,
+  ) => {
     const activeSorter = Array.isArray(sorter) ? sorter[0] : sorter
     const sortedField = activeSorter?.order ? String(activeSorter.columnKey) : null
+    const selectedCategories = (tableFilters.category ?? []).map(String)
 
-    updateFilters(
-      sortedField && isPostSortField(sortedField)
+    updateFilters({
+      categories: selectedCategories.join(',') || undefined,
+      ...(sortedField && isPostSortField(sortedField)
         ? { sort: sortedField, order: activeSorter?.order === 'descend' ? 'desc' : 'asc' }
-        : { sort: undefined, order: undefined },
-    )
+        : { sort: undefined, order: undefined }),
+    })
   }
+
+  const columnOptions = columns
+    .filter((column) => column.key !== 'actions')
+    .map((column) => ({ key: String(column.key), label: String(column.title) }))
 
   const invalidatePosts = async () => {
     await queryClient.invalidateQueries({ queryKey: POST_QUERY_KEYS.lists() })
@@ -175,6 +243,12 @@ export function PostsListPage() {
         title={messages.posts.listTitle}
         extra={
           <Flex gap={8} wrap>
+            <ColumnVisibilityButton
+              hiddenKeys={hiddenKeys}
+              options={columnOptions}
+              onReset={resetColumns}
+              onToggle={toggleColumn}
+            />
             <Button
               icon={<ReloadOutlined aria-hidden="true" />}
               loading={postsQuery.isFetching}
@@ -214,14 +288,7 @@ export function PostsListPage() {
             <Typography.Text code>{JSON.stringify(POST_QUERY_KEYS.list(filters))}</Typography.Text>
           </Typography.Text>
 
-          {postsQuery.isPending && (
-            <output>
-              <Flex align="center" justify="center" gap={12}>
-                <Spin />
-                <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-              </Flex>
-            </output>
-          )}
+          {postsQuery.isPending && <LoadingState />}
 
           {postsQuery.isError && (
             <Alert
@@ -248,13 +315,13 @@ export function PostsListPage() {
                 </Typography.Text>
               </Flex>
               <Table<PostDto>
-                columns={columns}
+                columns={visibleColumns(columns)}
                 dataSource={posts}
                 loading={postsQuery.isFetching}
                 pagination={false}
                 rowKey="id"
                 scroll={{ x: 'max-content' }}
-                onChange={updateSort}
+                onChange={updateSortAndFilters}
               />
             </>
           )}

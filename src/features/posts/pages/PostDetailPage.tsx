@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
-import { Alert, Button, Card, Flex, Spin, Typography } from 'antd'
+import { Alert, Button, Card, Flex } from 'antd'
 import { Link } from 'react-router'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { PostDetails } from '@/features/posts/components'
 import { usePostQuery } from '@/features/posts/hooks'
@@ -41,14 +42,7 @@ export function PostDetailPage() {
       >
         {postId === null && <Alert showIcon type="error" title={messages.posts.invalidId} />}
 
-        {postQuery.isPending && postId !== null && (
-          <output>
-            <Flex align="center" justify="center" gap={12}>
-              <Spin />
-              <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-            </Flex>
-          </output>
-        )}
+        {postQuery.isPending && postId !== null && <LoadingState />}
 
         {postQuery.isError && (
           <Alert

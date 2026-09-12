@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Alert, App, Button, Card, Flex, Form, Spin, Typography } from 'antd'
+import { Alert, App, Button, Card, Flex, Form } from 'antd'
 import { Link, useNavigate } from 'react-router'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { PostFormFields } from '@/features/posts/components'
 import { usePostQuery, useUpdatePostMutation } from '@/features/posts/hooks'
@@ -49,14 +50,7 @@ export function PostEditPage() {
       >
         {postId === null && <Alert showIcon type="error" title={messages.posts.invalidId} />}
 
-        {postQuery.isPending && postId !== null && (
-          <output>
-            <Flex align="center" justify="center" gap={12}>
-              <Spin />
-              <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-            </Flex>
-          </output>
-        )}
+        {postQuery.isPending && postId !== null && <LoadingState />}
 
         {postQuery.isError && (
           <Alert

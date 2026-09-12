@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { Alert, Button, Card, Flex, Spin, Typography } from 'antd'
+import { Alert, Button, Card } from 'antd'
 import { Link, useLocation } from 'react-router'
+import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { ProductDetails } from '@/features/products/components'
 import { useProductQuery } from '@/features/products/hooks'
@@ -40,14 +41,7 @@ export function ProductDetailPage() {
       >
         {productId === null && <Alert showIcon type="error" title={messages.products.invalidId} />}
 
-        {productQuery.isPending && productId !== null && (
-          <output>
-            <Flex align="center" justify="center" gap={12}>
-              <Spin />
-              <Typography.Text>{messages.common.loadingPage}</Typography.Text>
-            </Flex>
-          </output>
-        )}
+        {productQuery.isPending && productId !== null && <LoadingState />}
 
         {productQuery.isError && (
           <Alert

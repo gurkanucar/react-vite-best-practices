@@ -1,0 +1,12 @@
+/*
+ * `output` is an inline element by default, so a flex row inside it only spans its own
+ * content and never centres. The class makes the element itself the flex container.
+ */
+.loading-state {
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ant-margin-sm);
+}

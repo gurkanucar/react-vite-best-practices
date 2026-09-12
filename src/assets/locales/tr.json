@@ -276,6 +276,9 @@
     "colorTheme": "Renk teması",
     "system": "Sistem",
     "light": "Açık",
-    "dark": "Koyu"
+    "dark": "Koyu",
+    "columns": "Kolonlar",
+    "resetColumns": "Varsayılana dön",
+    "apply": "Uygula"
   }
 }

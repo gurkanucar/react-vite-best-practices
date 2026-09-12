@@ -57,6 +57,45 @@ Deriving options from the rows currently on screen is the tempting third option 
 one under server-side pagination: the reader would only ever be offered the values that happen
 to be on the current page.
 
+## Two places, one state
+
+The posts table offers its category filter twice: in the panel above the table and in the
+column header. Neither holds a copy of the selection — both read and write the same `categories`
+search parameter through `usePostFilterParams`, so they cannot drift apart:
+
+```tsx
+filters: (categoriesQuery.data ?? []).map((category: string) => ({ text: category, value: category })),
+filteredValue: values.categories.length > 0 ? values.categories : null,
+```
+
+Selecting a category in the header immediately shows up as a tag in the panel, and clearing it
+in the panel clears the header. This is the practical argument for keeping list state in the
+URL rather than in component state: a second control is free.
+
+A range does not fit the checkbox list Ant Design renders by default, so the views column
+supplies its own `filterDropdown` with two number inputs — again writing the same parameters the
+panel writes.
+
+## Hiding columns
+
+Column visibility is a personal preference, not shareable list state, so it goes to the
+persisted store rather than the URL:
+
+```ts
+const { hiddenKeys, resetColumns, toggleColumn, visibleColumns } = useColumnVisibility<PostDto>(
+  'posts',
+  ['id'],
+)
+```
+
+A table with no stored entry falls back to the defaults its page passes in, which is how the ID
+column ships hidden on both tables while staying one click away. Once the reader changes
+anything, their choice is stored per table and survives a reload.
+
+This completes the three-way split the project uses for state: the URL for what a list is
+showing, the persisted store for how a reader prefers to see it, and `useState` for what
+disappears when the page does.
+
 ## Filter types
 
 The posts panel covers the four shapes most list screens need:

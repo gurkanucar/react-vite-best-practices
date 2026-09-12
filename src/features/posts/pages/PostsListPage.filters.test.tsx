@@ -6,6 +6,7 @@ import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest
 import { resetMockPosts } from '@/features/posts/mocks'
 import { PostsListPage } from '@/features/posts/pages/PostsListPage'
 import { createQueryClient } from '@/lib/query/query-client'
+import { usePreferencesStore } from '@/store/preferences-store'
 import { mockServer } from '@/mocks/server'
 import { AppThemeProvider } from '@/theme/AppThemeProvider'
 
@@ -37,11 +38,12 @@ function renderPage() {
   )
 }
 
+// The ID column ships hidden, so the title is the first cell of every row.
 const rowTitles = () =>
   screen
     .getAllByRole('row')
     .slice(1)
-    .map((row) => within(row).getAllByRole('cell')[1]?.textContent)
+    .map((row) => within(row).getAllByRole('cell')[0]?.textContent)
 
 describe('PostsListPage filters', () => {
   it('narrows rows through the API and keeps every filter in the URL', async () => {
@@ -88,6 +90,51 @@ describe('PostsListPage filters', () => {
     await waitFor(() => expect(rowTitles()[0]).toBe('The address bar is the source of truth'))
     expect(screen.getByTestId('location-search')).toHaveTextContent('sort=views')
     expect(screen.getByTestId('location-search')).toHaveTextContent('order=asc')
+  })
+
+  it('offers the same category filter in the column header as in the panel', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    expect(await screen.findByText('Cache keys carry every filter')).toBeInTheDocument()
+
+    // The header filter is a second entry point into the same URL state, not a
+    // second copy of it.
+    const categoryHeader = screen.getByRole('columnheader', { name: /Category/ })
+    await user.click(within(categoryHeader).getByRole('button', { name: /filter/i }))
+
+    const filterDropdown = await waitFor(() => {
+      const dropdown = document.querySelector<HTMLElement>('.ant-table-filter-dropdown')
+      if (!dropdown) throw new Error('filter dropdown not rendered')
+      return dropdown
+    })
+
+    await user.click(within(filterDropdown).getByText('routing'))
+    await user.click(within(filterDropdown).getByRole('button', { name: 'OK' }))
+
+    await waitFor(() => expect(rowTitles()).toEqual(['The address bar is the source of truth']))
+    expect(screen.getByTestId('location-search')).toHaveTextContent('categories=routing')
+
+    // ...so the panel above now shows the same selection.
+    const categorySelect = screen.getByRole('combobox', { name: 'Category (from the API)' })
+    expect(
+      within(categorySelect.closest('.ant-select') ?? categorySelect).getByTitle('routing'),
+    ).toBeInTheDocument()
+  })
+
+  it('hides the ID column by default and restores it on request', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    expect(await screen.findByText('Cache keys carry every filter')).toBeInTheDocument()
+    expect(screen.queryByRole('columnheader', { name: 'ID' })).not.toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: /Columns/ }))
+    await user.click(await screen.findByRole('checkbox', { name: 'ID' }))
+
+    expect(await screen.findByRole('columnheader', { name: 'ID' })).toBeInTheDocument()
+    // The choice is a personal preference, so it is persisted rather than kept in the URL.
+    expect(usePreferencesStore.getState().hiddenColumns.posts).toEqual([])
   })
 })
 
