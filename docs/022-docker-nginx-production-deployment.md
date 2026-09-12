@@ -72,6 +72,20 @@ These values are public browser configuration and must never contain private cre
 
 Without the SPA fallback, directly opening `/products?q=phone&page=2` would ask Nginx for a physical file and return its own 404 page instead of letting React Router render the route.
 
+## The same fallback on a static host
+
+Nginx is one way to serve the build; dropping `dist/` on a static host is another, and that
+host has no `try_files`. `public/_redirects` states the same rule in the format Netlify and
+Cloudflare Pages read:
+
+```text
+/*  /index.html  200
+```
+
+It ships as a static asset, so it costs nothing on the Nginx path and is simply there if the
+build is ever deployed that way instead. `200` rather than a redirect matters: a 302 would
+rewrite the address bar, and every list page in this project keeps its filters in the URL.
+
 ## Verification
 
 ```bash

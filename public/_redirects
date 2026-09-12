@@ -1,0 +1,4 @@
+# Static-host equivalent of the Nginx try_files rule in docker/nginx.conf.
+# Every path renders index.html so React Router can match it; 200, not 302, so the
+# address the reader typed is the address they keep.
+/*  /index.html  200
