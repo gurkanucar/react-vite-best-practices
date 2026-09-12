@@ -7,6 +7,7 @@
 
 .public-showcase {
   min-height: 100vh;
+  overflow-x: clip;
   color: #1c252e;
   background: #fff;
 }
@@ -59,6 +60,10 @@
   display: flex;
   justify-content: center;
   gap: 4px;
+}
+
+.public-showcase__mobile-menu {
+  margin-left: auto;
 }
 
 .public-showcase__footer {
@@ -499,10 +504,13 @@
 
 .publication-card--lead {
   min-height: 330px;
-  padding-right: min(28vw, 320px);
   background:
     linear-gradient(90deg, #fff 58%, transparent 58%),
     linear-gradient(140deg, #283a34 0 70%, #b64b32 70%);
+}
+
+.publication-card--lead .publication-card__content {
+  max-width: 52%;
 }
 
 .publication-card__meta {
@@ -564,13 +572,6 @@
     flex-wrap: wrap;
   }
 
-  .public-showcase__nav {
-    order: 3;
-    width: 100%;
-    overflow-x: auto;
-    justify-content: flex-start;
-  }
-
   .showcase-hero,
   .corporate-hero {
     min-height: 0;
@@ -619,8 +620,11 @@
 
   .publication-card--lead {
     min-height: 0;
-    padding-right: 0;
     background: #fff;
+  }
+
+  .publication-card--lead .publication-card__content {
+    max-width: none;
   }
 
   .publication-detail__heading {

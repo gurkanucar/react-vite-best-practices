@@ -94,26 +94,28 @@ function PublicationListPage({ kind, standalone = false }: PublicationPageProps)
                 }
                 variant="borderless"
               >
-                <Flex className="publication-card__meta" gap={8} align="center" wrap>
-                  <Tag variant="filled">{localize(item.category, language)}</Tag>
-                  <Typography.Text type="secondary">
-                    <CalendarOutlined /> {formatDate(item.date, language)}
-                  </Typography.Text>
-                </Flex>
-                <Typography.Title level={index === 0 ? 2 : 3}>
-                  {localize(item.title, language)}
-                </Typography.Title>
-                <Typography.Paragraph type="secondary">
-                  {localize(item.summary, language)}
-                </Typography.Paragraph>
-                <Button
-                  href={`${paths.list}/${item.slug}`}
-                  type="link"
-                  icon={<ArrowRightOutlined />}
-                  iconPlacement="end"
-                >
-                  {kind === 'news' ? text.read : text.view}
-                </Button>
+                <div className="publication-card__content">
+                  <Flex className="publication-card__meta" gap={8} align="center" wrap>
+                    <Tag variant="filled">{localize(item.category, language)}</Tag>
+                    <Typography.Text type="secondary">
+                      <CalendarOutlined /> {formatDate(item.date, language)}
+                    </Typography.Text>
+                  </Flex>
+                  <Typography.Title level={index === 0 ? 2 : 3}>
+                    {localize(item.title, language)}
+                  </Typography.Title>
+                  <Typography.Paragraph type="secondary">
+                    {localize(item.summary, language)}
+                  </Typography.Paragraph>
+                  <Button
+                    href={`${paths.list}/${item.slug}`}
+                    type="link"
+                    icon={<ArrowRightOutlined />}
+                    iconPlacement="end"
+                  >
+                    {kind === 'news' ? text.read : text.view}
+                  </Button>
+                </div>
               </Card>
             </Col>
           ))}
@@ -160,7 +162,7 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
             <Tag variant="filled">{localize(publication.category, language)}</Tag>
             <Typography.Title>{localize(publication.title, language)}</Typography.Title>
             <Typography.Paragraph>{localize(publication.summary, language)}</Typography.Paragraph>
-            <Space split="·">
+            <Space separator="·">
               <Typography.Text type="secondary">
                 {formatDate(publication.date, language)}
               </Typography.Text>

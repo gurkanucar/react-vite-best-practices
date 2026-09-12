@@ -1,5 +1,15 @@
-import { GlobalOutlined } from '@ant-design/icons'
-import { Button, ConfigProvider, Flex, Layout, Space, theme, Typography } from 'antd'
+import { GlobalOutlined, MenuOutlined } from '@ant-design/icons'
+import {
+  Button,
+  ConfigProvider,
+  Dropdown,
+  Flex,
+  Grid,
+  Layout,
+  Space,
+  theme,
+  Typography,
+} from 'antd'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 import { usePreferencesStore } from '@/store/preferences-store'
@@ -28,6 +38,7 @@ export function PublicSiteShell({
 }: PublicSiteShellProps) {
   const language = usePreferencesStore((state) => state.language)
   const setLanguage = usePreferencesStore((state) => state.setLanguage)
+  const isDesktop = Grid.useBreakpoint().md ?? false
 
   return (
     <ConfigProvider
@@ -68,13 +79,31 @@ export function PublicSiteShell({
             </span>
           </Link>
 
-          <nav className="public-showcase__nav" aria-label="Website">
-            {links.map((item) => (
-              <Button key={item.href} type="text" href={item.href}>
-                {item.label[language]}
-              </Button>
-            ))}
-          </nav>
+          {isDesktop ? (
+            <nav className="public-showcase__nav" aria-label="Website">
+              {links.map((item) => (
+                <Button key={item.href} type="text" href={item.href}>
+                  {item.label[language]}
+                </Button>
+              ))}
+            </nav>
+          ) : (
+            <Dropdown
+              menu={{
+                items: links.map((item) => ({
+                  key: item.href,
+                  label: <a href={item.href}>{item.label[language]}</a>,
+                })),
+              }}
+              trigger={['click']}
+            >
+              <Button
+                className="public-showcase__mobile-menu"
+                aria-label={language === 'tr' ? 'Site menüsü' : 'Website navigation'}
+                icon={<MenuOutlined />}
+              />
+            </Dropdown>
+          )}
 
           <Button
             aria-label={language === 'tr' ? 'Switch to English' : 'Türkçeye geç'}
