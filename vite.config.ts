@@ -40,7 +40,15 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
-    testTimeout: 15_000,
+    /*
+     * The heaviest tests mount the whole application and walk through lazy routes; one of
+     * them takes 7s on its own. Spawning a worker per file on an eight-core machine then
+     * puts them well past a 15s budget for no reason other than contention — and coverage
+     * instrumentation roughly doubles it again. The pool is capped, and the budget is set
+     * high enough that a slow machine reports a slow test rather than a false failure.
+     */
+    testTimeout: 60_000,
+    maxWorkers: 4,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],

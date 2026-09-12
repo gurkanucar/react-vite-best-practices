@@ -79,7 +79,7 @@ describe('admin application', () => {
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Return to dashboard' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Go to home page' })).toBeInTheDocument()
-  }, 15_000)
+  })
 
   it('renders nested navigation and collapses the sidebar', async () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
@@ -273,7 +273,7 @@ describe('admin application', () => {
     expect(screen.getByRole('button', { name: 'Send feedback' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Send feedback' }))
     expect(await screen.findByText('Example feedback submitted.')).toBeInTheDocument()
-  }, 15_000)
+  })
 })
 
 it('uses the persistent sidebar on desktop screens', async () => {

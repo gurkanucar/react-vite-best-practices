@@ -11,7 +11,10 @@
     "persistedState": "Kalıcı durum",
     "documents": "PDF belgeleri",
     "assistant": "Yapay zekâ asistanı",
-    "analytics": "Analitik"
+    "analytics": "Analitik",
+    "files": "Dosya gezgini",
+    "board": "Teslimat panosu",
+    "calendar": "Takvim"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -630,5 +633,119 @@
       "sun": "Paz"
     },
     "operations": "İşlem"
+  },
+  "files": {
+    "title": "Dosya gezgini",
+    "description": "Klasör ağacı, listeleme ve ikisini birden değiştiren aksiyonlar — her biri doğru kalmak için bir query invalidation uzağında.",
+    "folders": "Klasörler",
+    "allFiles": "Tüm dosyalar",
+    "name": "Ad",
+    "owner": "Sahip",
+    "size": "Boyut",
+    "modified": "Değiştirilme",
+    "actions": "İşlemler",
+    "rename": "Yeniden adlandır",
+    "renameTitle": "Yeniden adlandır",
+    "delete": "Sil",
+    "download": "İndir",
+    "downloadStarted": "İndirme başladı",
+    "upload": "Yükle",
+    "uploaded": "Dosya yüklendi",
+    "newFolder": "Yeni klasör",
+    "newFolderPlaceholder": "Adsız klasör",
+    "folderCreated": "Klasör oluşturuldu",
+    "create": "Oluştur",
+    "save": "Kaydet",
+    "renamed": "Yeniden adlandırıldı",
+    "deleted": "Silindi",
+    "deleteSelected": "Seçilenleri sil",
+    "deleteSelectedConfirm": "Seçilenler silinsin mi? Klasörler içindeki her şeyle birlikte kaldırılır.",
+    "nameRequired": "Ad zorunlu",
+    "duplicateName": "Bu adda bir şey burada zaten var",
+    "actionError": "İşlem tamamlanmadı. Tekrar deneyin.",
+    "emptyFolder": "Bu klasör boş",
+    "searchPlaceholder": "Bu klasörde ara"
+  },
+  "board": {
+    "title": "Teslimat panosu",
+    "description": "Bir kartı sürüklediğinizde sunucu cevap vermeden yerine oturur. Asıl ilginç kısım sunucunun itiraz ettiğinde ne olduğu.",
+    "notice": "Taşımalar önce önbelleğe yazılır, sonra sunucuyla uzlaştırılır. Yukarıdaki anahtarı açıp bir sonraki taşımayı başarısız kılın ve kartın geri dönüşünü izleyin.",
+    "simulateFailure": "Sonraki taşıma başarısız olsun",
+    "simulateFailureHint": "Sonraki taşımayı sunucu reddeder, böylece iyimser güncelleme geri alınır.",
+    "moveFailed": "Pano bu taşımayı reddetti — kart geri döndü.",
+    "emptyColumn": "Burada bir şey yok",
+    "dragHandle": "Sürükle",
+    "points": "{count} puan",
+    "wipLimit": "WIP limiti {limit}",
+    "columns": {
+      "backlog": "Biriktirme listesi",
+      "inProgress": "Devam ediyor",
+      "inReview": "İncelemede",
+      "done": "Tamamlandı"
+    },
+    "priorities": {
+      "low": "Düşük",
+      "medium": "Orta",
+      "high": "Yüksek",
+      "urgent": "Acil"
+    },
+    "labels": {
+      "bug": "Hata",
+      "feature": "Özellik",
+      "chore": "Bakım",
+      "design": "Tasarım",
+      "infra": "Altyapı"
+    },
+    "announcements": {
+      "start": "{card} kartı alındı.",
+      "over": "{card} kartı {target} üzerinde.",
+      "outside": "{card} kartı artık bir bırakma alanı üzerinde değil.",
+      "end": "{card} kartı {target} üzerine bırakıldı.",
+      "cancel": "{card} kartının taşınması iptal edildi; başladığı yere döndü."
+    }
+  },
+  "calendar": {
+    "title": "Takvim",
+    "description": "CSS grid ve dayjs ile kurulmuş ay, hafta ve gün görünümleri — takvim kütüphanesi yok, bu yüzden temayı ve dili her şey gibi takip eder.",
+    "today": "Bugün",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "allDay": "Tüm gün",
+    "more": "+{count} tane daha",
+    "when": "Ne zaman",
+    "where": "Nerede",
+    "attendees": "Katılımcılar",
+    "category": "Kategori",
+    "views": {
+      "month": "Ay",
+      "week": "Hafta",
+      "day": "Gün"
+    },
+    "categories": {
+      "meeting": "Toplantı",
+      "focus": "Odak zamanı",
+      "review": "İnceleme",
+      "release": "Sürüm",
+      "personal": "Kişisel"
+    },
+    "events": {
+      "standup": "Günlük toplantı",
+      "focus": "Odak bloğu",
+      "designReview": "Tasarım incelemesi",
+      "oneOnOne": "Noah ile birebir",
+      "architecture": "Mimari senkronu",
+      "interview": "Aday görüşmesi",
+      "retro": "Sprint retrospektifi",
+      "planning": "Sprint planlaması",
+      "pairing": "Eşli programlama",
+      "release": "Sürüm penceresi",
+      "customerCall": "Müşteri görüşmesi",
+      "accessibility": "Erişilebilirlik denetimi",
+      "demo": "Şirket demosu",
+      "dentist": "Diş hekimi",
+      "offsite": "Takım kampı",
+      "holiday": "Resmî tatil",
+      "conference": "React konferansı"
+    }
   }
 }

@@ -10,6 +10,14 @@ export const AssistantPage = lazy(async () => ({
   default: (await import('@/features/assistant/pages/AssistantPage')).AssistantPage,
 }))
 
+export const BoardPage = lazy(async () => ({
+  default: (await import('@/features/board/pages/BoardPage')).BoardPage,
+}))
+
+export const CalendarPage = lazy(async () => ({
+  default: (await import('@/features/calendar/pages/CalendarPage')).CalendarPage,
+}))
+
 export const ComponentsPage = lazy(async () => ({
   default: (await import('@/pages/ComponentsPage')).ComponentsPage,
 }))
@@ -20,6 +28,10 @@ export const DashboardPage = lazy(async () => ({
 
 export const DocumentsPage = lazy(async () => ({
   default: (await import('@/features/documents/pages/DocumentsPage')).DocumentsPage,
+}))
+
+export const FilesPage = lazy(async () => ({
+  default: (await import('@/features/files/pages/FilesPage')).FilesPage,
 }))
 
 export const LandingPage = lazy(async () => ({

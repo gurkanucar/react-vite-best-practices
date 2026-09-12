@@ -120,6 +120,71 @@ html[data-theme='dark'] .admin-workspace {
   min-width: 0;
 }
 
+/*
+ * Columns stay side by side and scroll horizontally rather than stacking, because a
+ * board that reflows into one column stops being a board. Each column scrolls on its
+ * own so the header row never leaves the screen.
+ */
+.board-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-top: 16px;
+}
+
+.board-column {
+  height: 100%;
+}
+
+.board-column--over {
+  border-color: var(--ant-color-primary);
+}
+
+.board-column__dropzone {
+  min-height: 120px;
+}
+
+.board-card {
+  cursor: default;
+}
+
+/*
+ * The original stays in the flow at reduced opacity while `DragOverlay` renders the copy
+ * that follows the cursor, so the column keeps its height instead of collapsing.
+ */
+.board-card--dragging {
+  opacity: 0.4;
+}
+
+.board-card--overlay {
+  box-shadow: var(--ant-box-shadow-secondary);
+  cursor: grabbing;
+}
+
+.board-card__handle {
+  background: none;
+  border: 0;
+  border-radius: var(--ant-border-radius-sm);
+  color: var(--ant-color-text-tertiary);
+  cursor: grab;
+  line-height: 1;
+  padding: 2px 4px;
+  /* Without this the browser scrolls the board instead of starting a touch drag. */
+  touch-action: none;
+}
+
+.board-card__handle:hover {
+  background: var(--ant-color-fill-tertiary);
+  color: var(--ant-color-text);
+}
+
+.board-card__meta {
+  font-size: var(--ant-font-size-sm);
+}
+
 /* Recharts marks the focused segment with a default outline that clashes with the theme. */
 .recharts-wrapper :focus-visible {
   outline: 2px solid var(--ant-color-primary);
@@ -260,4 +325,339 @@ html[data-theme='dark'] .admin-workspace {
   border: var(--ant-line-width) dashed var(--ant-color-border);
   border-radius: var(--ant-border-radius);
   color: var(--ant-color-text-secondary);
+}
+
+/* ---------------------------------------------------------------------------
+ * Schedule
+ *
+ * The whole calendar is a CSS grid over dayjs. `--day-count` is what lets the same
+ * markup serve the week view and the day view: the column track count follows it.
+ * ------------------------------------------------------------------------- */
+
+.calendar-panel .ant-card-body {
+  padding: 16px;
+}
+
+.calendar-toolbar {
+  margin-bottom: 16px;
+}
+
+.calendar-toolbar__range {
+  margin: 0 0 0 8px !important;
+}
+
+/* --- Week and day --- */
+
+.calendar-timegrid {
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  overflow: hidden;
+}
+
+.calendar-timegrid__header,
+.calendar-timegrid__allday,
+.calendar-timegrid__canvas {
+  display: grid;
+  grid-template-columns: 64px repeat(var(--day-count), minmax(0, 1fr));
+}
+
+.calendar-timegrid__header {
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+.calendar-timegrid__allday {
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+  min-height: 40px;
+}
+
+.calendar-timegrid__gutter {
+  border-inline-end: 1px solid var(--ant-color-border-secondary);
+  color: var(--ant-color-text-tertiary);
+  font-size: var(--ant-font-size-sm);
+  padding: 8px;
+}
+
+.calendar-daycol {
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+}
+
+.calendar-daycol__weekday {
+  color: var(--ant-color-text-tertiary);
+  font-size: var(--ant-font-size-sm);
+  text-transform: uppercase;
+}
+
+.calendar-daycol__date {
+  font-size: var(--ant-font-size-lg);
+  font-weight: 600;
+}
+
+.calendar-daycol--today {
+  background: var(--ant-color-primary-bg);
+}
+
+.calendar-daycol--today .calendar-daycol__weekday {
+  color: var(--ant-color-primary);
+}
+
+.calendar-daycol--today .calendar-daycol__date {
+  background: var(--ant-color-primary);
+  border-radius: 50%;
+  color: #fff;
+  min-width: 28px;
+  text-align: center;
+}
+
+/*
+ * Today's whole column is tinted, not just its heading: at a glance the eye finds the
+ * column before it finds the number at the top of it.
+ */
+.calendar-daycolumn--today {
+  background: var(--ant-color-primary-bg);
+}
+
+.calendar-daycolumn--today .calendar-hour-slot {
+  border-bottom-color: var(--ant-color-primary-border);
+}
+
+.calendar-allday-cell {
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px;
+}
+
+/* The body scrolls, the header above it does not, so the days stay in view. */
+.calendar-timegrid__body {
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+.calendar-timegrid__canvas {
+  position: relative;
+}
+
+.calendar-timegrid__hours {
+  padding: 0;
+}
+
+.calendar-hour-label {
+  height: var(--hour-height);
+  position: relative;
+}
+
+/* The label sits on the line rather than inside the row it starts. */
+.calendar-hour-label span {
+  position: absolute;
+  top: -8px;
+  inset-inline-end: 8px;
+}
+
+.calendar-daycolumn {
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
+  position: relative;
+}
+
+.calendar-hour-slot {
+  border-bottom: 1px solid var(--ant-color-split);
+  height: var(--hour-height);
+}
+
+.calendar-event {
+  background: var(--ant-color-bg-elevated);
+  border: 1px solid var(--ant-color-border-secondary);
+  border-inline-start-width: 3px;
+  border-radius: var(--ant-border-radius);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--ant-font-size-sm);
+  overflow: hidden;
+  padding: 2px 6px;
+  position: absolute;
+  text-align: start;
+}
+
+.calendar-event:hover {
+  border-color: var(--ant-color-primary);
+  z-index: 2;
+}
+
+.calendar-event__title {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.calendar-event__time {
+  color: var(--ant-color-text-tertiary);
+}
+
+.calendar-now {
+  background: var(--ant-color-error);
+  height: 2px;
+  inset-inline: 0;
+  position: absolute;
+  z-index: 3;
+}
+
+.calendar-now::before {
+  background: var(--ant-color-error);
+  border-radius: 50%;
+  content: '';
+  height: 8px;
+  inset-inline-start: -4px;
+  position: absolute;
+  top: -3px;
+  width: 8px;
+}
+
+/* --- Month --- */
+
+.calendar-month__header,
+.calendar-month__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendar-month__weekday {
+  color: var(--ant-color-text-tertiary);
+  font-size: var(--ant-font-size-sm);
+  padding: 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.calendar-month__grid {
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  overflow: hidden;
+}
+
+.calendar-month__cell {
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
+  border-top: 1px solid var(--ant-color-border-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 108px;
+  padding: 4px;
+}
+
+/* The first cell of each row and the top row already have the container's own edge. */
+.calendar-month__cell:nth-child(7n + 1) {
+  border-inline-start: 0;
+}
+
+.calendar-month__cell:nth-child(-n + 7) {
+  border-top: 0;
+}
+
+.calendar-month__cell--outside {
+  background: var(--ant-color-fill-quaternary);
+}
+
+.calendar-month__cell--outside .calendar-month__daynumber {
+  color: var(--ant-color-text-quaternary);
+}
+
+.calendar-month__daynumber {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  border-radius: var(--ant-border-radius);
+  color: inherit;
+  cursor: pointer;
+  font-size: var(--ant-font-size-sm);
+  min-width: 24px;
+  padding: 2px 6px;
+}
+
+.calendar-month__daynumber:hover {
+  background: var(--ant-color-fill-tertiary);
+}
+
+.calendar-month__cell--today {
+  background: var(--ant-color-primary-bg);
+}
+
+.calendar-month__cell--today .calendar-month__daynumber {
+  background: var(--ant-color-primary);
+  color: #fff;
+}
+
+/* The weekday heading above today, so the column is findable from the top of the grid. */
+.calendar-month__weekday--today {
+  color: var(--ant-color-primary);
+  font-weight: 600;
+}
+
+.calendar-month__more {
+  font-size: var(--ant-font-size-sm);
+  padding-inline-start: 4px;
+}
+
+.calendar-chip {
+  background: var(--ant-color-fill-quaternary);
+  border: 0;
+  border-inline-start: 3px solid var(--ant-color-primary);
+  border-radius: var(--ant-border-radius-sm);
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  font-size: var(--ant-font-size-sm);
+  overflow: hidden;
+  padding: 1px 6px;
+  text-align: start;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.calendar-chip:hover {
+  background: var(--ant-color-fill-tertiary);
+}
+
+.calendar-chip__time {
+  color: var(--ant-color-text-tertiary);
+  flex: none;
+}
+
+.calendar-chip__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-chip--allday {
+  background: var(--ant-color-primary-bg);
+}
+
+/*
+ * Below this the week view's seven columns are too narrow to read. The grid scrolls
+ * sideways instead of squeezing, and the month cells lose their minimum height.
+ */
+@media (max-width: 768px) {
+  .calendar-timegrid {
+    overflow-x: auto;
+  }
+
+  .calendar-timegrid__header,
+  .calendar-timegrid__allday,
+  .calendar-timegrid__canvas {
+    grid-template-columns: 52px repeat(var(--day-count), minmax(96px, 1fr));
+    min-width: max-content;
+  }
+
+  .calendar-month__cell {
+    min-height: 72px;
+  }
+
+  .calendar-chip__time {
+    display: none;
+  }
 }

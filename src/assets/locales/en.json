@@ -11,7 +11,10 @@
     "persistedState": "Persisted state",
     "documents": "PDF documents",
     "assistant": "AI assistant",
-    "analytics": "Analytics"
+    "analytics": "Analytics",
+    "files": "File browser",
+    "board": "Delivery board",
+    "calendar": "Schedule"
   },
   "shell": {
     "product": "RVBP Console",
@@ -630,5 +633,119 @@
       "sun": "Sun"
     },
     "operations": "Operations"
+  },
+  "files": {
+    "title": "File browser",
+    "description": "A folder tree, a listing, and the actions that change both — every one of them a query invalidation away from being correct.",
+    "folders": "Folders",
+    "allFiles": "All files",
+    "name": "Name",
+    "owner": "Owner",
+    "size": "Size",
+    "modified": "Modified",
+    "actions": "Actions",
+    "rename": "Rename",
+    "renameTitle": "Rename",
+    "delete": "Delete",
+    "download": "Download",
+    "downloadStarted": "Download started",
+    "upload": "Upload",
+    "uploaded": "File uploaded",
+    "newFolder": "New folder",
+    "newFolderPlaceholder": "Untitled folder",
+    "folderCreated": "Folder created",
+    "create": "Create",
+    "save": "Save",
+    "renamed": "Renamed",
+    "deleted": "Deleted",
+    "deleteSelected": "Delete selected",
+    "deleteSelectedConfirm": "Delete the selected items? Folders are removed with everything inside them.",
+    "nameRequired": "A name is required",
+    "duplicateName": "Something with that name is already here",
+    "actionError": "That did not go through. Try again.",
+    "emptyFolder": "This folder is empty",
+    "searchPlaceholder": "Search in this folder"
+  },
+  "board": {
+    "title": "Delivery board",
+    "description": "Drag a card and it lands immediately, before the server has answered. What happens when the server disagrees is the interesting part.",
+    "notice": "Moves are written to the cache first and reconciled afterwards. Turn on the switch above to make the next move fail and watch the card return.",
+    "simulateFailure": "Fail the next move",
+    "simulateFailureHint": "The next move is rejected by the server, so the optimistic update is rolled back.",
+    "moveFailed": "The board rejected that move — the card went back.",
+    "emptyColumn": "Nothing here",
+    "dragHandle": "Drag",
+    "points": "{count} pts",
+    "wipLimit": "WIP limit {limit}",
+    "columns": {
+      "backlog": "Backlog",
+      "inProgress": "In progress",
+      "inReview": "In review",
+      "done": "Done"
+    },
+    "priorities": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "labels": {
+      "bug": "Bug",
+      "feature": "Feature",
+      "chore": "Chore",
+      "design": "Design",
+      "infra": "Infrastructure"
+    },
+    "announcements": {
+      "start": "Picked up card {card}.",
+      "over": "Card {card} is over {target}.",
+      "outside": "Card {card} is no longer over a drop area.",
+      "end": "Card {card} was dropped on {target}.",
+      "cancel": "Moving card {card} was cancelled; it returned to where it started."
+    }
+  },
+  "calendar": {
+    "title": "Schedule",
+    "description": "Month, week, and day views built from a CSS grid and dayjs — no calendar library, so it follows the theme and the locale like everything else.",
+    "today": "Today",
+    "previous": "Previous",
+    "next": "Next",
+    "allDay": "All day",
+    "more": "+{count} more",
+    "when": "When",
+    "where": "Where",
+    "attendees": "Attendees",
+    "category": "Category",
+    "views": {
+      "month": "Month",
+      "week": "Week",
+      "day": "Day"
+    },
+    "categories": {
+      "meeting": "Meeting",
+      "focus": "Focus time",
+      "review": "Review",
+      "release": "Release",
+      "personal": "Personal"
+    },
+    "events": {
+      "standup": "Daily standup",
+      "focus": "Focus block",
+      "designReview": "Design review",
+      "oneOnOne": "1:1 with Noah",
+      "architecture": "Architecture sync",
+      "interview": "Candidate interview",
+      "retro": "Sprint retrospective",
+      "planning": "Sprint planning",
+      "pairing": "Pairing session",
+      "release": "Release window",
+      "customerCall": "Customer call",
+      "accessibility": "Accessibility audit",
+      "demo": "Company demo",
+      "dentist": "Dentist",
+      "offsite": "Team offsite",
+      "holiday": "Public holiday",
+      "conference": "React conference"
+    }
   }
 }

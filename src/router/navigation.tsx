@@ -1,13 +1,16 @@
 import {
   AppstoreOutlined,
   BgColorsOutlined,
+  CalendarOutlined,
   CloudServerOutlined,
   DashboardOutlined,
   DatabaseOutlined,
   FilePdfOutlined,
   FolderOpenOutlined,
   FormOutlined,
+  HddOutlined,
   LineChartOutlined,
+  ProjectOutlined,
   RobotOutlined,
   SettingOutlined,
   ShoppingOutlined,
@@ -46,6 +49,8 @@ export function useNavigationSections(): NavigationSection[] {
         children: [
           { key: '/dashboard', icon: <DashboardOutlined />, label: messages.navigation.dashboard },
           { key: '/analytics', icon: <LineChartOutlined />, label: messages.navigation.analytics },
+          { key: '/board', icon: <ProjectOutlined />, label: messages.navigation.board },
+          { key: '/calendar', icon: <CalendarOutlined />, label: messages.navigation.calendar },
           {
             key: '/components',
             icon: <AppstoreOutlined />,
@@ -54,6 +59,7 @@ export function useNavigationSections(): NavigationSection[] {
           { key: '/survey', icon: <FormOutlined />, label: messages.navigation.survey },
           { key: '/posts', icon: <CloudServerOutlined />, label: messages.navigation.postsApi },
           { key: '/products', icon: <ShoppingOutlined />, label: messages.navigation.productsApi },
+          { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
           ...(FEATURE_FLAGS.assistant
             ? [

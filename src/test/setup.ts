@@ -1,7 +1,15 @@
 import '@testing-library/jest-dom/vitest'
-import { cleanup } from '@testing-library/react'
+import { cleanup, configure } from '@testing-library/react'
 import { afterEach, beforeEach } from 'vitest'
 import { initialPreferences, usePreferencesStore } from '@/store/preferences-store'
+
+/*
+ * Several tests wait on a lazy route: the `findBy*` that follows a navigation is waiting on
+ * a dynamic import, not on a render. One second is enough on an idle machine and not enough
+ * when the rest of the suite is competing for the same cores, which showed up as tests that
+ * passed alone and failed in the full run.
+ */
+configure({ asyncUtilTimeout: 5_000 })
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -17,27 +25,9 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 })
 
-/** jsdom lays nothing out, so every element measures zero. */
-const measuredSize = { width: 800, height: 400 }
-
-/**
- * Reporting a real size matters for anything that draws itself from its measured box —
- * Recharts' `ResponsiveContainer` refuses to render a chart at 0x0 and warns instead.
- */
 class ResizeObserverMock implements ResizeObserver {
-  private readonly callback: ResizeObserverCallback
-
-  constructor(callback: ResizeObserverCallback) {
-    this.callback = callback
-  }
-
-  observe(target: Element) {
-    const contentRect = { ...measuredSize, top: 0, left: 0, bottom: 400, right: 800, x: 0, y: 0 }
-
-    this.callback([{ target, contentRect } as ResizeObserverEntry], this)
-  }
-
   disconnect() {}
+  observe() {}
   unobserve() {}
 }
 

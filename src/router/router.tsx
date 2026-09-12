@@ -3,9 +3,12 @@ import {
   AdminLayout,
   AnalyticsPage,
   AssistantPage,
+  BoardPage,
+  CalendarPage,
   ComponentsPage,
   DashboardPage,
   DocumentsPage,
+  FilesPage,
   LandingPage,
   LoginPage,
   NotFoundPage,
@@ -98,6 +101,24 @@ export const routes: RouteObject[] = [
         errorElement: adminErrorElement,
       },
       {
+        path: 'board',
+        element: (
+          <RouteSuspense>
+            <BoardPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'calendar',
+        element: (
+          <RouteSuspense>
+            <CalendarPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
         path: 'components',
         element: (
           <RouteSuspense>
@@ -178,6 +199,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <DocumentsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'files',
+        element: (
+          <RouteSuspense>
+            <FilesPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,
