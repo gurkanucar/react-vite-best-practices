@@ -1119,3 +1119,127 @@ html[data-theme='dark'] .admin-workspace {
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Learning
+ * ------------------------------------------------------------------------- */
+
+.exam-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* An option is a whole row, so the hit area matches what the reader sees. */
+.exam-option {
+  align-items: center;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  display: flex;
+  margin-inline-end: 0;
+  padding: 10px 12px;
+  width: 100%;
+}
+
+.exam-option:hover {
+  border-color: var(--ant-color-primary);
+}
+
+.exam-option__image {
+  border-radius: var(--ant-border-radius);
+  max-width: 220px;
+  width: 100%;
+}
+
+.exam-prompt-image {
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  max-width: 420px;
+}
+
+.exam-body {
+  margin-top: 16px;
+}
+
+.exam-upload {
+  max-width: 480px;
+}
+
+.exam-match-row__prompt,
+.exam-order-row__label {
+  flex: 1;
+  min-width: 160px;
+}
+
+.exam-order-row {
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius);
+  padding: 8px 12px;
+}
+
+.exam-navigator {
+  position: sticky;
+  top: 88px;
+}
+
+.exam-clock {
+  margin: 0 !important;
+}
+
+.exam-kinds,
+.exam-review {
+  margin: 16px 0;
+}
+
+.exam-review__correct {
+  margin-top: 16px !important;
+}
+
+.course-card__cover {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
+}
+
+.course-card__tags,
+.course-card__facts,
+.course-card__progress {
+  margin-bottom: 12px;
+}
+
+.course-card__facts {
+  margin-top: 12px;
+}
+
+.flashcard {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  max-width: 560px;
+  padding: 0;
+  width: 100%;
+}
+
+.flashcard__face {
+  min-height: 220px;
+}
+
+.flashcard__face .ant-card-body {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  min-height: 220px;
+  text-align: center;
+}
+
+.flashcard__text {
+  margin: 0 !important;
+}
+
+.flashcard-progress {
+  max-width: 560px;
+  width: 100%;
+}

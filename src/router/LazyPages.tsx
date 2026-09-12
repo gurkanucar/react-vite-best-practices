@@ -22,6 +22,22 @@ export const CalendarPage = lazy(async () => ({
   default: (await import('@/features/calendar/pages/CalendarPage')).CalendarPage,
 }))
 
+export const CoursesPage = lazy(async () => ({
+  default: (await import('@/features/learning/pages/CoursesPage')).CoursesPage,
+}))
+
+export const ExamPage = lazy(async () => ({
+  default: (await import('@/features/learning/pages/ExamPage')).ExamPage,
+}))
+
+export const ExamResultsPage = lazy(async () => ({
+  default: (await import('@/features/learning/pages/ExamResultsPage')).ExamResultsPage,
+}))
+
+export const FlashcardsPage = lazy(async () => ({
+  default: (await import('@/features/learning/pages/FlashcardsPage')).FlashcardsPage,
+}))
+
 export const ComponentsPage = lazy(async () => ({
   default: (await import('@/pages/ComponentsPage')).ComponentsPage,
 }))

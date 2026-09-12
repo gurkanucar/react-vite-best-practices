@@ -130,6 +130,16 @@ picked with Ant Design are written up in [033](docs/033-tours-section.md).
 
 ![The tours list](docs/images/tours.jpg)
 
+### An exam engine with seven question kinds
+
+`/learning` holds courses, flashcards, a results page and an exam: single and multiple
+choice, true/false, short answer, file upload, matching and ordering, with pictures in
+prompts and as options. Partial credit, a countdown that hands the paper in, and one
+question no code can score — [034](docs/034-exam-engine.md) covers the model and the two
+bugs the numbers found.
+
+![The exam](docs/images/exam.jpg)
+
 ### An admin shell with persistent preferences
 
 ![The dashboard](docs/images/dashboard.jpg)
@@ -151,6 +161,7 @@ picked with Ant Design are written up in [033](docs/033-tours-section.md).
 - An account settings screen: forms, validation, uploads, and tabbed panes
 - An e-commerce flow: product detail, order, and invoice sub-pages
 - A tours section with a filterable card grid and a detail route
+- An exam engine: seven question kinds, partial credit, and a countdown
 - PDF viewing with pdf.js, from a blob fetched through the API client
 - An AI chat screen built from Ant Design X, with streamed and cancellable replies
 - A header search over one shared navigation definition, with a ⌘K shortcut

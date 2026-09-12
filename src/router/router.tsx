@@ -7,6 +7,10 @@ import {
   BoardPage,
   CalendarPage,
   ComponentsPage,
+  CoursesPage,
+  ExamPage,
+  ExamResultsPage,
+  FlashcardsPage,
   DashboardPage,
   DocumentsPage,
   FilesPage,
@@ -278,6 +282,42 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <TourDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'learning/courses',
+        element: (
+          <RouteSuspense>
+            <CoursesPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'learning/exam',
+        element: (
+          <RouteSuspense>
+            <ExamPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'learning/flashcards',
+        element: (
+          <RouteSuspense>
+            <FlashcardsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'learning/results',
+        element: (
+          <RouteSuspense>
+            <ExamResultsPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,
