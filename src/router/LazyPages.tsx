@@ -86,6 +86,18 @@ export const RouteErrorPage = lazy(async () => ({
   default: (await import('@/pages/RouteErrorPage')).RouteErrorPage,
 }))
 
+export const ShopInvoicePage = lazy(async () => ({
+  default: (await import('@/features/shop/pages/ShopInvoicePage')).ShopInvoicePage,
+}))
+
+export const ShopOrderPage = lazy(async () => ({
+  default: (await import('@/features/shop/pages/ShopOrderPage')).ShopOrderPage,
+}))
+
+export const ShopProductPage = lazy(async () => ({
+  default: (await import('@/features/shop/pages/ShopProductPage')).ShopProductPage,
+}))
+
 export const SettingsPage = lazy(async () => ({
   default: (await import('@/pages/SettingsPage')).SettingsPage,
 }))

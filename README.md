@@ -113,6 +113,15 @@ tab is mounted.
 
 ![Account settings](docs/images/account.jpg)
 
+### An e-commerce flow in three sub-pages
+
+`/shop` holds a product detail, an order, and an invoice. One function decides what a
+document adds up to and both the order and the invoice call it, so the two cannot disagree
+about tax on a discounted subtotal. [032](docs/032-ecommerce-screens.md) has the component
+map and the antd deprecations the console reported along the way.
+
+![The product detail page](docs/images/shop-product.jpg)
+
 ### An admin shell with persistent preferences
 
 ![The dashboard](docs/images/dashboard.jpg)
@@ -132,6 +141,7 @@ tab is mounted.
 - Month, week, and day calendar views written without a calendar library
 - A social profile screen assembled from Ant Design components alone
 - An account settings screen: forms, validation, uploads, and tabbed panes
+- An e-commerce flow: product detail, order, and invoice sub-pages
 - PDF viewing with pdf.js, from a blob fetched through the API client
 - An AI chat screen built from Ant Design X, with streamed and cancellable replies
 - A header search over one shared navigation definition, with a ⌘K shortcut

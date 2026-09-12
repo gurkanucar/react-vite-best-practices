@@ -1,3 +1,6 @@
+import boardShot from '@/features/board/assets/attachment-board.svg'
+import calendarShot from '@/features/board/assets/attachment-calendar.svg'
+import chartShot from '@/features/board/assets/attachment-chart.svg'
 import { applyMove, type Board, type BoardCard, type MoveCardInput } from '@/features/board/types'
 
 /**
@@ -19,6 +22,7 @@ let cards: BoardCard[] = [
     points: 2,
     dueDate: '2026-09-26',
     labels: ['bug'],
+    image: chartShot,
   },
   {
     id: 'RVB-121',
@@ -60,6 +64,7 @@ let cards: BoardCard[] = [
     points: 8,
     dueDate: '2026-09-19',
     labels: ['feature', 'design'],
+    image: calendarShot,
   },
   {
     id: 'RVB-114',
@@ -70,6 +75,7 @@ let cards: BoardCard[] = [
     points: 3,
     dueDate: '2026-09-18',
     labels: ['feature'],
+    image: boardShot,
   },
 
   {

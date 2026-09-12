@@ -37,6 +37,12 @@ export function BoardCardItem({ card, overlay = false }: BoardCardItemProps) {
       }}
     >
       <Flex vertical gap={8}>
+        {/*
+         * Not an antd `Image`: a card attachment opening a lightbox would fight the drag,
+         * and the preview is decoration beside a title that already says what it is.
+         */}
+        {card.image && <img src={card.image} alt="" className="board-card__image" />}
+
         <Flex align="start" gap={8} justify="space-between">
           <Typography.Text strong>{card.title}</Typography.Text>
           {/*

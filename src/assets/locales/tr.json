@@ -16,7 +16,11 @@
     "board": "Teslimat panosu",
     "calendar": "Takvim",
     "profile": "Profil",
-    "account": "Hesap"
+    "account": "Hesap",
+    "shopSection": "E-ticaret",
+    "productDetail": "Ürün detayı",
+    "orderDetail": "Sipariş",
+    "invoiceDetail": "Fatura"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -935,5 +939,170 @@
     "twoFactorOn": "İki adımlı doğrulama açık.",
     "twoFactorOff": "İki adımlı doğrulama kapalı.",
     "twoFactorEnabled": "Yeni girişlerde kod sorulacak."
+  },
+  "shop": {
+    "productTitle": "Ürün",
+    "orderTitle": "Sipariş",
+    "invoiceTitle": "Fatura",
+    "section": "E-ticaret",
+    "back": "Geri",
+    "preview": "Önizle",
+    "previewHint": "Mağaza sayfası burada açılırdı.",
+    "edit": "Düzenle",
+    "editHint": "Düzenleme formu burada açılırdı.",
+    "statuses": {
+      "published": "Yayında",
+      "draft": "Taslak"
+    },
+    "products": {
+      "loafers": "Klasik Deri Loafer",
+      "runners": "Patika Koşu Ayakkabısı",
+      "sandals": "Yazlık Sandalet"
+    },
+    "colours": {
+      "green": "Yeşil",
+      "slate": "Antrasit",
+      "blush": "Pudra",
+      "sand": "Kum",
+      "ink": "Mürekkep"
+    },
+    "newArrival": "Yeni",
+    "stockStatuses": {
+      "inStock": "Stokta",
+      "lowStock": "Az stok",
+      "outOfStock": "Tükendi"
+    },
+    "reviewCount": "({count} değerlendirme)",
+    "productSummary": "Tam tabaka deri sayalı, dalgalı tabanlı bir loafer; dikişli, gün boyu giyilecek kadar hafif.",
+    "colour": "Renk",
+    "size": "Beden",
+    "quantity": "Adet",
+    "available": "Mevcut: {count}",
+    "increase": "Adedi artır",
+    "decrease": "Adedi azalt",
+    "addToCart": "Sepete ekle",
+    "addedToCart": "Sepetinize eklendi.",
+    "buyNow": "Hemen al",
+    "buyingNow": "Ödeme adımına yönlendiriliyorsunuz.",
+    "compare": "Karşılaştır",
+    "favourite": "Favori",
+    "share": "Paylaş",
+    "previousImage": "Önceki görsel",
+    "nextImage": "Sonraki görsel",
+    "showImage": "Görseli göster",
+    "highlights": {
+      "original": {
+        "title": "%100 orijinal",
+        "description": "Doğrudan üreticiden, aracıdan değil."
+      },
+      "replacement": {
+        "title": "10 gün içinde değişim",
+        "description": "Fikriniz değiştiyse, giyilmemiş hâlde geri gönderin."
+      },
+      "warranty": {
+        "title": "Bir yıl garanti",
+        "description": "Dikiş ve taban on iki ay boyunca kapsam altında."
+      }
+    },
+    "description": "Açıklama",
+    "reviews": "Değerlendirmeler",
+    "specifications": "Teknik özellikler",
+    "specs": {
+      "category": "Kategori",
+      "manufacturer": "Üretici",
+      "warranty": "Garanti",
+      "serial": "Seri numarası",
+      "shipsFrom": "Gönderim yeri"
+    },
+    "warrantyMonths": "{count} ay",
+    "productDetails": "Ürün detayları",
+    "detailPoints": [
+      "Köpük iç taban yumuşak ve rahat",
+      "Topukta çekme payı",
+      "Kişisel koruyucu ekipman olarak kullanılmaz",
+      "Gösterilen renk: Yeşil / Kemik",
+      "Model: 921826-109",
+      "Menşei: Portekiz"
+    ],
+    "benefits": "Avantajlar",
+    "benefitPoints": [
+      "Tam tabaka deri, kullandıkça formunu koruyor",
+      "Gün boyu esnekliğini kaybetmeyen yastıklı orta taban",
+      "Kauçuk dış taban tutuş sağlıyor ve uzun ömürlü",
+      "Yapıştırma değil dikiş, yani tabanı yenilenebilir"
+    ],
+    "delivery": "Teslimat ve iade",
+    "deliveryFree": "200 $ ve üzeri siparişlerde kargo ücretsiz.",
+    "deliveryOptions": ["Standart: 4-5 iş günü", "Ekspres: 2-4 iş günü"],
+    "deliveryNote": "Siparişler resmî tatiller hariç pazartesiden cumaya hazırlanır ve teslim edilir.",
+    "reviewBodies": {
+      "comfort": "İlk günden rahat, alıştırma gerektirmedi. Taban yağmurlu bir sonbaharı sorunsuz geçirdi.",
+      "sizing": "Yarım numara büyük geliyor. Deri kaliteli, dikişler düzgün.",
+      "colour": "Yeşil, fotoğraflardakinden koyu. Yine de iyi bir ayakkabı, sadece beklediğim ton değil."
+    },
+    "helpful": "Faydalı ({count})",
+    "orderPlaced": "Verildi",
+    "orderStatus": "Durum",
+    "orderStatuses": {
+      "pending": "Beklemede",
+      "packing": "Paketleniyor",
+      "shipped": "Kargoda",
+      "delivered": "Teslim edildi"
+    },
+    "customer": "Müşteri",
+    "shipTo": "Teslimat adresi",
+    "shippingMethod": "Kargo yöntemi",
+    "shippingMethods": {
+      "standard": "Standart",
+      "express": "Ekspres"
+    },
+    "tracking": "Takip numarası",
+    "items": "Ürünler",
+    "timeline": "Zaman çizelgesi",
+    "orderEvents": {
+      "placed": "Sipariş verildi",
+      "paid": "Ödeme alındı",
+      "packed": "Paketlendi",
+      "shipped": "Kargoya verildi",
+      "delivered": "Teslim edildi"
+    },
+    "expected": "Beklenen",
+    "markDelivered": "Teslim edildi olarak işaretle",
+    "markedDelivered": "Sipariş teslim edildi olarak işaretlendi.",
+    "printOrder": "Yazdır",
+    "printHint": "Yazdırma penceresi burada açılırdı.",
+    "product": "Ürün",
+    "sku": "SKU",
+    "unitPrice": "Birim fiyat",
+    "lineTotal": "Tutar",
+    "invoiceFrom": "Gönderen",
+    "invoiceTo": "Fatura edilen",
+    "issuedAt": "Düzenlenme",
+    "dueAt": "Son ödeme",
+    "invoiceStatuses": {
+      "paid": "Ödendi",
+      "pending": "Beklemede",
+      "overdue": "Gecikmiş"
+    },
+    "services": {
+      "wholesale": "Toptan sipariş",
+      "fulfilment": "Sipariş karşılama",
+      "photography": "Ürün fotoğrafı"
+    },
+    "serviceDescriptions": {
+      "wholesale": "Klasik Deri Loafer, karışık bedenler",
+      "fulfilment": "Eylül ayı toplama, paketleme ve sevkiyat",
+      "photography": "Stüdyo çekimi, üç renk seçeneği"
+    },
+    "serviceItem": "Kalem",
+    "quantityShort": "Adet",
+    "downloadInvoice": "İndir",
+    "sendInvoice": "Gönder",
+    "sentInvoice": "Fatura gönderildi.",
+    "subtotal": "Ara toplam",
+    "discount": "İndirim",
+    "shipping": "Kargo",
+    "tax": "Vergi",
+    "total": "Toplam"
   }
 }

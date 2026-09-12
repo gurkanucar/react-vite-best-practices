@@ -14,7 +14,10 @@ import {
   ProjectOutlined,
   RobotOutlined,
   SafetyOutlined,
+  FileTextOutlined,
   SettingOutlined,
+  ShopOutlined,
+  TagOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
@@ -74,6 +77,24 @@ export function useNavigationSections(): NavigationSection[] {
                 },
               ]
             : []),
+        ],
+      },
+      {
+        key: 'shop',
+        icon: <ShopOutlined />,
+        label: messages.navigation.shopSection,
+        children: [
+          { key: '/shop/product', icon: <TagOutlined />, label: messages.navigation.productDetail },
+          {
+            key: '/shop/order',
+            icon: <ShoppingOutlined />,
+            label: messages.navigation.orderDetail,
+          },
+          {
+            key: '/shop/invoice',
+            icon: <FileTextOutlined />,
+            label: messages.navigation.invoiceDetail,
+          },
         ],
       },
       {

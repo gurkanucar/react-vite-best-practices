@@ -173,6 +173,13 @@ html[data-theme='dark'] .admin-workspace {
   cursor: grabbing;
 }
 
+.board-card__image {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--ant-border-radius);
+  object-fit: cover;
+  width: 100%;
+}
+
 .board-card__handle {
   background: none;
   border: 0;
@@ -825,4 +832,136 @@ html[data-theme='dark'] .admin-workspace {
 
 .account-2fa-notice {
   margin-top: 16px;
+}
+
+/* ---------------------------------------------------------------------------
+ * E-commerce
+ * ------------------------------------------------------------------------- */
+
+.shop-back {
+  margin-bottom: 8px;
+  padding-inline: 0;
+}
+
+.product-gallery {
+  position: relative;
+}
+
+.product-gallery__frame {
+  aspect-ratio: 1;
+  border-radius: var(--ant-border-radius-lg);
+  object-fit: cover;
+  width: 100%;
+}
+
+/* The pager sits on the image, which is the one thing the components cannot do. */
+.product-gallery__pager {
+  background: var(--ant-color-bg-elevated);
+  border-radius: var(--ant-border-radius-lg);
+  bottom: 12px;
+  font-size: var(--ant-font-size-sm);
+  inset-inline-end: 12px;
+  padding: 2px 6px;
+  position: absolute;
+}
+
+.product-thumb {
+  background: none;
+  border: 2px solid transparent;
+  border-radius: var(--ant-border-radius);
+  cursor: pointer;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.product-thumb img {
+  height: 64px;
+  object-fit: cover;
+  width: 64px;
+}
+
+.product-thumb--active {
+  border-color: var(--ant-color-primary);
+}
+
+.product-swatch {
+  border: 2px solid transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--ant-color-border);
+  cursor: pointer;
+  height: 24px;
+  padding: 0;
+  width: 24px;
+}
+
+.product-swatch--active {
+  border-color: var(--ant-color-bg-container);
+  box-shadow: 0 0 0 2px var(--ant-color-primary);
+}
+
+.product-title,
+.product-price,
+.shop-party-name,
+.shop-summary__total,
+.product-review-score {
+  margin: 0 !important;
+}
+
+.product-divider {
+  margin: 8px 0;
+}
+
+.product-action {
+  flex: 1;
+  min-width: 160px;
+}
+
+.product-highlights {
+  margin: 32px 0;
+}
+
+.product-highlight {
+  text-align: center;
+}
+
+.product-highlight__icon {
+  color: var(--ant-color-success);
+  font-size: 28px;
+}
+
+.shop-tabs-card {
+  margin-top: 8px;
+}
+
+.product-review-bars {
+  flex: 1;
+  min-width: 220px;
+}
+
+.product-review-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.shop-line-image {
+  border-radius: var(--ant-border-radius);
+  height: 48px;
+  object-fit: cover;
+  width: 48px;
+}
+
+/* The totals block is a narrow column pinned to the end of whatever holds it. */
+.shop-summary {
+  margin-inline-start: auto;
+  margin-top: 16px;
+  max-width: 320px;
+}
+
+.shop-parties {
+  margin: 24px 0;
+}
+
+.shop-party-line {
+  margin-bottom: 0 !important;
 }

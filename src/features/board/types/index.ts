@@ -11,6 +11,8 @@ export interface BoardCard {
   dueDate: string
   /** Translation keys under `board.labels`. */
   labels: BoardLabelId[]
+  /** An attached preview, shown at the top of the card. Most cards have none. */
+  image?: string
 }
 
 export type BoardLabelId = 'bug' | 'feature' | 'chore' | 'design' | 'infra'

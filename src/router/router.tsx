@@ -23,6 +23,9 @@ import {
   RegisterPage,
   RouteErrorPage,
   SettingsPage,
+  ShopInvoicePage,
+  ShopOrderPage,
+  ShopProductPage,
   SurveyPage,
 } from '@/router/LazyPages'
 import { RouteSuspense } from '@/router/RouteSuspense'
@@ -228,6 +231,33 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <ProfilePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'shop/product',
+        element: (
+          <RouteSuspense>
+            <ShopProductPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'shop/order',
+        element: (
+          <RouteSuspense>
+            <ShopOrderPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'shop/invoice',
+        element: (
+          <RouteSuspense>
+            <ShopInvoicePage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

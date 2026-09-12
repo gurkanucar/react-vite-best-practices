@@ -16,7 +16,11 @@
     "board": "Delivery board",
     "calendar": "Schedule",
     "profile": "Profile",
-    "account": "Account"
+    "account": "Account",
+    "shopSection": "E-commerce",
+    "productDetail": "Product detail",
+    "orderDetail": "Order",
+    "invoiceDetail": "Invoice"
   },
   "shell": {
     "product": "RVBP Console",
@@ -935,5 +939,170 @@
     "twoFactorOn": "Two-factor authentication is on.",
     "twoFactorOff": "Two-factor authentication is off.",
     "twoFactorEnabled": "New sign-ins will ask for a code."
+  },
+  "shop": {
+    "productTitle": "Product",
+    "orderTitle": "Order",
+    "invoiceTitle": "Invoice",
+    "section": "E-commerce",
+    "back": "Back",
+    "preview": "Preview",
+    "previewHint": "The storefront page would open here.",
+    "edit": "Edit",
+    "editHint": "The edit form would open here.",
+    "statuses": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "products": {
+      "loafers": "Classic Leather Loafers",
+      "runners": "Trail Runners",
+      "sandals": "Summer Sandals"
+    },
+    "colours": {
+      "green": "Green",
+      "slate": "Slate",
+      "blush": "Blush",
+      "sand": "Sand",
+      "ink": "Ink"
+    },
+    "newArrival": "New",
+    "stockStatuses": {
+      "inStock": "In stock",
+      "lowStock": "Low stock",
+      "outOfStock": "Out of stock"
+    },
+    "reviewCount": "({count} reviews)",
+    "productSummary": "A ripple-soled loafer built on a full-grain leather upper, stitched to last and light enough to wear all day.",
+    "colour": "Colour",
+    "size": "Size",
+    "quantity": "Quantity",
+    "available": "Available: {count}",
+    "increase": "Increase quantity",
+    "decrease": "Decrease quantity",
+    "addToCart": "Add to cart",
+    "addedToCart": "Added to your cart.",
+    "buyNow": "Buy now",
+    "buyingNow": "Taking you to checkout.",
+    "compare": "Compare",
+    "favourite": "Favourite",
+    "share": "Share",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "showImage": "Show image",
+    "highlights": {
+      "original": {
+        "title": "100% original",
+        "description": "Sourced from the maker, never from a reseller."
+      },
+      "replacement": {
+        "title": "10 day replacement",
+        "description": "Changed your mind? Send it back, unworn."
+      },
+      "warranty": {
+        "title": "One year warranty",
+        "description": "Stitching and soles, covered for twelve months."
+      }
+    },
+    "description": "Description",
+    "reviews": "Reviews",
+    "specifications": "Specifications",
+    "specs": {
+      "category": "Category",
+      "manufacturer": "Manufacturer",
+      "warranty": "Warranty",
+      "serial": "Serial number",
+      "shipsFrom": "Ships from"
+    },
+    "warrantyMonths": "{count} months",
+    "productDetails": "Product details",
+    "detailPoints": [
+      "The foam sockliner feels soft and comfortable",
+      "Pull tab at the heel",
+      "Not intended for use as personal protective equipment",
+      "Colour shown: Green / Bone",
+      "Style: 921826-109",
+      "Country of origin: Portugal"
+    ],
+    "benefits": "Benefits",
+    "benefitPoints": [
+      "Full-grain leather keeps its shape as it wears in",
+      "A cushioned midsole that stays springy through the day",
+      "The rubber outsole adds traction and lasts",
+      "Stitched, not glued, so it can be resoled"
+    ],
+    "delivery": "Delivery and returns",
+    "deliveryFree": "Orders of $200 or more ship free.",
+    "deliveryOptions": ["Standard: 4-5 business days", "Express: 2-4 business days"],
+    "deliveryNote": "Orders are processed and delivered Monday to Friday, excluding public holidays.",
+    "reviewBodies": {
+      "comfort": "Comfortable from the first day — no breaking in at all. The sole has held up through a wet autumn.",
+      "sizing": "Runs about half a size large. Good leather, and the stitching is neat.",
+      "colour": "The green is darker than the photographs suggest. Still a good shoe, just not the shade I expected."
+    },
+    "helpful": "Helpful ({count})",
+    "orderPlaced": "Placed",
+    "orderStatus": "Status",
+    "orderStatuses": {
+      "pending": "Pending",
+      "packing": "Packing",
+      "shipped": "Shipped",
+      "delivered": "Delivered"
+    },
+    "customer": "Customer",
+    "shipTo": "Shipping address",
+    "shippingMethod": "Shipping method",
+    "shippingMethods": {
+      "standard": "Standard",
+      "express": "Express"
+    },
+    "tracking": "Tracking number",
+    "items": "Items",
+    "timeline": "Timeline",
+    "orderEvents": {
+      "placed": "Order placed",
+      "paid": "Payment captured",
+      "packed": "Packed",
+      "shipped": "Handed to the carrier",
+      "delivered": "Delivered"
+    },
+    "expected": "Expected",
+    "markDelivered": "Mark as delivered",
+    "markedDelivered": "The order is marked delivered.",
+    "printOrder": "Print",
+    "printHint": "The print dialog would open here.",
+    "product": "Product",
+    "sku": "SKU",
+    "unitPrice": "Unit price",
+    "lineTotal": "Total",
+    "invoiceFrom": "From",
+    "invoiceTo": "Billed to",
+    "issuedAt": "Issued",
+    "dueAt": "Due",
+    "invoiceStatuses": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "overdue": "Overdue"
+    },
+    "services": {
+      "wholesale": "Wholesale order",
+      "fulfilment": "Fulfilment",
+      "photography": "Product photography"
+    },
+    "serviceDescriptions": {
+      "wholesale": "Classic Leather Loafers, mixed sizes",
+      "fulfilment": "Pick, pack and dispatch for September",
+      "photography": "Studio shoot, three colourways"
+    },
+    "serviceItem": "Item",
+    "quantityShort": "Qty",
+    "downloadInvoice": "Download",
+    "sendInvoice": "Send",
+    "sentInvoice": "The invoice was sent.",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "shipping": "Shipping",
+    "tax": "Tax",
+    "total": "Total"
   }
 }
