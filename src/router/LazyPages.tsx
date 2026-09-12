@@ -2,6 +2,10 @@ import { lazy } from 'react'
 
 export const AdminLayout = lazy(() => import('@/App'))
 
+export const AccountPage = lazy(async () => ({
+  default: (await import('@/features/account/pages/AccountPage')).AccountPage,
+}))
+
 export const AnalyticsPage = lazy(async () => ({
   default: (await import('@/features/analytics/pages/AnalyticsPage')).AnalyticsPage,
 }))

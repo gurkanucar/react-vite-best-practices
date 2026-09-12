@@ -1,5 +1,6 @@
 import { createBrowserRouter, type RouteObject } from 'react-router'
 import {
+  AccountPage,
   AdminLayout,
   AnalyticsPage,
   AssistantPage,
@@ -209,6 +210,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <FilesPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'account',
+        element: (
+          <RouteSuspense>
+            <AccountPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

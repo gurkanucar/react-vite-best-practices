@@ -13,6 +13,7 @@ import {
   IdcardOutlined,
   ProjectOutlined,
   RobotOutlined,
+  SafetyOutlined,
   SettingOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
@@ -63,6 +64,7 @@ export function useNavigationSections(): NavigationSection[] {
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
           { key: '/profile', icon: <IdcardOutlined />, label: messages.navigation.profile },
+          { key: '/account', icon: <SafetyOutlined />, label: messages.navigation.account },
           ...(FEATURE_FLAGS.assistant
             ? [
                 {

@@ -103,6 +103,16 @@ of the design turned out to be, and the two bugs the browser found on the way.
 
 ![The profile screen](docs/images/profile.jpg)
 
+### Account settings across five tabs
+
+`/account` is the settings side of the same user — general details, billing, notifications,
+social links, security. Five declarations of custom CSS;
+[031](docs/031-account-settings.md) covers the pieces worth copying: a validation rule that
+depends on another field, upload checks without an upload endpoint, and why only the open
+tab is mounted.
+
+![Account settings](docs/images/account.jpg)
+
 ### An admin shell with persistent preferences
 
 ![The dashboard](docs/images/dashboard.jpg)
@@ -121,6 +131,7 @@ of the design turned out to be, and the two bugs the browser found on the way.
 - A drag-and-drop board with optimistic updates, rollback, and keyboard dragging
 - Month, week, and day calendar views written without a calendar library
 - A social profile screen assembled from Ant Design components alone
+- An account settings screen: forms, validation, uploads, and tabbed panes
 - PDF viewing with pdf.js, from a blob fetched through the API client
 - An AI chat screen built from Ant Design X, with streamed and cancellable replies
 - A header search over one shared navigation definition, with a ⌘K shortcut

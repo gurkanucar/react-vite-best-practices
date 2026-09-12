@@ -15,7 +15,8 @@
     "files": "File browser",
     "board": "Delivery board",
     "calendar": "Schedule",
-    "profile": "Profile"
+    "profile": "Profile",
+    "account": "Account"
   },
   "shell": {
     "product": "RVBP Console",
@@ -815,5 +816,124 @@
     "replyToComment": "Reply",
     "copyComment": "Copy text",
     "reportComment": "Report comment"
+  },
+  "account": {
+    "title": "Account",
+    "description": "Account settings across five tabs, every field an Ant Design form control.",
+    "user": "User",
+    "tabs": {
+      "general": "General",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "social": "Social links",
+      "security": "Security"
+    },
+    "name": "Name",
+    "nameRequired": "A name is required",
+    "email": "Email address",
+    "emailRequired": "An email address is required",
+    "emailInvalid": "That is not a valid email address",
+    "phone": "Phone number",
+    "dialCode": "Dialling code",
+    "address": "Address",
+    "country": "Country",
+    "region": "State / region",
+    "city": "City",
+    "zip": "Zip / code",
+    "about": "About",
+    "saveChanges": "Save changes",
+    "saved": "Your changes are saved.",
+    "publicProfile": "Public profile",
+    "uploadPhoto": "Upload photo",
+    "avatarAllowed": "Allowed *.jpeg, *.jpg, *.png, *.gif",
+    "avatarMaxSize": "max size of {size} MB",
+    "avatarTypeError": "That file type is not allowed.",
+    "avatarSizeError": "That file is larger than {size} MB.",
+    "deleteUser": "Delete user",
+    "deleteUserConfirm": "Delete this user? Everything they own goes with them.",
+    "userDeleted": "The user was deleted.",
+    "countries": {
+      "CA": "Canada",
+      "DE": "Germany",
+      "GB": "United Kingdom",
+      "TR": "Türkiye",
+      "US": "United States"
+    },
+    "paymentMethods": "Payment methods",
+    "addCard": "Add card",
+    "addCardHint": "A real form would open here.",
+    "cardBrands": {
+      "visa": "Visa",
+      "mastercard": "Mastercard"
+    },
+    "expires": "Expires",
+    "primaryCard": "Primary",
+    "makePrimary": "Make primary",
+    "invoiceHistory": "Invoice history",
+    "invoiceNumber": "Invoice",
+    "issuedAt": "Issued",
+    "amount": "Amount",
+    "status": "Status",
+    "actions": "Actions",
+    "download": "Download",
+    "downloadStarted": "Download started",
+    "invoiceStatuses": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "overdue": "Overdue"
+    },
+    "notificationGroups": {
+      "activity": "Activity",
+      "application": "Application"
+    },
+    "notificationOptions": {
+      "comments": {
+        "title": "Comments on my posts",
+        "description": "Email me when someone replies to something I wrote."
+      },
+      "answers": {
+        "title": "Answers to my questions",
+        "description": "Email me when a question of mine is answered."
+      },
+      "mentions": {
+        "title": "Mentions",
+        "description": "Email me when someone mentions me by name."
+      },
+      "news": {
+        "title": "Product news",
+        "description": "Occasional news about what shipped."
+      },
+      "productUpdates": {
+        "title": "Release notes",
+        "description": "Every release, in full."
+      },
+      "blogDigest": {
+        "title": "Weekly digest",
+        "description": "A summary of the week, once a week."
+      }
+    },
+    "socialNetworks": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "twitter": "X"
+    },
+    "urlInvalid": "That is not a valid address",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordRequired": "A password is required",
+    "passwordTooShort": "Use at least 8 characters",
+    "passwordHint": "At least 8 characters.",
+    "passwordMismatch": "The two passwords do not match",
+    "savePassword": "Save password",
+    "passwordChanged": "Your password is changed.",
+    "twoFactor": "Two-factor authentication",
+    "twoFactorTitle": "Require a second step at sign-in",
+    "twoFactorDescription": "A code from your authenticator app, on top of your password.",
+    "twoFactorOn": "Two-factor authentication is on.",
+    "twoFactorOff": "Two-factor authentication is off.",
+    "twoFactorEnabled": "New sign-ins will ask for a code."
   }
 }

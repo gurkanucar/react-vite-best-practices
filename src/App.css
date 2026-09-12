@@ -791,3 +791,38 @@ html[data-theme='dark'] .admin-workspace {
     padding: 0 12px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Account
+ *
+ * Ant Design's `Upload` with `listType="picture-circle"` already draws the dashed
+ * circle; what is left is the flag size and a couple of spacings.
+ * ------------------------------------------------------------------------- */
+
+.account-flag {
+  height: 14px;
+  width: 21px;
+}
+
+/* So the upload card matches the height of the form beside it. */
+.account-side-card {
+  height: 100%;
+}
+
+.account-avatar-drop {
+  height: 100%;
+  justify-content: center;
+}
+
+.account-avatar-drop__hint {
+  font-size: var(--ant-font-size-sm);
+}
+
+.account-upload-hint {
+  margin-bottom: 0 !important;
+  text-align: center;
+}
+
+.account-2fa-notice {
+  margin-top: 16px;
+}

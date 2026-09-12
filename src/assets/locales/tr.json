@@ -15,7 +15,8 @@
     "files": "Dosya gezgini",
     "board": "Teslimat panosu",
     "calendar": "Takvim",
-    "profile": "Profil"
+    "profile": "Profil",
+    "account": "Hesap"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -815,5 +816,124 @@
     "replyToComment": "Yanıtla",
     "copyComment": "Metni kopyala",
     "reportComment": "Yorumu bildir"
+  },
+  "account": {
+    "title": "Hesap",
+    "description": "Beş sekmede hesap ayarları; her alan bir Ant Design form bileşeni.",
+    "user": "Kullanıcı",
+    "tabs": {
+      "general": "Genel",
+      "billing": "Faturalama",
+      "notifications": "Bildirimler",
+      "social": "Sosyal bağlantılar",
+      "security": "Güvenlik"
+    },
+    "name": "Ad",
+    "nameRequired": "Ad zorunlu",
+    "email": "E-posta adresi",
+    "emailRequired": "E-posta adresi zorunlu",
+    "emailInvalid": "Geçerli bir e-posta adresi değil",
+    "phone": "Telefon numarası",
+    "dialCode": "Ülke kodu",
+    "address": "Adres",
+    "country": "Ülke",
+    "region": "İl / bölge",
+    "city": "Şehir",
+    "zip": "Posta kodu",
+    "about": "Hakkında",
+    "saveChanges": "Değişiklikleri kaydet",
+    "saved": "Değişiklikleriniz kaydedildi.",
+    "publicProfile": "Herkese açık profil",
+    "uploadPhoto": "Fotoğraf yükle",
+    "avatarAllowed": "İzin verilen: *.jpeg, *.jpg, *.png, *.gif",
+    "avatarMaxSize": "en fazla {size} MB",
+    "avatarTypeError": "Bu dosya türüne izin verilmiyor.",
+    "avatarSizeError": "Bu dosya {size} MB sınırını aşıyor.",
+    "deleteUser": "Kullanıcıyı sil",
+    "deleteUserConfirm": "Bu kullanıcı silinsin mi? Sahip olduğu her şey de gider.",
+    "userDeleted": "Kullanıcı silindi.",
+    "countries": {
+      "CA": "Kanada",
+      "DE": "Almanya",
+      "GB": "Birleşik Krallık",
+      "TR": "Türkiye",
+      "US": "Amerika Birleşik Devletleri"
+    },
+    "paymentMethods": "Ödeme yöntemleri",
+    "addCard": "Kart ekle",
+    "addCardHint": "Gerçek bir formda burası açılırdı.",
+    "cardBrands": {
+      "visa": "Visa",
+      "mastercard": "Mastercard"
+    },
+    "expires": "Son kullanma",
+    "primaryCard": "Birincil",
+    "makePrimary": "Birincil yap",
+    "invoiceHistory": "Fatura geçmişi",
+    "invoiceNumber": "Fatura",
+    "issuedAt": "Düzenlenme",
+    "amount": "Tutar",
+    "status": "Durum",
+    "actions": "İşlemler",
+    "download": "İndir",
+    "downloadStarted": "İndirme başladı",
+    "invoiceStatuses": {
+      "paid": "Ödendi",
+      "pending": "Beklemede",
+      "overdue": "Gecikmiş"
+    },
+    "notificationGroups": {
+      "activity": "Etkinlik",
+      "application": "Uygulama"
+    },
+    "notificationOptions": {
+      "comments": {
+        "title": "Gönderilerime gelen yorumlar",
+        "description": "Yazdığım bir şeye yanıt gelince e-posta gönder."
+      },
+      "answers": {
+        "title": "Sorularıma gelen yanıtlar",
+        "description": "Bir sorum yanıtlandığında e-posta gönder."
+      },
+      "mentions": {
+        "title": "Bahsetmeler",
+        "description": "Biri adımı andığında e-posta gönder."
+      },
+      "news": {
+        "title": "Ürün haberleri",
+        "description": "Ara sıra, neyin yayınlandığına dair haberler."
+      },
+      "productUpdates": {
+        "title": "Sürüm notları",
+        "description": "Her sürüm, tam hâliyle."
+      },
+      "blogDigest": {
+        "title": "Haftalık özet",
+        "description": "Haftada bir, haftanın özeti."
+      }
+    },
+    "socialNetworks": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "linkedin": "LinkedIn",
+      "twitter": "X"
+    },
+    "urlInvalid": "Geçerli bir adres değil",
+    "changePassword": "Parolayı değiştir",
+    "currentPassword": "Mevcut parola",
+    "newPassword": "Yeni parola",
+    "confirmPassword": "Yeni parolayı doğrula",
+    "passwordRequired": "Parola zorunlu",
+    "passwordTooShort": "En az 8 karakter kullanın",
+    "passwordHint": "En az 8 karakter.",
+    "passwordMismatch": "İki parola eşleşmiyor",
+    "savePassword": "Parolayı kaydet",
+    "passwordChanged": "Parolanız değiştirildi.",
+    "twoFactor": "İki adımlı doğrulama",
+    "twoFactorTitle": "Girişte ikinci bir adım iste",
+    "twoFactorDescription": "Parolanıza ek olarak doğrulama uygulamanızdan bir kod.",
+    "twoFactorOn": "İki adımlı doğrulama açık.",
+    "twoFactorOff": "İki adımlı doğrulama kapalı.",
+    "twoFactorEnabled": "Yeni girişlerde kod sorulacak."
   }
 }
