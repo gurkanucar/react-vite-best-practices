@@ -58,6 +58,10 @@ export const PostEditPage = lazy(async () => ({
   default: (await import('@/features/posts/pages/PostEditPage')).PostEditPage,
 }))
 
+export const ProfilePage = lazy(async () => ({
+  default: (await import('@/features/profile/pages/ProfilePage')).ProfilePage,
+}))
+
 export const PostsListPage = lazy(async () => ({
   default: (await import('@/features/posts/pages/PostsListPage')).PostsListPage,
 }))

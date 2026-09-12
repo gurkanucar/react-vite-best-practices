@@ -14,7 +14,8 @@
     "analytics": "Analitik",
     "files": "Dosya gezgini",
     "board": "Teslimat panosu",
-    "calendar": "Takvim"
+    "calendar": "Takvim",
+    "profile": "Profil"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -749,5 +750,70 @@
       "vacation": "Yıllık izin"
     },
     "dayCount": "{count} gün"
+  },
+  "profile": {
+    "title": "Profil",
+    "description": "Ant Design bileşenleriyle ve neredeyse hiç özel CSS olmadan kurulmuş sosyal profil.",
+    "people": "Kişiler",
+    "about": "Hakkında",
+    "social": "Sosyal",
+    "bio": "Tatlı krem, yulaflı kek ve reçelli rulo severim. Üstüne de gofret.",
+    "livesAt": "Yaşadığı yer",
+    "worksAt": "Çalıştığı yer",
+    "studiedAt": "Okuduğu yer",
+    "followers": "Takipçi",
+    "following": "Takip edilen",
+    "follow": "Takip et",
+    "followed": "Takip ediliyor",
+    "friends": "Arkadaşlar",
+    "searchFriends": "Arkadaş ara",
+    "sendMessage": "Mesaj gönder",
+    "call": "Ara",
+    "viewProfile": "Profili görüntüle",
+    "removeFriend": "Arkadaşlıktan çıkar",
+    "gallery": "Galeri",
+    "composerPlaceholder": "Ne düşündüğünü buradan paylaş…",
+    "attachImage": "Görsel / video",
+    "startStream": "Canlı yayın",
+    "post": "Paylaş",
+    "posted": "Gönderin yayında.",
+    "comment": "Yorum",
+    "share": "Paylaş",
+    "commentPlaceholder": "Bir yorum yaz…",
+    "postActions": "Gönderi işlemleri",
+    "savePost": "Gönderiyi kaydet",
+    "copyLink": "Bağlantıyı kopyala",
+    "reportPost": "Gönderiyi bildir",
+    "tabs": {
+      "profile": "Profil",
+      "followers": "Takipçiler",
+      "friends": "Arkadaşlar",
+      "gallery": "Galeri"
+    },
+    "roles": {
+      "cto": "CTO",
+      "engineer": "Yazılım mühendisi",
+      "designer": "Tasarımcı",
+      "productManager": "Ürün yöneticisi",
+      "dataAnalyst": "Veri analisti"
+    },
+    "posts": {
+      "sunset": "Güneş ufukta yavaşça battı, gökyüzünü canlı turuncu ve pembe tonlara boyadı.",
+      "gift": "Hediyeyi heyecanla açtı, gözleri parlıyordu.",
+      "oak": "Yaşlı meşe ağacı heybetle duruyordu, dalları rüzgârda usulca salınıyordu."
+    },
+    "comments": {
+      "short": "Praesent venenatis metus at.",
+      "long": "Etiam rhoncus. Nullam vel sem. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam. Sed lectus."
+    },
+    "gallerySubjects": {
+      "sunset": "Körfezde gün batımı",
+      "coast": "Kayalıklar ve derin su",
+      "beach": "Uzun sahil"
+    },
+    "commentActions": "Yorum işlemleri",
+    "replyToComment": "Yanıtla",
+    "copyComment": "Metni kopyala",
+    "reportComment": "Yorumu bildir"
   }
 }

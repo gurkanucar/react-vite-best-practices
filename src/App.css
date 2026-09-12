@@ -679,3 +679,115 @@ html[data-theme='dark'] .admin-workspace {
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Profile
+ *
+ * Deliberately thin. Everything on this screen is an Ant Design component with its
+ * own styling; what is left here is the banner, which is a stacking problem no
+ * component solves, and a few sizes.
+ * ------------------------------------------------------------------------- */
+
+.profile-breadcrumb {
+  margin-bottom: 16px;
+}
+
+.profile-cover {
+  background: var(--ant-color-bg-container);
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  overflow: hidden;
+}
+
+.profile-cover__banner {
+  align-items: flex-end;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  min-height: 220px;
+  padding: 24px;
+}
+
+.profile-cover__identity {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+/* The banner is dark at every theme, so its text is light at every theme too. */
+.profile-cover__name,
+.profile-cover__role {
+  color: #fff !important;
+}
+
+.profile-cover__name {
+  margin: 0 !important;
+}
+
+.profile-cover__avatar {
+  border: 3px solid var(--ant-color-bg-container);
+}
+
+.profile-cover__tabs .ant-tabs-nav {
+  padding: 0 24px;
+}
+
+.profile-body {
+  margin-top: 16px;
+}
+
+.post-card__image img,
+.profile-gallery__image {
+  border-radius: var(--ant-border-radius);
+  object-fit: cover;
+  width: 100%;
+}
+
+.post-card__image img {
+  max-height: 420px;
+}
+
+.profile-gallery__image {
+  aspect-ratio: 16 / 10;
+}
+
+.post-card__actions {
+  margin-top: 16px;
+}
+
+.post-card__meta {
+  font-size: var(--ant-font-size-sm);
+}
+
+.post-card__comments {
+  margin-top: 12px;
+}
+
+.post-card__comment {
+  background: var(--ant-color-fill-quaternary);
+  border-radius: var(--ant-border-radius);
+  padding: 12px;
+}
+
+/* The text block has to be allowed to shrink, or the date is pushed out of the row. */
+.post-card__comment-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.post-card__reply {
+  margin-top: 8px;
+}
+
+/* Below this the banner text crowds the avatar, so they stack instead. */
+@media (max-width: 575px) {
+  .profile-cover__identity {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .profile-cover__tabs .ant-tabs-nav {
+    padding: 0 12px;
+  }
+}

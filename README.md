@@ -94,6 +94,15 @@ so it follows the theme and the locale like everything else.
 
 ![The file browser](docs/images/files.jpg)
 
+### A profile screen assembled from components
+
+`/profile` rebuilds a social profile layout — cover, stats, feed, comments, followers,
+friends, and a gallery — out of Ant Design components, with one block of custom CSS for the
+banner and nothing else. [030](docs/030-profile-screen.md) lists which component each part
+of the design turned out to be, and the two bugs the browser found on the way.
+
+![The profile screen](docs/images/profile.jpg)
+
 ### An admin shell with persistent preferences
 
 ![The dashboard](docs/images/dashboard.jpg)
@@ -111,6 +120,7 @@ so it follows the theme and the locale like everything else.
 - A file browser with a folder tree, uploads, renames, and subtree deletes
 - A drag-and-drop board with optimistic updates, rollback, and keyboard dragging
 - Month, week, and day calendar views written without a calendar library
+- A social profile screen assembled from Ant Design components alone
 - PDF viewing with pdf.js, from a blob fetched through the API client
 - An AI chat screen built from Ant Design X, with streamed and cancellable replies
 - A header search over one shared navigation definition, with a ⌘K shortcut

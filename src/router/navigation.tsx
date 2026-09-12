@@ -10,6 +10,7 @@ import {
   FormOutlined,
   HddOutlined,
   LineChartOutlined,
+  IdcardOutlined,
   ProjectOutlined,
   RobotOutlined,
   SettingOutlined,
@@ -61,6 +62,7 @@ export function useNavigationSections(): NavigationSection[] {
           { key: '/products', icon: <ShoppingOutlined />, label: messages.navigation.productsApi },
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
+          { key: '/profile', icon: <IdcardOutlined />, label: messages.navigation.profile },
           ...(FEATURE_FLAGS.assistant
             ? [
                 {

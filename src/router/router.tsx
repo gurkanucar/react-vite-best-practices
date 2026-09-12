@@ -16,6 +16,7 @@ import {
   PostDetailPage,
   PostEditPage,
   PostsListPage,
+  ProfilePage,
   ProductDetailPage,
   ProductsListPage,
   RegisterPage,
@@ -208,6 +209,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <FilesPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'profile',
+        element: (
+          <RouteSuspense>
+            <ProfilePage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

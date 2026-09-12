@@ -14,7 +14,8 @@
     "analytics": "Analytics",
     "files": "File browser",
     "board": "Delivery board",
-    "calendar": "Schedule"
+    "calendar": "Schedule",
+    "profile": "Profile"
   },
   "shell": {
     "product": "RVBP Console",
@@ -749,5 +750,70 @@
       "vacation": "Annual leave"
     },
     "dayCount": "{count} days"
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "A social profile laid out with Ant Design components and almost no custom CSS.",
+    "people": "People",
+    "about": "About",
+    "social": "Social",
+    "bio": "Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer.",
+    "livesAt": "Lives at",
+    "worksAt": "Works at",
+    "studiedAt": "Studied at",
+    "followers": "Followers",
+    "following": "Following",
+    "follow": "Follow",
+    "followed": "Following",
+    "friends": "Friends",
+    "searchFriends": "Search friends",
+    "sendMessage": "Send a message",
+    "call": "Call",
+    "viewProfile": "View profile",
+    "removeFriend": "Remove friend",
+    "gallery": "Gallery",
+    "composerPlaceholder": "Share what you are thinking here…",
+    "attachImage": "Image / video",
+    "startStream": "Streaming",
+    "post": "Post",
+    "posted": "Your post is live.",
+    "comment": "Comment",
+    "share": "Share",
+    "commentPlaceholder": "Write a comment…",
+    "postActions": "Post actions",
+    "savePost": "Save post",
+    "copyLink": "Copy link",
+    "reportPost": "Report post",
+    "tabs": {
+      "profile": "Profile",
+      "followers": "Followers",
+      "friends": "Friends",
+      "gallery": "Gallery"
+    },
+    "roles": {
+      "cto": "CTO",
+      "engineer": "Engineer",
+      "designer": "Designer",
+      "productManager": "Product manager",
+      "dataAnalyst": "Data analyst"
+    },
+    "posts": {
+      "sunset": "The sun slowly set over the horizon, painting the sky in vibrant hues of orange and pink.",
+      "gift": "She eagerly opened the gift, her eyes sparkling with excitement.",
+      "oak": "The old oak tree stood tall and majestic, its branches swaying gently in the breeze."
+    },
+    "comments": {
+      "short": "Praesent venenatis metus at.",
+      "long": "Etiam rhoncus. Nullam vel sem. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam. Sed lectus."
+    },
+    "gallerySubjects": {
+      "sunset": "Sunset over the bay",
+      "coast": "Cliffs and deep water",
+      "beach": "The long beach"
+    },
+    "commentActions": "Comment actions",
+    "replyToComment": "Reply",
+    "copyComment": "Copy text",
+    "reportComment": "Report comment"
   }
 }
