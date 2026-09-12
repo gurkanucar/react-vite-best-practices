@@ -19,7 +19,9 @@
     "menu": "Navigasyonu aç",
     "profile": "Demo yöneticisi",
     "collapseMenu": "Menüyü daralt",
-    "expandMenu": "Menüyü genişlet"
+    "expandMenu": "Menüyü genişlet",
+    "searchLabel": "Çalışma alanında ara",
+    "searchPlaceholder": "Sayfalarda ara"
   },
   "landing": {
     "ready": "Production-ready altyapı",

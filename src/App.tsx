@@ -1,28 +1,15 @@
-import {
-  AppstoreOutlined,
-  BgColorsOutlined,
-  BellOutlined,
-  DashboardOutlined,
-  DatabaseOutlined,
-  CloudServerOutlined,
-  FilePdfOutlined,
-  FolderOpenOutlined,
-  FormOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  RobotOutlined,
-  SettingOutlined,
-  ShoppingOutlined,
-} from '@ant-design/icons'
+import { BellOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Avatar, Badge, Button, Flex, Grid, Layout, Menu, Tooltip, Typography } from 'antd'
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
+import { GlobalSearch } from '@/components/GlobalSearch/GlobalSearch'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
 import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
 import { env } from '@/config/env'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
+import { useNavigationSections } from '@/router/navigation'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
 import './App.css'
 
@@ -36,6 +23,7 @@ function App() {
   // On a narrow screen an icon rail is still a column of wasted width, so the sider
   // collapses to nothing instead and the header button is the only way back.
   const isDesktop = Grid.useBreakpoint().lg ?? false
+  const navigationSections = useNavigationSections()
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const backgroundImage = officialThemeBackgrounds[visualTheme]
   const backgroundStyle = backgroundImage
@@ -55,71 +43,6 @@ function App() {
       target.scrollIntoView({ block: 'nearest' })
     }
   }, [location.hash])
-
-  const navigationItems = useMemo(
-    () => [
-      {
-        key: 'workspace',
-        icon: <FolderOpenOutlined />,
-        label: messages.navigation.workspace,
-        children: [
-          {
-            key: '/dashboard',
-            icon: <DashboardOutlined />,
-            label: messages.navigation.dashboard,
-          },
-          {
-            key: '/components',
-            icon: <AppstoreOutlined />,
-            label: messages.navigation.components,
-          },
-          {
-            key: '/survey',
-            icon: <FormOutlined />,
-            label: messages.navigation.survey,
-          },
-          {
-            key: '/posts',
-            icon: <CloudServerOutlined />,
-            label: messages.navigation.postsApi,
-          },
-          {
-            key: '/products',
-            icon: <ShoppingOutlined />,
-            label: messages.navigation.productsApi,
-          },
-          {
-            key: '/documents',
-            icon: <FilePdfOutlined />,
-            label: messages.navigation.documents,
-          },
-          {
-            key: '/assistant',
-            icon: <RobotOutlined />,
-            label: messages.navigation.assistant,
-          },
-        ],
-      },
-      {
-        key: 'configuration',
-        icon: <SettingOutlined />,
-        label: messages.navigation.configuration,
-        children: [
-          {
-            key: '/settings#appearance',
-            icon: <BgColorsOutlined />,
-            label: messages.navigation.appearance,
-          },
-          {
-            key: '/settings#state',
-            icon: <DatabaseOutlined />,
-            label: messages.navigation.persistedState,
-          },
-        ],
-      },
-    ],
-    [messages],
-  )
 
   const selectedNavigationKey =
     location.pathname === '/settings'
@@ -145,7 +68,16 @@ function App() {
         defaultOpenKeys={['workspace', 'configuration']}
         mode="inline"
         selectedKeys={[selectedNavigationKey]}
-        items={navigationItems}
+        items={navigationSections.map((section) => ({
+          key: section.key,
+          icon: section.icon,
+          label: section.label,
+          children: section.children.map((entry) => ({
+            key: entry.key,
+            icon: entry.icon,
+            label: entry.label,
+          })),
+        }))}
         onClick={({ key }) => {
           void navigate(key)
         }}
@@ -180,6 +112,8 @@ function App() {
               onClick={() => setCollapsed(!collapsed)}
             />
           </Tooltip>
+
+          <GlobalSearch />
 
           <Flex className="admin-header__actions" align="center" gap={10}>
             <ColorModeControl variant="menu" />

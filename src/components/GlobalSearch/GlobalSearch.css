@@ -1,0 +1,35 @@
+.global-search {
+  align-self: center;
+  flex: 1 1 260px;
+  max-width: 360px;
+  /* The layout header sets `line-height: 64px`, which the select's inner element
+     inherits and turns into a 64px line box — stretching the field to the height of the
+     whole bar. Resetting it here keeps the field the same height as the buttons. */
+  line-height: normal;
+}
+
+.global-search__field {
+  width: 100%;
+}
+
+.global-search__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.global-search__shortcut {
+  padding: 0 6px;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--ant-color-text-tertiary);
+  background: var(--ant-color-fill-tertiary);
+  border-radius: var(--ant-border-radius-sm);
+}
+
+/* The header has no room for it next to the language and theme controls. */
+@media (max-width: 720px) {
+  .global-search {
+    display: none;
+  }
+}

@@ -19,7 +19,9 @@
     "menu": "Open navigation",
     "profile": "Demo administrator",
     "collapseMenu": "Collapse the menu",
-    "expandMenu": "Expand the menu"
+    "expandMenu": "Expand the menu",
+    "searchLabel": "Search the workspace",
+    "searchPlaceholder": "Search pages"
   },
   "landing": {
     "ready": "Production-ready foundation",

@@ -82,6 +82,7 @@ can be seen working in this theme before it is reached for.
 - A working catalog of the full Ant Design component set
 - PDF viewing with pdf.js, from a blob fetched through the API client
 - An AI chat screen built from Ant Design X, with streamed and cancellable replies
+- A header search over one shared navigation definition, with a ⌘K shortcut
 - Responsive Ant Design data-layout patterns without internal CSS overrides
 - React Router data routing, detail routes, and an admin dashboard demo
 - List state in the URL: pagination, search, filters, and sorting
