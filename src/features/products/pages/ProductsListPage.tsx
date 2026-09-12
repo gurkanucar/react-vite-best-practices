@@ -1,5 +1,5 @@
 import { ReloadOutlined } from '@ant-design/icons'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import {
   Alert,
   App,
@@ -16,16 +16,12 @@ import {
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
-import type { Product, ProductListFilters } from '@/features/products/model/product'
-import { productQueryKeys } from '@/features/products/queries/product-query-keys'
-import {
-  PRODUCT_PAGE_SIZE,
-  productsQueryOptions,
-} from '@/features/products/queries/product-query-options'
+import { PRODUCT_PAGE_SIZE, productQueryKeys, useProductsQuery } from '@/features/products/hooks'
+import type { Product, ProductListFilters } from '@/features/products/types'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 
-export function ProductsPage() {
+export function ProductsListPage() {
   const messages = useMessages()
   const language = usePreferencesStore((state) => state.language)
   const { message } = App.useApp()
@@ -35,7 +31,7 @@ export function ProductsPage() {
     limit: PRODUCT_PAGE_SIZE,
     skip: (page - 1) * PRODUCT_PAGE_SIZE,
   }
-  const productsQuery = useQuery(productsQueryOptions(filters))
+  const productsQuery = useProductsQuery(filters)
   const currencyFormatter = new Intl.NumberFormat(language === 'tr' ? 'tr-TR' : 'en-US', {
     currency: 'USD',
     style: 'currency',

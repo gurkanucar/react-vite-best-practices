@@ -1,5 +1,5 @@
+import type { CreatePostInput, Post, PostListFilters } from '@/features/posts/types'
 import { apiRequest } from '@/lib/api/api-client'
-import type { CreatePostInput, Post, PostListFilters } from '@/features/posts/model/post'
 
 export function getPosts(filters: PostListFilters, signal?: AbortSignal): Promise<Post[]> {
   return apiRequest<Post[]>('/posts', {

@@ -1,23 +1,20 @@
 import { ReloadOutlined, SendOutlined } from '@ant-design/icons'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { Alert, App, Button, Card, Empty, Flex, Spin, Table, Tag, Typography } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import { useState } from 'react'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
-import type { Post } from '@/features/posts/model/post'
-import { useCreatePostMutation } from '@/features/posts/mutations/use-create-post-mutation'
-import { postQueryKeys } from '@/features/posts/queries/post-query-keys'
-import {
-  DEFAULT_POST_FILTERS,
-  postsQueryOptions,
-} from '@/features/posts/queries/post-query-options'
+import { QuickCreatePostModal } from '@/features/posts/components/QuickCreatePostModal'
+import { DEFAULT_POST_FILTERS, postQueryKeys, usePostsQuery } from '@/features/posts/hooks'
+import type { Post } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
 
-export function PostsPage() {
+export function PostsListPage() {
   const messages = useMessages()
   const { message } = App.useApp()
   const queryClient = useQueryClient()
-  const postsQuery = useQuery(postsQueryOptions())
-  const createPostMutation = useCreatePostMutation()
+  const postsQuery = usePostsQuery()
+  const [quickCreateOpen, setQuickCreateOpen] = useState(false)
 
   const columns: ColumnsType<Post> = [
     { title: messages.posts.id, dataIndex: 'id', key: 'id', width: 80 },
@@ -29,20 +26,6 @@ export function PostsPage() {
   const invalidatePosts = async () => {
     await queryClient.invalidateQueries({ queryKey: postQueryKeys.lists() })
     void message.success(messages.posts.invalidated)
-  }
-
-  const createDemoPost = () => {
-    createPostMutation.mutate(
-      {
-        title: 'TanStack Query cache invalidation',
-        body: 'This simulated mutation invalidates every cached post list.',
-        userId: 1,
-      },
-      {
-        onSuccess: () => void message.success(messages.posts.created),
-        onError: () => void message.error(messages.posts.createError),
-      },
-    )
   }
 
   return (
@@ -63,9 +46,8 @@ export function PostsPage() {
             </Button>
             <Button
               icon={<SendOutlined aria-hidden="true" />}
-              loading={createPostMutation.isPending}
               type="primary"
-              onClick={createDemoPost}
+              onClick={() => setQuickCreateOpen(true)}
             >
               {messages.posts.create}
             </Button>
@@ -125,6 +107,8 @@ export function PostsPage() {
           )}
         </Flex>
       </Card>
+
+      <QuickCreatePostModal open={quickCreateOpen} onClose={() => setQuickCreateOpen(false)} />
     </div>
   )
 }

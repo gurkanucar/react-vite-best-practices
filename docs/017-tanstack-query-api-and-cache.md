@@ -13,16 +13,19 @@ src/
 │   └── query/query-client.ts
 └── features/
     ├── posts/
-    │   ├── api/posts-api.ts
-    │   ├── model/post.ts
-    │   ├── mutations/use-create-post-mutation.ts
-    │   ├── pages/PostsPage.tsx
-    │   └── queries/
+    │   ├── api/postsApi.ts
+    │   ├── components/QuickCreatePostModal.tsx
+    │   ├── hooks/
+    │   │   ├── index.ts
+    │   │   ├── usePostsMutations.ts
+    │   │   └── usePostsQueries.ts
+    │   ├── pages/PostsListPage.tsx
+    │   └── types.ts
     └── products/
-        ├── api/products-api.ts
-        ├── model/product.ts
-        ├── pages/ProductsPage.tsx
-        └── queries/
+        ├── api/productsApi.ts
+        ├── hooks/useProductsQueries.ts
+        ├── pages/ProductsListPage.tsx
+        └── types.ts
 ```
 
 - `lib/api` owns transport concerns shared by every feature: base URL, query strings, JSON bodies, response parsing, and HTTP errors.
@@ -180,14 +183,16 @@ Do not copy successful query results into Zustand. That creates two sources of t
 
 ## Adding another API feature
 
-1. Create `src/features/<feature>/model` types.
+1. Create `src/features/<feature>/types.ts` for the feature contracts.
 2. Add endpoint functions under `api` using `apiRequest`.
-3. Add one query-key factory for the domain.
-4. Co-locate reusable `queryOptions` with that factory.
-5. Put invalidation rules in mutation hooks.
-6. Build loading, error, empty, success, and background-refresh states in the page or component.
-7. Add API-client, key-factory, and user-flow tests.
-8. Add the page through `LazyPages.tsx` so route code remains lazy-loaded.
+3. Keep query keys, options, and read hooks together in `hooks/use<Feature>Queries.ts`.
+4. Keep mutation keys, mutation hooks, and invalidation rules in `hooks/use<Feature>Mutations.ts`.
+5. Put route-level list, detail, and create screens under `pages`.
+6. Put feature-owned modals and reusable UI under `components`.
+7. Add a `services` directory only when real framework-independent business logic exists.
+8. Build loading, error, empty, success, and background-refresh states in the page or component.
+9. Add API-client, hook, and user-flow tests.
+10. Add the page through `LazyPages.tsx` so route code remains lazy-loaded.
 
 ## Verification
 

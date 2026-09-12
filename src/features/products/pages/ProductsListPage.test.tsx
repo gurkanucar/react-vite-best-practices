@@ -2,7 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { ProductsPage } from '@/features/products/pages/ProductsPage'
+import { ProductsListPage } from '@/features/products/pages/ProductsListPage'
 import { createQueryClient } from '@/lib/query/query-client'
 import { AppThemeProvider } from '@/theme/AppThemeProvider'
 
@@ -10,7 +10,7 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
-describe('ProductsPage', () => {
+describe('ProductsListPage', () => {
   it('loads paginated data from the second API origin', async () => {
     const user = userEvent.setup()
     const fetchMock = vi.fn<typeof fetch>().mockImplementation((input) => {
@@ -47,7 +47,7 @@ describe('ProductsPage', () => {
     render(
       <QueryClientProvider client={createQueryClient()}>
         <AppThemeProvider>
-          <ProductsPage />
+          <ProductsListPage />
         </AppThemeProvider>
       </QueryClientProvider>,
     )

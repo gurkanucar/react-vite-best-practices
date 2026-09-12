@@ -38,12 +38,12 @@ Transport behavior remains shared while ownership of the service selection stays
 
 ```text
 src/features/products/
-├── api/products-api.ts
-├── model/product.ts
-├── pages/ProductsPage.tsx
-└── queries/
-    ├── product-query-keys.ts
-    └── product-query-options.ts
+├── api/productsApi.ts
+├── hooks/
+│   ├── index.ts
+│   └── useProductsQueries.ts
+├── pages/ProductsListPage.tsx
+└── types.ts
 ```
 
 The API request uses DummyJSON's `select` parameter to request only the fields displayed by the table. This reduces unnecessary response data while keeping the response contract explicit.
@@ -82,7 +82,7 @@ Do not create one generic key such as `['api-data']` for unrelated services. Cac
 
 ## UI states
 
-`ProductsPage` provides:
+`ProductsListPage` provides:
 
 - translated loading, error, empty, and success states;
 - an Ant Design table and server-backed pagination;

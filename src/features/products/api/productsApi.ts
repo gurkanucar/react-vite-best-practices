@@ -1,5 +1,5 @@
 import { env } from '@/config/env'
-import type { ProductListFilters, ProductListResponse } from '@/features/products/model/product'
+import type { ProductListFilters, ProductListResponse } from '@/features/products/types'
 import { apiRequest } from '@/lib/api/api-client'
 
 const PRODUCT_FIELDS = [
