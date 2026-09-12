@@ -63,6 +63,28 @@ describe('PostsListPage filters', () => {
     expect(screen.getByTestId('location-search')).toHaveTextContent('categories=routing')
   })
 
+  it('coalesces keystrokes into a single request', async () => {
+    const user = userEvent.setup()
+    const listRequests: string[] = []
+    const recordRequest = ({ request }: { request: Request }) => {
+      const url = new URL(request.url)
+      if (url.pathname === '/posts') listRequests.push(url.search)
+    }
+    mockServer.events.on('request:start', recordRequest)
+
+    renderPage()
+    expect(await screen.findByText('Cache keys carry every filter')).toBeInTheDocument()
+    listRequests.length = 0
+
+    // Typing "500" used to ask the server for 5, then 50, then 500.
+    await user.type(screen.getByPlaceholderText('Min'), '500')
+
+    await waitFor(() => expect(listRequests).toHaveLength(1))
+    expect(listRequests[0]).toContain('minViews=500')
+
+    mockServer.events.removeListener('request:start', recordRequest)
+  })
+
   it('applies the view-count range on the server', async () => {
     const user = userEvent.setup()
     renderPage()

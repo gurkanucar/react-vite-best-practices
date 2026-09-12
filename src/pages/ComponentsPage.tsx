@@ -76,37 +76,49 @@ interface TeamMember {
   key: string
   name: string
   role: string
-  status: 'Active' | 'Invited'
+  active: boolean
 }
 
-const teamMembers: TeamMember[] = [
-  { key: '1', name: 'Maya Chen', role: 'Product manager', status: 'Active' },
-  { key: '2', name: 'Noah Williams', role: 'Frontend engineer', status: 'Active' },
-  { key: '3', name: 'Ava Patel', role: 'Design lead', status: 'Invited' },
-]
+// Demo rows are built from the active locale; only the people's names stay as written.
+function createTeamMembers(messages: Messages): TeamMember[] {
+  return [
+    { key: '1', name: 'Maya Chen', role: messages.components.roleProductManager, active: true },
+    {
+      key: '2',
+      name: 'Noah Williams',
+      role: messages.components.roleFrontendEngineer,
+      active: true,
+    },
+    { key: '3', name: 'Ava Patel', role: messages.components.roleDesignLead, active: false },
+  ]
+}
 
-const teamColumns: ColumnsType<TeamMember> = [
-  {
-    title: 'Member',
-    dataIndex: 'name',
-    key: 'name',
-    render: (name: string) => (
-      <Space>
-        <Avatar icon={<UserOutlined />} />
-        {name}
-      </Space>
-    ),
-  },
-  { title: 'Role', dataIndex: 'role', key: 'role' },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    render: (status: TeamMember['status']) => (
-      <Tag color={status === 'Active' ? 'success' : 'processing'}>{status}</Tag>
-    ),
-  },
-]
+function createTeamColumns(messages: Messages): ColumnsType<TeamMember> {
+  return [
+    {
+      title: messages.components.member,
+      dataIndex: 'name',
+      key: 'name',
+      render: (name: string) => (
+        <Space>
+          <Avatar icon={<UserOutlined />} />
+          {name}
+        </Space>
+      ),
+    },
+    { title: messages.components.role, dataIndex: 'role', key: 'role' },
+    {
+      title: messages.components.status,
+      dataIndex: 'active',
+      key: 'active',
+      render: (active: boolean) => (
+        <Tag color={active ? 'success' : 'processing'}>
+          {active ? messages.components.statusActive : messages.components.statusInvited}
+        </Tag>
+      ),
+    },
+  ]
+}
 
 function InputsShowcase({ messages }: { messages: Messages }) {
   const { message } = App.useApp()
@@ -115,21 +127,25 @@ function InputsShowcase({ messages }: { messages: Messages }) {
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} xl={12}>
-        <Card className="component-panel" title="Text and numeric input">
+        <Card className="component-panel" title={messages.components.textInputs}>
           <Space orientation="vertical" size="middle" className="full-width">
-            <Input prefix={<UserOutlined />} placeholder="Workspace owner" allowClear />
-            <Input.Password placeholder="Password" />
-            <Input.Search placeholder="Search the catalog" enterButton />
+            <Input
+              prefix={<UserOutlined />}
+              placeholder={messages.components.workspaceOwner}
+              allowClear
+            />
+            <Input.Password placeholder={messages.components.password} />
+            <Input.Search placeholder={messages.components.searchCatalog} enterButton />
             <InputNumber
               className="full-width"
               min={1}
               max={100}
               defaultValue={12}
-              suffix="seats"
+              suffix={messages.components.seats}
             />
             <Input.OTP length={4} defaultValue="2026" />
             <Mentions
-              placeholder="Mention a teammate"
+              placeholder={messages.components.mentionTeammate}
               options={[
                 { value: 'maya', label: 'Maya Chen' },
                 { value: 'noah', label: 'Noah Williams' },
@@ -140,7 +156,7 @@ function InputsShowcase({ messages }: { messages: Messages }) {
       </Col>
 
       <Col xs={24} xl={12}>
-        <Card className="component-panel" title="Selection controls">
+        <Card className="component-panel" title={messages.components.selectionControls}>
           <Space orientation="vertical" size="middle" className="full-width">
             <Select
               mode="multiple"
@@ -154,34 +170,34 @@ function InputsShowcase({ messages }: { messages: Messages }) {
             />
             <AutoComplete
               className="full-width"
-              placeholder="Select a region"
+              placeholder={messages.components.selectRegion}
               options={[{ value: 'Frankfurt' }, { value: 'London' }, { value: 'Istanbul' }]}
             />
             <Cascader
               className="full-width"
-              placeholder="Select an environment"
+              placeholder={messages.components.selectEnvironment}
               options={[
                 {
                   value: 'cloud',
-                  label: 'Cloud',
+                  label: messages.components.cloud,
                   children: [
-                    { value: 'production', label: 'Production' },
-                    { value: 'staging', label: 'Staging' },
+                    { value: 'production', label: messages.components.production },
+                    { value: 'staging', label: messages.components.staging },
                   ],
                 },
               ]}
             />
             <TreeSelect
               className="full-width"
-              placeholder="Select a team"
+              placeholder={messages.components.selectTeam}
               treeDefaultExpandAll
               treeData={[
                 {
                   value: 'engineering',
-                  title: 'Engineering',
+                  title: messages.components.engineering,
                   children: [
-                    { value: 'frontend', title: 'Frontend' },
-                    { value: 'platform', title: 'Platform' },
+                    { value: 'frontend', title: messages.components.frontend },
+                    { value: 'platform', title: messages.components.platform },
                   ],
                 },
               ]}
@@ -191,32 +207,50 @@ function InputsShowcase({ messages }: { messages: Messages }) {
       </Col>
 
       <Col xs={24} xl={10}>
-        <Card className="component-panel" title="Choice and range">
+        <Card className="component-panel" title={messages.components.choiceRange}>
           <Space orientation="vertical" size="large" className="full-width">
-            <Checkbox.Group options={['Email', 'Push', 'SMS']} defaultValue={['Email']} />
+            <Checkbox.Group
+              options={[
+                messages.components.email,
+                messages.components.push,
+                messages.components.sms,
+              ]}
+              defaultValue={[messages.components.email]}
+            />
             <Radio.Group
               optionType="button"
               defaultValue="monthly"
               options={[
-                { label: 'Monthly', value: 'monthly' },
-                { label: 'Annual', value: 'annual' },
+                { label: messages.components.monthly, value: 'monthly' },
+                { label: messages.components.annual, value: 'annual' },
               ]}
             />
             <Flex align="center" gap="middle" wrap>
               <Switch defaultChecked />
               <Rate allowHalf defaultValue={4.5} />
             </Flex>
-            <Segmented block options={['Development', 'Staging', 'Production']} />
+            <Segmented
+              block
+              options={[
+                messages.components.development,
+                messages.components.staging,
+                messages.components.production,
+              ]}
+            />
             <div>
               <Progress percent={readiness} />
-              <Slider aria-label="Release readiness" value={readiness} onChange={setReadiness} />
+              <Slider
+                aria-label={messages.components.releaseReadiness}
+                value={readiness}
+                onChange={setReadiness}
+              />
             </div>
           </Space>
         </Card>
       </Col>
 
       <Col xs={24} xl={14}>
-        <Card className="component-panel" title="Dates, color, and files">
+        <Card className="component-panel" title={messages.components.datesColorFiles}>
           <Space orientation="vertical" size="middle" className="full-width">
             <Flex gap="middle" wrap>
               <DatePicker />
@@ -225,13 +259,9 @@ function InputsShowcase({ messages }: { messages: Messages }) {
             </Flex>
             <ColorPicker defaultValue="#1677ff" showText />
             <Upload beforeUpload={() => false} showUploadList={false}>
-              <Button icon={<CloudUploadOutlined />}>Choose a file</Button>
+              <Button icon={<CloudUploadOutlined />}>{messages.components.chooseFile}</Button>
             </Upload>
-            <Alert
-              showIcon
-              type="info"
-              title="Demo uploads stay in the browser and are not sent to a server."
-            />
+            <Alert showIcon type="info" title={messages.components.uploadNotice} />
           </Space>
         </Card>
       </Col>
@@ -251,7 +281,7 @@ function InputsShowcase({ messages }: { messages: Messages }) {
                 <Form.Item
                   label={messages.components.company}
                   name="company"
-                  rules={[{ required: true, message: 'Company name is required' }]}
+                  rules={[{ required: true, message: messages.components.companyRequired }]}
                 >
                   <Input placeholder={messages.components.companyPlaceholder} />
                 </Form.Item>
@@ -260,15 +290,15 @@ function InputsShowcase({ messages }: { messages: Messages }) {
                 <Form.Item label={messages.components.plan} name="plan">
                   <Select
                     options={[
-                      { value: 'starter', label: 'Starter' },
-                      { value: 'growth', label: 'Growth' },
-                      { value: 'enterprise', label: 'Enterprise' },
+                      { value: 'starter', label: messages.components.starter },
+                      { value: 'growth', label: messages.components.growth },
+                      { value: 'enterprise', label: messages.components.enterprise },
                     ]}
                   />
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item label="Renewal date" name="renewalDate">
+                <Form.Item label={messages.components.renewalDate} name="renewalDate">
                   <DatePicker className="full-width" />
                 </Form.Item>
               </Col>
@@ -292,12 +322,19 @@ function InputsShowcase({ messages }: { messages: Messages }) {
   )
 }
 
-function DataDisplayShowcase() {
+function DataDisplayShowcase({ messages }: { messages: Messages }) {
+  const pipelineEvent = (index: number) =>
+    messages.components.pipelineEvent.replace('{index}', String(index))
+
   return (
     <Row gutter={[16, 16]}>
       <Col xs={24} md={8}>
         <Card className="component-panel">
-          <Statistic title="Active workspaces" value={2847} suffix={<Badge status="success" />} />
+          <Statistic
+            title={messages.components.activeWorkspaces}
+            value={2847}
+            suffix={<Badge status="success" />}
+          />
           <Divider />
           <Avatar.Group max={{ count: 4 }}>
             <Avatar>M</Avatar>
@@ -309,21 +346,21 @@ function DataDisplayShowcase() {
         </Card>
       </Col>
       <Col xs={24} md={16}>
-        <Card className="component-panel" title="Descriptions">
+        <Card className="component-panel" title={messages.components.descriptions}>
           <Descriptions
             bordered
             column={{ xs: 1, sm: 2 }}
             items={[
-              { key: 'region', label: 'Region', children: 'eu-central-1' },
-              { key: 'runtime', label: 'Runtime', children: 'React 19' },
+              { key: 'region', label: messages.components.region, children: 'eu-central-1' },
+              { key: 'runtime', label: messages.components.runtime, children: 'React 19' },
               {
                 key: 'status',
-                label: 'Status',
-                children: <Badge status="success" text="Healthy" />,
+                label: messages.components.status,
+                children: <Badge status="success" text={messages.components.healthy} />,
               },
               {
                 key: 'release',
-                label: 'Release',
+                label: messages.components.release,
                 children: <Tag color="blue">v0.0.0</Tag>,
               },
             ]}
@@ -332,10 +369,10 @@ function DataDisplayShowcase() {
       </Col>
 
       <Col span={24}>
-        <Card className="component-panel" title="Table">
+        <Card className="component-panel" title={messages.components.table}>
           <Table<TeamMember>
-            columns={teamColumns}
-            dataSource={teamMembers}
+            columns={createTeamColumns(messages)}
+            dataSource={createTeamMembers(messages)}
             pagination={false}
             scroll={{ x: 'max-content' }}
           />
@@ -343,13 +380,13 @@ function DataDisplayShowcase() {
       </Col>
 
       <Col xs={24} xl={12}>
-        <Card className="component-panel" title="List and timeline">
+        <Card className="component-panel" title={messages.components.listTimeline}>
           <Listy
             rowKey="title"
             items={[
-              { title: 'Production build completed', detail: 'Pipeline event 1' },
-              { title: 'Quality checks passed', detail: 'Pipeline event 2' },
-              { title: 'Release approved', detail: 'Pipeline event 3' },
+              { title: messages.components.buildCompleted, detail: pipelineEvent(1) },
+              { title: messages.components.checksPassed, detail: pipelineEvent(2) },
+              { title: messages.components.releaseApproved, detail: pipelineEvent(3) },
             ]}
             itemRender={(item, index) => (
               <Flex align="center" justify="space-between" gap="middle">
@@ -361,23 +398,23 @@ function DataDisplayShowcase() {
                     <Typography.Text type="secondary">{item.detail}</Typography.Text>
                   </span>
                 </Space>
-                <Button type="link">Details</Button>
+                <Button type="link">{messages.components.details}</Button>
               </Flex>
             )}
           />
           <Divider />
           <Timeline
             items={[
-              { color: 'green', content: 'Dependencies installed' },
-              { color: 'green', content: 'Tests completed' },
-              { color: 'blue', content: 'Deployment in progress' },
+              { color: 'green', content: messages.components.dependenciesInstalled },
+              { color: 'green', content: messages.components.testsCompleted },
+              { color: 'blue', content: messages.components.deploymentInProgress },
             ]}
           />
         </Card>
       </Col>
 
       <Col xs={24} xl={12}>
-        <Card className="component-panel" title="Tree and collapsible content">
+        <Card className="component-panel" title={messages.components.treeCollapsible}>
           <Tree
             defaultExpandAll
             treeData={[
@@ -398,13 +435,13 @@ function DataDisplayShowcase() {
             items={[
               {
                 key: 'architecture',
-                label: 'Architecture',
-                children: 'Feature-oriented modules with typed boundaries.',
+                label: messages.components.architecture,
+                children: messages.components.architectureDetail,
               },
               {
                 key: 'quality',
-                label: 'Quality gates',
-                children: 'Lint, format, tests, and commit checks.',
+                label: messages.components.qualityGates,
+                children: messages.components.qualityGatesDetail,
               },
             ]}
           />
@@ -412,92 +449,115 @@ function DataDisplayShowcase() {
       </Col>
 
       <Col xs={24} xl={14}>
-        <Card className="component-panel" title="Calendar">
+        <Card className="component-panel" title={messages.components.calendar}>
           <Calendar fullscreen={false} />
         </Card>
       </Col>
       <Col xs={24} xl={10}>
-        <Card className="component-panel" title="Image, QR code, and empty state">
+        <Card className="component-panel" title={messages.components.imageQrEmpty}>
           <Flex justify="space-around" align="center" gap="large" wrap>
-            <Image src="/favicon.svg" width={96} preview={false} alt="RVBP application icon" />
+            <Image
+              src="/favicon.svg"
+              width={96}
+              preview={false}
+              alt={messages.components.appIconAlt}
+            />
             <QRCode value="https://example.com/react-vite-best-practices" />
           </Flex>
           <Divider />
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No archived releases" />
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={messages.components.noArchived}
+          />
         </Card>
       </Col>
     </Row>
   )
 }
 
-function NavigationShowcase() {
+function NavigationShowcase({ messages }: { messages: Messages }) {
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
-        <Card className="component-panel" title="Breadcrumb, menu, and dropdown">
+        <Card className="component-panel" title={messages.components.breadcrumbMenu}>
           <Space orientation="vertical" size="large" className="full-width">
             <Breadcrumb
-              items={[{ title: 'Workspace' }, { title: 'Components' }, { title: 'Navigation' }]}
+              items={[
+                { title: messages.components.workspaceCrumb },
+                { title: messages.components.componentsCrumb },
+                { title: messages.components.navigationCrumb },
+              ]}
             />
             <Menu
               mode="horizontal"
               defaultSelectedKeys={['overview']}
               items={[
-                { key: 'overview', icon: <AppstoreOutlined />, label: 'Overview' },
-                { key: 'members', icon: <UserOutlined />, label: 'Members' },
-                { key: 'settings', icon: <SettingOutlined />, label: 'Settings' },
+                {
+                  key: 'overview',
+                  icon: <AppstoreOutlined />,
+                  label: messages.components.overview,
+                },
+                { key: 'members', icon: <UserOutlined />, label: messages.components.members },
+                {
+                  key: 'settings',
+                  icon: <SettingOutlined />,
+                  label: messages.components.settingsItem,
+                },
               ]}
             />
             <Dropdown
               menu={{
                 items: [
-                  { key: 'csv', label: 'Export CSV' },
-                  { key: 'json', label: 'Export JSON' },
+                  { key: 'csv', label: messages.components.exportCsv },
+                  { key: 'json', label: messages.components.exportJson },
                 ],
               }}
             >
-              <Button icon={<DownloadOutlined />}>Export options</Button>
+              <Button icon={<DownloadOutlined />}>{messages.components.exportOptions}</Button>
             </Dropdown>
           </Space>
         </Card>
       </Col>
 
       <Col xs={24} xl={14}>
-        <Card className="component-panel" title="Steps">
+        <Card className="component-panel" title={messages.components.steps}>
           <Steps
             current={1}
             items={[
-              { title: 'Configure', content: 'Choose the environment' },
-              { title: 'Validate', content: 'Run quality checks' },
-              { title: 'Deploy', content: 'Publish the build' },
+              {
+                title: messages.components.configure,
+                content: messages.components.configureDetail,
+              },
+              { title: messages.components.validate, content: messages.components.validateDetail },
+              { title: messages.components.deploy, content: messages.components.deployDetail },
             ]}
           />
         </Card>
       </Col>
       <Col xs={24} xl={10}>
-        <Card className="component-panel" title="Pagination">
+        <Card className="component-panel" title={messages.components.pagination}>
           <Pagination defaultCurrent={3} total={120} showSizeChanger showQuickJumper />
         </Card>
       </Col>
 
       <Col span={24}>
-        <Card className="component-panel" title="Tabs and progressive disclosure">
+        <Card className="component-panel" title={messages.components.tabsDisclosure}>
           <Tabs
             items={[
               {
                 key: 'summary',
-                label: 'Summary',
-                children: 'A concise view of the current release.',
+                label: messages.components.summary,
+                children: messages.components.summaryDetail,
               },
               {
                 key: 'activity',
-                label: 'Activity',
-                children: 'Recent changes from the delivery pipeline.',
+                label: messages.components.activity,
+                children: messages.components.activityDetail,
               },
               {
                 key: 'audit',
-                label: 'Audit log',
-                children: 'Immutable records for administrative actions.',
+                label: messages.components.auditLog,
+                children: messages.components.auditLogDetail,
               },
             ]}
           />
@@ -506,13 +566,13 @@ function NavigationShowcase() {
             items={[
               {
                 key: 'one',
-                label: 'How is navigation state handled?',
-                children: 'React Router owns the URL and active route.',
+                label: messages.components.faqNavigation,
+                children: messages.components.faqNavigationAnswer,
               },
               {
                 key: 'two',
-                label: 'How are menus themed?',
-                children: 'Ant Design tokens follow the selected official preset.',
+                label: messages.components.faqMenus,
+                children: messages.components.faqMenusAnswer,
               },
             ]}
           />
@@ -531,24 +591,26 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
     <>
       <Row gutter={[16, 16]}>
         <Col xs={24} xl={12}>
-          <Card className="component-panel" title="Alerts and messages">
+          <Card className="component-panel" title={messages.components.alertsMessages}>
             <Space orientation="vertical" size="middle" className="full-width">
-              <Alert showIcon type="success" title="Production build completed" />
-              <Alert showIcon type="info" title="A dependency update is available" />
-              <Alert showIcon type="warning" title="Two approvals are still required" />
-              <Alert showIcon type="error" title="The staging deployment failed" closable />
+              <Alert showIcon type="success" title={messages.components.buildCompleted} />
+              <Alert showIcon type="info" title={messages.components.dependencyUpdate} />
+              <Alert showIcon type="warning" title={messages.components.approvalsRequired} />
+              <Alert showIcon type="error" title={messages.components.stagingFailed} closable />
               <Space wrap>
-                <Button onClick={() => void message.success('Changes saved')}>Show message</Button>
+                <Button onClick={() => void message.success(messages.components.changesSaved)}>
+                  {messages.components.showMessage}
+                </Button>
                 <Button
                   onClick={() =>
                     notification.success({
-                      title: 'Deployment complete',
-                      description: 'Version v0.0.0 is available in production.',
+                      title: messages.components.deploymentComplete,
+                      description: messages.components.deploymentCompleteDetail,
                       showProgress: true,
                     })
                   }
                 >
-                  Show notification
+                  {messages.components.showNotification}
                 </Button>
               </Space>
             </Space>
@@ -556,7 +618,7 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
         </Col>
 
         <Col xs={24} xl={12}>
-          <Card className="component-panel" title="Progress and loading">
+          <Card className="component-panel" title={messages.components.progressLoading}>
             <Space orientation="vertical" size="large" className="full-width">
               <Progress percent={82} />
               <Flex justify="space-around" align="center" gap="large" wrap>
@@ -570,39 +632,43 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
         </Col>
 
         <Col xs={24} xl={14}>
-          <Card className="component-panel" title="Overlays and confirmation">
+          <Card className="component-panel" title={messages.components.overlaysConfirmation}>
             <Space wrap>
               <Button type="primary" onClick={() => setModalOpen(true)}>
-                Open modal
+                {messages.components.openModal}
               </Button>
-              <Button onClick={() => setDrawerOpen(true)}>Open drawer</Button>
+              <Button onClick={() => setDrawerOpen(true)}>{messages.components.openDrawer}</Button>
               <Popconfirm
-                title="Archive this release?"
-                description="You can restore it later from the archive."
-                onConfirm={() => void message.success('Release archived')}
+                title={messages.components.archiveRelease}
+                description={messages.components.archiveReleaseDetail}
+                onConfirm={() => void message.success(messages.components.releaseArchived)}
               >
-                <Button danger>Archive</Button>
+                <Button danger>{messages.components.archive}</Button>
               </Popconfirm>
               <Popover
-                title="Build information"
-                content="Vite production build with hashed assets."
+                title={messages.components.buildInformation}
+                content={messages.components.buildInformationDetail}
               >
-                <Button>Open popover</Button>
+                <Button>{messages.components.openPopover}</Button>
               </Popover>
-              <Tooltip title="Theme-aware tooltip">
-                <Button shape="circle" icon={<InfoCircleOutlined />} aria-label="Show tooltip" />
+              <Tooltip title={messages.components.themeAwareTooltip}>
+                <Button
+                  shape="circle"
+                  icon={<InfoCircleOutlined />}
+                  aria-label={messages.components.showTooltip}
+                />
               </Tooltip>
             </Space>
           </Card>
         </Col>
 
         <Col xs={24} xl={10}>
-          <Card className="component-panel" title="Result">
+          <Card className="component-panel" title={messages.components.resultTitle}>
             <Result
               status="success"
-              title="The workspace is ready"
-              subTitle="All required quality checks completed successfully."
-              extra={<Button type="primary">View release</Button>}
+              title={messages.components.workspaceReady}
+              subTitle={messages.components.workspaceReadySubtitle}
+              extra={<Button type="primary">{messages.components.viewRelease}</Button>}
             />
           </Card>
         </Col>
@@ -621,39 +687,41 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
                 {messages.components.primaryAction}
               </Button>
               <Button icon={<DownloadOutlined />}>{messages.components.secondaryAction}</Button>
-              <Button disabled>Unavailable action</Button>
-              <Button loading>Processing</Button>
+              <Button disabled>{messages.components.unavailableAction}</Button>
+              <Button loading>{messages.components.processing}</Button>
             </Space>
           </Card>
         </Col>
       </Row>
 
       <Modal
-        title="Review workspace changes"
+        title={messages.components.reviewChanges}
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onOk={() => {
           setModalOpen(false)
-          void message.success('Changes approved')
+          void message.success(messages.components.changesApproved)
         }}
       >
-        <Typography.Paragraph>
-          Modal content, actions, focus management, and motion all come from Ant Design.
-        </Typography.Paragraph>
+        <Typography.Paragraph>{messages.components.modalBody}</Typography.Paragraph>
       </Modal>
 
       <Drawer
-        title="Release details"
+        title={messages.components.releaseDetails}
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        extra={<Tag color="processing">In progress</Tag>}
+        extra={<Tag color="processing">{messages.components.inProgress}</Tag>}
       >
         <Descriptions
           column={1}
           items={[
-            { key: 'branch', label: 'Branch', children: 'main' },
-            { key: 'environment', label: 'Environment', children: 'Production' },
-            { key: 'owner', label: 'Owner', children: 'Maya Chen' },
+            { key: 'branch', label: messages.components.branch, children: 'main' },
+            {
+              key: 'environment',
+              label: messages.components.environment,
+              children: messages.components.production,
+            },
+            { key: 'owner', label: messages.components.owner, children: 'Maya Chen' },
           ]}
         />
       </Drawer>
@@ -679,12 +747,12 @@ export function ComponentsPage() {
           {
             key: 'data-display',
             label: messages.components.dataDisplay,
-            children: <DataDisplayShowcase />,
+            children: <DataDisplayShowcase messages={messages} />,
           },
           {
             key: 'navigation',
             label: messages.components.navigation,
-            children: <NavigationShowcase />,
+            children: <NavigationShowcase messages={messages} />,
           },
           {
             key: 'feedback',

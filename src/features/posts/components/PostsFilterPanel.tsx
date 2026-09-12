@@ -5,6 +5,7 @@ import { usePostCategoriesQuery, type PostFilterPatch } from '@/features/posts/h
 import type { PostFilterValues } from '@/features/posts/hooks'
 import { POST_AUTHOR_OPTIONS } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
+import { useDebouncedFilter } from '@/lib/filters/useDebouncedFilter'
 
 interface PostsFilterPanelProps {
   values: PostFilterValues
@@ -23,6 +24,16 @@ export function PostsFilterPanel({
 }: PostsFilterPanelProps) {
   const messages = useMessages()
   const categoriesQuery = usePostCategoriesQuery()
+  // Typed filters commit on a shared delay; discrete ones commit as soon as they change.
+  const search = useDebouncedFilter(values.search, (value) =>
+    onChange({ q: value.trim() || undefined }),
+  )
+  const minViews = useDebouncedFilter(values.minViews, (value) =>
+    onChange({ minViews: value?.toString() }),
+  )
+  const maxViews = useDebouncedFilter(values.maxViews, (value) =>
+    onChange({ maxViews: value?.toString() }),
+  )
 
   return (
     <Card size="small" title={messages.posts.filtersTitle}>
@@ -32,12 +43,12 @@ export function PostsFilterPanel({
             {/* Free text, matched against the title by the handler. */}
             <Form.Item label={messages.posts.searchLabel}>
               <Input.Search
-                key={values.search}
                 allowClear
                 aria-label={messages.posts.searchLabel}
-                defaultValue={values.search}
                 placeholder={messages.posts.searchPlaceholder}
-                onSearch={(value) => onChange({ q: value.trim() || undefined })}
+                value={search.value}
+                onChange={(event) => search.change(event.target.value)}
+                onSearch={(value) => search.commitNow(value)}
               />
             </Form.Item>
           </Col>
@@ -90,15 +101,15 @@ export function PostsFilterPanel({
                   className="full-width"
                   min={0}
                   placeholder={messages.posts.minPlaceholder}
-                  value={values.minViews}
-                  onChange={(minViews) => onChange({ minViews: minViews?.toString() })}
+                  value={minViews.value}
+                  onChange={(value) => minViews.change(value ?? undefined)}
                 />
                 <InputNumber
                   className="full-width"
                   min={0}
                   placeholder={messages.posts.maxPlaceholder}
-                  value={values.maxViews}
-                  onChange={(maxViews) => onChange({ maxViews: maxViews?.toString() })}
+                  value={maxViews.value}
+                  onChange={(value) => maxViews.change(value ?? undefined)}
                 />
               </Flex>
             </Form.Item>

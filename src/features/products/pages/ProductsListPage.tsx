@@ -12,6 +12,7 @@ import {
   Space,
   Table,
   Tag,
+  Tooltip,
   Typography,
 } from 'antd'
 import type { TableProps } from 'antd'
@@ -32,6 +33,7 @@ import {
   type ProductFilterParams,
 } from '@/features/products/types'
 import { useMessages } from '@/i18n/messages'
+import { useDebouncedFilter } from '@/lib/filters/useDebouncedFilter'
 import { usePreferencesStore } from '@/store/preferences-store'
 
 export function ProductsListPage() {
@@ -46,7 +48,7 @@ export function ProductsListPage() {
 
   const pageParam = Number(searchParams.get('page'))
   const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1
-  const search = searchParams.get('q')?.trim() ?? ''
+  const searchValue = searchParams.get('q')?.trim() ?? ''
   const category = searchParams.get('category') ?? ''
   const sortParam = searchParams.get('sort')
   const sortBy = isProductSortField(sortParam) ? sortParam : undefined
@@ -56,7 +58,7 @@ export function ProductsListPage() {
     category: category || undefined,
     limit: PRODUCT_PAGE_SIZE,
     order,
-    search: search || undefined,
+    search: searchValue || undefined,
     skip: (page - 1) * PRODUCT_PAGE_SIZE,
     sortBy,
   }
@@ -121,24 +123,30 @@ export function ProductsListPage() {
     {
       title: messages.products.actions,
       key: 'actions',
-      width: 220,
+      width: 110,
       fixed: 'right',
+      align: 'center',
       // Two actions fit a row, so they stay inline. The posts table has five and
       // collapses them into an overflow menu instead.
       render: (_value, product) => (
         <Space size="small">
-          <Link to={`/products/${product.id}`} state={{ listSearch: searchParams.toString() }}>
-            <Button size="small" icon={<EyeOutlined aria-hidden="true" />}>
-              {messages.products.show}
-            </Button>
-          </Link>
-          <Button
-            size="small"
-            icon={<ThunderboltOutlined aria-hidden="true" />}
-            onClick={() => setQuickShowProductId(product.id)}
-          >
-            {messages.products.quickShow}
-          </Button>
+          <Tooltip title={messages.products.show}>
+            <Link to={`/products/${product.id}`} state={{ listSearch: searchParams.toString() }}>
+              <Button
+                aria-label={messages.products.show}
+                icon={<EyeOutlined aria-hidden="true" />}
+                size="small"
+              />
+            </Link>
+          </Tooltip>
+          <Tooltip title={messages.products.quickShow}>
+            <Button
+              aria-label={messages.products.quickShow}
+              icon={<ThunderboltOutlined aria-hidden="true" />}
+              size="small"
+              onClick={() => setQuickShowProductId(product.id)}
+            />
+          </Tooltip>
         </Space>
       ),
     },
@@ -168,6 +176,8 @@ export function ProductsListPage() {
 
     setSearchParams(nextParams)
   }
+
+  const search = useDebouncedFilter(searchValue, updateSearch)
 
   const updatePage = (nextPage: number) => {
     const nextParams = new URLSearchParams(searchParams)
@@ -241,13 +251,13 @@ export function ProductsListPage() {
         <Flex vertical gap={16}>
           <Alert showIcon type="info" title={messages.products.demoNotice} />
           <Input.Search
-            key={search}
             allowClear
             aria-label={messages.products.searchLabel}
-            defaultValue={search}
             enterButton={messages.products.search}
             placeholder={messages.products.searchPlaceholder}
-            onSearch={updateSearch}
+            value={search.value}
+            onChange={(event) => search.change(event.target.value)}
+            onSearch={(value) => search.commitNow(value)}
           />
           <Typography.Text type="secondary">
             {messages.products.cacheKey}:{' '}

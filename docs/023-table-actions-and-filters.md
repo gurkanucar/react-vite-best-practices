@@ -76,6 +76,47 @@ A range does not fit the checkbox list Ant Design renders by default, so the vie
 supplies its own `filterDropdown` with two number inputs — again writing the same parameters the
 panel writes.
 
+## Typing should not be a request per keystroke
+
+A filter control bound straight to the URL fires a request on every keystroke: typing `500`
+into the view-count filter asked the server for `5`, then `50`, then `500`, and threw the first
+two answers away. Every typed filter therefore goes through one shared hook:
+
+```ts
+const minViews = useDebouncedFilter(values.minViews, (value) =>
+  onChange({ minViews: value?.toString() }),
+)
+```
+
+`useDebouncedFilter` keeps the typed value locally so the input stays responsive, and delays
+only the commit that changes the URL. It also watches the committed value, so the control still
+follows the back button and "Clear filters", which change the URL from outside the control.
+
+Discrete filters — a select, a date range — commit immediately, because there is no partially
+typed state to wait for. `FILTER_DEBOUNCE_MS` is defined once, so every typed filter in the
+application waits the same amount of time.
+
+## Why some requests show as cancelled
+
+Requests marked `(cancelled)` in the network panel, immediately followed by an identical
+request that succeeds, are expected and not a bug. Every query passes the `AbortSignal`
+TanStack Query provides:
+
+```ts
+queryFn: ({ signal }) => getPosts(filters, signal),
+```
+
+so a request that is no longer needed is actually aborted instead of being left to finish and
+discarded. Two things trigger that:
+
+- **React StrictMode in development.** It mounts, unmounts, and remounts every component to
+  surface effects that are not idempotent. The first mount's request is aborted and the second
+  mount refetches. This does not happen in a production build.
+- **A filter changing while a request is in flight.** The superseded request is aborted, which
+  is the correct outcome — its answer is for a filter the reader has already moved past.
+
+Debouncing the typed filters removes most of the second kind.
+
 ## Hiding columns
 
 Column visibility is a personal preference, not shareable list state, so it goes to the

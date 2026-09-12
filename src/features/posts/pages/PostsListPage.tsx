@@ -8,19 +8,7 @@ import {
   ThunderboltOutlined,
 } from '@ant-design/icons'
 import { useQueryClient } from '@tanstack/react-query'
-import {
-  Alert,
-  App,
-  Button,
-  Card,
-  Dropdown,
-  Empty,
-  Flex,
-  InputNumber,
-  Table,
-  Tag,
-  Typography,
-} from 'antd'
+import { Alert, App, Button, Card, Dropdown, Empty, Flex, Table, Tag, Typography } from 'antd'
 import type { MenuProps, TableProps } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
@@ -35,6 +23,7 @@ import {
   QuickCreatePostModal,
   QuickEditPostDrawer,
   QuickShowPostModal,
+  ViewsRangeFilterDropdown,
 } from '@/features/posts/components'
 import {
   useDeletePostMutation,
@@ -105,23 +94,12 @@ export function PostsListPage() {
       filteredValue: (values.minViews ?? values.maxViews) ? ['range'] : null,
       filterDropdown: filteringEnabled
         ? ({ confirm }) => (
-            <Flex vertical gap={8} style={{ padding: 8 }}>
-              <InputNumber
-                min={0}
-                placeholder={messages.posts.minPlaceholder}
-                value={values.minViews}
-                onChange={(minViews) => updateFilters({ minViews: minViews?.toString() })}
-              />
-              <InputNumber
-                min={0}
-                placeholder={messages.posts.maxPlaceholder}
-                value={values.maxViews}
-                onChange={(maxViews) => updateFilters({ maxViews: maxViews?.toString() })}
-              />
-              <Button size="small" type="primary" onClick={() => confirm({ closeDropdown: true })}>
-                {messages.common.apply}
-              </Button>
-            </Flex>
+            <ViewsRangeFilterDropdown
+              maxViews={values.maxViews}
+              minViews={values.minViews}
+              onChange={updateFilters}
+              onClose={() => confirm({ closeDropdown: true })}
+            />
           )
         : undefined,
       render: (views?: number) => views?.toLocaleString() ?? '—',

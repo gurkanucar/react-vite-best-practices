@@ -16,6 +16,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
 import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
+import { env } from '@/config/env'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
@@ -154,9 +155,9 @@ function App() {
           <Flex className="admin-header__actions" align="center" gap={10}>
             <ColorModeControl variant="menu" />
             <LanguageSelect />
-            <Tooltip title="Notifications">
+            <Tooltip title={messages.common.notifications}>
               <Badge dot offset={[-5, 5]}>
-                <Button aria-label="Notifications" icon={<BellOutlined />} />
+                <Button aria-label={messages.common.notifications} icon={<BellOutlined />} />
               </Badge>
             </Tooltip>
             <Tooltip title={messages.shell.profile}>
@@ -170,7 +171,7 @@ function App() {
         </Content>
 
         <Footer className="admin-footer">
-          <span>React Vite Best Practices</span>
+          <span>{env.appName}</span>
           <AppVersion />
         </Footer>
       </Layout>

@@ -1,21 +1,23 @@
 import { Button, Result } from 'antd'
 import { isRouteErrorResponse, useNavigate, useRouteError } from 'react-router'
+import { useMessages } from '@/i18n/messages'
 
 export function RouteErrorPage() {
+  const messages = useMessages()
   const error = useRouteError()
   const navigate = useNavigate()
   const description = isRouteErrorResponse(error)
     ? `${error.status} ${error.statusText}`
-    : 'The route could not be rendered.'
+    : messages.routeError.description
 
   return (
     <Result
       status="error"
-      title="Navigation error"
+      title={messages.routeError.title}
       subTitle={description}
       extra={
         <Button type="primary" onClick={() => void navigate('/dashboard')}>
-          Return to dashboard
+          {messages.routeError.backToDashboard}
         </Button>
       }
     />

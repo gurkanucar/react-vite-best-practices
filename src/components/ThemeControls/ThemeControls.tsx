@@ -70,6 +70,7 @@ export function ColorModeControl({
 }
 
 export function ThemeControls() {
+  const messages = useMessages()
   const [themeGalleryOpen, setThemeGalleryOpen] = useState(false)
   const compact = usePreferencesStore((state) => state.compact)
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
@@ -78,7 +79,7 @@ export function ThemeControls() {
   const selectedTheme = visualThemeOptions.find((option) => option.value === visualTheme)
 
   const themeGallery = (
-    <ul className="theme-gallery" aria-label="Visual theme presets">
+    <ul className="theme-gallery" aria-label={messages.common.themePresets}>
       {visualThemeOptions.map((option) => {
         const selected = option.value === visualTheme
 
@@ -116,12 +117,12 @@ export function ThemeControls() {
         content={themeGallery}
         open={themeGalleryOpen}
         placement="bottomRight"
-        title="Ant Design theme gallery"
+        title={messages.common.themeGallery}
         trigger="click"
         onOpenChange={setThemeGalleryOpen}
       >
         <Button
-          aria-label={`Visual theme: ${selectedTheme?.label ?? 'Ant Design'}`}
+          aria-label={`${messages.common.visualTheme}: ${selectedTheme?.label ?? 'Ant Design'}`}
           className="theme-controls__preset"
           icon={<BgColorsOutlined />}
         >
@@ -129,12 +130,14 @@ export function ThemeControls() {
         </Button>
       </Popover>
       <ColorModeControl />
-      <Tooltip title="Use Ant Design's compact spacing algorithm">
+      <Tooltip title={messages.common.compactTooltip}>
         <Flex align="center" gap={7}>
           <CompressOutlined aria-hidden="true" />
-          <Typography.Text className="theme-controls__density">Compact</Typography.Text>
+          <Typography.Text className="theme-controls__density">
+            {messages.common.compact}
+          </Typography.Text>
           <Switch
-            aria-label="Compact density"
+            aria-label={messages.common.compactDensity}
             checked={compact}
             size="small"
             onChange={setCompact}

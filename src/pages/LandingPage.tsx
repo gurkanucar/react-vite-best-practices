@@ -14,6 +14,7 @@ import { Link, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { LanguageSelect } from '@/components/LanguageSelect/LanguageSelect'
 import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
+import { env } from '@/config/env'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
@@ -60,7 +61,7 @@ export function LandingPage() {
         >
           <Link className="landing-brand" to="/">
             <img src="/favicon.svg" alt="" width="40" height="40" />
-            <Typography.Text strong>React Vite Best Practices</Typography.Text>
+            <Typography.Text strong>{env.appName}</Typography.Text>
           </Link>
           <Space wrap>
             <ColorModeControl variant="menu" />

@@ -1,5 +1,6 @@
 import { Button, Result, Space, Typography } from 'antd'
 import { env } from '@/config/env'
+import { useMessages } from '@/i18n/messages'
 
 interface ErrorFallbackProps {
   error: Error
@@ -7,20 +8,19 @@ interface ErrorFallbackProps {
 }
 
 export function ErrorFallback({ error, onRetry }: ErrorFallbackProps) {
+  const messages = useMessages()
+
   return (
     <main role="alert">
       <Result
         status="error"
-        title="This screen could not be loaded."
+        title={messages.errorBoundary.title}
         subTitle={
           <Space orientation="vertical">
-            <Typography.Text type="secondary">
-              Reload the application to try again. If the problem continues, report what you were
-              doing when it happened.
-            </Typography.Text>
+            <Typography.Text type="secondary">{messages.errorBoundary.description}</Typography.Text>
             {env.isDevelopment && (
               <details>
-                <summary>Developer details</summary>
+                <summary>{messages.errorBoundary.developerDetails}</summary>
                 <code>{error.message}</code>
               </details>
             )}
@@ -28,7 +28,7 @@ export function ErrorFallback({ error, onRetry }: ErrorFallbackProps) {
         }
         extra={
           <Button type="primary" onClick={onRetry}>
-            Reload application
+            {messages.errorBoundary.reload}
           </Button>
         }
       />

@@ -183,7 +183,7 @@ export function DashboardPage() {
               className="health-panel__footer"
               showIcon
               type="success"
-              title="12 services reporting normally"
+              title={messages.dashboard.servicesHealthy}
             />
           </Card>
         </Col>
