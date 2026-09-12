@@ -1,5 +1,6 @@
 import { theme, type ConfigProviderProps, type ThemeConfig } from 'antd'
 import antDesignBackground from '@/assets/theme-backgrounds/ant-design.jpg'
+import gurkanBackground from '@/assets/theme-backgrounds/gurkan.jpg'
 import illustrationBackground from '@/assets/theme-backgrounds/illustration.jpg'
 import muiBackground from '@/assets/theme-backgrounds/mui.jpg'
 import shadcnBackground from '@/assets/theme-backgrounds/shadcn.jpg'
@@ -141,6 +142,7 @@ const sharedProviderProps: ConfigProviderProps = {
 
 export const officialThemeBackgrounds: Partial<Record<VisualTheme, string>> = {
   'ant-design': antDesignBackground,
+  gurkan: gurkanBackground,
   mui: muiBackground,
   shadcn: shadcnBackground,
   illustration: illustrationBackground,
