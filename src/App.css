@@ -233,3 +233,13 @@ html[data-theme='dark'] .admin-workspace {
   font-size: 22px;
   color: var(--ant-color-text-secondary);
 }
+
+.context-menu-demo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  border: var(--ant-line-width) dashed var(--ant-color-border);
+  border-radius: var(--ant-border-radius);
+  color: var(--ant-color-text-secondary);
+}

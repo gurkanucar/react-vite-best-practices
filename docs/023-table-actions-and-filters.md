@@ -28,6 +28,28 @@ click. They stay inline.
 Destructive actions ask first. `modal.confirm` from `App.useApp()` is used rather than the
 browser's `confirm`, so the dialog is themed, translated, and does not block the page.
 
+### The right-click menu
+
+A right-click on a posts row opens the same actions as the overflow button. One dropdown is
+anchored to the cursor rather than one being wrapped around every row:
+
+```tsx
+onRow={(post) => ({
+  onContextMenu: (event) => {
+    event.preventDefault()
+    setContextMenu({ post, x: event.clientX, y: event.clientY })
+  },
+})}
+```
+
+Wrapping each row in its own `Dropdown` through `components.body.row` is the other way, and it
+re-creates every row whenever the component identity changes. Anchoring one menu to the cursor
+avoids that, and it keeps a single `actionItems(post)` as the definition of what a row can do,
+so the button and the menu cannot drift apart.
+
+The anchor element needs a measurable box — a zero-size element gives the positioning code
+nothing to align to, and the menu is placed off-screen.
+
 ### Show versus quick show
 
 "Show" and "Edit" navigate to a route, so the address bar can be copied, bookmarked, and

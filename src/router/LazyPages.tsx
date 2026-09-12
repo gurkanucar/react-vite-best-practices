@@ -10,6 +10,10 @@ export const DashboardPage = lazy(async () => ({
   default: (await import('@/pages/DashboardPage')).DashboardPage,
 }))
 
+export const DocumentsPage = lazy(async () => ({
+  default: (await import('@/features/documents/pages')).DocumentsPage,
+}))
+
 export const LandingPage = lazy(async () => ({
   default: (await import('@/pages/LandingPage')).LandingPage,
 }))

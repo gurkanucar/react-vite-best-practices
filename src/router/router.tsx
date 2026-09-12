@@ -3,6 +3,7 @@ import {
   AdminLayout,
   ComponentsPage,
   DashboardPage,
+  DocumentsPage,
   LandingPage,
   LoginPage,
   NotFoundPage,
@@ -143,6 +144,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <ProductDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'documents',
+        element: (
+          <RouteSuspense>
+            <DocumentsPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

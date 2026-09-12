@@ -8,7 +8,8 @@
     "productsApi": "DummyJSON API",
     "configuration": "Yapılandırma",
     "appearance": "Görünüm",
-    "persistedState": "Kalıcı durum"
+    "persistedState": "Kalıcı durum",
+    "documents": "PDF belgeleri"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -257,7 +258,33 @@
     "floatButtonBackTop": "Başa dön",
     "icons": "Simgeler",
     "iconsDescription": "Simgeler @ant-design/icons paketinden gelir ve geçerli temayı izler.",
-    "messagesNote": "Message ve Notification, App.useApp() üzerinden çağrılır; böylece bağlamdaki tema ve dili kullanır."
+    "messagesNote": "Message ve Notification, App.useApp() üzerinden çağrılır; böylece bağlamdaki tema ve dili kullanır.",
+    "contextMenu": "Bağlam menüsü",
+    "contextMenuDescription": "Açmak için aşağıdaki alana sağ tıklayın.",
+    "contextMenuTarget": "Bu kutunun herhangi bir yerine sağ tıklayın",
+    "resultVariants": "Sonuç durumları",
+    "resultVariantsDescription": "Result’ın nasıl bildirdiğini görmek için bir durum seçin.",
+    "resultSuccess": "Başarılı",
+    "resultError": "Hata",
+    "resultInfo": "Bilgi",
+    "resultWarning": "Uyarı",
+    "resultNotFound": "404",
+    "resultForbidden": "403",
+    "resultServerError": "500",
+    "resultErrorTitle": "Dağıtım başarısız oldu",
+    "resultErrorSubtitle": "Üç kalite kontrolü geçemedi. Kaydı inceleyip tekrar deneyin.",
+    "resultInfoTitle": "Çalışma alanı hazırlanıyor",
+    "resultInfoSubtitle": "Hazır olduğunda bilgilendirileceksiniz.",
+    "resultWarningTitle": "Bazı ayarlar dikkat gerektiriyor",
+    "resultWarningSubtitle": "Çalışma alanı çalışıyor, ancak iki ilke henüz uygulanmıyor.",
+    "resultNotFoundTitle": "Bu sayfa mevcut değil",
+    "resultNotFoundSubtitle": "Adresi kontrol edin veya panele dönün.",
+    "resultForbiddenTitle": "Bu çalışma alanını açamazsınız",
+    "resultForbiddenSubtitle": "Erişim için bir yöneticiye başvurun.",
+    "resultServerErrorTitle": "Bir şeyler ters gitti",
+    "resultServerErrorSubtitle": "Sunucu isteği tamamlayamadı. Kısa süre sonra tekrar deneyin.",
+    "retry": "Tekrar dene",
+    "backHome": "Panele dön"
   },
   "settings": {
     "title": "Çalışma alanı tercihleri",
@@ -404,7 +431,8 @@
     "clearFilters": "Filtreleri temizle",
     "categoryColumn": "Kategori",
     "viewsColumn": "Görüntülenme",
-    "publishedColumn": "Yayın tarihi"
+    "publishedColumn": "Yayın tarihi",
+    "contextMenuHint": "Aynı işlemler için satıra sağ tıklayın."
   },
   "products": {
     "title": "DummyJSON ürün API'si",
@@ -476,5 +504,19 @@
     "description": "Tekrar denemek için uygulamayı yeniden yükleyin. Sorun sürerse, olduğu sırada ne yaptığınızı bildirin.",
     "developerDetails": "Geliştirici ayrıntıları",
     "reload": "Uygulamayı yeniden yükle"
+  },
+  "documents": {
+    "title": "PDF belgeleri",
+    "description": "Bir belgeyi blob olarak alıp tarayıcı eklentisi yerine pdf.js ile render etme.",
+    "notice": "Dosya API istemcisi üzerinden istenir; kimlik doğrulamalı bir uç nokta da aynı şekilde çalışır.",
+    "sampleTitle": "Sürüm raporu",
+    "download": "İndir",
+    "previousPage": "Önceki sayfa",
+    "nextPage": "Sonraki sayfa",
+    "pageOf": "Sayfa {page} / {total}",
+    "zoomIn": "Yakınlaştır",
+    "zoomOut": "Uzaklaştır",
+    "loadError": "Belge yüklenemedi",
+    "retry": "Tekrar dene"
   }
 }

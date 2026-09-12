@@ -147,6 +147,21 @@ describe('PostsListPage filters', () => {
     ).toBeInTheDocument()
   })
 
+  it('opens the same actions from a right-click as from the overflow button', async () => {
+    const user = userEvent.setup()
+    renderPage()
+
+    expect(await screen.findByText('Cache keys carry every filter')).toBeInTheDocument()
+    expect(screen.queryByRole('menuitem', { name: /Quick edit/ })).not.toBeInTheDocument()
+
+    const firstRow = screen.getAllByRole('row')[1]
+    await user.pointer({ keys: '[MouseRight]', target: firstRow })
+
+    for (const action of ['Show', 'Quick show', 'Edit', 'Quick edit', 'Delete']) {
+      expect(await screen.findByRole('menuitem', { name: action })).toBeInTheDocument()
+    }
+  })
+
   it('hides the ID column by default and restores it on request', async () => {
     const user = userEvent.setup()
     renderPage()

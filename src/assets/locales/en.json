@@ -8,7 +8,8 @@
     "productsApi": "DummyJSON API",
     "configuration": "Configuration",
     "appearance": "Appearance",
-    "persistedState": "Persisted state"
+    "persistedState": "Persisted state",
+    "documents": "PDF documents"
   },
   "shell": {
     "product": "RVBP Console",
@@ -257,7 +258,33 @@
     "floatButtonBackTop": "Back to top",
     "icons": "Icons",
     "iconsDescription": "Icons come from @ant-design/icons and follow the current theme.",
-    "messagesNote": "Message and Notification are called through App.useApp(), so they read the theme and locale in context."
+    "messagesNote": "Message and Notification are called through App.useApp(), so they read the theme and locale in context.",
+    "contextMenu": "Context menu",
+    "contextMenuDescription": "Right-click the area below to open it.",
+    "contextMenuTarget": "Right-click anywhere in this box",
+    "resultVariants": "Result states",
+    "resultVariantsDescription": "Pick a state to see how Result reports it.",
+    "resultSuccess": "Success",
+    "resultError": "Error",
+    "resultInfo": "Info",
+    "resultWarning": "Warning",
+    "resultNotFound": "404",
+    "resultForbidden": "403",
+    "resultServerError": "500",
+    "resultErrorTitle": "The deployment failed",
+    "resultErrorSubtitle": "Three quality checks did not pass. Review the log and try again.",
+    "resultInfoTitle": "The workspace is being prepared",
+    "resultInfoSubtitle": "You will be notified as soon as it is ready.",
+    "resultWarningTitle": "Some settings need attention",
+    "resultWarningSubtitle": "The workspace runs, but two policies are not enforced yet.",
+    "resultNotFoundTitle": "This page does not exist",
+    "resultNotFoundSubtitle": "Check the address, or return to the dashboard.",
+    "resultForbiddenTitle": "You cannot open this workspace",
+    "resultForbiddenSubtitle": "Ask an administrator for access.",
+    "resultServerErrorTitle": "Something went wrong",
+    "resultServerErrorSubtitle": "The server could not complete the request. Try again shortly.",
+    "retry": "Try again",
+    "backHome": "Back to the dashboard"
   },
   "settings": {
     "title": "Workspace preferences",
@@ -404,7 +431,8 @@
     "clearFilters": "Clear filters",
     "categoryColumn": "Category",
     "viewsColumn": "Views",
-    "publishedColumn": "Published"
+    "publishedColumn": "Published",
+    "contextMenuHint": "Right-click a row for the same actions."
   },
   "products": {
     "title": "DummyJSON products API",
@@ -476,5 +504,19 @@
     "description": "Reload the application to try again. If the problem continues, report what you were doing when it happened.",
     "developerDetails": "Developer details",
     "reload": "Reload application"
+  },
+  "documents": {
+    "title": "PDF documents",
+    "description": "Fetching a document as a blob and rendering it with pdf.js instead of the browser plugin.",
+    "notice": "The file is requested through the API client, so an authenticated endpoint would work the same way.",
+    "sampleTitle": "Release report",
+    "download": "Download",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "pageOf": "Page {page} of {total}",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "loadError": "The document could not be loaded",
+    "retry": "Try again"
   }
 }

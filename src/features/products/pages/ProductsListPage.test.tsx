@@ -132,6 +132,31 @@ describe('ProductsListPage', () => {
     expect(await screen.findByText('Second page product')).toBeInTheDocument()
   })
 
+  it('reads the page size from the URL and requests that many rows', async () => {
+    const fetchMock = stubProductsApi()
+
+    render(
+      <QueryClientProvider client={createQueryClient()}>
+        <AppThemeProvider>
+          <MemoryRouter initialEntries={['/products?size=50&page=2']}>
+            <ProductsListPage />
+            <LocationProbe />
+          </MemoryRouter>
+        </AppThemeProvider>
+      </QueryClientProvider>,
+    )
+
+    expect(await screen.findByText('First page product')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.stringContaining('limit=50'),
+        expect.any(Object),
+      )
+    })
+    // Page two of a 50-row page starts at row 50, not at row 10.
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('skip=50'), expect.any(Object))
+  })
+
   it('sends sorting to the server and keeps it in the URL', async () => {
     const user = userEvent.setup()
     const fetchMock = stubProductsApi()

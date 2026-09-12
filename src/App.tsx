@@ -5,6 +5,7 @@ import {
   DashboardOutlined,
   DatabaseOutlined,
   CloudServerOutlined,
+  FilePdfOutlined,
   FolderOpenOutlined,
   FormOutlined,
   MenuFoldOutlined,
@@ -12,7 +13,7 @@ import {
   SettingOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
-import { Avatar, Badge, Button, Flex, Layout, Menu, Tooltip, Typography } from 'antd'
+import { Avatar, Badge, Button, Flex, Grid, Layout, Menu, Tooltip, Typography } from 'antd'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
@@ -31,6 +32,9 @@ function App() {
   const navigate = useNavigate()
   const messages = useMessages()
   const [collapsed, setCollapsed] = useState(false)
+  // On a narrow screen an icon rail is still a column of wasted width, so the sider
+  // collapses to nothing instead and the header button is the only way back.
+  const isDesktop = Grid.useBreakpoint().lg ?? false
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const backgroundImage = officialThemeBackgrounds[visualTheme]
   const backgroundStyle = backgroundImage
@@ -82,6 +86,11 @@ function App() {
             key: '/products',
             icon: <ShoppingOutlined />,
             label: messages.navigation.productsApi,
+          },
+          {
+            key: '/documents',
+            icon: <FilePdfOutlined />,
+            label: messages.navigation.documents,
           },
         ],
       },
@@ -144,6 +153,7 @@ function App() {
         breakpoint="lg"
         className="admin-sider"
         collapsed={collapsed}
+        collapsedWidth={isDesktop ? 80 : 0}
         collapsible
         theme="light"
         trigger={null}

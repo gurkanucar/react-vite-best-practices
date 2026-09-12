@@ -9,7 +9,13 @@ export const PRODUCT_QUERY_KEYS = {
   categories: () => [...PRODUCT_QUERY_KEYS.all, 'categories'] as const,
 }
 
-export const PRODUCT_PAGE_SIZE = 10
+export const PRODUCT_PAGE_SIZES = [5, 10, 20, 50] as const
+
+export const DEFAULT_PRODUCT_PAGE_SIZE = 10
+
+export function isProductPageSize(value: number): boolean {
+  return (PRODUCT_PAGE_SIZES as readonly number[]).includes(value)
+}
 
 // ─── DTOs ────────────────────────────────────────────────────────────────────
 

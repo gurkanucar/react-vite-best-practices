@@ -80,6 +80,7 @@ can be seen working in this theme before it is reached for.
 - MSW for a mocked API that runs beside the real one
 - Ant Design and persistent visual themes
 - A working catalog of the full Ant Design component set
+- PDF viewing with pdf.js, from a blob fetched through the API client
 - Responsive Ant Design data-layout patterns without internal CSS overrides
 - React Router data routing, detail routes, and an admin dashboard demo
 - List state in the URL: pagination, search, filters, and sorting

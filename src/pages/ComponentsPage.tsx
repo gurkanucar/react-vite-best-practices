@@ -77,6 +77,7 @@ import {
   Upload,
   Watermark,
 } from 'antd'
+import type { ResultProps } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
@@ -145,7 +146,7 @@ function InputsShowcase({ messages }: { messages: Messages }) {
               placeholder={messages.components.workspaceOwner}
               allowClear
             />
-            <Input.Password placeholder={messages.components.password} />
+            <Input.Password autoComplete="off" placeholder={messages.components.password} />
             <Input.Search placeholder={messages.components.searchCatalog} enterButton />
             <InputNumber
               className="full-width"
@@ -582,7 +583,7 @@ function DataDisplayShowcase({ messages }: { messages: Messages }) {
 
       <Col xs={24} xl={12}>
         <Card className="component-panel" title={messages.components.carousel}>
-          <Carousel autoplay>
+          <Carousel arrows autoplay>
             {[1, 2, 3].map((slide) => (
               <div key={slide}>
                 <div className="carousel-demo__slide">
@@ -720,6 +721,27 @@ function NavigationShowcase({ messages }: { messages: Messages }) {
         </Card>
       </Col>
 
+      <Col span={24}>
+        <Card className="component-panel" title={messages.components.contextMenu}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.contextMenuDescription}
+          </Typography.Paragraph>
+          <Dropdown
+            trigger={['contextMenu']}
+            menu={{
+              items: [
+                { key: 'open', icon: <AppstoreOutlined />, label: messages.components.overview },
+                { key: 'export', icon: <DownloadOutlined />, label: messages.components.exportCsv },
+                { type: 'divider' },
+                { key: 'archive', danger: true, label: messages.components.archive },
+              ],
+            }}
+          >
+            <div className="context-menu-demo">{messages.components.contextMenuTarget}</div>
+          </Dropdown>
+        </Card>
+      </Col>
+
       <Col xs={24} xl={14}>
         <Card className="component-panel" id="catalog-steps" title={messages.components.steps}>
           <Steps
@@ -787,8 +809,67 @@ function NavigationShowcase({ messages }: { messages: Messages }) {
   )
 }
 
+type ResultStatus = 'success' | 'error' | 'info' | 'warning' | '404' | '403' | '500'
+
+function resultOptions(messages: Messages) {
+  return [
+    { label: messages.components.resultSuccess, value: 'success' },
+    { label: messages.components.resultError, value: 'error' },
+    { label: messages.components.resultInfo, value: 'info' },
+    { label: messages.components.resultWarning, value: 'warning' },
+    { label: messages.components.resultNotFound, value: '404' },
+    { label: messages.components.resultForbidden, value: '403' },
+    { label: messages.components.resultServerError, value: '500' },
+  ]
+}
+
+function resultContent(messages: Messages): Record<ResultStatus, ResultProps> {
+  return {
+    success: {
+      status: 'success',
+      title: messages.components.workspaceReady,
+      subTitle: messages.components.workspaceReadySubtitle,
+      extra: <Button type="primary">{messages.components.viewRelease}</Button>,
+    },
+    error: {
+      status: 'error',
+      title: messages.components.resultErrorTitle,
+      subTitle: messages.components.resultErrorSubtitle,
+      extra: <Button danger>{messages.components.retry}</Button>,
+    },
+    info: {
+      status: 'info',
+      title: messages.components.resultInfoTitle,
+      subTitle: messages.components.resultInfoSubtitle,
+    },
+    warning: {
+      status: 'warning',
+      title: messages.components.resultWarningTitle,
+      subTitle: messages.components.resultWarningSubtitle,
+    },
+    '404': {
+      status: '404',
+      title: messages.components.resultNotFoundTitle,
+      subTitle: messages.components.resultNotFoundSubtitle,
+      extra: <Button type="primary">{messages.components.backHome}</Button>,
+    },
+    '403': {
+      status: '403',
+      title: messages.components.resultForbiddenTitle,
+      subTitle: messages.components.resultForbiddenSubtitle,
+    },
+    '500': {
+      status: '500',
+      title: messages.components.resultServerErrorTitle,
+      subTitle: messages.components.resultServerErrorSubtitle,
+      extra: <Button type="primary">{messages.components.retry}</Button>,
+    },
+  }
+}
+
 function FeedbackShowcase({ messages }: { messages: Messages }) {
   const { message, notification } = App.useApp()
+  const [resultStatus, setResultStatus] = useState<ResultStatus>('success')
   const [modalOpen, setModalOpen] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
@@ -836,7 +917,7 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
           </Card>
         </Col>
 
-        <Col xs={24} xl={14}>
+        <Col span={24}>
           <Card className="component-panel" title={messages.components.overlaysConfirmation}>
             <Space wrap>
               <Button type="primary" onClick={() => setModalOpen(true)}>
@@ -867,14 +948,18 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
           </Card>
         </Col>
 
-        <Col xs={24} xl={10}>
+        <Col span={24}>
           <Card className="component-panel" title={messages.components.resultTitle}>
-            <Result
-              status="success"
-              title={messages.components.workspaceReady}
-              subTitle={messages.components.workspaceReadySubtitle}
-              extra={<Button type="primary">{messages.components.viewRelease}</Button>}
+            <Typography.Paragraph type="secondary">
+              {messages.components.resultVariantsDescription}
+            </Typography.Paragraph>
+            <Segmented
+              block
+              options={resultOptions(messages)}
+              value={resultStatus}
+              onChange={(value) => setResultStatus(value as ResultStatus)}
             />
+            <Result {...resultContent(messages)[resultStatus]} />
           </Card>
         </Col>
 

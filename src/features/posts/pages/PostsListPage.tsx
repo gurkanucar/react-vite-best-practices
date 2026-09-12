@@ -34,6 +34,17 @@ import {
 import { isPostSortField, POST_QUERY_KEYS, type PostDto } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
 
+/**
+ * A right-click opens the same actions as the overflow button. One dropdown is anchored
+ * to the cursor rather than wrapping every row, so rows are never re-created and the
+ * menu cannot drift out of step with the button's.
+ */
+interface ContextMenuState {
+  post: PostDto
+  x: number
+  y: number
+}
+
 export function PostsListPage() {
   const messages = useMessages()
   const { message, modal } = App.useApp()
@@ -54,6 +65,7 @@ export function PostsListPage() {
   const [quickCreateOpen, setQuickCreateOpen] = useState(false)
   const [quickShowPostId, setQuickShowPostId] = useState<number | null>(null)
   const [quickEditPostId, setQuickEditPostId] = useState<number | null>(null)
+  const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null)
   const posts = postsQuery.data ?? []
   const sortOrderFor = (field: string) =>
     values.sortBy === field ? (values.order === 'desc' ? 'descend' : 'ascend') : null
@@ -289,6 +301,7 @@ export function PostsListPage() {
               <Flex justify="space-between" align="center" gap={12} wrap>
                 <Tag color="success">{messages.posts.cached}</Tag>
                 <Typography.Text type="secondary">
+                  {messages.posts.contextMenuHint}{' '}
                   {messages.posts.resultCount.replace('{count}', String(posts.length))}
                 </Typography.Text>
               </Flex>
@@ -300,11 +313,39 @@ export function PostsListPage() {
                 rowKey="id"
                 scroll={{ x: 'max-content' }}
                 onChange={updateSortAndFilters}
+                onRow={(post) => ({
+                  onContextMenu: (event) => {
+                    event.preventDefault()
+                    setContextMenu({ post, x: event.clientX, y: event.clientY })
+                  },
+                })}
               />
             </>
           )}
         </Flex>
       </Card>
+
+      {contextMenu && (
+        <Dropdown
+          open
+          menu={{ items: actionItems(contextMenu.post), onClick: () => setContextMenu(null) }}
+          onOpenChange={(open) => {
+            if (!open) setContextMenu(null)
+          }}
+        >
+          {/* The anchor needs a measurable box, or the popup cannot be aligned to it. */}
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'fixed',
+              left: contextMenu.x,
+              top: contextMenu.y,
+              width: 1,
+              height: 1,
+            }}
+          />
+        </Dropdown>
+      )}
 
       <QuickCreatePostModal open={quickCreateOpen} onClose={() => setQuickCreateOpen(false)} />
       <QuickShowPostModal postId={quickShowPostId} onClose={() => setQuickShowPostId(null)} />

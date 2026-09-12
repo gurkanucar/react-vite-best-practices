@@ -26,8 +26,10 @@ import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { QuickShowProductModal } from '@/features/products/components'
 import { useProductCategoriesQuery, useProductsQuery } from '@/features/products/hooks'
 import {
+  DEFAULT_PRODUCT_PAGE_SIZE,
+  isProductPageSize,
   isProductSortField,
-  PRODUCT_PAGE_SIZE,
+  PRODUCT_PAGE_SIZES,
   PRODUCT_QUERY_KEYS,
   type ProductDto,
   type ProductFilterParams,
@@ -48,6 +50,8 @@ export function ProductsListPage() {
 
   const pageParam = Number(searchParams.get('page'))
   const page = Number.isInteger(pageParam) && pageParam > 0 ? pageParam : 1
+  const sizeParam = Number(searchParams.get('size'))
+  const pageSize = isProductPageSize(sizeParam) ? sizeParam : DEFAULT_PRODUCT_PAGE_SIZE
   const searchValue = searchParams.get('q')?.trim() ?? ''
   const category = searchParams.get('category') ?? ''
   const sortParam = searchParams.get('sort')
@@ -56,10 +60,10 @@ export function ProductsListPage() {
 
   const filters: ProductFilterParams = {
     category: category || undefined,
-    limit: PRODUCT_PAGE_SIZE,
+    limit: pageSize,
     order,
     search: searchValue || undefined,
-    skip: (page - 1) * PRODUCT_PAGE_SIZE,
+    skip: (page - 1) * pageSize,
     sortBy,
   }
   const productsQuery = useProductsQuery(filters)
@@ -179,10 +183,21 @@ export function ProductsListPage() {
 
   const search = useDebouncedFilter(searchValue, updateSearch)
 
-  const updatePage = (nextPage: number) => {
+  // Ant Design reports a size change through the same handler as a page change, so both
+  // are written together and the default is left out of the URL.
+  const updatePage = (nextPage: number, nextPageSize: number) => {
     const nextParams = new URLSearchParams(searchParams)
+    const sizeChanged = nextPageSize !== pageSize
 
-    if (nextPage === 1) {
+    if (nextPageSize === DEFAULT_PRODUCT_PAGE_SIZE) {
+      nextParams.delete('size')
+    } else {
+      nextParams.set('size', String(nextPageSize))
+    }
+
+    // A larger page starts at a different offset, so a resize returns to the first page
+    // rather than landing the reader somewhere unrelated.
+    if (sizeChanged || nextPage === 1) {
       nextParams.delete('page')
     } else {
       nextParams.set('page', String(nextPage))
@@ -300,8 +315,9 @@ export function ProductsListPage() {
               <Flex justify="flex-end">
                 <Pagination
                   current={page}
-                  pageSize={PRODUCT_PAGE_SIZE}
-                  showSizeChanger={false}
+                  pageSize={pageSize}
+                  pageSizeOptions={[...PRODUCT_PAGE_SIZES]}
+                  showSizeChanger
                   total={productsQuery.data.total}
                   onChange={updatePage}
                 />

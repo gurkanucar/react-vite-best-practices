@@ -5,14 +5,14 @@ Both list pages keep their server-side list state in the URL. Other pages may us
 ## Result
 
 ```text
-/products?category=laptops&sort=price&order=desc&page=2
+/products?category=laptops&sort=price&order=desc&page=2&size=20
 /posts?categories=tables,routing&minViews=1000&from=2026-03-01&sort=views&order=desc
 ```
 
 Each URL fully describes the visible list state:
 
 - `q` selects the DummyJSON search endpoint; `category` selects the category endpoint;
-- `page=2` produces `skip=10` with a page size of ten;
+- `page=2` and `size` together produce `skip`, so the offset always matches the page shown;
 - `sort` and `order` become the `sortBy` and `order` request parameters;
 - every value contributes to the TanStack Query cache key.
 
@@ -65,7 +65,11 @@ nextParams.delete('page')
 setSearchParams(nextParams)
 ```
 
-Page one is omitted from the URL because it is the default. Empty search text removes `q` instead of leaving `?q=`.
+Page one is omitted from the URL because it is the default, and so is the default page size.
+Empty search text removes `q` instead of leaving `?q=`.
+
+Changing the page size returns to page one, because the same page number points at a different
+offset once the size changes and would otherwise land the reader somewhere unrelated.
 
 ## Cache identity
 

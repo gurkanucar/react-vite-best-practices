@@ -22,8 +22,28 @@ function getRootElement(): HTMLElement {
 
 const rootElement = getRootElement()
 
+/**
+ * A Service Worker outlives the page that registered it, so one started by an earlier
+ * run keeps intercepting every request — navigations included — after the flag is
+ * turned off. Turning the flag off therefore has to remove it, not merely skip start.
+ */
+async function removeApiMocking() {
+  const registrations = (await navigator.serviceWorker?.getRegistrations()) ?? []
+
+  await Promise.all(
+    registrations
+      .filter((registration) => registration.active?.scriptURL.endsWith('/mockServiceWorker.js'))
+      .map((registration) => registration.unregister()),
+  )
+}
+
 async function enableApiMocking() {
-  if (!import.meta.env.DEV || !isFeatureEnabled('mockPostsApi')) {
+  if (!import.meta.env.DEV) {
+    return
+  }
+
+  if (!isFeatureEnabled('mockPostsApi')) {
+    await removeApiMocking()
     return
   }
 

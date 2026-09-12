@@ -6,6 +6,8 @@ export interface ApiRequestOptions extends Omit<RequestInit, 'body'> {
   baseUrl?: string
   body?: unknown
   query?: Record<string, QueryValue>
+  /** `blob` keeps binary responses intact; the default decides from the content type. */
+  responseType?: 'auto' | 'blob'
 }
 
 export class ApiError extends Error {
@@ -34,8 +36,12 @@ function createUrl(path: string, baseUrl: string, query?: Record<string, QueryVa
   return url.toString()
 }
 
-async function parseResponse(response: Response): Promise<unknown> {
+async function parseResponse(
+  response: Response,
+  responseType: ApiRequestOptions['responseType'],
+): Promise<unknown> {
   if (response.status === 204) return undefined
+  if (responseType === 'blob') return response.blob()
 
   const contentType = response.headers.get('content-type')
   return contentType?.includes('application/json') ? response.json() : response.text()
@@ -43,18 +49,25 @@ async function parseResponse(response: Response): Promise<unknown> {
 
 export async function apiRequest<T>(
   path: string,
-  { baseUrl = env.apiBaseUrl, body, headers, query, ...init }: ApiRequestOptions = {},
+  {
+    baseUrl = env.apiBaseUrl,
+    body,
+    headers,
+    query,
+    responseType = 'auto',
+    ...init
+  }: ApiRequestOptions = {},
 ): Promise<T> {
   const response = await fetch(createUrl(path, baseUrl, query), {
     ...init,
     headers: {
-      Accept: 'application/json',
+      Accept: responseType === 'blob' ? '*/*' : 'application/json',
       ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
       ...headers,
     },
     body: body === undefined ? undefined : JSON.stringify(body),
   })
-  const data = await parseResponse(response)
+  const data = await parseResponse(response, responseType)
 
   if (!response.ok) {
     throw new ApiError(`API request failed with status ${response.status}`, response.status, data)

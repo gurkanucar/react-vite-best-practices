@@ -1,0 +1,24 @@
+.pdf-viewer__scroll {
+  max-height: 70vh;
+  padding: 16px;
+  overflow: auto;
+  background: var(--ant-color-fill-quaternary);
+  border-radius: var(--ant-border-radius);
+  /* Stops the smooth page jump from fighting the reader's own scrolling. */
+  overscroll-behavior: contain;
+}
+
+.pdf-viewer__page {
+  display: flex;
+  justify-content: center;
+}
+
+.pdf-viewer__page + .pdf-viewer__page {
+  margin-top: 16px;
+}
+
+/* pdf.js renders at the scale it is given; the page must not be stretched by layout. */
+.pdf-viewer__scroll canvas {
+  max-width: none;
+  box-shadow: var(--ant-box-shadow-tertiary);
+}
