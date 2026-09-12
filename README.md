@@ -2,6 +2,8 @@
 
 A documented and tested foundation for production-ready React applications.
 
+![The posts list with its filter panel, filtered and sorted from the URL](docs/images/posts-filters.jpg)
+
 ## Quick start
 
 ```bash
@@ -12,24 +14,74 @@ pnpm dev
 ## Quality checks
 
 ```bash
-pnpm check
+pnpm check          # typecheck, lint, format, tests
 pnpm test:coverage
 pnpm build
 ```
 
+## Run the production container
+
+```bash
+docker compose up --build   # http://localhost:8080
+```
+
+The image builds with Node and pnpm, then serves only the generated static files from
+Nginx. See [022](docs/022-docker-nginx-production-deployment.md).
+
+## What it demonstrates
+
+Two list pages solve the same problems differently, so each trade-off has a working
+example rather than a rule to memorize.
+
+|                  | Posts                                 | Products               |
+| ---------------- | ------------------------------------- | ---------------------- |
+| API              | MSW handlers                          | Real DummyJSON service |
+| Row actions      | Five, in an overflow menu             | Two, inline icons      |
+| Filter options   | Categories fetched, authors hardcoded | Categories fetched     |
+| Filter placement | Panel above **and** column headers    | Column headers         |
+
+### Server-side filtering, sorting, and pagination
+
+Every filter lives in the address bar, so a filtered list can be linked, reloaded, and
+walked back through with the browser's own history. Sorting and filtering are sent to
+the API rather than applied to the page already in memory, and typed filters commit on a
+shared debounce instead of firing a request per keystroke.
+
+![The products list against the real API, filtered by category and sorted by price](docs/images/products-list.jpg)
+
+### Detail routes and quick surfaces
+
+"Show" and "Edit" navigate to a route, so the address can be copied and reloaded. "Quick
+show" and "Quick edit" open a modal and a drawer over the list, so the reader keeps their
+filters and scroll position. Both read the same detail query.
+
+<p>
+  <img src="docs/images/posts-actions-menu.jpg" alt="The row action menu" width="49%">
+  <img src="docs/images/posts-quick-edit.jpg" alt="The quick edit drawer" width="49%">
+</p>
+
+### An admin shell with persistent preferences
+
+![The dashboard](docs/images/dashboard.jpg)
+
 ## Included foundations
 
 - React, Vite, and TypeScript
-- Typed environment configuration
+- Typed environment configuration and build-time feature flags
 - Source path aliases
+- TanStack Query for server state, caching, mutations, and targeted invalidation
+- MSW for a mocked API that runs beside the real one
 - Ant Design and persistent visual themes
 - Responsive Ant Design data-layout patterns without internal CSS overrides
-- React Router data routing and an admin dashboard demo
+- React Router data routing, detail routes, and an admin dashboard demo
+- List state in the URL: pagination, search, filters, and sorting
+- Column visibility stored per table as a reader preference
 - A standalone landing page at `/`, separate from the admin dashboard
 - Lazy-loaded route modules with shared Suspense loading states
 - Login, registration, OTP, survey, and 404 example pages
 - Zustand state management for language and appearance preferences
-- JSON-based internationalization (English and Turkish)
+- JSON-based internationalization (English and Turkish), including Ant Design's own strings
+- Docker and Nginx production deployment
 - Oxlint and Oxfmt
 - Vitest and React Testing Library
 - Root error handling

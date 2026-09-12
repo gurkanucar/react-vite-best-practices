@@ -59,6 +59,10 @@ request. Reloading the browser resets this temporary data.
 Because the mock API implements filters the real ones do not, the flag gates the list page's
 filter panel as well as the worker. See [023](023-table-actions-and-filters.md).
 
+Ant Design ships its own strings — date picker placeholders, empty-table text, pagination —
+which the locale files do not cover. `AppThemeProvider` passes the matching component locale to
+`ConfigProvider` and sets the dayjs locale, so those follow the selected language too.
+
 ## What a feature flag is
 
 A feature flag is a named switch around optional application behavior. It lets environments enable a capability independently from the source code:

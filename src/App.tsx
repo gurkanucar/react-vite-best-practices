@@ -7,6 +7,8 @@ import {
   CloudServerOutlined,
   FolderOpenOutlined,
   FormOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
   SettingOutlined,
   ShoppingOutlined,
 } from '@ant-design/icons'
@@ -144,6 +146,7 @@ function App() {
         collapsed={collapsed}
         collapsible
         theme="light"
+        trigger={null}
         width={252}
         onCollapse={setCollapsed}
       >
@@ -152,6 +155,16 @@ function App() {
 
       <Layout className="admin-workspace" style={backgroundStyle}>
         <Header className="admin-header">
+          <Tooltip title={collapsed ? messages.shell.expandMenu : messages.shell.collapseMenu}>
+            <Button
+              aria-expanded={!collapsed}
+              aria-label={collapsed ? messages.shell.expandMenu : messages.shell.collapseMenu}
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              type="text"
+              onClick={() => setCollapsed(!collapsed)}
+            />
+          </Tooltip>
+
           <Flex className="admin-header__actions" align="center" gap={10}>
             <ColorModeControl variant="menu" />
             <LanguageSelect />

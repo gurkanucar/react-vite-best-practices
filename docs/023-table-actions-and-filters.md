@@ -96,6 +96,16 @@ Discrete filters — a select, a date range — commit immediately, because ther
 typed state to wait for. `FILTER_DEBOUNCE_MS` is defined once, so every typed filter in the
 application waits the same amount of time.
 
+## StrictMode does not duplicate mutations
+
+Queries run from effects, which StrictMode deliberately runs twice in development. Mutations
+run from event handlers, which it does not, so a create or delete is sent once. A test holds
+that line rather than leaving it to trust:
+
+```ts
+expect(requests.filter((entry) => entry === 'POST /posts')).toHaveLength(1)
+```
+
 ## Why some requests show as cancelled
 
 Requests marked `(cancelled)` in the network panel, immediately followed by an identical

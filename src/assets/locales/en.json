@@ -15,7 +15,9 @@
     "workspace": "Foundation workspace",
     "language": "Language",
     "menu": "Open navigation",
-    "profile": "Demo administrator"
+    "profile": "Demo administrator",
+    "collapseMenu": "Collapse the menu",
+    "expandMenu": "Expand the menu"
   },
   "landing": {
     "ready": "Production-ready foundation",

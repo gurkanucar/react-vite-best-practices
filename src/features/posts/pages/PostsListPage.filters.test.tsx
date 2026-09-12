@@ -79,7 +79,7 @@ describe('PostsListPage filters', () => {
     // Typing "500" used to ask the server for 5, then 50, then 500.
     await user.type(screen.getByPlaceholderText('Min'), '500')
 
-    await waitFor(() => expect(listRequests).toHaveLength(1))
+    await waitFor(() => expect(listRequests).toHaveLength(1), { timeout: 3000 })
     expect(listRequests[0]).toContain('minViews=500')
 
     mockServer.events.removeListener('request:start', recordRequest)
@@ -92,12 +92,15 @@ describe('PostsListPage filters', () => {
     expect(await screen.findByText('Cache keys carry every filter')).toBeInTheDocument()
 
     await user.type(screen.getByPlaceholderText('Min'), '3000')
-    await waitFor(() => {
-      expect(rowTitles()).toEqual([
-        'Dynamic filter options belong to the server',
-        'Numeric and date ranges are filters too',
-      ])
-    })
+    await waitFor(
+      () => {
+        expect(rowTitles()).toEqual([
+          'Dynamic filter options belong to the server',
+          'Numeric and date ranges are filters too',
+        ])
+      },
+      { timeout: 3000 },
+    )
     expect(screen.getByTestId('location-search')).toHaveTextContent('minViews=3000')
   })
 

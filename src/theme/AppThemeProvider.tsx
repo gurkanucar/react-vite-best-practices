@@ -1,10 +1,23 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { App as AntApp, ConfigProvider } from 'antd'
+import enUS from 'antd/locale/en_US'
+import trTR from 'antd/locale/tr_TR'
+import dayjs from 'dayjs'
+import 'dayjs/locale/tr'
 import { resolveColorMode } from '@/theme/theme'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { useOfficialTheme } from '@/theme/useOfficialTheme'
 
 const colorSchemeQuery = '(prefers-color-scheme: dark)'
+
+/**
+ * Ant Design ships its own strings — date picker placeholders, empty-table text,
+ * pagination — which the application's locale files do not cover. They come from the
+ * component locale instead, and the pickers additionally read their month and weekday
+ * names from dayjs, so both follow the selected language.
+ */
+const antdLocales = { en: enUS, tr: trTR }
+const dayjsLocales = { en: 'en', tr: 'tr' }
 
 function systemPrefersDark(): boolean {
   return window.matchMedia?.(colorSchemeQuery).matches ?? false
@@ -25,6 +38,7 @@ export function AppThemeProvider({ children }: AppThemeProviderProps) {
 
   useEffect(() => {
     document.documentElement.lang = language
+    dayjs.locale(dayjsLocales[language])
   }, [language])
 
   useEffect(() => {
@@ -56,7 +70,7 @@ export function AppThemeProvider({ children }: AppThemeProviderProps) {
   }, [visualTheme, resolvedColorMode])
 
   return (
-    <ConfigProvider {...providerProps}>
+    <ConfigProvider {...providerProps} locale={antdLocales[language]}>
       <AntApp>{children}</AntApp>
     </ConfigProvider>
   )

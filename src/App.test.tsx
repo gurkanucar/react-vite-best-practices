@@ -100,13 +100,16 @@ describe('admin application', () => {
     expect(screen.getByRole('menuitem', { name: /Dashboard/ })).toBeVisible()
 
     const sidebar = screen.getByRole('complementary')
-    const collapseTrigger = sidebar.querySelector<HTMLElement>('.ant-layout-sider-trigger')
 
-    expect(collapseTrigger).not.toBeNull()
-    fireEvent.click(collapseTrigger!)
+    // The toggle sits in the header rather than in the sider's own footer trigger.
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse the menu' }))
 
     expect(sidebar).toHaveClass('ant-layout-sider-collapsed')
     expect(screen.queryByText('Foundation workspace')).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Expand the menu' }))
+
+    expect(sidebar).not.toHaveClass('ant-layout-sider-collapsed')
   })
 
   it('opens interactive component examples', async () => {

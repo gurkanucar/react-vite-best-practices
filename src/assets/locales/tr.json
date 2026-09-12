@@ -15,7 +15,9 @@
     "workspace": "Altyapı çalışma alanı",
     "language": "Dil",
     "menu": "Navigasyonu aç",
-    "profile": "Demo yöneticisi"
+    "profile": "Demo yöneticisi",
+    "collapseMenu": "Menüyü daralt",
+    "expandMenu": "Menüyü genişlet"
   },
   "landing": {
     "ready": "Production-ready altyapı",

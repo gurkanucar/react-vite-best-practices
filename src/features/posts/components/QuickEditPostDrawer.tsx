@@ -48,7 +48,7 @@ export function QuickEditPostDrawer({ postId, onClose }: QuickEditPostDrawerProp
       destroyOnHidden
       open={open}
       title={messages.posts.quickEditTitle}
-      width={420}
+      size={420}
       onClose={onClose}
       footer={
         <Flex gap={8} justify="flex-end">
