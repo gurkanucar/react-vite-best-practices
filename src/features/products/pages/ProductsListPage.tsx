@@ -35,6 +35,7 @@ import {
   type ProductFilterParams,
 } from '@/features/products/types'
 import { useMessages } from '@/i18n/messages'
+import { sortOrderFor } from '@/lib/filters/sortOrder'
 import { useDebouncedFilter } from '@/lib/filters/useDebouncedFilter'
 import { usePreferencesStore } from '@/store/preferences-store'
 
@@ -75,8 +76,7 @@ export function ProductsListPage() {
     currency: 'USD',
     style: 'currency',
   })
-  const sortOrderFor = (field: string) =>
-    sortBy === field ? (order === 'desc' ? 'descend' : 'ascend') : null
+  const columnSortOrder = (field: string) => sortOrderFor(field, sortBy, order)
 
   const columns: ColumnsType<ProductDto> = [
     { title: messages.products.id, dataIndex: 'id', key: 'id', width: 72 },
@@ -86,7 +86,7 @@ export function ProductsListPage() {
       key: 'title',
       width: 280,
       sorter: true,
-      sortOrder: sortOrderFor('title'),
+      sortOrder: columnSortOrder('title'),
     },
     {
       title: messages.products.category,
@@ -105,7 +105,7 @@ export function ProductsListPage() {
       key: 'price',
       width: 140,
       sorter: true,
-      sortOrder: sortOrderFor('price'),
+      sortOrder: columnSortOrder('price'),
       render: (price: number) => currencyFormatter.format(price),
     },
     {
@@ -114,7 +114,7 @@ export function ProductsListPage() {
       key: 'rating',
       width: 110,
       sorter: true,
-      sortOrder: sortOrderFor('rating'),
+      sortOrder: columnSortOrder('rating'),
     },
     {
       title: messages.products.stock,
@@ -122,7 +122,7 @@ export function ProductsListPage() {
       key: 'stock',
       width: 100,
       sorter: true,
-      sortOrder: sortOrderFor('stock'),
+      sortOrder: columnSortOrder('stock'),
     },
     {
       title: messages.products.actions,

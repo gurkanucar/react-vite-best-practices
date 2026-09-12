@@ -33,6 +33,7 @@ import {
 } from '@/features/posts/hooks'
 import { isPostSortField, POST_QUERY_KEYS, type PostDto } from '@/features/posts/types'
 import { useMessages } from '@/i18n/messages'
+import { sortOrderFor } from '@/lib/filters/sortOrder'
 
 /**
  * A right-click opens the same actions as the overflow button. One dropdown is anchored
@@ -67,8 +68,7 @@ export function PostsListPage() {
   const [quickEditPostId, setQuickEditPostId] = useState<number | null>(null)
   const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null)
   const posts = postsQuery.data ?? []
-  const sortOrderFor = (field: string) =>
-    values.sortBy === field ? (values.order === 'desc' ? 'descend' : 'ascend') : null
+  const columnSortOrder = (field: string) => sortOrderFor(field, values.sortBy, values.order)
 
   const columns: ColumnsType<PostDto> = [
     { title: messages.posts.id, dataIndex: 'id', key: 'id', width: 80 },
@@ -78,7 +78,7 @@ export function PostsListPage() {
       key: 'title',
       width: 280,
       sorter: filteringEnabled,
-      sortOrder: sortOrderFor('title'),
+      sortOrder: columnSortOrder('title'),
     },
     {
       title: messages.posts.categoryColumn,
@@ -100,7 +100,7 @@ export function PostsListPage() {
       key: 'views',
       width: 140,
       sorter: filteringEnabled,
-      sortOrder: sortOrderFor('views'),
+      sortOrder: columnSortOrder('views'),
       // A range does not fit the checkbox list antd renders by default, so the header
       // filter supplies its own dropdown and writes the same parameters as the panel.
       filteredValue: (values.minViews ?? values.maxViews) ? ['range'] : null,
@@ -122,7 +122,7 @@ export function PostsListPage() {
       key: 'publishedAt',
       width: 140,
       sorter: filteringEnabled,
-      sortOrder: sortOrderFor('publishedAt'),
+      sortOrder: columnSortOrder('publishedAt'),
       render: (publishedAt?: string) => publishedAt ?? '—',
     },
     { title: messages.posts.user, dataIndex: 'userId', key: 'userId', width: 100 },
