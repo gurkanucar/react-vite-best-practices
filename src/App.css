@@ -152,3 +152,84 @@ html[data-theme='dark'] .admin-workspace {
     flex-direction: column;
   }
 }
+
+/* Component catalog demos that need a visible box to show their behaviour. */
+.grid-demo-cell {
+  padding: 8px;
+  text-align: center;
+  border-radius: var(--ant-border-radius);
+  background: var(--ant-color-fill-tertiary);
+}
+
+.splitter-demo {
+  height: 168px;
+  border: var(--ant-line-width) solid var(--ant-color-border);
+  border-radius: var(--ant-border-radius);
+}
+
+.splitter-demo__panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--ant-color-text-secondary);
+}
+
+.layout-demo {
+  height: 200px;
+  overflow: hidden;
+  border-radius: var(--ant-border-radius);
+}
+
+.layout-demo__header,
+.layout-demo__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0;
+  line-height: normal;
+}
+
+.layout-demo__header {
+  color: var(--ant-color-text-light-solid);
+  background: var(--ant-color-primary);
+}
+
+.layout-demo__footer {
+  color: var(--ant-color-text-secondary);
+  background: var(--ant-color-fill-secondary);
+}
+
+.layout-demo__sider,
+.layout-demo__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ant-color-text-secondary);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.layout-demo__sider {
+  background: var(--ant-color-fill-tertiary);
+}
+
+.carousel-demo__slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  color: var(--ant-color-text-light-solid);
+  background: var(--ant-color-primary);
+}
+
+.watermark-demo {
+  padding: 16px;
+  border-radius: var(--ant-border-radius);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.icon-demo {
+  font-size: 22px;
+  color: var(--ant-color-text-secondary);
+}

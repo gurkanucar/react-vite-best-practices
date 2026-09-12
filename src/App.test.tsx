@@ -129,6 +129,27 @@ describe('admin application', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Cancel' }))
   })
 
+  it('covers every Ant Design group in the catalog tabs', async () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/components'] })
+    render(
+      <AppThemeProvider>
+        <RouterProvider router={router} />
+      </AppThemeProvider>,
+    )
+
+    for (const name of ['Inputs', 'Layout', 'Data display', 'Navigation', 'Feedback']) {
+      expect(await screen.findByRole('tab', { name })).toBeInTheDocument()
+    }
+
+    fireEvent.click(screen.getByRole('tab', { name: 'Layout' }))
+
+    // The layout group is where the components without another obvious home live.
+    expect(await screen.findByText('Splitter')).toBeInTheDocument()
+    expect(screen.getByText('Masonry')).toBeInTheDocument()
+    expect(screen.getByText('Responsive grid')).toBeInTheDocument()
+    expect(screen.getByText('Application shell')).toBeInTheDocument()
+  })
+
   it('renders and completes the lazy-loaded authentication and survey examples', async () => {
     const user = userEvent.setup()
     usePreferencesStore.setState({ visualTheme: 'illustration' })

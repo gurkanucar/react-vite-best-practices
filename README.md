@@ -60,6 +60,13 @@ filters and scroll position. Both read the same detail query.
   <img src="docs/images/posts-quick-edit.jpg" alt="The quick edit drawer" width="49%">
 </p>
 
+### A catalog covering every Ant Design component
+
+`/components` demonstrates the whole Ant Design catalog across six groups, so a component
+can be seen working in this theme before it is reached for.
+
+![The component catalog's layout group](docs/images/component-catalog.jpg)
+
 ### An admin shell with persistent preferences
 
 ![The dashboard](docs/images/dashboard.jpg)
@@ -72,6 +79,7 @@ filters and scroll position. Both read the same detail query.
 - TanStack Query for server state, caching, mutations, and targeted invalidation
 - MSW for a mocked API that runs beside the real one
 - Ant Design and persistent visual themes
+- A working catalog of the full Ant Design component set
 - Responsive Ant Design data-layout patterns without internal CSS overrides
 - React Router data routing, detail routes, and an admin dashboard demo
 - List state in the URL: pagination, search, filters, and sorting

@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons'
 import {
   Alert,
+  Anchor,
   App,
   AutoComplete,
   Avatar,
@@ -18,6 +19,7 @@ import {
   Button,
   Calendar,
   Card,
+  Carousel,
   Cascader,
   Checkbox,
   Col,
@@ -30,11 +32,15 @@ import {
   Dropdown,
   Empty,
   Flex,
+  FloatButton,
   Form,
+  Grid,
   Image,
   Input,
   InputNumber,
+  Layout,
   Listy,
+  Masonry,
   Mentions,
   Menu,
   Modal,
@@ -53,6 +59,7 @@ import {
   Slider,
   Space,
   Spin,
+  Splitter,
   Statistic,
   Steps,
   Switch,
@@ -62,10 +69,13 @@ import {
   TimePicker,
   Timeline,
   Tooltip,
+  Tour,
+  Transfer,
   Tree,
   TreeSelect,
   Typography,
   Upload,
+  Watermark,
 } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { useState } from 'react'
@@ -123,6 +133,7 @@ function createTeamColumns(messages: Messages): ColumnsType<TeamMember> {
 function InputsShowcase({ messages }: { messages: Messages }) {
   const { message } = App.useApp()
   const [readiness, setReadiness] = useState(72)
+  const [transferKeys, setTransferKeys] = useState<string[]>(['1'])
 
   return (
     <Row gutter={[16, 16]}>
@@ -267,6 +278,20 @@ function InputsShowcase({ messages }: { messages: Messages }) {
       </Col>
 
       <Col span={24}>
+        <Card className="component-panel" title={messages.components.transfer}>
+          <Transfer
+            dataSource={Array.from({ length: 6 }, (_, index) => ({
+              key: String(index),
+              title: messages.components.transferItem.replace('{index}', String(index + 1)),
+            }))}
+            render={(item) => item.title}
+            targetKeys={transferKeys}
+            titles={[messages.components.transferSource, messages.components.transferTarget]}
+            onChange={(keys) => setTransferKeys(keys.map(String))}
+          />
+        </Card>
+      </Col>
+      <Col span={24}>
         <Card className="component-panel" title={messages.components.form}>
           <Typography.Paragraph type="secondary">
             {messages.components.formDescription}
@@ -322,7 +347,114 @@ function InputsShowcase({ messages }: { messages: Messages }) {
   )
 }
 
+function LayoutShowcase({ messages }: { messages: Messages }) {
+  const breakpoints = Grid.useBreakpoint()
+  const activeBreakpoints = Object.entries(breakpoints)
+    .filter(([, active]) => active)
+    .map(([name]) => name)
+
+  return (
+    <Row gutter={[16, 16]}>
+      <Col xs={24} xl={12}>
+        <Card className="component-panel" title={messages.components.gridBreakpoints}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.gridBreakpointsDescription}
+          </Typography.Paragraph>
+          <Row gutter={[8, 8]}>
+            {[8, 8, 8, 12, 12, 24].map((span, index) => (
+              <Col key={index} span={span}>
+                <div className="grid-demo-cell">{span}</div>
+              </Col>
+            ))}
+          </Row>
+          <Divider />
+          <Space wrap>
+            <Typography.Text type="secondary">
+              {messages.components.activeBreakpoints}:
+            </Typography.Text>
+            {activeBreakpoints.map((name) => (
+              <Tag key={name} color="blue">
+                {name}
+              </Tag>
+            ))}
+          </Space>
+        </Card>
+      </Col>
+
+      <Col xs={24} xl={12}>
+        <Card className="component-panel" title={messages.components.splitter}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.splitterDescription}
+          </Typography.Paragraph>
+          <Splitter className="splitter-demo">
+            <Splitter.Panel defaultSize="35%" min="20%" max="70%">
+              <div className="splitter-demo__panel">{messages.components.splitterNavigation}</div>
+            </Splitter.Panel>
+            <Splitter.Panel>
+              <div className="splitter-demo__panel">{messages.components.splitterContent}</div>
+            </Splitter.Panel>
+          </Splitter>
+        </Card>
+      </Col>
+
+      <Col xs={24} xl={12}>
+        <Card className="component-panel" title={messages.components.masonry}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.masonryDescription}
+          </Typography.Paragraph>
+          <Masonry
+            columns={{ xs: 1, sm: 2, lg: 3 }}
+            gutter={12}
+            items={[120, 72, 160, 96, 130, 80].map((height, index) => ({
+              key: index,
+              data: { height, index },
+            }))}
+            itemRender={({ data }) => (
+              <Card size="small" styles={{ body: { height: data.height } }}>
+                {messages.components.masonryItem.replace('{index}', String(data.index + 1))}
+              </Card>
+            )}
+          />
+        </Card>
+      </Col>
+
+      <Col xs={24} xl={12}>
+        <Card className="component-panel" title={messages.components.appShell}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.appShellDescription}
+          </Typography.Paragraph>
+          <Layout className="layout-demo">
+            <Layout.Header className="layout-demo__header">
+              {messages.components.shellHeader}
+            </Layout.Header>
+            <Layout>
+              <Layout.Sider className="layout-demo__sider" width={96}>
+                {messages.components.shellSider}
+              </Layout.Sider>
+              <Layout.Content className="layout-demo__content">
+                {messages.components.shellContent}
+              </Layout.Content>
+            </Layout>
+            <Layout.Footer className="layout-demo__footer">
+              {messages.components.shellFooter}
+            </Layout.Footer>
+          </Layout>
+        </Card>
+      </Col>
+    </Row>
+  )
+}
+
+/**
+ * Tour resolves its target only when a step is shown, so the elements are looked up by
+ * id at that moment. Its type declares the getter as always returning an element.
+ */
+function tourTarget(id: string) {
+  return () => document.querySelector(`#${id}`) as HTMLElement
+}
+
 function DataDisplayShowcase({ messages }: { messages: Messages }) {
+  const [tourOpen, setTourOpen] = useState(false)
   const pipelineEvent = (index: number) =>
     messages.components.pipelineEvent.replace('{index}', String(index))
 
@@ -448,6 +580,55 @@ function DataDisplayShowcase({ messages }: { messages: Messages }) {
         </Card>
       </Col>
 
+      <Col xs={24} xl={12}>
+        <Card className="component-panel" title={messages.components.carousel}>
+          <Carousel autoplay>
+            {[1, 2, 3].map((slide) => (
+              <div key={slide}>
+                <div className="carousel-demo__slide">
+                  {messages.components.carouselSlide.replace('{index}', String(slide))}
+                </div>
+              </div>
+            ))}
+          </Carousel>
+        </Card>
+      </Col>
+
+      <Col xs={24} xl={12}>
+        <Card className="component-panel" title={messages.components.tour}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.tourDescription}
+          </Typography.Paragraph>
+          <Space wrap>
+            <Button id="tour-columns" icon={<AppstoreOutlined />}>
+              {messages.common.columns}
+            </Button>
+            <Button id="tour-refresh" icon={<CloudUploadOutlined />}>
+              {messages.posts.invalidate}
+            </Button>
+            <Button type="primary" onClick={() => setTourOpen(true)}>
+              {messages.components.startTour}
+            </Button>
+          </Space>
+          <Tour
+            open={tourOpen}
+            steps={[
+              {
+                title: messages.components.tourColumnsTitle,
+                description: messages.components.tourColumnsDetail,
+                target: tourTarget('tour-columns'),
+              },
+              {
+                title: messages.components.tourRefreshTitle,
+                description: messages.components.tourRefreshDetail,
+                target: tourTarget('tour-refresh'),
+              },
+            ]}
+            onClose={() => setTourOpen(false)}
+          />
+        </Card>
+      </Col>
+
       <Col xs={24} xl={14}>
         <Card className="component-panel" title={messages.components.calendar}>
           <Calendar fullscreen={false} />
@@ -479,7 +660,27 @@ function NavigationShowcase({ messages }: { messages: Messages }) {
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
-        <Card className="component-panel" title={messages.components.breadcrumbMenu}>
+        <Card className="component-panel" title={messages.components.anchor}>
+          <Typography.Paragraph type="secondary">
+            {messages.components.anchorDescription}
+          </Typography.Paragraph>
+          <Anchor
+            affix={false}
+            direction="horizontal"
+            items={[
+              { key: 'menus', href: '#catalog-menus', title: messages.components.breadcrumbMenu },
+              { key: 'steps', href: '#catalog-steps', title: messages.components.steps },
+              { key: 'tabs', href: '#catalog-tabs', title: messages.components.tabsDisclosure },
+            ]}
+          />
+        </Card>
+      </Col>
+      <Col span={24}>
+        <Card
+          className="component-panel"
+          id="catalog-menus"
+          title={messages.components.breadcrumbMenu}
+        >
           <Space orientation="vertical" size="large" className="full-width">
             <Breadcrumb
               items={[
@@ -520,7 +721,7 @@ function NavigationShowcase({ messages }: { messages: Messages }) {
       </Col>
 
       <Col xs={24} xl={14}>
-        <Card className="component-panel" title={messages.components.steps}>
+        <Card className="component-panel" id="catalog-steps" title={messages.components.steps}>
           <Steps
             current={1}
             items={[
@@ -541,7 +742,11 @@ function NavigationShowcase({ messages }: { messages: Messages }) {
       </Col>
 
       <Col span={24}>
-        <Card className="component-panel" title={messages.components.tabsDisclosure}>
+        <Card
+          className="component-panel"
+          id="catalog-tabs"
+          title={messages.components.tabsDisclosure}
+        >
           <Tabs
             items={[
               {
@@ -673,11 +878,48 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
           </Card>
         </Col>
 
+        <Col xs={24} xl={12}>
+          <Card className="component-panel" title={messages.components.watermark}>
+            <Typography.Paragraph type="secondary">
+              {messages.components.watermarkDescription}
+            </Typography.Paragraph>
+            <Watermark content={messages.components.watermarkContent} gap={[24, 24]}>
+              <div className="watermark-demo">
+                <Typography.Paragraph>{messages.components.watermarkBody}</Typography.Paragraph>
+                <Progress percent={45} />
+              </div>
+            </Watermark>
+          </Card>
+        </Col>
+
+        <Col xs={24} xl={12}>
+          <Card className="component-panel" title={messages.components.icons}>
+            <Typography.Paragraph type="secondary">
+              {messages.components.iconsDescription}
+            </Typography.Paragraph>
+            <Space size="large" wrap>
+              <AppstoreOutlined className="icon-demo" />
+              <CheckCircleOutlined className="icon-demo" />
+              <CloudUploadOutlined className="icon-demo" />
+              <DownloadOutlined className="icon-demo" />
+              <InfoCircleOutlined className="icon-demo" />
+              <SettingOutlined className="icon-demo" />
+              <UserOutlined className="icon-demo" />
+            </Space>
+          </Card>
+        </Col>
+
         <Col span={24}>
           <Card className="component-panel" title={messages.components.actions}>
             <Typography.Paragraph type="secondary">
               {messages.components.actionsDescription}
             </Typography.Paragraph>
+            <Alert
+              showIcon
+              type="info"
+              title={messages.components.messagesNote}
+              style={{ marginBottom: 16 }}
+            />
             <Space wrap>
               <Button
                 type="primary"
@@ -693,6 +935,15 @@ function FeedbackShowcase({ messages }: { messages: Messages }) {
           </Card>
         </Col>
       </Row>
+
+      <FloatButton.Group shape="circle" style={{ insetInlineEnd: 24 }}>
+        <FloatButton
+          icon={<InfoCircleOutlined />}
+          tooltip={messages.components.floatButtonHelp}
+          onClick={() => void message.info(messages.components.floatButtonDescription)}
+        />
+        <FloatButton.BackTop tooltip={messages.components.floatButtonBackTop} />
+      </FloatButton.Group>
 
       <Modal
         title={messages.components.reviewChanges}
@@ -743,6 +994,11 @@ export function ComponentsPage() {
             key: 'inputs',
             label: messages.components.inputs,
             children: <InputsShowcase messages={messages} />,
+          },
+          {
+            key: 'layout',
+            label: messages.components.layoutTab,
+            children: <LayoutShowcase messages={messages} />,
           },
           {
             key: 'data-display',
