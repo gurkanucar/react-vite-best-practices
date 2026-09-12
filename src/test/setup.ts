@@ -17,9 +17,27 @@ Object.defineProperty(window, 'matchMedia', {
   }),
 })
 
+/** jsdom lays nothing out, so every element measures zero. */
+const measuredSize = { width: 800, height: 400 }
+
+/**
+ * Reporting a real size matters for anything that draws itself from its measured box —
+ * Recharts' `ResponsiveContainer` refuses to render a chart at 0x0 and warns instead.
+ */
 class ResizeObserverMock implements ResizeObserver {
+  private readonly callback: ResizeObserverCallback
+
+  constructor(callback: ResizeObserverCallback) {
+    this.callback = callback
+  }
+
+  observe(target: Element) {
+    const contentRect = { ...measuredSize, top: 0, left: 0, bottom: 400, right: 800, x: 0, y: 0 }
+
+    this.callback([{ target, contentRect } as ResizeObserverEntry], this)
+  }
+
   disconnect() {}
-  observe() {}
   unobserve() {}
 }
 

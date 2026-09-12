@@ -7,6 +7,7 @@ import {
   FilePdfOutlined,
   FolderOpenOutlined,
   FormOutlined,
+  LineChartOutlined,
   RobotOutlined,
   SettingOutlined,
   ShoppingOutlined,
@@ -44,6 +45,7 @@ export function useNavigationSections(): NavigationSection[] {
         label: messages.navigation.workspace,
         children: [
           { key: '/dashboard', icon: <DashboardOutlined />, label: messages.navigation.dashboard },
+          { key: '/analytics', icon: <LineChartOutlined />, label: messages.navigation.analytics },
           {
             key: '/components',
             icon: <AppstoreOutlined />,

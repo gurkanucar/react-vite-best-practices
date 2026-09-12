@@ -110,6 +110,22 @@ html[data-theme='dark'] .admin-workspace {
   margin-top: 20px;
 }
 
+/*
+ * `ResponsiveContainer` measures this element, so it needs a height that does not come
+ * from its own contents. `min-width: 0` lets it shrink inside the grid column again:
+ * without it the measured width only ever grows and the chart stops following a resize.
+ */
+.chart-card__canvas {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Recharts marks the focused segment with a default outline that clashes with the theme. */
+.recharts-wrapper :focus-visible {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 2px;
+}
+
 .release-meter {
   margin-top: 24px;
 }

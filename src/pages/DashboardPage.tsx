@@ -1,5 +1,4 @@
 import { ArrowDownOutlined, ArrowUpOutlined, ClockCircleOutlined } from '@ant-design/icons'
-import { Column } from '@ant-design/charts'
 import {
   Alert,
   Badge,
@@ -15,6 +14,9 @@ import {
 } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
+// A leaf import: the components barrel would pull every chart type, and with it all of
+// recharts, into the chunk this page shares.
+import { ThroughputBarChart } from '@/features/analytics/components/ThroughputBarChart'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
 
@@ -25,12 +27,6 @@ interface ActivityRow {
   status: 'Completed' | 'Processing' | 'Review'
   time: string
 }
-
-const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-const throughput = [62, 74, 58, 86, 72, 94, 81].map((value, index) => ({
-  day: dayLabels[index],
-  value,
-}))
 
 export function DashboardPage() {
   const messages = useMessages()
@@ -149,7 +145,7 @@ export function DashboardPage() {
             <Typography.Paragraph type="secondary">
               {messages.dashboard.throughputDescription}
             </Typography.Paragraph>
-            <Column data={throughput} height={260} xField="day" yField="value" />
+            <ThroughputBarChart />
           </Card>
         </Col>
         <Col xs={24} xl={8}>

@@ -1,6 +1,7 @@
 import { createBrowserRouter, type RouteObject } from 'react-router'
 import {
   AdminLayout,
+  AnalyticsPage,
   AssistantPage,
   ComponentsPage,
   DashboardPage,
@@ -83,6 +84,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <DashboardPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'analytics',
+        element: (
+          <RouteSuspense>
+            <AnalyticsPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

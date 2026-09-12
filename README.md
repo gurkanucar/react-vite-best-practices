@@ -67,6 +67,15 @@ can be seen working in this theme before it is reached for.
 
 ![The component catalog's layout group](docs/images/component-catalog.jpg)
 
+### Ten chart types on one page
+
+`/analytics` draws area, line, composed, pie, donut, radar, radial, scatter, treemap, and
+funnel charts from Recharts, coloured from Ant Design's design tokens so they follow every
+theme and dark mode. Replacing `@ant-design/charts` with it cut the dashboard chunk from
+1.43 MB to 356 kB — the measurements are in [013](docs/013-charts-with-recharts.md).
+
+![The analytics page](docs/images/analytics.jpg)
+
 ### An admin shell with persistent preferences
 
 ![The dashboard](docs/images/dashboard.jpg)
@@ -80,6 +89,7 @@ can be seen working in this theme before it is reached for.
 - MSW for a mocked API that runs beside the real one
 - Ant Design and persistent visual themes
 - A working catalog of the full Ant Design component set
+- Ten Recharts chart types themed from Ant Design's design tokens
 - PDF viewing with pdf.js, from a blob fetched through the API client
 - An AI chat screen built from Ant Design X, with streamed and cancellable replies
 - A header search over one shared navigation definition, with a ⌘K shortcut

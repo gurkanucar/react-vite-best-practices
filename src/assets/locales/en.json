@@ -10,7 +10,8 @@
     "appearance": "Appearance",
     "persistedState": "Persisted state",
     "documents": "PDF documents",
-    "assistant": "AI assistant"
+    "assistant": "AI assistant",
+    "analytics": "Analytics"
   },
   "shell": {
     "product": "RVBP Console",
@@ -540,5 +541,94 @@
     "clear": "Clear the conversation",
     "cancelled": "The reply was stopped.",
     "error": "The assistant could not answer"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "description": "Every Recharts chart type this project uses, drawn from Ant Design's design tokens.",
+    "badge": "Recharts",
+    "revenueTitle": "Recurring revenue",
+    "revenueBody": "Monthly recurring revenue stacked by line of business.",
+    "revenueSeries": {
+      "subscriptions": "Subscriptions",
+      "services": "Professional services",
+      "marketplace": "Marketplace"
+    },
+    "latencyTitle": "Response time percentiles",
+    "latencyBody": "A logarithmic axis keeps the median readable next to the tail.",
+    "percentiles": {
+      "p50": "Median (p50)",
+      "p95": "95th percentile",
+      "p99": "99th percentile"
+    },
+    "signupsTitle": "Trials and conversion",
+    "signupsBody": "Counts on the left axis, the conversion rate on the right.",
+    "signupSeries": {
+      "trials": "Trials started",
+      "converted": "Converted to paid",
+      "conversionRate": "Conversion rate"
+    },
+    "devicesTitle": "Sessions by device",
+    "devicesBody": "Where the last 30 days of traffic came from.",
+    "devices": {
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tablet": "Tablet"
+    },
+    "plansTitle": "Accounts by plan",
+    "plansBody": "How the customer base spreads across the price list.",
+    "plans": {
+      "free": "Free",
+      "pro": "Pro",
+      "team": "Team",
+      "enterprise": "Enterprise"
+    },
+    "lighthouseTitle": "Audit scores",
+    "lighthouseBody": "Lighthouse categories before and after the route-splitting work.",
+    "audits": {
+      "performance": "Performance",
+      "accessibility": "Accessibility",
+      "bestPractices": "Best practices",
+      "seo": "SEO",
+      "pwa": "PWA"
+    },
+    "auditBefore": "Before",
+    "auditAfter": "After",
+    "objectivesTitle": "Service objectives",
+    "objectivesBody": "Availability against each monthly target, zoomed to the 98-100% band.",
+    "services": {
+      "api": "Public API",
+      "web": "Web application",
+      "jobs": "Background jobs",
+      "search": "Search cluster"
+    },
+    "routesTitle": "Route cost against traffic",
+    "routesBody": "Payload on the x axis, time to interactive on the y, sessions as the bubble size.",
+    "routeAxes": {
+      "transferred": "Transferred",
+      "interactive": "Time to interactive",
+      "sessions": "Sessions",
+      "routes": "Routes"
+    },
+    "bundleTitle": "Bundle composition",
+    "bundleBody": "Shipped kilobytes per package, measured from this repository's production build.",
+    "funnelTitle": "Onboarding funnel",
+    "funnelBody": "Where visitors stop on the way to a paid account.",
+    "stages": {
+      "visited": "Visited",
+      "signedUp": "Signed up",
+      "activated": "Activated",
+      "invitedTeam": "Invited a teammate",
+      "subscribed": "Subscribed"
+    },
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "operations": "Operations"
   }
 }

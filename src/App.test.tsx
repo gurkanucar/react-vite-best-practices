@@ -2,14 +2,10 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { routes } from '@/router/router'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { AppThemeProvider } from '@/theme/AppThemeProvider'
-
-vi.mock('@ant-design/charts', () => ({
-  Column: () => <div data-testid="weekly-throughput-chart" />,
-}))
 
 describe('admin application', () => {
   it('keeps the landing page separate from the dashboard', async () => {

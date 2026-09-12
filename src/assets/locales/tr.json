@@ -10,7 +10,8 @@
     "appearance": "Görünüm",
     "persistedState": "Kalıcı durum",
     "documents": "PDF belgeleri",
-    "assistant": "Yapay zekâ asistanı"
+    "assistant": "Yapay zekâ asistanı",
+    "analytics": "Analitik"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -540,5 +541,94 @@
     "clear": "Sohbeti temizle",
     "cancelled": "Yanıt durduruldu.",
     "error": "Asistan yanıt veremedi"
+  },
+  "analytics": {
+    "title": "Analitik",
+    "description": "Bu projenin kullandığı tüm Recharts grafik türleri, Ant Design tasarım token'larından renklendirilmiş.",
+    "badge": "Recharts",
+    "revenueTitle": "Yinelenen gelir",
+    "revenueBody": "İş koluna göre yığılmış aylık yinelenen gelir.",
+    "revenueSeries": {
+      "subscriptions": "Abonelikler",
+      "services": "Profesyonel hizmetler",
+      "marketplace": "Pazar yeri"
+    },
+    "latencyTitle": "Yanıt süresi yüzdelikleri",
+    "latencyBody": "Logaritmik eksen, medyanı kuyruk değerlerinin yanında okunur tutar.",
+    "percentiles": {
+      "p50": "Medyan (p50)",
+      "p95": "95. yüzdelik",
+      "p99": "99. yüzdelik"
+    },
+    "signupsTitle": "Denemeler ve dönüşüm",
+    "signupsBody": "Adetler sol eksende, dönüşüm oranı sağ eksende.",
+    "signupSeries": {
+      "trials": "Başlatılan deneme",
+      "converted": "Ücretliye dönen",
+      "conversionRate": "Dönüşüm oranı"
+    },
+    "devicesTitle": "Cihaza göre oturumlar",
+    "devicesBody": "Son 30 günlük trafiğin geldiği yerler.",
+    "devices": {
+      "desktop": "Masaüstü",
+      "mobile": "Mobil",
+      "tablet": "Tablet"
+    },
+    "plansTitle": "Plana göre hesaplar",
+    "plansBody": "Müşteri tabanının fiyat listesine dağılımı.",
+    "plans": {
+      "free": "Ücretsiz",
+      "pro": "Pro",
+      "team": "Takım",
+      "enterprise": "Kurumsal"
+    },
+    "lighthouseTitle": "Denetim puanları",
+    "lighthouseBody": "Route bölme çalışmasından önceki ve sonraki Lighthouse kategorileri.",
+    "audits": {
+      "performance": "Performans",
+      "accessibility": "Erişilebilirlik",
+      "bestPractices": "En iyi uygulamalar",
+      "seo": "SEO",
+      "pwa": "PWA"
+    },
+    "auditBefore": "Önce",
+    "auditAfter": "Sonra",
+    "objectivesTitle": "Servis hedefleri",
+    "objectivesBody": "Aylık hedefe karşı erişilebilirlik, %98-100 bandına yakınlaştırılmış.",
+    "services": {
+      "api": "Genel API",
+      "web": "Web uygulaması",
+      "jobs": "Arka plan işleri",
+      "search": "Arama kümesi"
+    },
+    "routesTitle": "Route maliyeti ve trafik",
+    "routesBody": "X ekseninde yük, Y ekseninde etkileşime hazır olma süresi, kabarcık boyutu oturum sayısı.",
+    "routeAxes": {
+      "transferred": "Aktarılan",
+      "interactive": "Etkileşime hazır",
+      "sessions": "Oturum",
+      "routes": "Route'lar"
+    },
+    "bundleTitle": "Paket bileşimi",
+    "bundleBody": "Paket başına gönderilen kilobayt; bu deponun üretim build'inden ölçüldü.",
+    "funnelTitle": "Kayıt hunisi",
+    "funnelBody": "Ziyaretçilerin ücretli hesaba giderken nerede durduğu.",
+    "stages": {
+      "visited": "Ziyaret etti",
+      "signedUp": "Kayıt oldu",
+      "activated": "Aktifleşti",
+      "invitedTeam": "Takım arkadaşı davet etti",
+      "subscribed": "Abone oldu"
+    },
+    "days": {
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt",
+      "sun": "Paz"
+    },
+    "operations": "İşlem"
   }
 }
