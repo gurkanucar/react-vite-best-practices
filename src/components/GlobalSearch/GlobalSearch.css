@@ -1,7 +1,7 @@
 .global-search {
   align-self: center;
-  flex: 1 1 260px;
-  max-width: 360px;
+  flex: 0 1 320px;
+  max-width: 320px;
   /* The layout header sets `line-height: 64px`, which the select's inner element
      inherits and turns into a 64px line box — stretching the field to the height of the
      whole bar. Resetting it here keeps the field the same height as the buttons. */

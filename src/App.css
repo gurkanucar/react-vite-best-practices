@@ -63,6 +63,12 @@ html[data-theme='dark'] .admin-workspace {
   padding-inline: 16px 24px;
 }
 
+/* Keeps the toggle and the search together on the left; the actions stay on the right. */
+.admin-header__lead {
+  flex: 1;
+  min-width: 0;
+}
+
 .language-select {
   width: 128px;
 }
