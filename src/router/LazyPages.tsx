@@ -42,12 +42,40 @@ export const ComponentsPage = lazy(async () => ({
   default: (await import('@/pages/ComponentsPage')).ComponentsPage,
 }))
 
+export const CorporateAnnouncementDetailPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CorporatePublicationPages'))
+    .CorporateAnnouncementDetailPage,
+}))
+
+export const CorporateAnnouncementsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CorporatePublicationPages'))
+    .CorporateAnnouncementsPage,
+}))
+
+export const CorporateLandingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CorporateLandingPage')).CorporateLandingPage,
+}))
+
+export const CorporateNewsDetailPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CorporatePublicationPages'))
+    .CorporateNewsDetailPage,
+}))
+
+export const CorporateNewsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CorporatePublicationPages')).CorporateNewsPage,
+}))
+
 export const DashboardPage = lazy(async () => ({
   default: (await import('@/pages/DashboardPage')).DashboardPage,
 }))
 
 export const DocumentsPage = lazy(async () => ({
   default: (await import('@/features/documents/pages/DocumentsPage')).DocumentsPage,
+}))
+
+export const DentalClinicLandingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/DentalClinicLandingPage'))
+    .DentalClinicLandingPage,
 }))
 
 export const FilesPage = lazy(async () => ({
@@ -128,4 +156,8 @@ export const TourListPage = lazy(async () => ({
 
 export const SurveyPage = lazy(async () => ({
   default: (await import('@/pages/SurveyPage')).SurveyPage,
+}))
+
+export const TechParkLandingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkLandingPage')).TechParkLandingPage,
 }))

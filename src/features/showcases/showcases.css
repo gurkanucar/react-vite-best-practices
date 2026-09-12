@@ -1,0 +1,634 @@
+.showcase-preview-frame {
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  box-shadow: var(--ant-box-shadow-tertiary);
+}
+
+.public-showcase {
+  min-height: 100vh;
+  color: #1c252e;
+  background: #fff;
+}
+
+.showcase-preview-frame .public-showcase {
+  min-height: 0;
+}
+
+.public-showcase__header,
+.public-showcase__footer,
+.showcase-section,
+.showcase-hero,
+.publication-hero,
+.publication-detail {
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.public-showcase__header {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.public-showcase__brand {
+  min-width: max-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.public-showcase__brand > span:last-child > span {
+  display: block;
+}
+
+.public-showcase__brand-mark {
+  width: 34px;
+  height: 34px;
+  display: inline-block;
+  border-radius: 10px 10px 10px 2px;
+  background: var(--ant-color-primary);
+  box-shadow: inset -8px -8px 0 rgb(255 255 255 / 18%);
+}
+
+.public-showcase__nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.public-showcase__footer {
+  padding-block: 40px;
+  border-top: 1px solid #e7e9ec;
+}
+
+.showcase-hero {
+  min-height: 600px;
+  padding-block: 84px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  align-items: center;
+  gap: 72px;
+}
+
+.showcase-hero__copy {
+  position: relative;
+  z-index: 1;
+}
+
+.showcase-hero__copy h1 {
+  max-width: 760px;
+  margin-block: 20px;
+  font-size: clamp(2.7rem, 5vw, 5.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.showcase-hero__copy > p {
+  max-width: 660px;
+  margin-bottom: 28px;
+  font-size: 1.12rem;
+  line-height: 1.7;
+}
+
+.showcase-section {
+  padding-block: 80px;
+}
+
+.showcase-section__heading {
+  max-width: 680px;
+  margin-bottom: 36px;
+}
+
+.showcase-section__heading h2,
+.corporate-principles h2,
+.corporate-latest h2,
+.dental-team h2,
+.dental-form h2,
+.showcase-cta h2 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 3vw, 3.25rem);
+  letter-spacing: -0.035em;
+}
+
+.showcase-feature-card {
+  height: 100%;
+}
+
+.showcase-feature-card__icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--ant-color-primary);
+  background: color-mix(in srgb, var(--ant-color-primary) 10%, white);
+  font-size: 22px;
+}
+
+.showcase-feature-card button,
+.corporate-story-card button,
+.publication-card button {
+  padding-inline: 0;
+}
+
+.showcase-cta {
+  margin-block: 40px 80px;
+  padding: 64px;
+  border-radius: 28px;
+}
+
+/* Aurora Tech Park */
+.techpark-site {
+  background: #f7f9ff;
+}
+
+.techpark-site .public-showcase__header {
+  border-bottom: 1px solid #e3e8f7;
+}
+
+.techpark-hero {
+  position: relative;
+}
+
+.techpark-hero::before {
+  position: absolute;
+  inset: 8% -30% auto 45%;
+  height: 520px;
+  content: '';
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(73 105 225 / 18%), transparent 68%);
+  filter: blur(8px);
+}
+
+.techpark-hero__visual {
+  position: relative;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #ced8fa;
+  border-radius: 42% 58% 62% 38% / 47% 38% 62% 53%;
+  background: linear-gradient(145deg, #e8ecff, #fff 52%, #dce8ff);
+}
+
+.techpark-core {
+  position: relative;
+  z-index: 2;
+  width: 158px;
+  height: 158px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #182a69;
+  box-shadow: 0 22px 50px rgb(32 57 145 / 28%);
+}
+
+.techpark-core > span {
+  font-size: 38px;
+}
+
+.techpark-core strong {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.techpark-orbit {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border: 1px solid #7990eb;
+  border-radius: 50%;
+  transform: rotate(28deg);
+}
+
+.techpark-orbit--two {
+  width: 92%;
+  height: 45%;
+  transform: rotate(-34deg);
+}
+
+.techpark-signal {
+  position: absolute;
+  top: 18%;
+  right: 18%;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #fff;
+  border-radius: 18px;
+  color: #3157d5;
+  background: rgb(255 255 255 / 80%);
+  box-shadow: 0 12px 30px rgb(32 57 145 / 18%);
+  font-weight: 800;
+}
+
+.techpark-signal--lower {
+  inset: auto auto 16% 12%;
+}
+
+.techpark-metrics {
+  padding-block: 0 40px;
+}
+
+.techpark-metrics .ant-card {
+  height: 100%;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+.techpark-program {
+  width: 100%;
+  max-width: none;
+  padding-inline: max(24px, calc((100% - 1180px) / 2));
+  background: #182a69;
+}
+
+.techpark-program h2,
+.techpark-program p {
+  color: #fff;
+}
+
+.techpark-program .ant-tag {
+  color: #bed0ff;
+  background: rgb(255 255 255 / 10%);
+}
+
+.techpark-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.techpark-steps .ant-card {
+  min-height: 190px;
+  background: rgb(255 255 255 / 9%);
+}
+
+.techpark-steps h4,
+.techpark-steps span {
+  color: #fff;
+}
+
+.techpark-site .showcase-cta {
+  color: #fff;
+  background: linear-gradient(120deg, #3157d5, #5936bb);
+}
+
+.techpark-site .showcase-cta h2,
+.techpark-site .showcase-cta p {
+  color: #fff;
+}
+
+/* Mira Dental */
+.dental-site {
+  background: #fffdfa;
+}
+
+.dental-site .public-showcase__header {
+  border-bottom: 1px solid #e7eee9;
+}
+
+.dental-hero {
+  width: 100%;
+  max-width: none;
+  padding-inline: max(24px, calc((100% - 1180px) / 2));
+  background:
+    radial-gradient(circle at 88% 18%, rgb(50 167 150 / 14%), transparent 26%),
+    linear-gradient(105deg, #fffdfa 58%, #edf8f4);
+}
+
+.dental-trust {
+  margin-top: 32px;
+}
+
+.dental-trust span > span {
+  margin-right: 5px;
+  color: #147d73;
+}
+
+.dental-availability {
+  max-width: 430px;
+  margin-inline: auto;
+  border: 1px solid #dbeae5;
+  box-shadow: 0 28px 70px rgb(31 90 80 / 14%);
+}
+
+.dental-smile-mark {
+  width: 88px;
+  height: 88px;
+  margin-bottom: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50% 50% 50% 16%;
+  color: #147d73;
+  background: #dff4ec;
+  font-size: 40px;
+}
+
+.dental-availability .anticon-star {
+  color: #e19a2b;
+}
+
+.dental-services {
+  background: #f3f8f6;
+  width: 100%;
+  max-width: none;
+  padding-inline: max(24px, calc((100% - 1180px) / 2));
+}
+
+.dental-services .ant-card {
+  border: 1px solid #dfeae6;
+  box-shadow: none;
+}
+
+.dental-portrait {
+  position: relative;
+  min-height: 430px;
+  overflow: hidden;
+  border-radius: 28px 80px 28px 28px;
+  background:
+    radial-gradient(circle at 50% 35%, #fff 0 17%, transparent 17.5%),
+    radial-gradient(circle at 50% 54%, #d7eae3 0 28%, transparent 28.5%),
+    linear-gradient(140deg, #dcefe8, #87b8aa);
+}
+
+.dental-portrait::after {
+  position: absolute;
+  inset: auto 12% 0;
+  height: 52%;
+  content: '';
+  border-radius: 50% 50% 0 0;
+  background: #fffdfa;
+}
+
+.dental-portrait__badge {
+  position: absolute;
+  z-index: 1;
+  right: 18px;
+  bottom: 18px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #fff;
+  background: #174f49;
+  font-weight: 600;
+}
+
+.dental-form {
+  padding: 20px;
+  background: #eaf6f2;
+}
+
+/* Northstar corporate site */
+.corporate-site {
+  background: #f7f3ed;
+}
+
+.corporate-site .public-showcase__header {
+  border-bottom: 1px solid #ded8cf;
+}
+
+.corporate-site .public-showcase__brand-mark {
+  border-radius: 50% 2px 50% 50%;
+}
+
+.corporate-hero {
+  min-height: 650px;
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.corporate-hero__panel {
+  padding: 44px;
+  border-radius: 2px 80px 2px 2px;
+  color: #f8eee3;
+  background: #202822;
+}
+
+.corporate-hero__panel h2,
+.corporate-hero__panel p,
+.corporate-hero__panel .ant-statistic-title,
+.corporate-hero__panel .ant-statistic-content {
+  color: #f8eee3;
+}
+
+.corporate-hero__panel > h2 {
+  margin: 52px 0 0;
+  font-size: clamp(4rem, 9vw, 7rem);
+  line-height: 1;
+}
+
+.corporate-hero__line {
+  height: 1px;
+  margin-block: 40px;
+  background: rgb(255 255 255 / 24%);
+}
+
+.corporate-principles {
+  width: 100%;
+  max-width: none;
+  padding-inline: max(24px, calc((100% - 1180px) / 2));
+  background: #fff;
+}
+
+.corporate-principles .ant-card {
+  height: 100%;
+  background: #f7f3ed;
+}
+
+.corporate-story-card {
+  height: 100%;
+}
+
+.corporate-story-card__image {
+  height: 190px;
+  margin: -24px -24px 24px;
+  background: linear-gradient(135deg, #30463e, #b8c7af);
+}
+
+.corporate-story-card__image--2 {
+  background: linear-gradient(135deg, #c87056, #f1d5b8);
+}
+
+.corporate-story-card__image--3 {
+  background: linear-gradient(135deg, #334962, #b5c6d9);
+}
+
+.corporate-contact {
+  color: #fff;
+  background: #202822;
+}
+
+.corporate-contact h2,
+.corporate-contact p {
+  max-width: 720px;
+  color: #fff;
+}
+
+/* Corporate publications */
+.publication-hero {
+  padding-block: 92px 56px;
+  border-bottom: 1px solid #ded8cf;
+}
+
+.publication-hero h1 {
+  margin-block: 18px 12px;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  letter-spacing: -0.055em;
+}
+
+.publication-hero p {
+  max-width: 700px;
+  font-size: 1.15rem;
+}
+
+.publication-grid {
+  padding-top: 40px;
+}
+
+.publication-card {
+  height: 100%;
+  border-top: 4px solid #b64b32;
+  border-radius: 2px 2px 16px 16px;
+}
+
+.publication-card--lead {
+  min-height: 330px;
+  padding-right: min(28vw, 320px);
+  background:
+    linear-gradient(90deg, #fff 58%, transparent 58%),
+    linear-gradient(140deg, #283a34 0 70%, #b64b32 70%);
+}
+
+.publication-card__meta {
+  margin-bottom: 28px;
+}
+
+.publication-detail {
+  padding-block: 56px 100px;
+}
+
+.publication-detail__heading {
+  max-width: 850px;
+  margin: 72px auto 48px;
+  text-align: center;
+}
+
+.publication-detail__heading h1 {
+  margin-block: 20px;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -0.05em;
+}
+
+.publication-detail__heading > p {
+  font-size: 1.2rem;
+}
+
+.publication-detail__visual {
+  height: 420px;
+  padding: 28px;
+  display: flex;
+  align-items: end;
+  border-radius: 2px 60px 2px 2px;
+  color: #fff;
+  background:
+    linear-gradient(120deg, rgb(32 40 34 / 92%), rgb(32 40 34 / 20%)),
+    radial-gradient(circle at 80% 20%, #d98468, transparent 36%), #6c8379;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.publication-detail__body {
+  max-width: 720px;
+  margin: 52px auto 0;
+}
+
+.publication-detail__body p {
+  margin-bottom: 24px;
+  font-size: 1.08rem;
+  line-height: 1.85;
+}
+
+.publication-empty {
+  padding-block: 120px;
+}
+
+@media (max-width: 860px) {
+  .public-showcase__header {
+    padding-block: 12px;
+    flex-wrap: wrap;
+  }
+
+  .public-showcase__nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+
+  .showcase-hero,
+  .corporate-hero {
+    min-height: 0;
+    padding-block: 56px;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .techpark-hero__visual {
+    width: min(100%, 480px);
+    margin-inline: auto;
+  }
+
+  .techpark-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-cta {
+    padding: 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .public-showcase__header,
+  .public-showcase__footer,
+  .showcase-section,
+  .showcase-hero,
+  .publication-hero,
+  .publication-detail {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .public-showcase__brand > span:last-child span:last-child {
+    display: none;
+  }
+
+  .showcase-hero__copy h1 {
+    font-size: 2.65rem;
+  }
+
+  .showcase-cta {
+    margin-bottom: 56px;
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .publication-card--lead {
+    min-height: 0;
+    padding-right: 0;
+    background: #fff;
+  }
+
+  .publication-detail__heading {
+    margin-top: 44px;
+    text-align: left;
+  }
+
+  .publication-detail__visual {
+    height: 280px;
+  }
+}

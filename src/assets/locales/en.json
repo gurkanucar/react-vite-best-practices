@@ -32,7 +32,13 @@
     "overview": "Overview",
     "apisSection": "API examples",
     "accountSection": "User",
-    "examplesSection": "Examples"
+    "examplesSection": "Examples",
+    "showcasesSection": "Landing pages",
+    "techParkLanding": "Technology park",
+    "dentalLanding": "Dental clinic",
+    "corporateLanding": "Corporate website",
+    "corporateNews": "Corporate news",
+    "corporateAnnouncements": "Announcements"
   },
   "shell": {
     "product": "RVBP Console",

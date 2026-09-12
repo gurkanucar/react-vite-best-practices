@@ -7,11 +7,17 @@ import {
   BoardPage,
   CalendarPage,
   ComponentsPage,
+  CorporateAnnouncementDetailPage,
+  CorporateAnnouncementsPage,
+  CorporateLandingPage,
+  CorporateNewsDetailPage,
+  CorporateNewsPage,
   CoursesPage,
   ExamPage,
   ExamResultsPage,
   FlashcardsPage,
   DashboardPage,
+  DentalClinicLandingPage,
   DocumentsPage,
   FilesPage,
   LandingPage,
@@ -31,6 +37,7 @@ import {
   ShopOrderPage,
   ShopProductPage,
   SurveyPage,
+  TechParkLandingPage,
   TourDetailPage,
   TourListPage,
 } from '@/router/LazyPages'
@@ -81,6 +88,69 @@ export const routes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <OtpPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/dental-clinic',
+    element: (
+      <RouteSuspense fullPage>
+        <DentalClinicLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/corporate',
+    element: (
+      <RouteSuspense fullPage>
+        <CorporateLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/corporate/news',
+    element: (
+      <RouteSuspense fullPage>
+        <CorporateNewsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/corporate/news/:slug',
+    element: (
+      <RouteSuspense fullPage>
+        <CorporateNewsDetailPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/corporate/announcements',
+    element: (
+      <RouteSuspense fullPage>
+        <CorporateAnnouncementsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/corporate/announcements/:slug',
+    element: (
+      <RouteSuspense fullPage>
+        <CorporateAnnouncementDetailPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -143,6 +213,69 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <SurveyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark',
+        element: (
+          <RouteSuspense>
+            <TechParkLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/dental-clinic',
+        element: (
+          <RouteSuspense>
+            <DentalClinicLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/corporate',
+        element: (
+          <RouteSuspense>
+            <CorporateLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/corporate/news',
+        element: (
+          <RouteSuspense>
+            <CorporateNewsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/corporate/news/:slug',
+        element: (
+          <RouteSuspense>
+            <CorporateNewsDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/corporate/announcements',
+        element: (
+          <RouteSuspense>
+            <CorporateAnnouncementsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/corporate/announcements/:slug',
+        element: (
+          <RouteSuspense>
+            <CorporateAnnouncementDetailPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

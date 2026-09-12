@@ -1,6 +1,7 @@
 import {
   AppstoreOutlined,
   ApiOutlined,
+  BankOutlined,
   BgColorsOutlined,
   BookOutlined,
   BulbOutlined,
@@ -16,13 +17,17 @@ import {
   FlagOutlined,
   FolderOpenOutlined,
   FormOutlined,
+  GlobalOutlined,
   HddOutlined,
   IdcardOutlined,
   LineChartOutlined,
+  MedicineBoxOutlined,
+  NotificationOutlined,
   PieChartOutlined,
   ProjectOutlined,
   ReadOutlined,
   RobotOutlined,
+  RocketOutlined,
   SafetyOutlined,
   SettingOutlined,
   ShopOutlined,
@@ -178,6 +183,38 @@ export function useNavigationSections(): NavigationSection[] {
         ],
       },
       {
+        key: 'showcases',
+        icon: <GlobalOutlined />,
+        label: messages.navigation.showcasesSection,
+        children: [
+          {
+            key: '/showcases/technopark',
+            icon: <RocketOutlined />,
+            label: messages.navigation.techParkLanding,
+          },
+          {
+            key: '/showcases/dental-clinic',
+            icon: <MedicineBoxOutlined />,
+            label: messages.navigation.dentalLanding,
+          },
+          {
+            key: '/showcases/corporate',
+            icon: <BankOutlined />,
+            label: messages.navigation.corporateLanding,
+          },
+          {
+            key: '/showcases/corporate/news',
+            icon: <ReadOutlined />,
+            label: messages.navigation.corporateNews,
+          },
+          {
+            key: '/showcases/corporate/announcements',
+            icon: <NotificationOutlined />,
+            label: messages.navigation.corporateAnnouncements,
+          },
+        ],
+      },
+      {
         key: 'configuration',
         icon: <SettingOutlined />,
         label: messages.navigation.configuration,
@@ -201,5 +238,9 @@ export function useNavigationSections(): NavigationSection[] {
 
 /** The section a route belongs to, so the menu can open it without being told. */
 export function sectionKeyFor(sections: NavigationSection[], routeKey: string): string | undefined {
-  return sections.find((section) => section.children.some((entry) => entry.key === routeKey))?.key
+  return sections.find((section) =>
+    section.children.some(
+      (entry) => entry.key === routeKey || routeKey.startsWith(`${entry.key}/`),
+    ),
+  )?.key
 }

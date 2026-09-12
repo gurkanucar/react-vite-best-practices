@@ -32,7 +32,13 @@
     "overview": "Genel bakış",
     "apisSection": "API örnekleri",
     "accountSection": "Kullanıcı",
-    "examplesSection": "Örnekler"
+    "examplesSection": "Örnekler",
+    "showcasesSection": "Landing sayfaları",
+    "techParkLanding": "Teknopark",
+    "dentalLanding": "Diş kliniği",
+    "corporateLanding": "Kurumsal web sitesi",
+    "corporateNews": "Kurumsal haberler",
+    "corporateAnnouncements": "Duyurular"
   },
   "shell": {
     "product": "RVBP Konsolu",
