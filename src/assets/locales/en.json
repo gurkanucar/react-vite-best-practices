@@ -28,7 +28,11 @@
     "coursesNav": "Courses",
     "examNav": "Exam",
     "flashcardsNav": "Flashcards",
-    "resultsNav": "My results"
+    "resultsNav": "My results",
+    "overview": "Overview",
+    "apisSection": "API examples",
+    "accountSection": "User",
+    "examplesSection": "Examples"
   },
   "shell": {
     "product": "RVBP Console",
@@ -1365,6 +1369,10 @@
     "noAttempts": "No attempt yet",
     "bestScore": "Best score",
     "attemptsCount": "Attempts",
-    "averageScore": "Average"
+    "averageScore": "Average",
+    "questionsLabel": "Questions",
+    "totalPoints": "Total points",
+    "passMarkTitle": "Pass mark",
+    "minutesShort": "min"
   }
 }

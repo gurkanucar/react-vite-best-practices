@@ -89,9 +89,15 @@ describe('admin application', () => {
       </AppThemeProvider>,
     )
 
-    expect(await screen.findByRole('menuitem', { name: /Workspace/ })).toHaveAttribute(
+    // The section holding the open page is the one expanded; the rest stay shut, which is
+    // what keeps nine sections readable.
+    expect(await screen.findByRole('menuitem', { name: /Overview/ })).toHaveAttribute(
       'aria-expanded',
       'true',
+    )
+    expect(screen.getByRole('menuitem', { name: /Workspace/ })).toHaveAttribute(
+      'aria-expanded',
+      'false',
     )
     expect(screen.getByRole('menuitem', { name: /Dashboard/ })).toBeVisible()
 

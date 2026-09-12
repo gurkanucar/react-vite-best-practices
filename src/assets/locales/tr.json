@@ -28,7 +28,11 @@
     "coursesNav": "Kurslar",
     "examNav": "Sınav",
     "flashcardsNav": "Bilgi kartları",
-    "resultsNav": "Sonuçlarım"
+    "resultsNav": "Sonuçlarım",
+    "overview": "Genel bakış",
+    "apisSection": "API örnekleri",
+    "accountSection": "Kullanıcı",
+    "examplesSection": "Örnekler"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -1365,6 +1369,10 @@
     "noAttempts": "Henüz deneme yok",
     "bestScore": "En iyi puan",
     "attemptsCount": "Deneme",
-    "averageScore": "Ortalama"
+    "averageScore": "Ortalama",
+    "questionsLabel": "Soru",
+    "totalPoints": "Toplam puan",
+    "passMarkTitle": "Geçme notu",
+    "minutesShort": "dk"
   }
 }

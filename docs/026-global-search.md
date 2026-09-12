@@ -9,6 +9,17 @@ The sidebar menu and the search read the same `useNavigationSections()`. A new r
 one place cannot go missing from the other, which is the failure this extraction prevents —
 previously the menu owned the list and nothing else could see it.
 
+It pays off again whenever the grouping changes. The sections were regrouped after one of
+them grew to thirteen entries — Overview, Workspace, E-commerce, Tours, Learning, API
+examples, User, Examples, Configuration — and the search's result headings followed without
+a line being changed here.
+
+With that many sections the sidebar is only readable when most of them are shut, so `Menu`
+takes controlled `openKeys`: the section holding the current page is opened and the rest are
+left as the reader left them. `sectionKeyFor()` answers which one that is, and the state is
+adjusted during render rather than in an effect, so a deep link or a jump from this search
+does not draw the section closed for a frame first.
+
 ## Entries, not an index
 
 ```ts

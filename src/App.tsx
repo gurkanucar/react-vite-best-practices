@@ -11,7 +11,7 @@ import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
 import { env } from '@/config/env'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
-import { useNavigationSections } from '@/router/navigation'
+import { sectionKeyFor, useNavigationSections } from '@/router/navigation'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
 import './App.css'
 
@@ -51,6 +51,28 @@ function App() {
       ? `/settings${location.hash === '#state' ? '#state' : '#appearance'}`
       : location.pathname
 
+  const activeSectionKey = sectionKeyFor(navigationSections, selectedNavigationKey)
+  const [openKeys, setOpenKeys] = useState<string[]>(() =>
+    activeSectionKey ? [activeSectionKey] : [],
+  )
+  const [lastSectionKey, setLastSectionKey] = useState(activeSectionKey)
+
+  /**
+   * With nine sections the menu is only readable when most of them are shut, so the one
+   * holding the current page is opened and the rest are left alone. Adjusting during
+   * render rather than in an effect keeps the section from drawing closed for a frame
+   * after a deep link or a jump from the header search.
+   */
+  if (lastSectionKey !== activeSectionKey) {
+    setLastSectionKey(activeSectionKey)
+
+    if (activeSectionKey) {
+      setOpenKeys((current) =>
+        current.includes(activeSectionKey) ? current : [...current, activeSectionKey],
+      )
+    }
+  }
+
   const navigation = (
     <>
       <Link
@@ -67,8 +89,9 @@ function App() {
         )}
       </Link>
       <Menu
-        defaultOpenKeys={['workspace', 'configuration']}
         mode="inline"
+        openKeys={openKeys}
+        onOpenChange={(keys) => setOpenKeys(keys)}
         selectedKeys={[selectedNavigationKey]}
         items={navigationSections.map((section) => ({
           key: section.key,

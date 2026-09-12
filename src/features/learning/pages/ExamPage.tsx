@@ -29,23 +29,21 @@ export function ExamPage() {
 
           <Row gutter={[16, 16]}>
             <Col xs={12} md={6}>
+              <Statistic title={messages.learning.questionsLabel} value={examQuestions.length} />
+            </Col>
+            <Col xs={12} md={6}>
+              {/* A string value rather than a suffix: "20 min" needs the space that
+                  `suffix` does not add, where "70%" is right without one. */}
               <Statistic
-                title={messages.learning.questionCount.replace('{count}', '')}
-                value={examQuestions.length}
+                title={messages.learning.duration}
+                value={`${exam.durationMinutes} ${messages.learning.minutesShort}`}
               />
             </Col>
             <Col xs={12} md={6}>
-              <Statistic
-                title={messages.learning.timeLeft}
-                value={exam.durationMinutes}
-                suffix="dk"
-              />
+              <Statistic title={messages.learning.totalPoints} value={totalPoints} />
             </Col>
             <Col xs={12} md={6}>
-              <Statistic title={messages.learning.score} value={totalPoints} />
-            </Col>
-            <Col xs={12} md={6}>
-              <Statistic title={messages.learning.passed} value={exam.passMark} suffix="%" />
+              <Statistic title={messages.learning.passMarkTitle} value={exam.passMark} suffix="%" />
             </Col>
           </Row>
 

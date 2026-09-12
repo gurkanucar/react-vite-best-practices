@@ -1,32 +1,36 @@
 import {
   AppstoreOutlined,
+  ApiOutlined,
   BgColorsOutlined,
+  BookOutlined,
+  BulbOutlined,
   CalendarOutlined,
   CloudServerOutlined,
+  CompassOutlined,
   DashboardOutlined,
   DatabaseOutlined,
+  ExperimentOutlined,
+  FileDoneOutlined,
   FilePdfOutlined,
+  FileTextOutlined,
   FlagOutlined,
   FolderOpenOutlined,
   FormOutlined,
-  FileDoneOutlined,
   HddOutlined,
-  LineChartOutlined,
   IdcardOutlined,
+  LineChartOutlined,
+  PieChartOutlined,
   ProjectOutlined,
   ReadOutlined,
   RobotOutlined,
   SafetyOutlined,
-  FileTextOutlined,
   SettingOutlined,
   ShopOutlined,
-  BookOutlined,
-  BulbOutlined,
-  CompassOutlined,
+  ShoppingOutlined,
   TagOutlined,
+  TeamOutlined,
   TrophyOutlined,
   UnorderedListOutlined,
-  ShoppingOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
@@ -49,6 +53,10 @@ export interface NavigationSection {
 /**
  * One definition of where the application can go, shared by the sidebar menu and the
  * header search so a new page cannot appear in one and be missing from the other.
+ *
+ * Sections are grouped by what a reader is trying to do rather than by which feature
+ * folder a page lives in: one flat list of everything grew to thirteen entries and stopped
+ * being scannable.
  */
 export function useNavigationSections(): NavigationSection[] {
   const messages = useMessages()
@@ -56,35 +64,23 @@ export function useNavigationSections(): NavigationSection[] {
   return useMemo(
     () => [
       {
+        key: 'overview',
+        icon: <PieChartOutlined />,
+        label: messages.navigation.overview,
+        children: [
+          { key: '/dashboard', icon: <DashboardOutlined />, label: messages.navigation.dashboard },
+          { key: '/analytics', icon: <LineChartOutlined />, label: messages.navigation.analytics },
+        ],
+      },
+      {
         key: 'workspace',
         icon: <FolderOpenOutlined />,
         label: messages.navigation.workspace,
         children: [
-          { key: '/dashboard', icon: <DashboardOutlined />, label: messages.navigation.dashboard },
-          { key: '/analytics', icon: <LineChartOutlined />, label: messages.navigation.analytics },
           { key: '/board', icon: <ProjectOutlined />, label: messages.navigation.board },
           { key: '/calendar', icon: <CalendarOutlined />, label: messages.navigation.calendar },
-          {
-            key: '/components',
-            icon: <AppstoreOutlined />,
-            label: messages.navigation.components,
-          },
-          { key: '/survey', icon: <FormOutlined />, label: messages.navigation.survey },
-          { key: '/posts', icon: <CloudServerOutlined />, label: messages.navigation.postsApi },
-          { key: '/products', icon: <ShoppingOutlined />, label: messages.navigation.productsApi },
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
-          { key: '/profile', icon: <IdcardOutlined />, label: messages.navigation.profile },
-          { key: '/account', icon: <SafetyOutlined />, label: messages.navigation.account },
-          ...(FEATURE_FLAGS.assistant
-            ? [
-                {
-                  key: '/assistant',
-                  icon: <RobotOutlined />,
-                  label: messages.navigation.assistant,
-                },
-              ]
-            : []),
         ],
       },
       {
@@ -142,6 +138,46 @@ export function useNavigationSections(): NavigationSection[] {
         ],
       },
       {
+        key: 'apis',
+        icon: <ApiOutlined />,
+        label: messages.navigation.apisSection,
+        children: [
+          { key: '/posts', icon: <CloudServerOutlined />, label: messages.navigation.postsApi },
+          { key: '/products', icon: <ShoppingOutlined />, label: messages.navigation.productsApi },
+        ],
+      },
+      {
+        key: 'account',
+        icon: <TeamOutlined />,
+        label: messages.navigation.accountSection,
+        children: [
+          { key: '/profile', icon: <IdcardOutlined />, label: messages.navigation.profile },
+          { key: '/account', icon: <SafetyOutlined />, label: messages.navigation.account },
+        ],
+      },
+      {
+        key: 'examples',
+        icon: <ExperimentOutlined />,
+        label: messages.navigation.examplesSection,
+        children: [
+          {
+            key: '/components',
+            icon: <AppstoreOutlined />,
+            label: messages.navigation.components,
+          },
+          { key: '/survey', icon: <FormOutlined />, label: messages.navigation.survey },
+          ...(FEATURE_FLAGS.assistant
+            ? [
+                {
+                  key: '/assistant',
+                  icon: <RobotOutlined />,
+                  label: messages.navigation.assistant,
+                },
+              ]
+            : []),
+        ],
+      },
+      {
         key: 'configuration',
         icon: <SettingOutlined />,
         label: messages.navigation.configuration,
@@ -161,4 +197,9 @@ export function useNavigationSections(): NavigationSection[] {
     ],
     [messages],
   )
+}
+
+/** The section a route belongs to, so the menu can open it without being told. */
+export function sectionKeyFor(sections: NavigationSection[], routeKey: string): string | undefined {
+  return sections.find((section) => section.children.some((entry) => entry.key === routeKey))?.key
 }
