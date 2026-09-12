@@ -52,6 +52,7 @@ Custom environment variable types are declared in `src/vite-env.d.ts`:
 interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_API_BASE_URL: string
+  readonly VITE_DUMMYJSON_API_BASE_URL: string
 }
 ```
 
@@ -62,10 +63,11 @@ import { env } from './config/env'
 
 console.log(env.appName)
 console.log(env.apiBaseUrl)
+console.log(env.dummyJsonApiBaseUrl)
 console.log(env.mode)
 ```
 
-The checked-in demo modes currently use JSONPlaceholder as `apiBaseUrl`. API features consume the normalized value through `src/lib/api/api-client.ts`, so switching to a real service only requires changing environment configuration rather than endpoint components.
+The checked-in demo modes use JSONPlaceholder as `apiBaseUrl` and DummyJSON as `dummyJsonApiBaseUrl`. API features consume normalized values through `src/lib/api/api-client.ts`, so switching services only requires changing environment configuration rather than endpoint components.
 
 `src/config/env.ts` validates required values immediately. A missing value therefore produces a clear startup error instead of failing later in an unrelated feature.
 
@@ -116,6 +118,7 @@ Add the raw variable to `src/vite-env.d.ts`:
 interface ImportMetaEnv {
   readonly VITE_APP_NAME: string
   readonly VITE_API_BASE_URL: string
+  readonly VITE_DUMMYJSON_API_BASE_URL: string
   readonly VITE_SUPPORT_EMAIL: string
 }
 ```
@@ -127,7 +130,8 @@ This catches misspelled environment keys during development. It does not validat
 Extend `RequiredEnvKey` in `src/config/env.ts`:
 
 ```ts
-type RequiredEnvKey = 'VITE_APP_NAME' | 'VITE_API_BASE_URL' | 'VITE_SUPPORT_EMAIL'
+type RequiredEnvKey =
+  'VITE_APP_NAME' | 'VITE_API_BASE_URL' | 'VITE_DUMMYJSON_API_BASE_URL' | 'VITE_SUPPORT_EMAIL'
 ```
 
 `EnvironmentSource` is derived from this union, so TypeScript now requires the new raw value when `createEnvironment` is called.
@@ -141,6 +145,7 @@ export function createEnvironment(source: EnvironmentSource) {
   return Object.freeze({
     appName: getRequiredEnv(source, 'VITE_APP_NAME'),
     apiBaseUrl: getRequiredEnv(source, 'VITE_API_BASE_URL'),
+    dummyJsonApiBaseUrl: getRequiredEnv(source, 'VITE_DUMMYJSON_API_BASE_URL'),
     supportEmail: getRequiredEnv(source, 'VITE_SUPPORT_EMAIL'),
     mode: source.MODE,
     isDevelopment: source.DEV,
@@ -159,6 +164,7 @@ Add the new required raw value to `validSource` in `src/config/env.test.ts`:
 const validSource: EnvironmentSource = {
   VITE_APP_NAME: 'React Vite Best Practices',
   VITE_API_BASE_URL: 'https://api.example.com',
+  VITE_DUMMYJSON_API_BASE_URL: 'https://dummy.example.com',
   VITE_SUPPORT_EMAIL: 'support@example.com',
   MODE: 'test',
   DEV: true,

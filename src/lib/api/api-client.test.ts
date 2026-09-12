@@ -55,4 +55,24 @@ describe('apiRequest', () => {
       }),
     )
   })
+
+  it('supports a feature-specific API base URL', async () => {
+    const fetchMock = vi.fn<typeof fetch>().mockResolvedValue(
+      new Response(JSON.stringify({ products: [] }), {
+        headers: { 'Content-Type': 'application/json' },
+        status: 200,
+      }),
+    )
+    vi.stubGlobal('fetch', fetchMock)
+
+    await apiRequest('/products', {
+      baseUrl: 'https://dummyjson.com/',
+      query: { limit: 10, skip: 20 },
+    })
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://dummyjson.com/products?limit=10&skip=20',
+      expect.any(Object),
+    )
+  })
 })

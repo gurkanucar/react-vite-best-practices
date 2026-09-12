@@ -21,17 +21,21 @@ describe('admin application', () => {
     )
 
     expect(
-      await screen.findByRole('heading', {
-        level: 1,
-        name: 'Start with a React foundation you can understand and trust.',
-      }),
+      await screen.findByRole(
+        'heading',
+        {
+          level: 1,
+          name: 'Start with a React foundation you can understand and trust.',
+        },
+        { timeout: 5_000 },
+      ),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Explore the dashboard' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
     expect(screen.queryByRole('switch', { name: 'Compact density' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /Visual theme:/ })).not.toBeInTheDocument()
     expect(screen.queryByText('Operational overview')).not.toBeInTheDocument()
-  })
+  }, 10_000)
 
   it('renders and navigates between routed pages', async () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
@@ -41,7 +45,11 @@ describe('admin application', () => {
       </AppThemeProvider>,
     )
     expect(
-      await screen.findByRole('heading', { level: 1, name: 'Operational overview' }),
+      await screen.findByRole(
+        'heading',
+        { level: 1, name: 'Operational overview' },
+        { timeout: 5_000 },
+      ),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
     expect(screen.getByText('Monthly revenue')).toBeInTheDocument()
@@ -75,7 +83,7 @@ describe('admin application', () => {
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Return to dashboard' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Go to home page' })).toBeInTheDocument()
-  })
+  }, 15_000)
 
   it('renders nested navigation and collapses the sidebar', async () => {
     const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })

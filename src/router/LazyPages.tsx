@@ -30,6 +30,10 @@ export const PostsPage = lazy(async () => ({
   default: (await import('@/features/posts/pages/PostsPage')).PostsPage,
 }))
 
+export const ProductsPage = lazy(async () => ({
+  default: (await import('@/features/products/pages/ProductsPage')).ProductsPage,
+}))
+
 export const RegisterPage = lazy(async () => ({
   default: (await import('@/pages/RegisterPage')).RegisterPage,
 }))

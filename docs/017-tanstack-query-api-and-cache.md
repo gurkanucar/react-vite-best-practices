@@ -1,6 +1,6 @@
 # 017 — TanStack Query, API Access, and Cache Keys
 
-This project uses TanStack Query v5 for remote server state and keeps each API domain in a feature-based package. The included `/posts` page uses the public JSONPlaceholder API to demonstrate queries, mutations, caching, and targeted invalidation.
+This project uses TanStack Query v5 for remote server state and keeps each API domain in a feature-based package. The `/posts` page uses JSONPlaceholder for queries, mutations, and invalidation; `/products` uses DummyJSON to demonstrate a second API origin and paginated cache entries.
 
 ## What belongs where
 
@@ -11,20 +11,24 @@ src/
 ├── lib/
 │   ├── api/api-client.ts
 │   └── query/query-client.ts
-└── features/posts/
-    ├── api/posts-api.ts
-    ├── model/post.ts
-    ├── mutations/use-create-post-mutation.ts
-    ├── pages/PostsPage.tsx
-    └── queries/
-        ├── post-query-keys.ts
-        └── post-query-options.ts
+└── features/
+    ├── posts/
+    │   ├── api/posts-api.ts
+    │   ├── model/post.ts
+    │   ├── mutations/use-create-post-mutation.ts
+    │   ├── pages/PostsPage.tsx
+    │   └── queries/
+    └── products/
+        ├── api/products-api.ts
+        ├── model/product.ts
+        ├── pages/ProductsPage.tsx
+        └── queries/
 ```
 
 - `lib/api` owns transport concerns shared by every feature: base URL, query strings, JSON bodies, response parsing, and HTTP errors.
 - `lib/query` owns application-wide TanStack Query defaults.
 - `app/providers` connects one stable `QueryClient` to React.
-- `features/posts` owns the post contract, endpoints, cache identities, operations, and UI.
+- Each package under `features` owns its domain contract, endpoints, cache identities, operations, and UI.
 - A feature may import shared `lib` code. Shared code must not import a feature.
 
 ## Installation and provider
@@ -58,12 +62,13 @@ return apiRequest<Post[]>('/posts', {
 })
 ```
 
-The client reads `env.apiBaseUrl`, omits empty query parameters, serializes JSON bodies, and throws `ApiError` for non-successful HTTP responses. Throwing is important because TanStack Query treats a rejected promise as an error. The `AbortSignal` supplied by a query function is passed through to `fetch`, allowing obsolete requests to be cancelled.
+The client defaults to `env.apiBaseUrl`, accepts a feature-specific `baseUrl`, omits empty query parameters, serializes JSON bodies, and throws `ApiError` for non-successful HTTP responses. Throwing is important because TanStack Query treats a rejected promise as an error. The `AbortSignal` supplied by a query function is passed through to `fetch`, allowing obsolete requests to be cancelled.
 
 `VITE_API_BASE_URL` is public browser configuration, not a secret. The demo environment files point to:
 
 ```dotenv
 VITE_API_BASE_URL=https://jsonplaceholder.typicode.com
+VITE_DUMMYJSON_API_BASE_URL=https://dummyjson.com
 ```
 
 Replace this value for a real backend without changing feature code.
@@ -191,7 +196,7 @@ pnpm check
 pnpm build
 ```
 
-Tests mock `fetch`; they must not depend on public internet availability or modify JSONPlaceholder.
+Tests mock `fetch`; they must not depend on public internet availability or modify either demo service.
 
 ## References
 
@@ -202,3 +207,4 @@ Tests mock `fetch`; they must not depend on public internet availability or modi
 - [Query invalidation](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation)
 - [Query functions and cancellation signals](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions)
 - [JSONPlaceholder guide](https://jsonplaceholder.typicode.com/guide/)
+- [DummyJSON products](https://dummyjson.com/docs/products)

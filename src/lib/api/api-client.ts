@@ -3,6 +3,7 @@ import { env } from '@/config/env'
 type QueryValue = boolean | number | string | null | undefined
 
 export interface ApiRequestOptions extends Omit<RequestInit, 'body'> {
+  baseUrl?: string
   body?: unknown
   query?: Record<string, QueryValue>
 }
@@ -19,10 +20,10 @@ export class ApiError extends Error {
   }
 }
 
-function createUrl(path: string, query?: Record<string, QueryValue>): string {
-  const baseUrl = env.apiBaseUrl.replace(/\/$/, '')
+function createUrl(path: string, baseUrl: string, query?: Record<string, QueryValue>): string {
+  const normalizedBaseUrl = baseUrl.replace(/\/$/, '')
   const normalizedPath = path.replace(/^\//, '')
-  const url = new URL(`${baseUrl}/${normalizedPath}`, window.location.origin)
+  const url = new URL(`${normalizedBaseUrl}/${normalizedPath}`, window.location.origin)
 
   for (const [key, value] of Object.entries(query ?? {})) {
     if (value !== undefined && value !== null) {
@@ -42,9 +43,9 @@ async function parseResponse(response: Response): Promise<unknown> {
 
 export async function apiRequest<T>(
   path: string,
-  { body, headers, query, ...init }: ApiRequestOptions = {},
+  { baseUrl = env.apiBaseUrl, body, headers, query, ...init }: ApiRequestOptions = {},
 ): Promise<T> {
-  const response = await fetch(createUrl(path, query), {
+  const response = await fetch(createUrl(path, baseUrl, query), {
     ...init,
     headers: {
       Accept: 'application/json',

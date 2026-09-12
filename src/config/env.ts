@@ -1,4 +1,4 @@
-type RequiredEnvKey = 'VITE_APP_NAME' | 'VITE_API_BASE_URL'
+type RequiredEnvKey = 'VITE_APP_NAME' | 'VITE_API_BASE_URL' | 'VITE_DUMMYJSON_API_BASE_URL'
 
 export type EnvironmentSource = Pick<ImportMetaEnv, RequiredEnvKey | 'MODE' | 'DEV' | 'PROD'>
 
@@ -16,6 +16,7 @@ export function createEnvironment(source: EnvironmentSource) {
   return Object.freeze({
     appName: getRequiredEnv(source, 'VITE_APP_NAME'),
     apiBaseUrl: getRequiredEnv(source, 'VITE_API_BASE_URL'),
+    dummyJsonApiBaseUrl: getRequiredEnv(source, 'VITE_DUMMYJSON_API_BASE_URL'),
     mode: source.MODE,
     isDevelopment: source.DEV,
     isProduction: source.PROD,

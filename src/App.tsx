@@ -8,6 +8,7 @@ import {
   FolderOpenOutlined,
   FormOutlined,
   SettingOutlined,
+  ShoppingOutlined,
 } from '@ant-design/icons'
 import { Avatar, Badge, Button, Flex, Layout, Menu, Tooltip, Typography } from 'antd'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
@@ -72,7 +73,12 @@ function App() {
           {
             key: '/posts',
             icon: <CloudServerOutlined />,
-            label: messages.navigation.apiData,
+            label: messages.navigation.postsApi,
+          },
+          {
+            key: '/products',
+            icon: <ShoppingOutlined />,
+            label: messages.navigation.productsApi,
           },
         ],
       },

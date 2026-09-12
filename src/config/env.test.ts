@@ -4,6 +4,7 @@ import { createEnvironment, type EnvironmentSource } from '@/config/env'
 const validSource: EnvironmentSource = {
   VITE_APP_NAME: 'React Vite Best Practices',
   VITE_API_BASE_URL: 'https://api.example.com',
+  VITE_DUMMYJSON_API_BASE_URL: 'https://dummy.example.com',
   MODE: 'test',
   DEV: true,
   PROD: false,
@@ -19,6 +20,7 @@ describe('createEnvironment', () => {
     expect(environment).toEqual({
       appName: 'React Vite Best Practices',
       apiBaseUrl: 'https://api.example.com',
+      dummyJsonApiBaseUrl: 'https://dummy.example.com',
       mode: 'test',
       isDevelopment: true,
       isProduction: false,

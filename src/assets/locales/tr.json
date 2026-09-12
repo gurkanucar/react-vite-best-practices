@@ -4,7 +4,8 @@
     "dashboard": "Kontrol paneli",
     "components": "Bileşenler",
     "survey": "Anket",
-    "apiData": "API verileri",
+    "postsApi": "JSONPlaceholder API",
+    "productsApi": "DummyJSON API",
     "configuration": "Yapılandırma",
     "appearance": "Görünüm",
     "persistedState": "Kalıcı durum"
@@ -183,6 +184,24 @@
     "titleColumn": "Başlık",
     "body": "İçerik",
     "user": "Kullanıcı"
+  },
+  "products": {
+    "title": "DummyJSON ürün API'si",
+    "description": "Sunucu taraflı pagination ve bağımsız TanStack Query cache ağacı kullanan ikinci bir API kaynağı.",
+    "listTitle": "Ürün kataloğu",
+    "demoNotice": "DummyJSON herkese açık sahte bir REST API'dir. Bu örnek yalnızca tabloda gösterilen alanları ister.",
+    "cacheKey": "Aktif cache key",
+    "invalidate": "Ürün cache'ini geçersiz kıl",
+    "invalidated": "Ürün listesi cache'i geçersiz kılındı ve yenilendi.",
+    "loadError": "Ürünler yüklenemedi",
+    "empty": "Hiç ürün dönmedi.",
+    "retry": "Tekrar dene",
+    "id": "ID",
+    "name": "Ürün",
+    "category": "Kategori",
+    "price": "Fiyat",
+    "rating": "Puan",
+    "stock": "Stok"
   },
   "notFound": {
     "title": "Sayfa bulunamadı",

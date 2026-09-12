@@ -4,7 +4,8 @@
     "dashboard": "Dashboard",
     "components": "Components",
     "survey": "Survey",
-    "apiData": "API data",
+    "postsApi": "JSONPlaceholder API",
+    "productsApi": "DummyJSON API",
     "configuration": "Configuration",
     "appearance": "Appearance",
     "persistedState": "Persisted state"
@@ -183,6 +184,24 @@
     "titleColumn": "Title",
     "body": "Body",
     "user": "User"
+  },
+  "products": {
+    "title": "DummyJSON products API",
+    "description": "A second API origin with server-side pagination and an independent TanStack Query cache tree.",
+    "listTitle": "Product catalog",
+    "demoNotice": "DummyJSON is a public fake REST API. This example requests only the fields displayed in the table.",
+    "cacheKey": "Active cache key",
+    "invalidate": "Invalidate product cache",
+    "invalidated": "The product-list cache was invalidated and refreshed.",
+    "loadError": "Products could not be loaded",
+    "empty": "No products were returned.",
+    "retry": "Try again",
+    "id": "ID",
+    "name": "Product",
+    "category": "Category",
+    "price": "Price",
+    "rating": "Rating",
+    "stock": "Stock"
   },
   "notFound": {
     "title": "Page not found",
