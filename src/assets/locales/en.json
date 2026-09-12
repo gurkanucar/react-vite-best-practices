@@ -66,7 +66,7 @@
     "qualityTitle": "Quality is executable",
     "qualityDescription": "Formatting, linting, tests, coverage, production builds, and commit checks are part of the workflow.",
     "uiTitle": "Real component system",
-    "uiDescription": "Ant Design components, official homepage presets, responsive layouts, and Ant Design Charts.",
+    "uiDescription": "Ant Design components, a gallery of visual themes, responsive layouts, and Recharts.",
     "footer": "Documented incrementally for teams that want to know how their foundation works."
   },
   "dashboard": {

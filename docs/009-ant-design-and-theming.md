@@ -131,7 +131,7 @@ The `AntApp` wrapper supplies context for components and APIs that need it, such
 
 ## Styling ownership
 
-The application does not target Ant Design's internal `.ant-*` classes. Application CSS is limited to structural page layout and the tiny color swatches in the theme picker. Component appearance comes from Ant Design or the selected official homepage preset. The dashboard chart is provided by Ant Design Charts rather than custom CSS.
+The application does not target Ant Design's internal `.ant-*` classes. Application CSS is limited to structural page layout and the tiny color swatches in the theme picker. Component appearance comes from Ant Design or the selected preset. The dashboard chart is drawn by Recharts, coloured from the design tokens, rather than by custom CSS.
 
 Responsive data layout fixes also stay on Ant Design's public API. The project uses responsive `Descriptions` columns, vertical key/value layout, explicit `Table` column widths, and horizontal table scrolling instead of overriding internal selectors. See document 015 for the rationale and reusable patterns.
 

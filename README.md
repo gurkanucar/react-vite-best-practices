@@ -60,12 +60,23 @@ filters and scroll position. Both read the same detail query.
   <img src="docs/images/posts-quick-edit.jpg" alt="The quick edit drawer" width="49%">
 </p>
 
+### Six visual themes, light and dark
+
+`/settings` switches the whole shell between six presets and remembers the choice. Five are
+adapted from the Ant Design website and are light-only, so their dark variant is derived by
+stripping their colours. Gurkan carries both palettes itself, because a theme whose
+character is its greys cannot survive having them stripped —
+[009](docs/009-ant-design-and-theming.md) explains the split. No preset touches the global
+stylesheet: every one of them is `ConfigProvider` tokens.
+
+![The theme gallery, with the Gurkan preset selected](docs/images/appearance.jpg)
+
 ### A broad Ant Design component catalog
 
 `/components` demonstrates commonly used Ant Design components across five groups, so a component
 can be seen working in this theme before it is reached for.
 
-![The component catalog's layout group](docs/images/component-catalog.jpg)
+![The component catalog's input group](docs/images/component-catalog.jpg)
 
 ### Ten chart types on one page
 
@@ -120,7 +131,10 @@ document adds up to and both the order and the invoice call it, so the two canno
 about tax on a discounted subtotal. [032](docs/032-ecommerce-screens.md) has the component
 map and the antd deprecations the console reported along the way.
 
-![The product detail page](docs/images/shop-product.jpg)
+<p>
+  <img src="docs/images/shop-product.jpg" alt="The product detail page" width="49%">
+  <img src="docs/images/shop-invoice.jpg" alt="The invoice" width="49%">
+</p>
 
 ### A tours section: card list and detail
 
@@ -138,9 +152,30 @@ prompts and as options. Partial credit, a countdown that hands the paper in, and
 question no code can score — [034](docs/034-exam-engine.md) covers the model and the two
 bugs the numbers found.
 
-![The exam](docs/images/exam.jpg)
+<p>
+  <img src="docs/images/learning-courses.jpg" alt="The course list" width="49%">
+  <img src="docs/images/exam.jpg" alt="A question whose options are pictures" width="49%">
+</p>
 
-### An admin shell with persistent preferences
+### A PDF viewer and a streamed chat
+
+`/documents` fetches a PDF as a blob through the same API client every other request uses,
+then renders it with pdf.js — so an authenticated endpoint would need no change. `/assistant`
+is built from Ant Design X: the answers are canned, but the streaming, the cancelling, and
+the rendering are real, and nothing leaves the browser.
+
+<p>
+  <img src="docs/images/documents.jpg" alt="The PDF viewer" width="49%">
+  <img src="docs/images/assistant.jpg" alt="The AI assistant" width="49%">
+</p>
+
+### A landing page and an admin shell
+
+`/` is a standalone marketing page and everything else lives behind the shell, so the two
+do not have to share a layout. Language, theme, colour mode, and density are stored by
+Zustand and survive a reload on both.
+
+![The landing page](docs/images/landing.jpg)
 
 ![The dashboard](docs/images/dashboard.jpg)
 
@@ -151,7 +186,7 @@ bugs the numbers found.
 - Source path aliases
 - TanStack Query for server state, caching, mutations, and targeted invalidation
 - MSW for a mocked API that runs beside the real one
-- Ant Design and persistent visual themes
+- Ant Design and six persistent visual themes, one of them carrying its own dark palette
 - A working catalog of the full Ant Design component set
 - Ten Recharts chart types themed from Ant Design's design tokens
 - A file browser with a folder tree, uploads, renames, and subtree deletes
