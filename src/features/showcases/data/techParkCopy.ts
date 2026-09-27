@@ -7,7 +7,7 @@ import type { LocalizedText } from '@/features/showcases/types'
 export const techParkCopy = {
   en: {
     tagline: 'Technology campus',
-    nav: ['Campus', 'Announcements', 'Programs', 'Companies', 'Contact'],
+    nav: ['About', 'Programs', 'Companies', 'Announcements', 'Team', 'Contact'],
     eyebrow: 'Build what comes next',
     title: 'Where ambitious technology companies become category leaders.',
     description:
@@ -95,7 +95,7 @@ export const techParkCopy = {
   },
   tr: {
     tagline: 'Teknoloji kampüsü',
-    nav: ['Kampüs', 'Duyurular', 'Programlar', 'Şirketler', 'İletişim'],
+    nav: ['Hakkımızda', 'Programlar', 'Şirketler', 'Duyurular', 'Ekibimiz', 'İletişim'],
     eyebrow: 'Geleceği burada kurun',
     title: 'İddialı teknoloji şirketlerinin kategori liderine dönüştüğü yer.',
     description:
@@ -193,13 +193,10 @@ export const techParkCopy = {
  * would drop the reader out of the example they were looking at.
  */
 export function techParkLinks(rootPath: string): { href: string; label: LocalizedText }[] {
-  const targets = [
-    rootPath,
-    `${rootPath}/announcements`,
-    `${rootPath}#section-1`,
-    `${rootPath}/companies`,
-    `${rootPath}#section-3`,
-  ]
+  // The brand is the way home, so the campus front page needs no link of its own.
+  const targets = ['about', 'programs', 'companies', 'announcements', 'team', 'contact'].map(
+    (page) => `${rootPath}/${page}`,
+  )
 
   return targets.map((href, index) => ({
     href,

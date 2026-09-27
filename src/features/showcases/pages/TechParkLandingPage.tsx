@@ -33,6 +33,7 @@ import {
   techParkCopy,
   techParkMonogram,
 } from '@/features/showcases/data'
+import type { CSSProperties } from 'react'
 import { localize } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
 import '../showcases.css'
@@ -49,6 +50,20 @@ const stripCompanies = residentCompanies.slice(0, 21)
 
 /** The notices list newest first, so the front page shows what the campus desk posted last. */
 const latestAnnouncements = campusAnnouncements.slice(0, 3)
+
+/**
+ * Sectors riding the rings. A ring is drawn once, by its first satellite; the others share
+ * its size and clock with an invisible ring of their own, so every badge moves in step.
+ */
+const orbitSatellites = [
+  { ring: 'inner', label: 'AI', start: '-40deg' },
+  { ring: 'inner', label: '5G', start: '140deg' },
+  { ring: 'middle', label: 'BIO', start: '80deg' },
+  { ring: 'middle', label: 'ROBO', start: '260deg' },
+  { ring: 'outer', label: 'IoT', start: '200deg' },
+  { ring: 'outer', label: 'AGRI', start: '320deg' },
+  { ring: 'outer', label: 'CHIP', start: '20deg' },
+]
 
 const capabilityIcons = [
   <ExperimentOutlined key="lab" />,
@@ -90,26 +105,45 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
           <Typography.Title>{text.title}</Typography.Title>
           <Typography.Paragraph>{text.description}</Typography.Paragraph>
           <Space wrap>
-            <Button type="primary" size="large" icon={<RocketOutlined />}>
+            <Button
+              type="primary"
+              size="large"
+              href={`${rootPath}/contact`}
+              icon={<RocketOutlined />}
+            >
               {text.primary}
             </Button>
-            <Button size="large" href="#section-1" icon={<ArrowRightOutlined />}>
+            <Button size="large" href={`${rootPath}/programs`} icon={<ArrowRightOutlined />}>
               {text.secondary}
             </Button>
           </Space>
         </div>
         <div
           className="techpark-hero__visual"
-          aria-label="Connected innovation campus illustration"
+          // Decoration: the sectors it shows are listed in words further down the page.
+          aria-hidden="true"
         >
-          <span className="techpark-orbit techpark-orbit--one" />
-          <span className="techpark-orbit techpark-orbit--two" />
+          {/*
+            One clock for every ring: they turn at the same speed, so the three sectors travel
+            together round the core. Each badge turns back by the same amount to stay upright.
+          */}
+          {orbitSatellites.map((satellite, index) => (
+            <span
+              key={satellite.label}
+              className={`techpark-orbit techpark-orbit--${satellite.ring}${
+                orbitSatellites.findIndex((other) => other.ring === satellite.ring) === index
+                  ? ''
+                  : ' techpark-orbit--ghost'
+              }`}
+              style={{ '--orbit-start': satellite.start } as CSSProperties}
+            >
+              <span className="techpark-satellite">{satellite.label}</span>
+            </span>
+          ))}
           <div className="techpark-core">
             <RocketOutlined />
             <strong>AURORA / 01</strong>
           </div>
-          <div className="techpark-signal">AI</div>
-          <div className="techpark-signal techpark-signal--lower">BIO</div>
         </div>
       </section>
 
@@ -196,7 +230,12 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
                 <div className="showcase-feature-card__icon">{capabilityIcons[index]}</div>
                 <Typography.Title level={4}>{title}</Typography.Title>
                 <Typography.Paragraph type="secondary">{description}</Typography.Paragraph>
-                <Button type="link" icon={<ArrowRightOutlined />} iconPlacement="end">
+                <Button
+                  type="link"
+                  href={`${rootPath}/programs`}
+                  icon={<ArrowRightOutlined />}
+                  iconPlacement="end"
+                >
                   {language === 'tr' ? 'Detayları gör' : 'See details'}
                 </Button>
               </Card>
@@ -275,7 +314,7 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
           <Typography.Paragraph className="techpark-cta__description">
             {text.ctaText}
           </Typography.Paragraph>
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" href={`${rootPath}/contact`}>
             {text.primary}
           </Button>
         </Space>

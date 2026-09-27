@@ -154,6 +154,22 @@ export const SurveyPage = lazy(async () => ({
   default: (await import('@/pages/SurveyPage')).SurveyPage,
 }))
 
+export const TechParkProgramsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkProgramsPage')).TechParkProgramsPage,
+}))
+
+export const TechParkTeamPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkTeamPage')).TechParkTeamPage,
+}))
+
+export const TechParkAboutPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkAboutPage')).TechParkAboutPage,
+}))
+
+export const TechParkContactPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkContactPage')).TechParkContactPage,
+}))
+
 export const TechParkAnnouncementDetailPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/PublicationPages'))
     .TechParkAnnouncementDetailPage,

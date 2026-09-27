@@ -43,11 +43,15 @@ import {
   ShopOrderPage,
   ShopProductPage,
   SurveyPage,
+  TechParkAboutPage,
   TechParkAnnouncementDetailPage,
   TechParkAnnouncementsPage,
   TechParkCompaniesPage,
+  TechParkContactPage,
   TechParkCompanyPage,
   TechParkLandingPage,
+  TechParkProgramsPage,
+  TechParkTeamPage,
   TourDetailPage,
   TourListPage,
 } from '@/router/LazyPages'
@@ -126,6 +130,42 @@ export const routes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <TechParkCompanyPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/programs',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkProgramsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/team',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkTeamPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/about',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkAboutPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/contact',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkContactPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -292,6 +332,42 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <TechParkCompanyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/programs',
+        element: (
+          <RouteSuspense>
+            <TechParkProgramsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/team',
+        element: (
+          <RouteSuspense>
+            <TechParkTeamPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/about',
+        element: (
+          <RouteSuspense>
+            <TechParkAboutPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/contact',
+        element: (
+          <RouteSuspense>
+            <TechParkContactPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

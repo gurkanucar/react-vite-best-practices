@@ -36,12 +36,6 @@
   }
 }
 
-@keyframes showcase-orbit {
-  to {
-    rotate: 1turn;
-  }
-}
-
 .public-showcase main {
   animation: showcase-page-enter 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -125,6 +119,57 @@
 .public-showcase__footer {
   padding-block: 40px;
   border-top: 1px solid #e7e9ec;
+}
+
+.techpark-footer {
+  padding-top: 16px;
+}
+
+.techpark-footer__brand {
+  font-size: 1.05rem;
+}
+
+.techpark-footer h5 {
+  margin-bottom: 14px;
+}
+
+.techpark-footer__links {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  list-style: none;
+}
+
+.techpark-footer a,
+.techpark-footer__contact > span {
+  color: #637381;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.techpark-footer a:hover {
+  color: var(--ant-color-primary);
+}
+
+.techpark-footer__contact {
+  display: grid;
+  gap: 12px;
+  font-style: normal;
+}
+
+.techpark-footer__contact .anticon {
+  margin-right: 6px;
+  color: var(--ant-color-primary);
+}
+
+.techpark-footer__newsletter {
+  flex-wrap: nowrap;
+}
+
+.techpark-footer__newsletter .ant-form-item:first-child {
+  flex: 1;
+  margin-inline-end: 8px;
 }
 
 .showcase-hero {
@@ -258,10 +303,15 @@
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  overflow: hidden;
   border: 1px solid #ced8fa;
   border-radius: 42% 58% 62% 38% / 47% 38% 62% 53%;
   background: linear-gradient(145deg, #e8ecff, #fff 52%, #dce8ff);
+  --orbit-period: 36s;
+}
+
+/* The rings and the core share the grid's one cell, so they are all centred on each other. */
+.techpark-hero__visual > * {
+  grid-area: 1 / 1;
 }
 
 .techpark-core {
@@ -270,14 +320,31 @@
   width: 158px;
   height: 158px;
   display: grid;
-  place-items: center;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
   border-radius: 50%;
   color: #fff;
   background: #182a69;
   box-shadow: 0 22px 50px rgb(32 57 145 / 28%);
 }
 
-.techpark-core > span {
+/* A slow pulse going out from the core: the campus sending, the rings receiving. */
+.techpark-core::before,
+.techpark-core::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  border: 1px solid rgb(49 87 213 / 45%);
+  border-radius: 50%;
+  animation: techpark-pulse 4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.techpark-core::after {
+  animation-delay: 2s;
+}
+
+.techpark-core > .anticon {
   font-size: 38px;
 }
 
@@ -287,41 +354,80 @@
 }
 
 .techpark-orbit {
-  position: absolute;
-  width: 72%;
-  height: 72%;
-  border: 1px solid #7990eb;
+  position: relative;
+  aspect-ratio: 1;
+  border: 1px solid rgb(121 144 235 / 70%);
   border-radius: 50%;
-  transform: rotate(28deg);
-  animation: showcase-orbit 34s linear infinite;
+  animation: techpark-orbit var(--orbit-period) linear infinite;
 }
 
-.techpark-orbit--two {
-  width: 92%;
-  height: 45%;
-  transform: rotate(-34deg);
-  animation-direction: reverse;
-  animation-duration: 42s;
+.techpark-orbit--inner {
+  width: 46%;
 }
 
-.techpark-signal {
+.techpark-orbit--middle {
+  width: 64%;
+  border-style: dashed;
+}
+
+.techpark-orbit--outer {
+  width: 82%;
+  border-color: rgb(121 144 235 / 40%);
+}
+
+.techpark-orbit.techpark-orbit--ghost {
+  border-color: transparent;
+}
+
+.techpark-satellite {
   position: absolute;
-  top: 18%;
-  right: 18%;
-  width: 64px;
-  height: 64px;
+  top: 0;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
   display: grid;
   place-items: center;
   border: 1px solid #fff;
-  border-radius: 18px;
+  border-radius: 16px;
   color: #3157d5;
-  background: rgb(255 255 255 / 80%);
+  background: rgb(255 255 255 / 88%);
   box-shadow: 0 12px 30px rgb(32 57 145 / 18%);
+  font-size: 13px;
   font-weight: 800;
+  animation: techpark-orbit-upright var(--orbit-period) linear infinite;
 }
 
-.techpark-signal--lower {
-  inset: auto auto 16% 12%;
+@keyframes techpark-orbit {
+  from {
+    rotate: var(--orbit-start);
+  }
+
+  to {
+    rotate: calc(var(--orbit-start) + 1turn);
+  }
+}
+
+@keyframes techpark-orbit-upright {
+  from {
+    rotate: calc(-1 * var(--orbit-start));
+  }
+
+  to {
+    rotate: calc(-1 * var(--orbit-start) - 1turn);
+  }
+}
+
+@keyframes techpark-pulse {
+  from {
+    opacity: 0.9;
+    scale: 1;
+  }
+
+  to {
+    opacity: 0;
+    scale: 1.9;
+  }
 }
 
 .techpark-metrics {
@@ -647,8 +753,26 @@
   margin-top: 36px;
 }
 
+.techpark-updates {
+  padding-block: 48px 56px;
+}
+
 .techpark-updates .ant-typography + .ant-row {
-  margin-top: 28px;
+  margin-top: 24px;
+}
+
+/* A teaser of the list, not the list: a flatter cover and tighter type keep it to one glance. */
+.techpark-updates :is(.announcement-card__cover-wrap, .announcement-card__placeholder) {
+  aspect-ratio: 16 / 6;
+}
+
+.techpark-updates .announcement-card__content {
+  padding: 20px;
+}
+
+.techpark-updates .announcement-card__content > h3 {
+  margin: 14px 0 6px;
+  font-size: 1.2rem;
 }
 
 .techpark-site .showcase-cta {
@@ -995,8 +1119,16 @@
   color: #fff;
 }
 
-.announcement-overview h3 {
+.announcement-overview h3.ant-typography {
   margin: 6px 0 0;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.announcement-overview .ant-card .ant-typography:first-child {
+  font-weight: 600;
 }
 
 .announcement-card {
@@ -1046,7 +1178,8 @@
 }
 
 .announcement-card__content {
-  height: 100%;
+  /* Whatever the cover leaves, not the whole card: `height: 100%` added the cover's height again. */
+  flex: 1;
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -1238,6 +1371,19 @@
     margin-inline: auto;
   }
 
+  .techpark-satellite {
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+
+  .techpark-core {
+    width: 120px;
+    height: 120px;
+  }
+
   .techpark-steps {
     grid-template-columns: 1fr;
   }
@@ -1343,4 +1489,321 @@
     :is(.publication-card__cover, .announcement-card__cover, .publication-detail__cover) {
     transform: none;
   }
+}
+
+/* ---- Site header: the page you are on, the flag, the theme switch ---- */
+.public-showcase__nav .ant-btn.is-active {
+  color: var(--ant-color-primary);
+  background: color-mix(in srgb, var(--ant-color-primary) 10%, transparent);
+}
+
+.public-showcase__actions {
+  margin-left: auto;
+}
+
+.public-showcase__nav + .public-showcase__actions {
+  margin-left: 0;
+}
+
+.public-showcase__flag {
+  width: 20px;
+  height: auto;
+  display: block;
+  border-radius: 2px;
+}
+
+/* ---- Tech park inner pages ---- */
+.techpark-about-hero {
+  padding-block: 72px 16px;
+}
+
+.techpark-about-hero h1 {
+  max-width: 820px;
+}
+
+.techpark-about-hero__description {
+  max-width: 720px;
+  color: var(--ant-color-text-secondary);
+  font-size: 1.1rem;
+}
+
+.techpark-about-section {
+  padding-block: 40px;
+}
+
+.techpark-about-card,
+.techpark-program-card,
+.techpark-member {
+  height: 100%;
+  border: 1px solid #e3e8f7;
+  box-shadow: none;
+}
+
+.techpark-about-card h3,
+.techpark-program-card h3 {
+  margin-block: 16px 12px;
+}
+
+.techpark-program-card h3 {
+  margin: 0;
+}
+
+.techpark-program-card .ant-card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.techpark-program-card .ant-btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.techpark-program-card__facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+}
+
+.techpark-program-card__facts > div {
+  display: contents;
+}
+
+.techpark-program-card__facts dt {
+  color: var(--ant-color-text-secondary);
+  white-space: nowrap;
+}
+
+.techpark-program-card__facts dd {
+  margin: 0;
+}
+
+.techpark-goals {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 32px;
+  list-style: none;
+}
+
+.techpark-goals li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.techpark-goals .anticon {
+  margin-top: 4px;
+  color: var(--ant-color-primary);
+}
+
+.techpark-goals--compact {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.techpark-duties {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+}
+
+.techpark-equality {
+  background: var(--ant-color-bg-container);
+}
+
+.campus-map {
+  width: 100%;
+  height: 420px;
+  z-index: 0;
+  border: 1px solid #e3e8f7;
+  border-radius: 20px;
+}
+
+.techpark-contact-page__map {
+  margin-top: 24px;
+}
+
+.techpark-contact-page__details {
+  display: block;
+}
+
+.techpark-contact-page__details h3 {
+  margin-top: 0;
+}
+
+.techpark-contact-detail {
+  padding-block: 14px;
+  display: flex;
+  gap: 14px;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+.techpark-contact-detail:last-child {
+  border-bottom: 0;
+}
+
+.techpark-contact-detail__icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--ant-color-primary);
+  background: color-mix(in srgb, var(--ant-color-primary) 10%, transparent);
+}
+
+.techpark-member {
+  text-align: center;
+}
+
+.techpark-member .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.techpark-member h4 {
+  margin: 4px 0 0;
+}
+
+.techpark-member .ant-typography:last-of-type {
+  margin-bottom: 0;
+}
+
+.techpark-member__avatar {
+  color: #fff;
+  background: linear-gradient(135deg, #3157d5, #00b8d9);
+  font-weight: 700;
+}
+
+.techpark-member--lead {
+  border-color: color-mix(in srgb, var(--ant-color-primary) 40%, transparent);
+}
+
+.techpark-team__row {
+  margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+  .techpark-goals {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-map {
+    height: 320px;
+  }
+}
+
+/* ---- Dark side of the tech park ---- */
+.techpark-site.public-showcase--dark {
+  color: #e6ebff;
+  background: #0b1022;
+}
+
+.public-showcase--dark .public-showcase__header {
+  border-bottom-color: #1f2850;
+}
+
+.public-showcase--dark .public-showcase__footer {
+  border-top-color: #1f2850;
+}
+
+.public-showcase--dark .techpark-footer a,
+.public-showcase--dark .techpark-footer__contact > span {
+  color: #9aa6cf;
+}
+
+.public-showcase--dark .techpark-footer a:hover {
+  color: #8ea6ff;
+}
+
+.public-showcase--dark .showcase-feature-card__icon {
+  background: color-mix(in srgb, var(--ant-color-primary) 22%, transparent);
+}
+
+.public-showcase--dark .techpark-hero::before {
+  background: radial-gradient(circle, rgb(73 105 225 / 30%), transparent 68%);
+}
+
+.public-showcase--dark .techpark-hero__visual {
+  border-color: #2a3563;
+  background: linear-gradient(145deg, #141c3d, #0e1430 52%, #18214a);
+}
+
+.public-showcase--dark .techpark-core {
+  background: #3157d5;
+  box-shadow: 0 22px 50px rgb(49 87 213 / 35%);
+}
+
+.public-showcase--dark .techpark-satellite {
+  border-color: #2a3563;
+  color: #b9c8ff;
+  background: rgb(19 26 51 / 92%);
+}
+
+:is(
+  .public-showcase--dark .techpark-metrics .ant-card,
+  .public-showcase--dark .techpark-stat,
+  .public-showcase--dark .techpark-share,
+  .public-showcase--dark .techpark-strip__chip,
+  .public-showcase--dark .techpark-company,
+  .public-showcase--dark .techpark-company-detail__card,
+  .public-showcase--dark .techpark-about-card,
+  .public-showcase--dark .techpark-program-card,
+  .public-showcase--dark .techpark-member,
+  .public-showcase--dark .announcement-card,
+  .public-showcase--dark .campus-map
+) {
+  border-color: #242e5a;
+  box-shadow: none;
+}
+
+.public-showcase--dark .techpark-strip__chip {
+  background: #131a33;
+}
+
+.public-showcase--dark .techpark-program {
+  background: #131a33;
+}
+
+.public-showcase--dark .techpark-contact__row .anticon {
+  background: color-mix(in srgb, var(--ant-color-primary) 22%, transparent);
+}
+
+.announcement-site.public-showcase--dark {
+  background: linear-gradient(180deg, #111838 0, #0b1022 620px), #0b1022;
+}
+
+.public-showcase--dark .announcement-card__placeholder {
+  color: #8ea6ff;
+  background-color: #141c3d;
+}
+
+.public-showcase--dark .publication-attachment {
+  border-bottom-color: #1f2850;
+}
+
+/* The map tiles are light; dimmed, they stop glaring out of a dark page. */
+.public-showcase--dark .campus-map .leaflet-tile-pane {
+  filter: brightness(0.75) contrast(1.1) saturate(0.8);
+}
+
+.techpark-footer__subscribed {
+  color: var(--ant-color-success);
+  font-weight: 600;
+}
+
+.techpark-contact-page {
+  padding-block: 32px 64px;
+}
+
+.techpark-contact-page__map .campus-map {
+  height: 360px;
 }

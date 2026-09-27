@@ -1,7 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   campusAnnouncements,
   companySectorRoles,
@@ -13,9 +13,16 @@ import {
   TechParkAnnouncementDetailPage,
   TechParkAnnouncementsPage,
 } from '@/features/showcases/pages/PublicationPages'
+import { TechParkAboutPage } from '@/features/showcases/pages/TechParkAboutPage'
 import { TechParkCompaniesPage } from '@/features/showcases/pages/TechParkCompaniesPage'
+import { TechParkContactPage } from '@/features/showcases/pages/TechParkContactPage'
+import { TechParkTeamPage } from '@/features/showcases/pages/TechParkTeamPage'
 import { TechParkCompanyPage } from '@/features/showcases/pages/TechParkCompanyPage'
 import { TechParkLandingPage } from '@/features/showcases/pages/TechParkLandingPage'
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 describe('showcase pages', () => {
   it('offers a clean standalone preview from the admin version', () => {
@@ -344,5 +351,82 @@ describe('showcase pages', () => {
       ),
     ).toHaveClass('publication-hero__description')
     expect(screen.getAllByRole('link', { name: /View announcement$/ })).toHaveLength(6)
+  })
+
+  it('marks the page being shown in the site header', () => {
+    // The header only lays its links out in a row on a wide screen.
+    vi.spyOn(window, 'matchMedia').mockImplementation(
+      (query) =>
+        ({
+          matches: true,
+          media: query,
+          onchange: null,
+          addListener: () => undefined,
+          removeListener: () => undefined,
+          addEventListener: () => undefined,
+          removeEventListener: () => undefined,
+          dispatchEvent: () => false,
+        }) as MediaQueryList,
+    )
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/team']}>
+        <TechParkTeamPage standalone />
+      </MemoryRouter>,
+    )
+
+    const nav = screen.getByRole('navigation', { name: 'Website' })
+    expect(within(nav).getByRole('link', { name: 'Team' })).toHaveAttribute('aria-current', 'page')
+    expect(within(nav).getByRole('link', { name: 'About' })).not.toHaveAttribute('aria-current')
+    expect(screen.getByRole('heading', { name: 'Board of Directors' })).toBeVisible()
+    expect(screen.getByText('Chairman of the Board')).toBeVisible()
+    expect(screen.getByText('Venture Office Coordinator')).toBeVisible()
+  })
+
+  it('sends the contact form only once it is complete', async () => {
+    const user = userEvent.setup()
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/contact']}>
+        <TechParkContactPage standalone />
+      </MemoryRouter>,
+    )
+
+    await user.click(screen.getByRole('button', { name: /Send message/ }))
+    expect(await screen.findByText('Please tell us your name.')).toBeInTheDocument()
+    expect(screen.getByText('We can only answer if you agree.')).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Full name'), 'Ada')
+    await user.type(screen.getByLabelText('Email'), 'ada@example.com')
+    await user.click(screen.getByRole('combobox', { name: 'Topic' }))
+    await user.click(await screen.findByTitle('Office or lab space'))
+    await user.type(screen.getByLabelText('Message'), 'We need a small lab for our sensor team.')
+    await user.click(screen.getByRole('checkbox'))
+    await user.click(screen.getByRole('button', { name: /Send message/ }))
+
+    expect(await screen.findByText('Message sent')).toBeInTheDocument()
+  })
+
+  it('puts the campus on a map on the about page', () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/preview/technopark/about']}>
+        <TechParkAboutPage standalone />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('heading', { name: 'Our vision' })).toBeVisible()
+    expect(container.querySelector('.leaflet-container')).toBeInTheDocument()
+  })
+
+  it('opens the announcement from its cover instead of enlarging it', () => {
+    render(
+      <MemoryRouter initialEntries={['/preview/technopark/announcements']}>
+        <TechParkAnnouncementsPage standalone />
+      </MemoryRouter>,
+    )
+
+    const withCover = campusAnnouncements.find((item) => item.coverImage)!
+    const cover = document.querySelector(
+      `a.announcement-card__cover-wrap[href$="/${withCover.slug}"]`,
+    )
+    expect(cover).toHaveAttribute('href', `/preview/technopark/announcements/${withCover.slug}`)
   })
 })

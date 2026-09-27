@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { PublicSiteShell } from '@/features/showcases/components/PublicSiteShell'
+import { TechParkFooter } from '@/features/showcases/components/TechParkFooter'
 import { techParkCopy, techParkLinks } from '@/features/showcases/data'
 
 interface TechParkSiteShellProps {
@@ -18,6 +19,9 @@ export function TechParkSiteShell({ children, rootPath, className }: TechParkSit
       className={className ? `techpark-site ${className}` : 'techpark-site'}
       primary="#3157d5"
       links={techParkLinks(rootPath)}
+      homeHref={rootPath}
+      colorModeToggle
+      footer={<TechParkFooter rootPath={rootPath} />}
     >
       {children}
     </PublicSiteShell>

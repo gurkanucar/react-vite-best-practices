@@ -3,15 +3,14 @@ import {
   BellOutlined,
   CalendarOutlined,
   PaperClipOutlined,
-  PictureOutlined,
 } from '@ant-design/icons'
-import { Button, Card, Flex, Image, Space, Tag, Typography } from 'antd'
+import { Button, Card, Flex, Tag, Typography } from 'antd'
 import { formatPublicationDate, localize, type Publication } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
 
 const labels = {
-  en: { view: 'View announcement', previewImage: 'Preview image' },
-  tr: { view: 'Duyuruyu görüntüle', previewImage: 'Görseli büyüt' },
+  en: { view: 'View announcement' },
+  tr: { view: 'Duyuruyu görüntüle' },
 }
 
 export function PublicationTags({ publication }: { publication: Publication }) {
@@ -36,19 +35,20 @@ export function AnnouncementCard({ item, detailPath }: { item: Publication; deta
   return (
     <Card className="announcement-card">
       {item.coverImage ? (
-        <Image
-          rootClassName="announcement-card__cover-wrap"
-          className="announcement-card__cover"
-          src={item.coverImage.src}
-          alt={localize(item.coverImage.alt, language)}
-          preview={{
-            cover: (
-              <Space size={6}>
-                <PictureOutlined /> {text.previewImage}
-              </Space>
-            ),
-          }}
-        />
+        // The cover is a way into the announcement, not a gallery; the detail page enlarges it.
+        <a
+          href={detailPath}
+          className="announcement-card__cover-wrap"
+          tabIndex={-1}
+          aria-hidden="true"
+        >
+          <img
+            className="announcement-card__cover"
+            src={item.coverImage.src}
+            alt=""
+            loading="lazy"
+          />
+        </a>
       ) : (
         <div className="announcement-card__placeholder" aria-hidden="true">
           <BellOutlined />
