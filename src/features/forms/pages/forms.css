@@ -1,0 +1,513 @@
+/* Form builder: list, builder, fill and responses pages. Colours come from antd's CSS
+   variables, so the pages follow the light and dark admin themes without their own rules. */
+
+/* List */
+.form-list__toolbar {
+  margin-bottom: 16px;
+}
+
+.form-list__filters {
+  flex: 1 1 420px;
+}
+
+.form-list__search {
+  max-width: 320px;
+}
+
+.form-list__card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-list__card > .ant-card-body {
+  flex: 1;
+}
+
+.form-list__title {
+  min-width: 0;
+}
+
+.form-list__title h4.ant-typography {
+  margin: 0;
+}
+
+.form-list__title:hover h4.ant-typography {
+  color: var(--ant-color-primary);
+}
+
+.form-list__body .ant-typography {
+  margin-bottom: 0;
+}
+
+.form-list__meta {
+  margin-top: auto;
+  font-size: 13px;
+}
+
+/* Builder: top bar */
+.form-builder__bar {
+  margin-bottom: 16px;
+}
+
+.form-builder__bar > .ant-card-body {
+  padding: 12px 16px;
+}
+
+.form-builder__title {
+  min-width: 0;
+  flex: 1 1 280px;
+}
+
+.form-builder__unsaved {
+  flex: none;
+  white-space: nowrap;
+}
+
+.form-builder__title h4.ant-typography {
+  margin: 0;
+  min-width: 0;
+}
+
+/* Builder: three panels. The side panels stay in view while the canvas scrolls. */
+.form-builder {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+}
+
+.form-builder__side {
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+}
+
+.form-builder__inspector .ant-tabs-nav {
+  margin-bottom: 12px;
+}
+
+.form-builder__mobile-actions {
+  margin-bottom: 12px;
+}
+
+.form-builder__preview {
+  margin-inline: auto;
+}
+
+/* Palette */
+.form-palette__hint {
+  font-size: 13px;
+}
+
+.form-palette__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+@media (max-width: 991px) {
+  .form-palette__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.form-palette__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  font: inherit;
+  text-align: start;
+  color: var(--ant-color-text);
+  cursor: grab;
+  touch-action: none;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius);
+  background: var(--ant-color-bg-container);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.form-palette__item:hover,
+.form-palette__item:focus-visible {
+  border-color: var(--ant-color-primary);
+  background: var(--ant-color-primary-bg);
+  outline: none;
+}
+
+.form-palette__item--dragging {
+  opacity: 0.4;
+}
+
+.form-palette__item--overlay {
+  width: 220px;
+  cursor: grabbing;
+  border-color: var(--ant-color-primary);
+  box-shadow: var(--ant-box-shadow-secondary);
+}
+
+.form-palette__icon {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  color: var(--ant-color-primary);
+  border-radius: 6px;
+  background: var(--ant-color-primary-bg);
+}
+
+/* Canvas */
+.form-canvas {
+  min-height: 420px;
+  padding: 28px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-bg-container);
+  transition: border-color 0.15s;
+}
+
+.form-canvas--over {
+  border-color: var(--ant-color-primary);
+  border-style: dashed;
+}
+
+.form-canvas__header {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ant-color-split);
+}
+
+.form-canvas__header h3.ant-typography {
+  margin: 0 0 4px;
+}
+
+.form-canvas__empty {
+  padding: 48px 0;
+  border: 2px dashed var(--ant-color-border);
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.form-canvas__field {
+  position: relative;
+  padding: 10px 14px 14px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-bg-container);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.form-canvas__field:hover {
+  border-color: var(--ant-color-border);
+}
+
+.form-canvas__field:focus-visible {
+  outline: 2px solid var(--ant-color-primary);
+  outline-offset: 2px;
+}
+
+.form-canvas__field--selected,
+.form-canvas__field--selected:hover {
+  border-color: var(--ant-color-primary);
+  box-shadow: 0 0 0 3px var(--ant-color-primary-bg);
+}
+
+.form-canvas__field--dragging {
+  z-index: 2;
+  opacity: 0.85;
+  box-shadow: var(--ant-box-shadow-secondary);
+}
+
+.form-canvas__field--section {
+  background: var(--ant-color-fill-quaternary);
+}
+
+.form-canvas__section-title.ant-typography {
+  margin: 4px 0;
+}
+
+.form-canvas__bar {
+  min-height: 28px;
+  margin-bottom: 4px;
+}
+
+.form-canvas__select {
+  padding: 2px 6px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--ant-color-text-secondary);
+  cursor: pointer;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.form-canvas__select:hover,
+.form-canvas__select:focus-visible {
+  color: var(--ant-color-primary);
+  background: var(--ant-color-primary-bg);
+  outline: none;
+}
+
+/* The quick actions appear on the field being pointed at or worked on. */
+.form-canvas__actions {
+  margin-inline-start: auto;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.form-canvas__field:hover .form-canvas__actions,
+.form-canvas__field:focus-within .form-canvas__actions,
+.form-canvas__field--selected .form-canvas__actions {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .form-canvas__actions {
+    opacity: 1;
+  }
+}
+
+.form-canvas__handle {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 28px;
+  padding: 0;
+  color: var(--ant-color-text-tertiary);
+  cursor: grab;
+  touch-action: none;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.form-canvas__handle:hover {
+  color: var(--ant-color-text);
+  background: var(--ant-color-fill-tertiary);
+}
+
+.form-canvas__preview {
+  pointer-events: none;
+}
+
+.form-canvas__item.ant-form-item {
+  margin-bottom: 0;
+}
+
+.form-canvas__drop-line {
+  margin: 2px 0 8px;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ant-color-primary);
+  border: 2px dashed var(--ant-color-primary);
+  border-radius: var(--ant-border-radius);
+  background: var(--ant-color-primary-bg);
+}
+
+.form-canvas__submit {
+  margin-top: 20px;
+  pointer-events: none;
+}
+
+.form-inspector__type {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* NPS buttons wrap on a narrow screen rather than overflow it. */
+.form-nps .ant-radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.form-nps .ant-radio-button-wrapper {
+  min-width: 40px;
+  text-align: center;
+  border-radius: var(--ant-border-radius) !important;
+  border-inline-start-width: 1px;
+}
+
+.form-nps .ant-radio-button-wrapper::before {
+  display: none;
+}
+
+/* Fill */
+.form-fill__toolbar {
+  max-width: 760px;
+  margin: 0 auto 12px;
+}
+
+.form-fill__card {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.form-fill__card h2.ant-typography {
+  margin: 12px 0 4px;
+}
+
+.form-fill__description {
+  margin-bottom: 20px;
+}
+
+.form-fill__notice {
+  margin-bottom: 20px;
+}
+
+.form-renderer__section {
+  margin: 28px 0 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ant-color-split);
+}
+
+.form-renderer__section h4.ant-typography {
+  margin: 0 0 4px;
+}
+
+/* Responses */
+.form-responses__stats {
+  margin-bottom: 8px;
+}
+
+.form-responses__heading.ant-typography {
+  margin: 24px 0 12px;
+}
+
+.form-responses__row {
+  cursor: pointer;
+}
+
+.form-summary {
+  height: 100%;
+}
+
+.form-summary__bar .ant-progress {
+  margin: 0;
+}
+
+.form-summary__nps .ant-statistic-content {
+  color: var(--ant-color-primary);
+  font-weight: 700;
+}
+
+.form-summary__answers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.form-summary__answers li {
+  padding: 8px 12px;
+  border-radius: var(--ant-border-radius);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.form-summary__answers .form-summary__more {
+  color: var(--ant-color-text-tertiary);
+  background: transparent;
+}
+
+/* Sharing */
+.form-share__link {
+  margin-top: 6px;
+}
+
+.form-share__open.ant-btn {
+  padding-inline: 0;
+}
+
+.form-share__qr {
+  padding: 16px;
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-fill-quaternary);
+}
+
+/* A QR code only scans dark on light, so its tile stays white in dark mode too. */
+.form-share__qr .ant-qrcode {
+  padding: 8px;
+  border-radius: var(--ant-border-radius);
+  background: #fff;
+}
+
+.form-share__qr-text {
+  flex: 1 1 200px;
+}
+
+/* The public page: the form alone, centred, the way a respondent expects to see it. */
+.public-form {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 16px 16px 40px;
+  color: var(--ant-color-text);
+  background:
+    radial-gradient(circle at 50% -20%, var(--ant-color-primary-bg) 0, transparent 60%),
+    var(--ant-color-bg-layout);
+}
+
+.public-form__controls {
+  max-width: 720px;
+  margin: 0 auto 16px;
+}
+
+.public-form__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.public-form__card.ant-card {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: var(--ant-box-shadow-tertiary);
+}
+
+.public-form__card > .ant-card-body {
+  padding: 32px clamp(20px, 5vw, 40px) 36px;
+}
+
+.public-form__accent {
+  height: 6px;
+  margin: -32px calc(-1 * clamp(20px, 5vw, 40px)) 28px;
+  background: var(--ant-color-primary);
+}
+
+.public-form__title.ant-typography {
+  margin: 0 0 8px;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  line-height: 1.2;
+}
+
+.public-form__description.ant-typography {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  white-space: pre-line;
+}
+
+.public-form__required.ant-typography {
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+.public-form__footer {
+  font-size: 12px;
+}

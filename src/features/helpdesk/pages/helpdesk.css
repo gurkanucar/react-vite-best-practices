@@ -1,0 +1,400 @@
+/* Queue */
+.helpdesk-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.helpdesk-stat .ant-statistic-content {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.helpdesk-queue__tabs {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.helpdesk-queue__tabs .ant-tabs-nav {
+  margin-bottom: 0;
+}
+
+.helpdesk-count .ant-badge-count {
+  color: var(--ant-color-text-secondary);
+  box-shadow: none;
+}
+
+.helpdesk-filters {
+  margin-block: 16px;
+}
+
+.helpdesk-filters__search {
+  flex: 1 1 260px;
+  max-width: 380px;
+}
+
+.helpdesk-filters__select {
+  min-width: 150px;
+}
+
+.helpdesk-bulk {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-primary-bg);
+}
+
+.helpdesk-subject {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.helpdesk-subject__id {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.helpdesk-subject__link {
+  font-weight: 600;
+  color: var(--ant-color-text);
+}
+
+.helpdesk-subject__link:hover {
+  color: var(--ant-color-primary);
+}
+
+.helpdesk-subject__meta {
+  font-size: 12px;
+}
+
+.helpdesk-requester__text {
+  display: grid;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.helpdesk-requester__text .ant-typography {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.helpdesk-requester__text .ant-typography-secondary {
+  font-size: 12px;
+}
+
+.helpdesk-requester__avatar {
+  flex: none;
+  color: var(--ant-color-primary);
+  background: var(--ant-color-primary-bg);
+}
+
+.helpdesk-unassigned {
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.helpdesk-tag {
+  margin-inline-end: 0;
+}
+
+.helpdesk-priority-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  vertical-align: 1px;
+  background: currentcolor;
+}
+
+.helpdesk-sla {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.helpdesk-row--breached > td:first-child {
+  box-shadow: inset 3px 0 0 var(--ant-color-error);
+}
+
+.helpdesk-cards {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.helpdesk-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.helpdesk-empty {
+  padding-block: 40px;
+}
+
+/* Ticket */
+.helpdesk-ticket__header {
+  margin-bottom: 16px;
+}
+
+.helpdesk-ticket__subject.ant-typography {
+  margin: 0;
+}
+
+.helpdesk-ticket__id {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.helpdesk-thread {
+  display: grid;
+  gap: 16px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.helpdesk-message {
+  display: flex;
+  gap: 12px;
+}
+
+.helpdesk-message__avatar {
+  flex: none;
+}
+
+.helpdesk-message__bubble {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-bg-container);
+}
+
+.helpdesk-message--reply .helpdesk-message__bubble {
+  background: var(--ant-color-primary-bg);
+  border-color: var(--ant-color-primary-border);
+}
+
+/* A note is the team talking to itself; the tint says so before anyone reads a word. */
+.helpdesk-message--note .helpdesk-message__bubble {
+  background: var(--ant-color-warning-bg);
+  border-color: var(--ant-color-warning-border);
+  border-style: dashed;
+}
+
+.helpdesk-message__header {
+  margin-bottom: 6px;
+}
+
+.helpdesk-message__header .ant-tag {
+  margin: 0;
+}
+
+.helpdesk-message__time {
+  font-size: 12px;
+}
+
+.helpdesk-message__body.ant-typography {
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+
+.helpdesk-attachment {
+  margin: 0;
+}
+
+.helpdesk-composer {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.helpdesk-composer--note {
+  background: var(--ant-color-warning-bg);
+  border-color: var(--ant-color-warning-border);
+}
+
+.helpdesk-composer__canned {
+  min-width: 220px;
+}
+
+.helpdesk-composer__field {
+  margin: 0;
+}
+
+.helpdesk-property {
+  display: grid;
+  gap: 4px;
+}
+
+.helpdesk-requester__email {
+  display: block;
+  margin-top: 12px;
+  word-break: break-all;
+}
+
+.helpdesk-requester__history {
+  display: block;
+  margin-top: 8px;
+}
+
+.helpdesk-history {
+  display: grid;
+  /* A grid track sizes to its content by default, which would let a long subject overflow. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.helpdesk-history li {
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.helpdesk-history a {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.helpdesk-history .ant-tag {
+  flex: none;
+  margin: 0;
+}
+
+.helpdesk-sla-row {
+  display: grid;
+  gap: 4px;
+}
+
+.helpdesk-sla-row__due,
+.helpdesk-activity__time {
+  font-size: 12px;
+}
+
+.helpdesk-activity.ant-timeline {
+  margin-bottom: -16px;
+}
+
+.helpdesk-sla-preview {
+  margin-bottom: 24px;
+}
+
+/* History: the whole life of a ticket on one line, grouped by day. */
+.helpdesk-history-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Four filters do not fit a phone; they scroll sideways rather than getting cut off. */
+.helpdesk-history-filters {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.helpdesk-history-day .ant-divider {
+  margin-block: 16px 20px;
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+}
+
+.helpdesk-history-day .ant-timeline {
+  margin-bottom: -16px;
+}
+
+.helpdesk-history-icon {
+  display: inline-grid;
+  place-items: center;
+  font-size: 15px;
+}
+
+.helpdesk-history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.helpdesk-history-item__change .helpdesk-tag {
+  margin: 0;
+}
+
+/* A quoted message reads as a quote, so it is not mistaken for the entry's own words. */
+.helpdesk-history-item__excerpt.ant-typography {
+  margin: 2px 0 0;
+  padding-inline-start: 10px;
+  border-inline-start: 3px solid var(--ant-color-border-secondary);
+}
+
+.helpdesk-history-item--message .helpdesk-history-item__excerpt.ant-typography {
+  white-space: pre-line;
+}
+
+.helpdesk-history-item__meta {
+  font-size: 12px;
+}
+
+.helpdesk-history-item__meta .ant-typography {
+  font-size: 12px;
+}
+
+.helpdesk-history-item__jump.ant-btn {
+  height: auto;
+  padding: 0;
+  font-size: 12px;
+}
+
+.helpdesk-history-item__ticket {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.helpdesk-recent.ant-timeline {
+  margin-top: 8px;
+}
+
+/* The message the history jumped to flashes once, so the eye finds it in a long thread. */
+.helpdesk-message--focused .helpdesk-message__bubble {
+  animation: helpdesk-focus 1.6s ease-out;
+}
+
+@keyframes helpdesk-focus {
+  0%,
+  40% {
+    box-shadow: 0 0 0 3px var(--ant-color-primary-border);
+  }
+
+  100% {
+    box-shadow: 0 0 0 3px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .helpdesk-message--focused .helpdesk-message__bubble {
+    animation: none;
+    box-shadow: 0 0 0 3px var(--ant-color-primary-border);
+  }
+}

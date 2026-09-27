@@ -44,7 +44,10 @@
     "manageNews": "Manage news",
     "manageAnnouncements": "Manage announcements",
     "chat": "Chat",
-    "todos": "Tasks"
+    "todos": "Tasks",
+    "operationsSection": "Operations",
+    "helpdesk": "Helpdesk",
+    "formBuilder": "Form builder"
   },
   "shell": {
     "product": "RVBP Console",

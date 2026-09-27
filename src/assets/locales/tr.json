@@ -44,7 +44,10 @@
     "manageNews": "Haber yönetimi",
     "manageAnnouncements": "Duyuru yönetimi",
     "chat": "Sohbet",
-    "todos": "Görevler"
+    "todos": "Görevler",
+    "operationsSection": "Operasyon",
+    "helpdesk": "Destek talepleri",
+    "formBuilder": "Form oluşturucu"
   },
   "shell": {
     "product": "RVBP Konsolu",

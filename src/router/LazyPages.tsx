@@ -14,6 +14,38 @@ export const AssistantPage = lazy(async () => ({
   default: (await import('@/features/assistant/pages/AssistantPage')).AssistantPage,
 }))
 
+export const FormBuilderPage = lazy(async () => ({
+  default: (await import('@/features/forms/pages/FormBuilderPage')).FormBuilderPage,
+}))
+
+export const FormFillPage = lazy(async () => ({
+  default: (await import('@/features/forms/pages/FormFillPage')).FormFillPage,
+}))
+
+export const FormListPage = lazy(async () => ({
+  default: (await import('@/features/forms/pages/FormListPage')).FormListPage,
+}))
+
+export const PublicFormPage = lazy(async () => ({
+  default: (await import('@/features/forms/pages/PublicFormPage')).PublicFormPage,
+}))
+
+export const FormResponsesPage = lazy(async () => ({
+  default: (await import('@/features/forms/pages/FormResponsesPage')).FormResponsesPage,
+}))
+
+export const HelpdeskListPage = lazy(async () => ({
+  default: (await import('@/features/helpdesk/pages/HelpdeskListPage')).HelpdeskListPage,
+}))
+
+export const HelpdeskTicketPage = lazy(async () => ({
+  default: (await import('@/features/helpdesk/pages/HelpdeskTicketPage')).HelpdeskTicketPage,
+}))
+
+export const HelpdeskNewTicketPage = lazy(async () => ({
+  default: (await import('@/features/helpdesk/pages/HelpdeskNewTicketPage')).HelpdeskNewTicketPage,
+}))
+
 export const BoardPage = lazy(async () => ({
   default: (await import('@/features/board/pages/BoardPage')).BoardPage,
 }))

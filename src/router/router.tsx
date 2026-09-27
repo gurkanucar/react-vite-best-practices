@@ -9,6 +9,14 @@ import {
   CalendarPage,
   ChatPage,
   TodoPage,
+  FormBuilderPage,
+  FormFillPage,
+  FormListPage,
+  FormResponsesPage,
+  PublicFormPage,
+  HelpdeskListPage,
+  HelpdeskNewTicketPage,
+  HelpdeskTicketPage,
   ComponentsPage,
   CorporateContactPage,
   CorporateLandingPage,
@@ -200,6 +208,16 @@ export const routes: RouteObject[] = [
     errorElement: standaloneErrorElement,
   },
   {
+    // What respondents open from a shared link or QR code: the form, without the admin shell.
+    path: '/f/:formId',
+    element: (
+      <RouteSuspense fullPage>
+        <PublicFormPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
     path: '/preview/restaurant',
     element: (
       <RouteSuspense fullPage>
@@ -316,6 +334,78 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <ComponentsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'helpdesk',
+        element: (
+          <RouteSuspense>
+            <HelpdeskListPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'helpdesk/new',
+        element: (
+          <RouteSuspense>
+            <HelpdeskNewTicketPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'helpdesk/:ticketId',
+        element: (
+          <RouteSuspense>
+            <HelpdeskTicketPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'forms',
+        element: (
+          <RouteSuspense>
+            <FormListPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'forms/new',
+        element: (
+          <RouteSuspense>
+            <FormBuilderPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'forms/:formId/edit',
+        element: (
+          <RouteSuspense>
+            <FormBuilderPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'forms/:formId/fill',
+        element: (
+          <RouteSuspense>
+            <FormFillPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'forms/:formId/responses',
+        element: (
+          <RouteSuspense>
+            <FormResponsesPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

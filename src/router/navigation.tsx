@@ -40,6 +40,9 @@ import {
   TeamOutlined,
   TrophyOutlined,
   UnorderedListOutlined,
+  BuildOutlined,
+  CustomerServiceOutlined,
+  ToolOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
@@ -92,6 +95,19 @@ export function useNavigationSections(): NavigationSection[] {
           { key: '/chat', icon: <MessageOutlined />, label: messages.navigation.chat },
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
+        ],
+      },
+      {
+        key: 'operations',
+        icon: <ToolOutlined />,
+        label: messages.navigation.operationsSection,
+        children: [
+          {
+            key: '/helpdesk',
+            icon: <CustomerServiceOutlined />,
+            label: messages.navigation.helpdesk,
+          },
+          { key: '/forms', icon: <BuildOutlined />, label: messages.navigation.formBuilder },
         ],
       },
       {
