@@ -48,6 +48,10 @@ html[data-theme='dark'] .landing-shell {
   max-width: 680px;
 }
 
+.landing-feature {
+  height: 100%;
+}
+
 .landing-footer {
   display: flex;
   align-items: center;

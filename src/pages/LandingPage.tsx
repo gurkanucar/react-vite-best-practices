@@ -132,6 +132,7 @@ export function LandingPage() {
           {features.map((feature) => (
             <Col xs={24} md={8} key={feature.title}>
               <Card
+                className="landing-feature"
                 title={
                   <Space>
                     {feature.icon}

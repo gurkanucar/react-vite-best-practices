@@ -167,10 +167,6 @@ html[data-theme='dark'] .admin-shell::before {
   min-width: 0;
 }
 
-.language-select {
-  width: 128px;
-}
-
 .admin-content {
   width: 100%;
   max-width: 1560px;
