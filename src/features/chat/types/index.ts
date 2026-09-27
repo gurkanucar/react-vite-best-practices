@@ -45,6 +45,23 @@ export interface ChatAttachment {
   poster?: string
 }
 
+export interface PollOption {
+  id: string
+  text: ChatText
+}
+
+/** A WhatsApp-style poll: a question, up to twelve options, one answer or several. */
+export interface ChatPoll {
+  question: ChatText
+  options: PollOption[]
+  /** Several options may be ticked; otherwise a new vote replaces the old one. */
+  multiple: boolean
+  /** Option id to the ids of the people who picked it. */
+  votes: Record<string, string[]>
+}
+
+export const MAX_POLL_OPTIONS = 12
+
 /** Sent → delivered to the phone → opened. Only ever set on the user's own messages. */
 export type DeliveryStatus = 'sent' | 'delivered' | 'read'
 
@@ -57,6 +74,7 @@ export interface ChatMessage {
   text?: ChatText
   images?: string[]
   attachment?: ChatAttachment
+  poll?: ChatPoll
   replyToId?: string
   /** Emoji to the ids of the people who reacted with it. */
   reactions?: Record<string, string[]>
@@ -175,4 +193,32 @@ export function toggleReaction(
 export function formatDuration(seconds: number): string {
   const whole = Math.max(0, Math.round(seconds))
   return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, '0')}`
+}
+
+/**
+ * Ticks or unticks an option for a voter. A single-choice poll moves the voter's one vote;
+ * picking the option they already have takes it back, as WhatsApp does.
+ */
+export function castVote(poll: ChatPoll, optionId: string, voterId: string): ChatPoll {
+  const had = poll.votes[optionId]?.includes(voterId) ?? false
+  const votes: Record<string, string[]> = {}
+
+  for (const option of poll.options) {
+    const voters = poll.votes[option.id] ?? []
+    const keep =
+      poll.multiple || option.id === optionId ? voters : voters.filter((id) => id !== voterId)
+    votes[option.id] =
+      option.id === optionId
+        ? had
+          ? keep.filter((id) => id !== voterId)
+          : [...keep, voterId]
+        : keep
+  }
+
+  return { ...poll, votes }
+}
+
+/** How many different people have voted, which is what the percentages are shares of. */
+export function pollVoters(poll: ChatPoll): number {
+  return new Set(Object.values(poll.votes).flat()).size
 }

@@ -337,6 +337,20 @@ export function createSeedConversations(): Conversation[] {
           },
         }),
         message({
+          authorId: 'mehmet',
+          sentAt: at(0, '11:21'),
+          poll: {
+            question: { en: 'Where shall we eat?', tr: 'Nerede yiyelim?' },
+            multiple: false,
+            options: [
+              { id: 'lunch-new', text: { en: 'The new place', tr: 'Yeni yer' } },
+              { id: 'lunch-burger', text: { en: 'Burgers', tr: 'Hamburger' } },
+              { id: 'lunch-home', text: { en: 'Home-style food', tr: 'Ev yemekleri' } },
+            ],
+            votes: { 'lunch-new': ['mehmet', 'ayse'], 'lunch-burger': ['can'], 'lunch-home': [] },
+          },
+        }),
+        message({
           authorId: 'ayse',
           sentAt: at(0, '11:22'),
           text: { en: 'I’m in', tr: 'Ben varım' },
@@ -443,6 +457,27 @@ export function createSeedConversations(): Conversation[] {
             tr: 'Harika, duyuruyu takvimle açarım o zaman.',
           },
           reactions: { '🔥': ['zeynep', 'emre'] },
+        }),
+        message({
+          authorId: 'zeynep',
+          sentAt: at(2, '11:45'),
+          poll: {
+            question: {
+              en: 'Which days work for the release retro?',
+              tr: 'Sürüm retrosu için hangi günler uygun?',
+            },
+            multiple: true,
+            options: [
+              { id: 'retro-mon', text: { en: 'Monday', tr: 'Pazartesi' } },
+              { id: 'retro-tue', text: { en: 'Tuesday', tr: 'Salı' } },
+              { id: 'retro-thu', text: { en: 'Thursday', tr: 'Perşembe' } },
+            ],
+            votes: {
+              'retro-mon': ['zeynep', 'emre'],
+              'retro-tue': ['zeynep', 'burak', 'selin', ME],
+              'retro-thu': ['emre'],
+            },
+          },
         }),
         mine({
           sentAt: at(2, '12:00'),

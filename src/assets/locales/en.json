@@ -1484,6 +1484,25 @@
     "noCommonGroups": "No groups in common.",
     "notMember": "You can’t send messages to this group because you’re no longer a member.",
     "viewProfile": "View profile",
-    "membersTitle": "{count} members"
+    "membersTitle": "{count} members",
+    "poll": "Poll",
+    "createPoll": "Create poll",
+    "question": "Question",
+    "questionPlaceholder": "Ask a question",
+    "questionRequired": "Write the question.",
+    "options": "Options",
+    "optionPlaceholder": "Option {index}",
+    "optionRequired": "Fill in or remove this option.",
+    "addOption": "Add option",
+    "removeOption": "Remove option",
+    "allowMultiple": "Allow multiple answers",
+    "selectOne": "Select one",
+    "selectMany": "Select one or more",
+    "viewVotes": "View votes",
+    "pollResults": "Poll results",
+    "votes": "{count} votes",
+    "vote": "1 vote",
+    "noVotes": "No votes yet",
+    "duplicateOptions": "Options must be different."
   }
 }

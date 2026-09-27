@@ -11,6 +11,7 @@ import dayjs from 'dayjs'
 import { useRef, useState, type ComponentRef, type CSSProperties } from 'react'
 import { AttachmentView } from '@/features/chat/components/AttachmentView'
 import { ChatAvatar } from '@/features/chat/components/ChatAvatar'
+import { PollView } from '@/features/chat/components/PollView'
 import {
   authorName,
   contactById,
@@ -42,6 +43,7 @@ interface MessageListProps {
   /** A group member's name or avatar opens their profile. */
   onShowAuthor: (authorId: string) => void
   onReact: (messageId: string, emoji: string) => void
+  onVote: (messageId: string, optionId: string) => void
   onDelete: (messageId: string) => void
 }
 
@@ -74,6 +76,7 @@ export function MessageList({
   onReply,
   onShowAuthor,
   onReact,
+  onVote,
   onDelete,
 }: MessageListProps) {
   const messages = useMessages()
@@ -145,6 +148,14 @@ export function MessageList({
         )}
 
         {message.images && <PhotoGrid images={message.images} />}
+
+        {message.poll && (
+          <PollView
+            poll={message.poll}
+            readOnly={!conversation.memberIds.includes(ME)}
+            onVote={(optionId) => onVote(message.id, optionId)}
+          />
+        )}
 
         {message.attachment && (
           <AttachmentView
@@ -280,7 +291,12 @@ export function MessageList({
     const { message, first, last } = entry
     const mine = message.authorId === ME
     const text = message.text ? localize(message.text, language) : ''
-    const bare = isEmojiOnly(text) && !message.images && !message.attachment && !message.replyToId
+    const bare =
+      isEmojiOnly(text) &&
+      !message.images &&
+      !message.attachment &&
+      !message.poll &&
+      !message.replyToId
 
     return {
       key: message.id,

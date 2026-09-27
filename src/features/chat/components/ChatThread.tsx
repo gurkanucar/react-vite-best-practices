@@ -34,6 +34,7 @@ interface ChatThreadProps {
   onBack?: () => void
   onSend: (draft: Draft) => void
   onReact: (messageId: string, emoji: string) => void
+  onVote: (messageId: string, optionId: string) => void
   onDelete: (messageId: string) => void
   onClear: () => void
   onToggle: (flag: 'muted' | 'pinned') => void
@@ -76,6 +77,7 @@ export function ChatThread({
   onBack,
   onSend,
   onReact,
+  onVote,
   onDelete,
   onClear,
   onToggle,
@@ -192,6 +194,7 @@ export function ChatThread({
         onReply={setReplyTo}
         onShowAuthor={(authorId) => showDetails(authorId)}
         onReact={onReact}
+        onVote={onVote}
         onDelete={(messageId) => {
           if (replyTo?.id === messageId) setReplyTo(null)
           onDelete(messageId)

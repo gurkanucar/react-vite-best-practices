@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import {
   buildTimeline,
+  castVote,
   isEmojiOnly,
   ME,
+  pollVoters,
   toggleReaction,
   type ChatMessage,
+  type ChatPoll,
 } from '@/features/chat/types'
 
 function msg(id: string, authorId: string, sentAt: string, extra: Partial<ChatMessage> = {}) {
@@ -81,5 +84,34 @@ describe('toggleReaction', () => {
     expect(replaced).toEqual({ '👍': ['can'], '❤️': [ME] })
 
     expect(toggleReaction(replaced, '❤️', ME)).toEqual({ '👍': ['can'] })
+  })
+})
+
+describe('castVote', () => {
+  const poll = (multiple: boolean): ChatPoll => ({
+    question: 'Dinner?',
+    multiple,
+    options: [
+      { id: 'a', text: 'Pizza' },
+      { id: 'b', text: 'Sushi' },
+    ],
+    votes: { a: ['can'], b: [] },
+  })
+
+  it('moves a single-choice vote and takes it back on a second tap', () => {
+    const first = castVote(poll(false), 'a', ME)
+    expect(first.votes).toEqual({ a: ['can', ME], b: [] })
+
+    const moved = castVote(first, 'b', ME)
+    expect(moved.votes).toEqual({ a: ['can'], b: [ME] })
+
+    expect(castVote(moved, 'b', ME).votes).toEqual({ a: ['can'], b: [] })
+  })
+
+  it('keeps every tick in a multiple-choice poll and counts each voter once', () => {
+    const both = castVote(castVote(poll(true), 'a', ME), 'b', ME)
+
+    expect(both.votes).toEqual({ a: ['can', ME], b: [ME] })
+    expect(pollVoters(both)).toBe(2)
   })
 })

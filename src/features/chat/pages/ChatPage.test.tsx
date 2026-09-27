@@ -129,4 +129,22 @@ describe('ChatPage', () => {
     expect(within(sent).getByText(/Yes, as a “removed” event/)).toBeInTheDocument()
     expect(screen.queryByText('Replying to Mehmet Kaya')).not.toBeInTheDocument()
   })
+
+  it('moves a single-choice vote and shows who voted for what', async () => {
+    renderPage()
+    openChat('Frontend team')
+
+    const poll = screen.getByText('Where shall we eat?').closest('.chat-poll') as HTMLElement
+    fireEvent.click(within(poll).getByRole('radio', { name: 'Burgers' }))
+    expect(within(poll).getByRole('radio', { name: 'Burgers' })).toBeChecked()
+
+    fireEvent.click(within(poll).getByRole('radio', { name: 'The new place' }))
+    expect(within(poll).getByRole('radio', { name: 'Burgers' })).not.toBeChecked()
+
+    fireEvent.click(within(poll).getByRole('button', { name: /View votes/ }))
+    const results = await screen.findByRole('dialog')
+    // Mehmet and Ayşe from the seed, then the user.
+    expect(within(results).getByText('3 votes')).toBeInTheDocument()
+    expect(within(results).getByText('You')).toBeInTheDocument()
+  })
 })

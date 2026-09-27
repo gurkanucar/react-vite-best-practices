@@ -1484,6 +1484,25 @@
     "noCommonGroups": "Ortak grup yok.",
     "notMember": "Artık bu grubun üyesi olmadığınız için mesaj gönderemezsiniz.",
     "viewProfile": "Profili görüntüle",
-    "membersTitle": "{count} üye"
+    "membersTitle": "{count} üye",
+    "poll": "Anket",
+    "createPoll": "Anket oluştur",
+    "question": "Soru",
+    "questionPlaceholder": "Bir soru sorun",
+    "questionRequired": "Soruyu yazın.",
+    "options": "Seçenekler",
+    "optionPlaceholder": "{index}. seçenek",
+    "optionRequired": "Bu seçeneği doldurun ya da kaldırın.",
+    "addOption": "Seçenek ekle",
+    "removeOption": "Seçeneği kaldır",
+    "allowMultiple": "Birden fazla cevaba izin ver",
+    "selectOne": "Birini seçin",
+    "selectMany": "Bir veya daha fazlasını seçin",
+    "viewVotes": "Oyları görüntüle",
+    "pollResults": "Anket sonuçları",
+    "votes": "{count} oy",
+    "vote": "1 oy",
+    "noVotes": "Henüz oy yok",
+    "duplicateOptions": "Seçenekler birbirinden farklı olmalı."
   }
 }

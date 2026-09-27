@@ -44,6 +44,8 @@ export function initials(name: string): string {
 export function messagePreview(message: ChatMessage, messages: Messages, language: Language) {
   if (message.text) return localize(message.text, language)
 
+  if (message.poll) return `📊 ${localize(message.poll.question, language)}`
+
   const { attachment } = message
   if (attachment?.kind === 'voice') {
     return `🎤 ${messages.chat.voiceMessage} (${formatDuration(attachment.duration ?? 0)})`

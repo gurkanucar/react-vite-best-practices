@@ -41,6 +41,7 @@ export function ChatPage() {
                 onBack={wide ? undefined : () => chat.open(null)}
                 onSend={(draft) => chat.send(active.id, draft)}
                 onReact={(messageId, emoji) => chat.react(active.id, messageId, emoji)}
+                onVote={(messageId, optionId) => chat.vote(active.id, messageId, optionId)}
                 onDelete={(messageId) => chat.remove(active.id, messageId)}
                 onClear={() => chat.clear(active.id)}
                 onToggle={(flag) => chat.toggle(active.id, flag)}

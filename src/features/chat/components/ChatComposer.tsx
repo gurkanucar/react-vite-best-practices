@@ -2,6 +2,7 @@ import {
   AudioOutlined,
   CloseOutlined,
   DeleteOutlined,
+  BarChartOutlined,
   FileOutlined,
   PaperClipOutlined,
   PictureOutlined,
@@ -23,6 +24,7 @@ import {
 } from 'antd'
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { authorName, contactById, messagePreview } from '@/features/chat/components/chatText'
+import { PollComposer } from '@/features/chat/components/PollComposer'
 import { useVoiceRecorder, type Draft } from '@/features/chat/hooks'
 import { formatDuration, type ChatAttachment, type ChatMessage } from '@/features/chat/types'
 import { useMessages } from '@/i18n/messages'
@@ -50,6 +52,7 @@ export function ChatComposer({ replyTo, onCancelReply, onSend }: ChatComposerPro
   const [images, setImages] = useState<string[]>([])
   const [files, setFiles] = useState<ChatAttachment[]>([])
   const [emojiOpen, setEmojiOpen] = useState(false)
+  const [pollOpen, setPollOpen] = useState(false)
   // Object URLs outlive the component unless they are revoked; sent ones are still shown.
   const pending = useRef<string[]>([])
 
@@ -238,80 +241,96 @@ export function ChatComposer({ replyTo, onCancelReply, onSend }: ChatComposerPro
   )
 
   return (
-    <Sender
-      className="chat-composer"
-      header={header}
-      value={text}
-      onChange={setText}
-      onSubmit={submit}
-      onPasteFile={(pasted) => addFiles(Array.from(pasted))}
-      placeholder={messages.chat.placeholder}
-      autoSize={{ minRows: 1, maxRows: 5 }}
-      prefix={
-        <Flex gap={2}>
-          <Popover
-            open={emojiOpen}
-            onOpenChange={setEmojiOpen}
-            trigger="click"
-            placement="topLeft"
-            content={
-              <div className="chat-emoji-grid">
-                {EMOJI.map((emoji) => (
-                  <Button
-                    key={emoji}
-                    type="text"
-                    className="chat-emoji-button"
-                    aria-label={emoji}
-                    onClick={() => setText((current) => current + emoji)}
-                  >
-                    {emoji}
-                  </Button>
-                ))}
-              </div>
-            }
-          >
-            <Tooltip title={messages.chat.emoji}>
-              <Button type="text" icon={<SmileOutlined />} aria-label={messages.chat.emoji} />
-            </Tooltip>
-          </Popover>
-          <Dropdown
-            trigger={['click']}
-            placement="topLeft"
-            menu={{
-              items: [
-                {
-                  key: 'media',
-                  icon: <PictureOutlined />,
-                  label: picker('image/*,video/*', messages.chat.attachMedia),
-                },
-                {
-                  key: 'document',
-                  icon: <FileOutlined />,
-                  label: picker('*', messages.chat.attachDocument),
-                },
-              ],
-            }}
-          >
-            <Button type="text" icon={<PaperClipOutlined />} aria-label={messages.chat.attach} />
-          </Dropdown>
-        </Flex>
-      }
-      suffix={(_, { components: { SendButton } }) =>
-        // With nothing typed the button records a voice note instead, as in WhatsApp.
-        canSend || !recorder.supported ? (
-          <SendButton disabled={!canSend} icon={<SendOutlined />} aria-label={messages.chat.send} />
-        ) : (
-          <Tooltip title={messages.chat.record}>
-            <Button
-              type="primary"
-              shape="circle"
-              icon={<AudioOutlined />}
-              aria-label={messages.chat.record}
-              onClick={() => void startRecording()}
+    <>
+      <Sender
+        className="chat-composer"
+        header={header}
+        value={text}
+        onChange={setText}
+        onSubmit={submit}
+        onPasteFile={(pasted) => addFiles(Array.from(pasted))}
+        placeholder={messages.chat.placeholder}
+        autoSize={{ minRows: 1, maxRows: 5 }}
+        prefix={
+          <Flex gap={2}>
+            <Popover
+              open={emojiOpen}
+              onOpenChange={setEmojiOpen}
+              trigger="click"
+              placement="topLeft"
+              content={
+                <div className="chat-emoji-grid">
+                  {EMOJI.map((emoji) => (
+                    <Button
+                      key={emoji}
+                      type="text"
+                      className="chat-emoji-button"
+                      aria-label={emoji}
+                      onClick={() => setText((current) => current + emoji)}
+                    >
+                      {emoji}
+                    </Button>
+                  ))}
+                </div>
+              }
+            >
+              <Tooltip title={messages.chat.emoji}>
+                <Button type="text" icon={<SmileOutlined />} aria-label={messages.chat.emoji} />
+              </Tooltip>
+            </Popover>
+            <Dropdown
+              trigger={['click']}
+              placement="topLeft"
+              menu={{
+                items: [
+                  {
+                    key: 'media',
+                    icon: <PictureOutlined />,
+                    label: picker('image/*,video/*', messages.chat.attachMedia),
+                  },
+                  {
+                    key: 'document',
+                    icon: <FileOutlined />,
+                    label: picker('*', messages.chat.attachDocument),
+                  },
+                  { key: 'poll', icon: <BarChartOutlined />, label: messages.chat.poll },
+                ],
+                onClick: ({ key }) => key === 'poll' && setPollOpen(true),
+              }}
+            >
+              <Button type="text" icon={<PaperClipOutlined />} aria-label={messages.chat.attach} />
+            </Dropdown>
+          </Flex>
+        }
+        suffix={(_, { components: { SendButton } }) =>
+          // With nothing typed the button records a voice note instead, as in WhatsApp.
+          canSend || !recorder.supported ? (
+            <SendButton
+              disabled={!canSend}
+              icon={<SendOutlined />}
+              aria-label={messages.chat.send}
             />
-          </Tooltip>
-        )
-      }
-    />
+          ) : (
+            <Tooltip title={messages.chat.record}>
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<AudioOutlined />}
+                aria-label={messages.chat.record}
+                onClick={() => void startRecording()}
+              />
+            </Tooltip>
+          )
+        }
+      />
+      <PollComposer
+        open={pollOpen}
+        onCancel={() => setPollOpen(false)}
+        onCreate={(poll) => {
+          setPollOpen(false)
+          onSend({ text: '', images: [], poll, replyToId: replyTo?.id })
+        }}
+      />
+    </>
   )
 }

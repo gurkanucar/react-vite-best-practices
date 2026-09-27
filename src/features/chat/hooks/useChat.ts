@@ -2,8 +2,10 @@ import dayjs from 'dayjs'
 import { useCallback, useEffect, useReducer, useRef } from 'react'
 import { autoReplies, chatContacts, createSeedConversations } from '@/features/chat/data'
 import {
+  castVote,
   ME,
   type ChatAttachment,
+  type ChatPoll,
   type LocalizedText,
   toggleReaction,
   type ChatMessage,
@@ -20,6 +22,7 @@ export interface Draft {
   text: string
   images: string[]
   attachment?: ChatAttachment
+  poll?: ChatPoll
   replyToId?: string
 }
 
@@ -36,6 +39,13 @@ type Action =
   | { type: 'status'; conversationId: string; messageId: string; status: DeliveryStatus }
   | { type: 'typing'; conversationId: string; authorId?: string }
   | { type: 'react'; conversationId: string; messageId: string; emoji: string }
+  | {
+      type: 'vote'
+      conversationId: string
+      messageId: string
+      optionId: string
+      voterId: string
+    }
   | { type: 'delete'; conversationId: string; messageId: string }
   | { type: 'clear'; conversationId: string }
   | { type: 'toggle'; conversationId: string; flag: 'muted' | 'pinned' }
@@ -102,6 +112,12 @@ function reducer(state: ChatState, action: Action): ChatState {
         ...message,
         reactions: toggleReaction(message.reactions, action.emoji, ME),
       }))
+    case 'vote':
+      return updateMessage(state, action.conversationId, action.messageId, (message) =>
+        message.poll
+          ? { ...message, poll: castVote(message.poll, action.optionId, action.voterId) }
+          : message,
+      )
     case 'delete':
       return updateConversation(state, action.conversationId, (conversation) => ({
         ...conversation,
@@ -193,6 +209,7 @@ export function useChat(initialActiveId: string | null = null) {
       ...(draft.text.trim() && { text: draft.text.trim() }),
       ...(draft.images.length > 0 && { images: draft.images }),
       ...(draft.attachment && { attachment: draft.attachment }),
+      ...(draft.poll && { poll: draft.poll }),
       ...(draft.replyToId && { replyToId: draft.replyToId }),
     }
     dispatch({ type: 'append', conversationId, message })
@@ -206,6 +223,25 @@ export function useChat(initialActiveId: string | null = null) {
       dispatch({ type: 'status', conversationId, messageId: message.id, status })
 
     later(REPLY_TIMING.delivered, () => set('delivered'))
+
+    // A poll is answered with votes rather than words: each member picks, one after another.
+    if (draft.poll) {
+      const { options } = draft.poll
+      later(REPLY_TIMING.read, () => set('read'))
+      others.forEach((voterId, index) =>
+        later(REPLY_TIMING.read + (index + 1) * 900, () =>
+          dispatch({
+            type: 'vote',
+            conversationId,
+            messageId: message.id,
+            optionId: options[(index * 7 + sentId) % options.length]!.id,
+            voterId,
+          }),
+        ),
+      )
+      return
+    }
+
     later(REPLY_TIMING.read, () => {
       set('read')
       dispatch({ type: 'typing', conversationId, authorId: responder })
@@ -235,6 +271,8 @@ export function useChat(initialActiveId: string | null = null) {
       [],
     ),
     send,
+    vote: (conversationId: string, messageId: string, optionId: string) =>
+      dispatch({ type: 'vote', conversationId, messageId, optionId, voterId: ME }),
     react: (conversationId: string, messageId: string, emoji: string) =>
       dispatch({ type: 'react', conversationId, messageId, emoji }),
     remove: (conversationId: string, messageId: string) =>

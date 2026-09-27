@@ -517,3 +517,52 @@
 .chat-details__media video {
   background: #000;
 }
+
+/* ---------- Polls ---------- */
+
+.chat-poll {
+  display: flex;
+  flex-direction: column;
+  width: min(320px, 64vw);
+}
+
+.chat-poll__question {
+  font-size: var(--ant-font-size-lg);
+}
+
+.chat-poll__hint {
+  margin-block: 2px 12px;
+  font-size: var(--ant-font-size-sm);
+}
+
+.chat-poll__hint-second {
+  margin-inline-start: -8px;
+}
+
+.chat-poll__control {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-poll__count {
+  min-width: 12px;
+  text-align: end;
+}
+
+.chat-poll__option .ant-progress {
+  margin: 0;
+  padding-inline-start: 24px;
+}
+
+.chat-poll__divider.ant-divider {
+  margin: 12px 0 4px;
+}
+
+.chat-poll__voters {
+  margin-block-start: 8px;
+}
+
+.chat-poll-form__option {
+  flex: 1;
+  margin: 0;
+}
