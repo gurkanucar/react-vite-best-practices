@@ -372,8 +372,11 @@ html[data-theme='dark'] .admin-shell::before {
 /* ---------------------------------------------------------------------------
  * Schedule
  *
- * The whole calendar is a CSS grid over dayjs. `--day-count` is what lets the same
- * markup serve the week view and the day view: the column track count follows it.
+ * The toolbar, the agenda, the popovers and the detail dialog are Ant Design
+ * components. What is left here is the part no component draws: the month and time
+ * grids, and the tint an event takes from its category. `--day-count` is what lets
+ * the same markup serve the week view and the day view; `--event-color` is set per
+ * event from its category.
  * ------------------------------------------------------------------------- */
 
 .calendar-panel .ant-card-body {
@@ -385,7 +388,172 @@ html[data-theme='dark'] .admin-shell::before {
 }
 
 .calendar-toolbar__range {
-  margin: 0 0 0 8px !important;
+  min-width: 0;
+  margin: 0 !important;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* --- Events --- */
+
+/* One tint for every event: a wash of its category colour on the surface it sits on. */
+.calendar-chip,
+.calendar-event {
+  --event-color: var(--ant-color-primary);
+
+  color: var(--ant-color-text);
+  background: color-mix(in srgb, var(--event-color) 14%, var(--ant-color-bg-container));
+  border: 1px solid color-mix(in srgb, var(--event-color) 28%, transparent);
+  border-radius: var(--ant-border-radius-sm);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--ant-font-size-sm);
+  text-align: start;
+}
+
+.calendar-chip:hover,
+.calendar-event:hover {
+  background: color-mix(in srgb, var(--event-color) 22%, var(--ant-color-bg-container));
+}
+
+.calendar-chip:focus-visible,
+.calendar-event:focus-visible {
+  outline: 2px solid var(--event-color);
+  outline-offset: 1px;
+}
+
+.calendar-chip {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  height: 22px;
+  padding: 0 6px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.calendar-chip__time {
+  flex: none;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--event-color) 65%, var(--ant-color-text));
+}
+
+.calendar-chip__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-popover-list {
+  width: 240px;
+}
+
+.calendar-chip-slot {
+  min-width: 0;
+}
+
+.calendar-chip-slot--dragging {
+  opacity: 0.4;
+}
+
+.calendar-chip-drag {
+  width: 180px;
+  cursor: grabbing;
+}
+
+.calendar-chip--overlay {
+  box-shadow: var(--ant-box-shadow-secondary);
+  cursor: grabbing;
+}
+
+.calendar-event {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 6px;
+  overflow: hidden;
+}
+
+.calendar-event__time {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--event-color) 65%, var(--ant-color-text));
+  white-space: nowrap;
+}
+
+.calendar-event__title {
+  overflow: hidden;
+  line-height: 1.3;
+}
+
+/* A short event puts its time and title on one line instead of clipping the title. */
+.calendar-event--compact {
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  padding-block: 0;
+  white-space: nowrap;
+}
+
+.calendar-event--compact .calendar-event__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-event--interactive {
+  cursor: grab;
+  touch-action: none;
+}
+
+.calendar-event--dimmed {
+  opacity: 0.35;
+}
+
+.calendar-event--ghost {
+  z-index: 3;
+  box-shadow: var(--ant-box-shadow-secondary);
+  pointer-events: none;
+}
+
+.calendar-timegrid--dragging,
+.calendar-timegrid--dragging .calendar-event {
+  cursor: grabbing;
+}
+
+/* The bottom edge is the resize handle; a bar appears on it while the block is hovered. */
+.calendar-event__resize {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 8px;
+  cursor: ns-resize;
+}
+
+.calendar-event__resize::after {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 20px;
+  height: 3px;
+  content: '';
+  background: color-mix(in srgb, var(--event-color) 60%, transparent);
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+.calendar-event:hover .calendar-event__resize::after {
+  opacity: 1;
+}
+
+.calendar-hidden-marker.calendar-hidden-marker {
+  position: absolute;
+  inset-inline-end: 2px;
+  z-index: 2;
+  padding: 0;
+  font-size: var(--ant-font-size-sm);
 }
 
 /* --- Week and day --- */
@@ -399,13 +567,15 @@ html[data-theme='dark'] .admin-shell::before {
 .calendar-timegrid__header,
 .calendar-timegrid__canvas {
   display: grid;
-  grid-template-columns: 64px repeat(var(--day-count), minmax(0, 1fr));
+  grid-template-columns: 56px repeat(var(--day-count), minmax(0, 1fr));
 }
 
 /* The gutter, then one track holding the bands so they can span across days. */
 .calendar-timegrid__allday {
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
+  grid-template-columns: 56px minmax(0, 1fr);
+  min-height: 36px;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
 }
 
 .calendar-allday-track {
@@ -416,77 +586,52 @@ html[data-theme='dark'] .admin-shell::before {
   padding: 4px 0;
 }
 
-.calendar-timegrid__header {
-  border-bottom: 1px solid var(--ant-color-border-secondary);
-}
-
-.calendar-timegrid__allday {
-  border-bottom: 1px solid var(--ant-color-border-secondary);
-  min-height: 40px;
-}
-
-.calendar-timegrid__gutter {
-  border-inline-end: 1px solid var(--ant-color-border-secondary);
-  color: var(--ant-color-text-tertiary);
-  font-size: var(--ant-font-size-sm);
-  padding: 8px;
-}
-
-.calendar-daycol {
-  border-inline-start: 1px solid var(--ant-color-border-secondary);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 8px 4px;
-}
-
-.calendar-daycol__weekday {
-  color: var(--ant-color-text-tertiary);
-  font-size: var(--ant-font-size-sm);
-  text-transform: uppercase;
-}
-
-.calendar-daycol__date {
-  font-size: var(--ant-font-size-lg);
-  font-weight: 600;
-}
-
-.calendar-daycol--today {
-  background: var(--ant-color-primary-bg);
-}
-
-.calendar-daycol--today .calendar-daycol__weekday {
-  color: var(--ant-color-primary);
-}
-
-.calendar-daycol--today .calendar-daycol__date {
-  background: var(--ant-color-primary);
-  border-radius: 50%;
-  color: #fff;
-  min-width: 28px;
-  text-align: center;
-}
-
-/*
- * Today's whole column is tinted, not just its heading: at a glance the eye finds the
- * column before it finds the number at the top of it.
- */
-.calendar-daycolumn--today {
-  background: var(--ant-color-primary-bg);
-}
-
-.calendar-daycolumn--today .calendar-hour-slot {
-  border-bottom-color: var(--ant-color-primary-border);
+.calendar-allday-track .calendar-chip--band {
+  width: auto;
+  margin-inline: 2px;
 }
 
 .calendar-allday-cell {
   border-inline-start: 1px solid var(--ant-color-border-secondary);
 }
 
+.calendar-timegrid__header {
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+.calendar-timegrid__gutter {
+  padding: 8px 6px;
+  color: var(--ant-color-text-tertiary);
+  font-size: var(--ant-font-size-sm);
+  text-align: end;
+}
+
+.calendar-daycol {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px;
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
+}
+
+.calendar-daycol__date {
+  min-width: 28px;
+  font-size: var(--ant-font-size-lg);
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+}
+
+.calendar-daycol--today .calendar-daycol__date {
+  color: var(--ant-color-text-light-solid);
+  background: var(--ant-color-primary);
+  border-radius: 50%;
+}
+
 /* The body scrolls, the header above it does not, so the days stay in view. */
 .calendar-timegrid__body {
-  max-height: 560px;
+  max-height: 600px;
   overflow-y: auto;
 }
 
@@ -499,193 +644,169 @@ html[data-theme='dark'] .admin-shell::before {
 }
 
 .calendar-hour-label {
-  height: var(--hour-height);
   position: relative;
+  height: var(--hour-height);
 }
 
 /* The label sits on the line rather than inside the row it starts. */
 .calendar-hour-label span {
   position: absolute;
-  top: -8px;
+  top: -9px;
   inset-inline-end: 8px;
 }
 
 .calendar-daycolumn {
-  border-inline-start: 1px solid var(--ant-color-border-secondary);
   position: relative;
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
+}
+
+.calendar-daycolumn--today {
+  background: color-mix(in srgb, var(--ant-color-primary) 4%, transparent);
 }
 
 .calendar-hour-slot {
-  border-bottom: 1px solid var(--ant-color-split);
   height: var(--hour-height);
-}
-
-.calendar-event {
-  background: var(--ant-color-bg-elevated);
-  border: 1px solid var(--ant-color-border-secondary);
-  border-inline-start-width: 3px;
-  border-radius: var(--ant-border-radius);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: var(--ant-font-size-sm);
-  overflow: hidden;
-  padding: 2px 6px;
-  position: absolute;
-  text-align: start;
-}
-
-.calendar-event:hover {
-  border-color: var(--ant-color-primary);
-  z-index: 2;
-}
-
-.calendar-event__title {
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.calendar-event__time {
-  color: var(--ant-color-text-tertiary);
+  border-bottom: 1px solid var(--ant-color-split);
 }
 
 .calendar-now {
-  background: var(--ant-color-error);
-  height: 2px;
-  inset-inline: 0;
   position: absolute;
-  z-index: 3;
+  inset-inline: 0;
+  z-index: 4;
+  height: 2px;
+  background: var(--ant-color-error);
+  pointer-events: none;
 }
 
 .calendar-now::before {
+  position: absolute;
+  top: -4px;
+  inset-inline-start: -5px;
+  width: 10px;
+  height: 10px;
+  content: '';
   background: var(--ant-color-error);
   border-radius: 50%;
-  content: '';
-  height: 8px;
-  inset-inline-start: -4px;
-  position: absolute;
-  top: -3px;
-  width: 8px;
 }
 
 /* --- Month --- */
 
-.calendar-month__header,
-.calendar-month__grid {
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-}
-
-.calendar-month__weekday {
-  color: var(--ant-color-text-tertiary);
-  font-size: var(--ant-font-size-sm);
-  padding: 8px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.calendar-month__grid {
+.calendar-month {
   border: 1px solid var(--ant-color-border-secondary);
   border-radius: var(--ant-border-radius-lg);
   overflow: hidden;
 }
 
-.calendar-month__cell {
-  border-inline-start: 1px solid var(--ant-color-border-secondary);
+.calendar-month__header,
+.calendar-month__week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.calendar-month__header {
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+.calendar-month__weekday {
+  padding: 10px 8px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* The bands are laid over the week, on the rows its cells keep free below the date. */
+.calendar-month__week {
+  position: relative;
+}
+
+.calendar-month__week + .calendar-month__week {
   border-top: 1px solid var(--ant-color-border-secondary);
+}
+
+.calendar-month__bands {
+  position: absolute;
+  top: 32px;
+  inset-inline: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-auto-rows: 22px;
+  row-gap: 2px;
+  pointer-events: none;
+}
+
+.calendar-month__bands .calendar-chip--band {
+  width: auto;
+  margin-inline: 4px;
+  pointer-events: auto;
+}
+
+.calendar-month__cell {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  min-height: 108px;
-  padding: 4px;
+  min-width: 0;
+  min-height: 136px;
+  padding: 4px 4px 6px;
 }
 
-/* The first cell of each row and the top row already have the container's own edge. */
-.calendar-month__cell:nth-child(7n + 1) {
-  border-inline-start: 0;
+.calendar-month__cell + .calendar-month__cell {
+  border-inline-start: 1px solid var(--ant-color-border-secondary);
 }
 
-.calendar-month__cell:nth-child(-n + 7) {
-  border-top: 0;
+.calendar-month__cell--weekend {
+  background: var(--ant-color-fill-tertiary);
 }
 
-.calendar-month__cell--outside {
-  background: var(--ant-color-fill-quaternary);
+.calendar-month__cell--over {
+  background: var(--ant-color-primary-bg);
 }
 
-.calendar-month__cell--outside .calendar-month__daynumber {
-  color: var(--ant-color-text-quaternary);
+.calendar-month__band-space {
+  flex: none;
 }
 
 .calendar-month__daynumber {
-  align-self: flex-start;
-  background: none;
-  border: 0;
-  border-radius: var(--ant-border-radius);
+  align-self: flex-end;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
   color: inherit;
   cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: 13px;
+  font: inherit;
   font-size: var(--ant-font-size-sm);
-  min-width: 24px;
-  padding: 2px 6px;
 }
 
 .calendar-month__daynumber:hover {
   background: var(--ant-color-fill-tertiary);
 }
 
-.calendar-month__cell--today {
-  background: var(--ant-color-primary-bg);
+.calendar-month__cell--outside .calendar-month__daynumber {
+  color: var(--ant-color-text-quaternary);
 }
 
 .calendar-month__cell--today .calendar-month__daynumber {
+  color: var(--ant-color-text-light-solid);
   background: var(--ant-color-primary);
-  color: #fff;
-}
-
-/* The weekday heading above today, so the column is findable from the top of the grid. */
-.calendar-month__weekday--today {
-  color: var(--ant-color-primary);
   font-weight: 600;
 }
 
 .calendar-month__more {
+  padding-inline-start: 6px;
   font-size: var(--ant-font-size-sm);
-  padding-inline-start: 4px;
 }
 
-.calendar-chip {
-  background: var(--ant-color-fill-quaternary);
-  border: 0;
-  border-inline-start: 3px solid var(--ant-color-primary);
-  border-radius: var(--ant-border-radius-sm);
-  cursor: pointer;
+/* --- Agenda --- */
+
+.calendar-agenda .calendar-agenda__day-row > td {
+  background: var(--ant-color-fill-quaternary) !important;
+}
+
+.calendar-agenda__day {
   display: flex;
-  gap: 4px;
-  font-size: var(--ant-font-size-sm);
-  overflow: hidden;
-  padding: 1px 6px;
-  text-align: start;
-  white-space: nowrap;
-  width: 100%;
-}
-
-.calendar-chip:hover {
-  background: var(--ant-color-fill-tertiary);
-}
-
-.calendar-chip__time {
-  color: var(--ant-color-text-tertiary);
-  flex: none;
-}
-
-.calendar-chip__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.calendar-chip--allday {
-  background: var(--ant-color-primary-bg);
+  justify-content: space-between;
+  gap: 16px;
 }
 
 /*
@@ -700,16 +821,35 @@ html[data-theme='dark'] .admin-shell::before {
   .calendar-timegrid__header,
   .calendar-timegrid__allday,
   .calendar-timegrid__canvas {
-    grid-template-columns: 52px repeat(var(--day-count), minmax(96px, 1fr));
     min-width: max-content;
+    grid-template-columns: 48px repeat(var(--day-count), minmax(104px, 1fr));
+  }
+
+  .calendar-timegrid__allday {
+    grid-template-columns: 48px minmax(0, 1fr);
   }
 
   .calendar-month__cell {
-    min-height: 72px;
+    min-height: 96px;
   }
 
-  .calendar-chip__time {
+  /*
+   * A phone's month cell has room for a colour, not for a title: each event becomes a bar
+   * in its category colour, and the day opens on a tap for the details.
+   */
+  .calendar-month__cell .calendar-chip {
+    height: 6px;
+    padding: 0;
+    background: var(--event-color);
+    border: 0;
+  }
+
+  .calendar-month__cell .calendar-chip > * {
     display: none;
+  }
+
+  .calendar-month__more {
+    padding-inline-start: 2px;
   }
 }
 

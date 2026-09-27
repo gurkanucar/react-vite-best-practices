@@ -746,7 +746,8 @@
     "views": {
       "month": "Ay",
       "week": "Hafta",
-      "day": "Gün"
+      "day": "Gün",
+      "agenda": "Ajanda"
     },
     "categories": {
       "meeting": "Toplantı",
@@ -773,9 +774,14 @@
       "offsite": "Takım kampı",
       "holiday": "Resmî tatil",
       "conference": "React konferansı",
-      "vacation": "Yıllık izin"
+      "vacation": "Yıllık izin",
+      "incident": "Olay değerlendirmesi"
     },
-    "dayCount": "{count} gün"
+    "dayCount": "{count} gün",
+    "noEvents": "Bu aralıkta planlanmış bir şey yok.",
+    "hiddenEvents": "Bu saatte {count} etkinlik daha",
+    "updated": "Etkinlik yeniden planlandı",
+    "resize": "Bitiş saatini değiştir"
   },
   "profile": {
     "title": "Profil",

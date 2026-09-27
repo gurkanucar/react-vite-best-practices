@@ -1,8 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import {
+  applyChanges,
   layoutAllDay,
   layoutDay,
+  limitLanes,
   minutesFromMidnight,
+  moveEvent,
+  resizeEvent,
+  snapMinutes,
   occursOn,
   spanInDays,
   type CalendarEvent,
@@ -163,5 +168,68 @@ describe('layoutAllDay', () => {
 
   it('leaves timed events out of the all-day area', () => {
     expect(layoutAllDay([event('a', '09:00', '10:00')], week)).toEqual([])
+  })
+})
+
+describe('limitLanes', () => {
+  const crowded = [
+    event('a', '09:00', '10:00'),
+    event('b', '09:15', '10:00'),
+    event('c', '09:30', '10:30'),
+    event('d', '09:45', '11:00'),
+  ]
+
+  it('leaves a cluster alone when it fits', () => {
+    const { visible, hidden } = limitLanes(layoutDay(crowded), 4)
+
+    expect(visible).toHaveLength(4)
+    expect(hidden).toHaveLength(0)
+  })
+
+  it('keeps the first lanes and gathers the rest behind one marker', () => {
+    const { visible, hidden } = limitLanes(layoutDay(crowded), 2)
+
+    expect(visible.map((entry) => entry.event.id)).toEqual(['a', 'b'])
+    expect(visible.every((entry) => entry.lanes === 2)).toBe(true)
+    expect(hidden).toEqual([
+      { startMinutes: 9 * 60 + 30, endMinutes: 11 * 60, events: [crowded[2], crowded[3]] },
+    ])
+  })
+})
+
+describe('moving and resizing', () => {
+  const standup = event('s', '09:00', '09:30')
+
+  it('snaps a drag distance to quarter hours', () => {
+    // An hour row is 52px, so 20px is about 23 minutes and snaps to 30, and 10px to 15.
+    expect(snapMinutes(20)).toBe(30)
+    expect(snapMinutes(10)).toBe(15)
+    expect(snapMinutes(-40)).toBe(-45)
+  })
+
+  it('moves an event across days and hours, keeping its length', () => {
+    expect(moveEvent(standup, 2, 90)).toEqual({
+      start: '2026-09-16T10:30',
+      end: '2026-09-16T11:00',
+    })
+  })
+
+  it('keeps a moved event inside its day', () => {
+    expect(moveEvent(standup, 0, 20 * 60)).toEqual({
+      start: '2026-09-14T23:30',
+      end: '2026-09-15T00:00',
+    })
+    expect(moveEvent(standup, 0, -12 * 60).start).toBe('2026-09-14T00:00')
+  })
+
+  it('stretches from the bottom edge but never below one step', () => {
+    expect(resizeEvent(standup, 45).end).toBe('2026-09-14T10:15')
+    expect(resizeEvent(standup, -120).end).toBe('2026-09-14T09:15')
+  })
+
+  it('applies changes over the generated schedule by id', () => {
+    const [changed] = applyChanges([standup], { s: { start: 'x', end: 'y' } })
+
+    expect(changed).toMatchObject({ id: 's', start: 'x', end: 'y' })
   })
 })

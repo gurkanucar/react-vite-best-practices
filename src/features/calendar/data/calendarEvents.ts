@@ -91,6 +91,15 @@ const templates: EventTemplate[] = [
     weekOffset: 1,
   },
   {
+    titleId: 'incident',
+    category: 'release',
+    weekdays: [WEDNESDAY],
+    start: '11:15',
+    end: '12:00',
+    location: 'Room 3',
+    attendees: ['Noah Williams', 'Maya Chen'],
+  },
+  {
     titleId: 'retro',
     category: 'meeting',
     weekdays: [FRIDAY],

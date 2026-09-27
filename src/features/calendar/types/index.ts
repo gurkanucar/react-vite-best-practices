@@ -1,6 +1,6 @@
-export type CalendarView = 'month' | 'week' | 'day'
+export type CalendarView = 'month' | 'week' | 'day' | 'agenda'
 
-export const CALENDAR_VIEWS: CalendarView[] = ['month', 'week', 'day']
+export const CALENDAR_VIEWS: CalendarView[] = ['month', 'week', 'day', 'agenda']
 
 export type EventCategory = 'meeting' | 'focus' | 'review' | 'release' | 'personal'
 
@@ -87,6 +87,8 @@ export interface PositionedEvent {
   /** 0-based lane within its overlapping cluster, and how many lanes that cluster needs. */
   lane: number
   lanes: number
+  /** Set when the cluster had more lanes than the column shows and a "+N" marker sits beside it. */
+  overflow?: boolean
 }
 
 /** The shortest block still readable; a 15-minute event would otherwise be a hairline. */
@@ -169,4 +171,125 @@ export function layoutDay(events: CalendarEvent[]): PositionedEvent[] {
   flush()
 
   return positioned
+}
+
+/** Where an event has been moved to or resized; applied over the generated schedule. */
+export interface EventChange {
+  start: string
+  end: string
+}
+
+/** Drag and resize snap to this, which is also the smallest step a reader can aim for. */
+export const SNAP_MINUTES = 15
+
+function formatStamp(date: Date): string {
+  const pad = (value: number) => String(value).padStart(2, '0')
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+function shiftStamp(stamp: string, days: number, minutes: number): string {
+  const date = new Date(`${stamp}:00`)
+
+  date.setDate(date.getDate() + days)
+  date.setMinutes(date.getMinutes() + minutes)
+
+  return formatStamp(date)
+}
+
+/** Rounds a pixel distance on the time axis to whole snap steps, in minutes. */
+export function snapMinutes(pixels: number): number {
+  return Math.round(((pixels / HOUR_HEIGHT) * 60) / SNAP_MINUTES) * SNAP_MINUTES
+}
+
+/**
+ * Moves an event by whole days and snapped minutes, keeping its length. A timed event is
+ * kept inside its day, because a block that crossed midnight would have no column to sit in.
+ */
+export function moveEvent(event: CalendarEvent, days: number, minutes: number): EventChange {
+  if (event.allDay) {
+    return { start: shiftStamp(event.start, days, 0), end: shiftStamp(event.end, days, 0) }
+  }
+
+  const startMinutes = minutesFromMidnight(event.start)
+  const length = minutesFromMidnight(event.end) - startMinutes
+  const clamped = Math.min(Math.max(startMinutes + minutes, 0), 24 * 60 - length)
+  const start = shiftStamp(event.start, days, clamped - startMinutes)
+
+  return { start, end: shiftStamp(start, 0, length) }
+}
+
+/** Stretches or shortens a timed event from its bottom edge, within its own day. */
+export function resizeEvent(event: CalendarEvent, minutes: number): EventChange {
+  const startMinutes = minutesFromMidnight(event.start)
+  const endMinutes = Math.min(
+    Math.max(minutesFromMidnight(event.end) + minutes, startMinutes + SNAP_MINUTES),
+    24 * 60 - 1,
+  )
+
+  return { start: event.start, end: shiftStamp(event.start, 0, endMinutes - startMinutes) }
+}
+
+export function applyChanges(
+  events: CalendarEvent[],
+  changes: Record<string, EventChange>,
+): CalendarEvent[] {
+  return events.map((event) => (changes[event.id] ? { ...event, ...changes[event.id] } : event))
+}
+
+/** A run of overlapping events that did not fit the lanes a column can show. */
+export interface HiddenCluster {
+  startMinutes: number
+  endMinutes: number
+  events: CalendarEvent[]
+}
+
+/**
+ * A week column is too narrow for more than a couple of side-by-side blocks, so a cluster
+ * that needs more lanes keeps the first ones and collects the rest behind a "+N" marker.
+ * The visible blocks are re-divided over the lanes that are left, not the original count.
+ */
+export function limitLanes(
+  positioned: PositionedEvent[],
+  maxLanes: number,
+): { visible: PositionedEvent[]; hidden: HiddenCluster[] } {
+  const visible: PositionedEvent[] = []
+  const hidden: HiddenCluster[] = []
+  let cluster: PositionedEvent[] = []
+  let clusterEnd = -1
+
+  const flush = () => {
+    if (cluster.length === 0) return
+
+    const lanes = cluster[0]!.lanes
+
+    if (lanes <= maxLanes) {
+      visible.push(...cluster)
+    } else {
+      const kept = cluster.filter((entry) => entry.lane < maxLanes)
+      const dropped = cluster.filter((entry) => entry.lane >= maxLanes)
+
+      visible.push(...kept.map((entry) => ({ ...entry, lanes: maxLanes, overflow: true })))
+      hidden.push({
+        startMinutes: Math.min(...dropped.map((entry) => entry.startMinutes)),
+        endMinutes: Math.max(...dropped.map((entry) => entry.endMinutes)),
+        events: dropped.map((entry) => entry.event),
+      })
+    }
+
+    cluster = []
+    clusterEnd = -1
+  }
+
+  // `layoutDay` returns events sorted by start, so clusters are contiguous runs.
+  for (const entry of positioned) {
+    if (cluster.length > 0 && entry.startMinutes >= clusterEnd) flush()
+
+    cluster.push(entry)
+    clusterEnd = Math.max(clusterEnd, entry.endMinutes)
+  }
+
+  flush()
+
+  return { visible, hidden }
 }

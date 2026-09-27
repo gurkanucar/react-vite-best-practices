@@ -1,3 +1,4 @@
+export * from './AgendaView'
 export * from './CalendarToolbar'
 export * from './EventBlock'
 export * from './EventDetailModal'

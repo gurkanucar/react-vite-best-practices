@@ -746,7 +746,8 @@
     "views": {
       "month": "Month",
       "week": "Week",
-      "day": "Day"
+      "day": "Day",
+      "agenda": "Agenda"
     },
     "categories": {
       "meeting": "Meeting",
@@ -773,9 +774,14 @@
       "offsite": "Team offsite",
       "holiday": "Public holiday",
       "conference": "React conference",
-      "vacation": "Annual leave"
+      "vacation": "Annual leave",
+      "incident": "Incident review"
     },
-    "dayCount": "{count} days"
+    "dayCount": "{count} days",
+    "noEvents": "Nothing scheduled in this range.",
+    "hiddenEvents": "{count} more events at this time",
+    "updated": "Event rescheduled",
+    "resize": "Change the end time"
   },
   "profile": {
     "title": "Profile",

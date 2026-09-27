@@ -62,7 +62,7 @@ describe('CalendarPage', () => {
 
     // Switching view keeps the date, which the week step moved to the 21st.
     // antd's Segmented is a radio group, so the option is picked by its radio role.
-    fireEvent.click(screen.getByRole('radio', { name: 'Day' }))
+    fireEvent.click(screen.getByRole('radio', { name: /Day/ }))
     expect(screen.getByText('21 September 2026')).toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Next' }))
@@ -88,16 +88,16 @@ describe('CalendarPage', () => {
     fireEvent.click(screen.getByRole('button', { name: '17 September 2026' }))
 
     expect(screen.getByText('17 September 2026')).toBeInTheDocument()
-    expect(screen.getByRole('radio', { name: 'Day' })).toBeChecked()
+    expect(screen.getByRole('radio', { name: /Day/ })).toBeChecked()
   })
 
   it('draws a multi-day event as one band across the days it covers', () => {
     // The React conference runs Wednesday to Friday of this week.
     const { container } = renderAt('?view=week&date=2026-09-16')
 
-    const band = within(container.querySelector('.calendar-allday-track') as HTMLElement).getByText(
-      'React conference',
-    )
+    const band = within(container.querySelector('.calendar-allday-track') as HTMLElement)
+      .getByText('React conference')
+      .closest('button') as HTMLElement
 
     expect(band.style.gridColumn).toBe('4 / span 3')
   })
@@ -106,9 +106,9 @@ describe('CalendarPage', () => {
     // Annual leave starts on the Monday of the week before and runs seven days.
     const { container } = renderAt('?view=week&date=2026-09-09')
 
-    const band = within(container.querySelector('.calendar-allday-track') as HTMLElement).getByText(
-      'Annual leave',
-    )
+    const band = within(container.querySelector('.calendar-allday-track') as HTMLElement)
+      .getByText('Annual leave')
+      .closest('button') as HTMLElement
 
     expect(band.style.gridColumn).toBe('1 / span 1')
   })
@@ -129,13 +129,50 @@ describe('CalendarPage', () => {
   })
 
   it('lays overlapping events side by side rather than on top of each other', () => {
-    // Wednesday the 9th holds the architecture sync and the candidate interview.
+    // Wednesday the 9th holds the architecture sync, the incident review and the interview.
     const { container } = renderAt('?view=day&date=2026-09-09')
     const widths = [...container.querySelectorAll<HTMLElement>('.calendar-event')].map(
       (element) => element.style.width,
     )
 
-    expect(widths.length).toBeGreaterThan(1)
-    expect(widths.some((width) => width.includes('50%'))).toBe(true)
+    // jsdom normalises the calc, so a third of the column reads as 0.333… of 100%.
+    expect(widths.some((width) => width.includes('0.333'))).toBe(true)
+    // The day view has the room, so nothing is folded away.
+    expect(container.querySelector('.calendar-hidden-marker')).toBeNull()
+  })
+
+  it('folds a crowded cluster behind "+N" in the narrow week columns', async () => {
+    const { container } = renderAt('?view=week&date=2026-09-09')
+
+    const marker = screen.getByRole('button', { name: '1 more events at this time' })
+    expect(marker).toHaveTextContent('+1')
+
+    fireEvent.click(marker)
+    const popoverEntry = await screen.findByText('Candidate interview')
+    fireEvent.click(popoverEntry)
+
+    const dialog = await screen.findByRole('dialog')
+    expect(within(dialog).getByText('Zoom')).toBeInTheDocument()
+    expect(container.querySelectorAll('.calendar-event').length).toBeGreaterThan(0)
+  })
+
+  it('lists the week as an agenda, grouped by day, skipping empty days', () => {
+    renderAt('?view=agenda&date=2026-09-09')
+
+    expect(screen.getByRole('radio', { name: /Agenda/ })).toBeChecked()
+    expect(screen.getByText('Wednesday')).toBeInTheDocument()
+    expect(screen.getAllByText('Architecture sync').length).toBeGreaterThan(0)
+    // Saturday the 12th has nothing on it, so it gets no heading.
+    expect(screen.queryByText('Saturday')).not.toBeInTheDocument()
+  })
+
+  it('draws a multi-day event once across the month, not in every cell', () => {
+    const { container } = renderAt('?view=month&date=2026-09-14')
+
+    const bands = [...container.querySelectorAll('.calendar-month__bands')].flatMap((row) =>
+      within(row as HTMLElement).queryAllByText('React conference'),
+    )
+
+    expect(bands).toHaveLength(1)
   })
 })

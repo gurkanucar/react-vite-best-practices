@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { eventsInRange } from '@/features/calendar/data'
-import type { CalendarView } from '@/features/calendar/types'
+import { applyChanges, type CalendarView, type EventChange } from '@/features/calendar/types'
 
 export interface CalendarRange {
   /** The days the view draws, in order. */
@@ -22,7 +22,8 @@ export function calendarRange(view: CalendarView, date: dayjs.Dayjs): CalendarRa
     return { days: [start], start, end: start.add(1, 'day') }
   }
 
-  if (view === 'week') {
+  // The agenda lists the same week the week view draws, as rows instead of columns.
+  if (view === 'week' || view === 'agenda') {
     const start = date.startOf('week')
 
     return {
@@ -43,14 +44,36 @@ export function calendarRange(view: CalendarView, date: dayjs.Dayjs): CalendarRa
   }
 }
 
-export function useCalendarRange(view: CalendarView, date: dayjs.Dayjs) {
+/**
+ * How far either side of the visible range events are generated before changes are
+ * applied. A drag can only move an event within what is on screen, and the widest view
+ * is six weeks, so an event rescheduled into this range from anywhere it could have come
+ * from is still found.
+ */
+const CHANGE_MARGIN_DAYS = 42
+
+export function useCalendarRange(
+  view: CalendarView,
+  date: dayjs.Dayjs,
+  changes: Record<string, EventChange> = {},
+) {
   const key = `${view}:${date.format('YYYY-MM-DD')}`
 
   return useMemo(() => {
     const range = calendarRange(view, date)
+    const hasChanges = Object.keys(changes).length > 0
+    const generated = hasChanges
+      ? eventsInRange(
+          range.start.subtract(CHANGE_MARGIN_DAYS, 'day'),
+          range.end.add(CHANGE_MARGIN_DAYS, 'day'),
+        )
+      : eventsInRange(range.start, range.end)
+    const events = applyChanges(generated, changes).filter(
+      (event) => !dayjs(event.start).isAfter(range.end) && !dayjs(event.end).isBefore(range.start),
+    )
 
-    return { ...range, events: eventsInRange(range.start, range.end) }
+    return { ...range, events }
     // The dayjs instance is a new object every render; its formatted value is not.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+  }, [key, changes])
 }
