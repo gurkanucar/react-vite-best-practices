@@ -12,7 +12,7 @@ export function CorporateSiteShell({ children, standalone }: CorporateSiteShellP
     en: ['Company', 'News', 'Contact'],
     tr: ['Şirket', 'Haberler', 'İletişim'],
   }
-  const paths = [root, `${root}/news`, `${root}#contact`]
+  const paths = [root, `${root}/news`, `${root}/contact`]
 
   return (
     <PublicSiteShell

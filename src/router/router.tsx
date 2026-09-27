@@ -10,6 +10,7 @@ import {
   ChatPage,
   TodoPage,
   ComponentsPage,
+  CorporateContactPage,
   CorporateLandingPage,
   CorporateNewsDetailPage,
   CorporateNewsPage,
@@ -37,6 +38,7 @@ import {
   ProductDetailPage,
   ProductsListPage,
   RegisterPage,
+  RestaurantMenuPage,
   RouteErrorPage,
   SettingsPage,
   ShopInvoicePage,
@@ -198,10 +200,28 @@ export const routes: RouteObject[] = [
     errorElement: standaloneErrorElement,
   },
   {
+    path: '/preview/restaurant',
+    element: (
+      <RouteSuspense fullPage>
+        <RestaurantMenuPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
     path: '/preview/corporate',
     element: (
       <RouteSuspense fullPage>
         <CorporateLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/corporate/contact',
+    element: (
+      <RouteSuspense fullPage>
+        <CorporateContactPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -472,10 +492,28 @@ export const routes: RouteObject[] = [
         errorElement: adminErrorElement,
       },
       {
+        path: 'showcases/restaurant',
+        element: (
+          <RouteSuspense>
+            <RestaurantMenuPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
         path: 'showcases/corporate',
         element: (
           <RouteSuspense>
             <CorporateLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/corporate/contact',
+        element: (
+          <RouteSuspense>
+            <CorporateContactPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

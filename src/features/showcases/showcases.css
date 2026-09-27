@@ -972,6 +972,66 @@
   color: #fff;
 }
 
+.corporate-contact-hero {
+  padding-block: 72px 40px;
+}
+
+.corporate-contact-page {
+  padding-block: 40px 72px;
+}
+
+.corporate-contact-page__card {
+  border-radius: 2px 40px 2px 2px;
+}
+
+.corporate-contact-page__card h3 {
+  margin-top: 0;
+}
+
+.corporate-contact-page__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.corporate-contact-page__aside h3 {
+  margin: 12px 0 4px;
+}
+
+.corporate-contact-page__aside h3:first-child {
+  margin-top: 0;
+}
+
+.corporate-office {
+  padding: 16px 0;
+  display: grid;
+  gap: 6px;
+  border-bottom: 1px solid #ded8cf;
+}
+
+.corporate-office h5 {
+  margin: 0;
+}
+
+.corporate-desks {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.corporate-desks div {
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.corporate-desks dt {
+  font-weight: 600;
+}
+
+.corporate-desks dd {
+  margin: 2px 0 0;
+}
+
 /* Corporate publications */
 .publication-hero {
   padding-block: 92px 56px;

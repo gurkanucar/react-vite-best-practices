@@ -15,6 +15,7 @@ import {
 } from '@/features/showcases/pages/PublicationPages'
 import { TechParkAboutPage } from '@/features/showcases/pages/TechParkAboutPage'
 import { TechParkCompaniesPage } from '@/features/showcases/pages/TechParkCompaniesPage'
+import { CorporateContactPage } from '@/features/showcases/pages/CorporateContactPage'
 import { TechParkContactPage } from '@/features/showcases/pages/TechParkContactPage'
 import { TechParkTeamPage } from '@/features/showcases/pages/TechParkTeamPage'
 import { TechParkCompanyPage } from '@/features/showcases/pages/TechParkCompanyPage'
@@ -402,6 +403,33 @@ describe('showcase pages', () => {
     await user.click(screen.getByRole('checkbox'))
     await user.click(screen.getByRole('button', { name: /Send message/ }))
 
+    expect(await screen.findByText('Message sent')).toBeInTheDocument()
+  })
+
+  it('asks for a phone number on the corporate form only when a call is requested', async () => {
+    const user = userEvent.setup()
+    render(
+      <MemoryRouter initialEntries={['/preview/corporate/contact']}>
+        <CorporateContactPage standalone />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute(
+      'href',
+      '/preview/corporate/contact',
+    )
+    await user.type(screen.getByLabelText('Full name'), 'Ada')
+    await user.type(screen.getByLabelText('Work email'), 'ada@example.com')
+    await user.click(screen.getByRole('combobox', { name: 'What is it about?' }))
+    await user.click(await screen.findByTitle('Media and press'))
+    await user.type(screen.getByLabelText('Message'), 'We would like to interview your CEO.')
+    await user.click(screen.getByRole('checkbox'))
+    await user.click(screen.getByRole('radio', { name: 'By phone' }))
+    await user.click(screen.getByRole('button', { name: /Send message/ }))
+    expect(await screen.findByText('Add a phone number so we can call you')).toBeInTheDocument()
+
+    await user.type(screen.getByLabelText('Phone'), '+90 555 000 00 00')
+    await user.click(screen.getByRole('button', { name: /Send message/ }))
     expect(await screen.findByText('Message sent')).toBeInTheDocument()
   })
 

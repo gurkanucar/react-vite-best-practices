@@ -24,6 +24,7 @@ import {
   IdcardOutlined,
   LineChartOutlined,
   MedicineBoxOutlined,
+  CoffeeOutlined,
   NotificationOutlined,
   PieChartOutlined,
   ProjectOutlined,
@@ -220,6 +221,11 @@ export function useNavigationSections(): NavigationSection[] {
             label: messages.navigation.talentBoard,
           },
           {
+            key: '/showcases/restaurant',
+            icon: <CoffeeOutlined />,
+            label: messages.navigation.restaurantMenu,
+          },
+          {
             key: '/showcases/dental-clinic',
             icon: <MedicineBoxOutlined />,
             label: messages.navigation.dentalLanding,
@@ -228,11 +234,6 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/showcases/corporate',
             icon: <BankOutlined />,
             label: messages.navigation.corporateLanding,
-          },
-          {
-            key: '/showcases/corporate/news',
-            icon: <ReadOutlined />,
-            label: messages.navigation.corporateNews,
           },
         ],
       },
@@ -255,6 +256,19 @@ export function useNavigationSections(): NavigationSection[] {
       },
     ],
     [messages],
+  )
+}
+
+/**
+ * The menu entry a route belongs to. A showcase site has one entry, so its inner pages
+ * (news, an article, the tech park's about page) light up the site they are part of.
+ */
+export function navigationKeyFor(sections: NavigationSection[], pathname: string): string {
+  const keys = sections.flatMap((section) => section.children.map((entry) => entry.key))
+  if (keys.includes(pathname)) return pathname
+  return (
+    keys.filter((key) => pathname.startsWith(`${key}/`)).sort((a, b) => b.length - a.length)[0] ??
+    pathname
   )
 }
 

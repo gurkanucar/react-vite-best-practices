@@ -16,6 +16,8 @@ Each example has two route families:
 | `/showcases/technopark/announcements`       | `/preview/technopark/announcements`       |
 | `/showcases/technopark/announcements/:slug` | `/preview/technopark/announcements/:slug` |
 
+Each website has one entry in the admin menu. Inner pages such as Northstar's newsroom or a tech park article are reached from the site's own header, and the menu highlights the site they belong to.
+
 Announcements are the tech park's own notices, so they live under its routes and share its site header (`TechParkSiteShell`). The old `/corporate/announcements` addresses redirect there. The tech park front page shows the three newest notices with the same `AnnouncementCard` the list uses, so the two never drift apart.
 
 The admin route renders a normal `PageHeader` with an **Open in a new tab** action. The `/preview` route skips `App.tsx` entirely, so the admin sidebar, header, and footer are never mounted. The public website keeps only its own site header and content.

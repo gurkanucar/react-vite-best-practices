@@ -21,9 +21,10 @@ import type { Language } from '@/store/preferences-store'
 
 interface TiptapEditorProps {
   language: Language
-  value: string
+  /** Optional so a Form.Item can supply both. */
+  value?: string
   placeholder: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
 }
 
 const labels = {
@@ -73,7 +74,7 @@ const labels = {
   },
 } as const
 
-export function TiptapEditor({ language, value, placeholder, onChange }: TiptapEditorProps) {
+export function TiptapEditor({ language, value = '', placeholder, onChange }: TiptapEditorProps) {
   const { token } = theme.useToken()
   const text = labels[language]
   const [linkOpen, setLinkOpen] = useState(false)
@@ -93,7 +94,7 @@ export function TiptapEditor({ language, value, placeholder, onChange }: TiptapE
         style: `min-height: 320px; padding: 16px; outline: none; line-height: 1.75; color: ${token.colorText};`,
       },
     },
-    onUpdate: ({ editor: currentEditor }) => onChange(currentEditor.getHTML()),
+    onUpdate: ({ editor: currentEditor }) => onChange?.(currentEditor.getHTML()),
   })
 
   useEffect(() => {

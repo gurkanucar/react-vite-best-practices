@@ -11,7 +11,7 @@ import { ColorModeControl } from '@/components/ThemeControls/ThemeControls'
 import { env } from '@/config/env'
 import { useMessages } from '@/i18n/messages'
 import { usePreferencesStore } from '@/store/preferences-store'
-import { sectionKeyFor, useNavigationSections } from '@/router/navigation'
+import { navigationKeyFor, sectionKeyFor, useNavigationSections } from '@/router/navigation'
 import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
 import './App.css'
 
@@ -87,7 +87,7 @@ function App() {
   const selectedNavigationKey =
     location.pathname === '/settings'
       ? `/settings${location.hash === '#state' ? '#state' : '#appearance'}`
-      : location.pathname
+      : navigationKeyFor(navigationSections, location.pathname)
 
   const activeSectionKey = sectionKeyFor(navigationSections, selectedNavigationKey)
   const [openKeys, setOpenKeys] = useState<string[]>(() =>

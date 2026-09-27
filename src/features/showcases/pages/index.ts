@@ -1,5 +1,7 @@
+export { CorporateContactPage } from './CorporateContactPage'
 export { CorporateLandingPage } from './CorporateLandingPage'
 export { DentalClinicLandingPage } from './DentalClinicLandingPage'
+export { RestaurantMenuPage } from './RestaurantMenuPage'
 export {
   CorporateNewsDetailPage,
   CorporateNewsPage,

@@ -49,6 +49,10 @@ export const ComponentsPage = lazy(async () => ({
   default: (await import('@/pages/ComponentsPage')).ComponentsPage,
 }))
 
+export const CorporateContactPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CorporateContactPage')).CorporateContactPage,
+}))
+
 export const CorporateLandingPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/CorporateLandingPage')).CorporateLandingPage,
 }))
@@ -72,6 +76,10 @@ export const DocumentsPage = lazy(async () => ({
 export const DentalClinicLandingPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/DentalClinicLandingPage'))
     .DentalClinicLandingPage,
+}))
+
+export const RestaurantMenuPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/RestaurantMenuPage')).RestaurantMenuPage,
 }))
 
 export const FilesPage = lazy(async () => ({

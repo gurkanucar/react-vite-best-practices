@@ -167,7 +167,7 @@ export function CorporateLandingPage({ standalone = false }: CorporateLandingPag
       <section className="showcase-section showcase-cta corporate-contact" id="contact">
         <Typography.Title level={2}>{text.contactTitle}</Typography.Title>
         <Typography.Paragraph>{text.contactText}</Typography.Paragraph>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" href={`${root}/contact`}>
           {language === 'tr' ? 'Ekibimizle iletişime geçin' : 'Contact our team'}
         </Button>
       </section>
@@ -180,8 +180,8 @@ export function CorporateLandingPage({ standalone = false }: CorporateLandingPag
       standalonePath="/preview/corporate"
       title={{ en: 'Corporate landing page', tr: 'Kurumsal landing page' }}
       description={{
-        en: 'An editorial corporate website with linked news and announcement examples.',
-        tr: 'Bağlantılı haber ve duyuru örnekleri içeren editoryal kurumsal web sitesi.',
+        en: 'An editorial corporate website with its newsroom and article pages.',
+        tr: 'Haber merkezi ve haber detay sayfalarıyla editoryal kurumsal web sitesi.',
       }}
     >
       {page}
