@@ -27,7 +27,7 @@ describe('admin application', () => {
       ),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Explore the dashboard' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Color theme: Light' })).toBeInTheDocument()
     expect(screen.queryByRole('switch', { name: 'Compact density' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /Visual theme:/ })).not.toBeInTheDocument()
     expect(screen.queryByText('Operational overview')).not.toBeInTheDocument()
@@ -47,7 +47,7 @@ describe('admin application', () => {
         { timeout: 5_000 },
       ),
     ).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Color theme: Light' })).toBeInTheDocument()
     expect(screen.getByText('Monthly revenue')).toBeInTheDocument()
     await act(async () => {
       await router.navigate('/settings')
@@ -226,7 +226,7 @@ describe('admin application', () => {
     ).toBeInTheDocument()
     expect(screen.queryByRole('banner')).not.toBeInTheDocument()
     expect(screen.queryByRole('contentinfo')).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Color theme: System' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Color theme: Light' })).toBeInTheDocument()
     expect(screen.getByRole('combobox', { name: 'Language' })).toBeInTheDocument()
     await user.type(screen.getByLabelText('Email address'), 'owner@example.com')
     await user.type(screen.getByLabelText('Password'), 'Password123')

@@ -61,7 +61,18 @@ const cardTitleKeys = [
   'lighthouseTitle',
   'bundleTitle',
   'plansTitle',
+  'dailyUsersTitle',
+  'npsTitle',
+  'mrrBridgeTitle',
+  'ticketsTitle',
+  'countriesTitle',
+  'browsersTitle',
 ] as const
+
+/** Cards drawn without Recharts, so they are counted by title only. */
+const gridTitleKeys = ['heatmapTitle', 'cohortsTitle'] as const
+/** Each KPI card carries a sparkline of its own. */
+const SPARKLINES = 4
 
 describe('AnalyticsPage', () => {
   it('mounts every chart', () => {
@@ -72,12 +83,14 @@ describe('AnalyticsPage', () => {
     )
 
     const messages = getMessages('en')
-    for (const key of cardTitleKeys) {
+    for (const key of [...cardTitleKeys, ...gridTitleKeys]) {
       expect(screen.getByText(messages.analytics[key])).toBeInTheDocument()
     }
     // A card can render its title while the chart inside it fails to draw. Legend
     // swatches are surfaces of their own, so the wrapper is what counts one chart.
-    expect(container.querySelectorAll('.recharts-wrapper')).toHaveLength(cardTitleKeys.length)
+    expect(container.querySelectorAll('.recharts-wrapper')).toHaveLength(
+      cardTitleKeys.length + SPARKLINES,
+    )
   })
 
   it('translates every chart heading, so none of them falls back to English', () => {
@@ -86,7 +99,7 @@ describe('AnalyticsPage', () => {
 
     const turkish = getMessages('tr')
     const english = getMessages('en')
-    for (const key of cardTitleKeys) {
+    for (const key of [...cardTitleKeys, ...gridTitleKeys]) {
       expect(screen.getByText(turkish.analytics[key])).toBeInTheDocument()
       expect(screen.queryByText(english.analytics[key])).not.toBeInTheDocument()
     }

@@ -1,0 +1,94 @@
+.kpi-card .ant-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kpi-card__change .ant-tag {
+  margin: 0;
+}
+
+.kpi-card__spark {
+  height: 48px;
+  margin-block-start: 4px;
+}
+
+/* ---------- Activity heatmap ---------- */
+
+.activity-heatmap {
+  overflow-x: auto;
+}
+
+.activity-heatmap table {
+  width: 100%;
+  min-width: 420px;
+  /* The global reset collapses table borders, which would also remove the gaps. */
+  border-collapse: separate;
+  border-spacing: 3px;
+  table-layout: fixed;
+}
+
+.activity-heatmap th {
+  width: 36px;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 400;
+  text-align: start;
+  color: var(--ant-color-text-secondary);
+}
+
+.activity-heatmap tfoot th {
+  width: auto;
+}
+
+.activity-heatmap__cell,
+.activity-heatmap__swatch {
+  height: 24px;
+  padding: 0;
+  border-radius: 4px;
+  background: var(--ant-color-fill-tertiary);
+}
+
+.activity-heatmap__swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+}
+
+/* Five strengths of the theme's primary colour, from barely there to full. */
+.activity-heatmap__cell--1 {
+  background: color-mix(in srgb, var(--ant-color-primary) 25%, var(--ant-color-fill-tertiary));
+}
+
+.activity-heatmap__cell--2 {
+  background: color-mix(in srgb, var(--ant-color-primary) 45%, var(--ant-color-fill-tertiary));
+}
+
+.activity-heatmap__cell--3 {
+  background: color-mix(in srgb, var(--ant-color-primary) 70%, var(--ant-color-fill-tertiary));
+}
+
+.activity-heatmap__cell--4 {
+  background: var(--ant-color-primary);
+}
+
+.activity-heatmap__legend {
+  margin-block-start: 12px;
+  font-size: 12px;
+}
+
+/* ---------- Cohort table ---------- */
+
+.cohort-table .ant-table-cell.cohort-cell {
+  background: color-mix(
+    in srgb,
+    var(--ant-color-primary) var(--cohort-strength),
+    var(--ant-color-bg-container)
+  ) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The strong cells are dark enough that the number flips to white to stay legible. */
+.cohort-table .ant-table-cell.cohort-cell--strong {
+  color: #fff;
+}

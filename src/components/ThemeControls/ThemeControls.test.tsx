@@ -23,7 +23,7 @@ describe('ThemeControls', () => {
 
     await user.click(screen.getByRole('switch', { name: 'Compact density' }))
 
-    await user.click(screen.getByRole('button', { name: 'Visual theme: Ant Design' }))
+    await user.click(screen.getByRole('button', { name: 'Visual theme: Gurkan' }))
     await user.click(screen.getByRole('button', { name: 'Illustration' }))
 
     expect(screen.getByRole('radiogroup', { name: 'Color theme' })).toBeInTheDocument()
@@ -49,7 +49,7 @@ describe('ThemeControls', () => {
       </AppThemeProvider>,
     )
 
-    const themeButton = screen.getByRole('button', { name: 'Color theme: System' })
+    const themeButton = screen.getByRole('button', { name: 'Color theme: Light' })
 
     await user.hover(themeButton)
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()

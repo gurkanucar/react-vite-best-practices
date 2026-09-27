@@ -51,7 +51,8 @@ describe('preferences store', () => {
       language: 'tr',
       colorMode: 'dark',
       compact: true,
-      visualTheme: 'ant-design',
+      // An unknown theme falls back to the default one rather than to nothing.
+      visualTheme: 'gurkan',
     })
   })
 })

@@ -224,3 +224,199 @@ export const throughputByDay: ThroughputPoint[] = [
   { day: 'sat', operations: 34_200 },
   { day: 'sun', operations: 28_700 },
 ]
+
+export type KpiId = 'mrr' | 'activeUsers' | 'churn' | 'csat'
+
+export interface KpiTrend {
+  id: KpiId
+  value: number
+  /** Change against the previous period, in percent. */
+  change: number
+  /** Whether a rise is good news; churn going up is not. */
+  higherIsBetter: boolean
+  format: 'currency' | 'number' | 'percent'
+  /** The last twelve periods, oldest first, for the sparkline. */
+  trend: number[]
+}
+
+/** The headline figures across the top of the page, each with the shape of its last year. */
+export const kpiTrends: KpiTrend[] = [
+  {
+    id: 'mrr',
+    value: 975_300,
+    change: 4.1,
+    higherIsBetter: true,
+    format: 'currency',
+    trend: [647, 674, 702, 726, 749, 795, 813, 851, 876, 899, 937, 975],
+  },
+  {
+    id: 'activeUsers',
+    value: 24_860,
+    change: 6.8,
+    higherIsBetter: true,
+    format: 'number',
+    trend: [15.2, 15.9, 16.4, 17.1, 17.8, 18.9, 19.6, 20.4, 21.8, 22.5, 23.3, 24.9],
+  },
+  {
+    id: 'churn',
+    value: 2.6,
+    change: -0.4,
+    higherIsBetter: false,
+    format: 'percent',
+    trend: [3.9, 3.7, 3.8, 3.5, 3.4, 3.3, 3.1, 3.2, 3, 2.9, 2.7, 2.6],
+  },
+  // The one going the wrong way: satisfaction slid while chat tickets grew faster than the team.
+  {
+    id: 'csat',
+    value: 84.2,
+    change: -3.1,
+    higherIsBetter: true,
+    format: 'percent',
+    trend: [91.8, 92.4, 91.9, 91.2, 90.6, 90.9, 89.7, 88.9, 88.1, 87.3, 86.9, 84.2],
+  },
+]
+
+export interface DailyUsersPoint {
+  /** `YYYY-MM-DD` */
+  date: string
+  users: number
+}
+
+/**
+ * Ninety days of daily active users: steady growth, quiet weekends, and a two-day outage in
+ * August, which is what the brush and the reference area on the chart are there to find.
+ */
+export const dailyActiveUsers: DailyUsersPoint[] = Array.from({ length: 90 }, (_, index) => {
+  const date = new Date(Date.UTC(2026, 5, 30 + index))
+  const weekday = date.getUTCDay()
+  const weekend = weekday === 0 || weekday === 6 ? 0.72 : 1
+  // A fixed wobble instead of Math.random, so every render and every test sees the same line.
+  const wobble = 1 + Math.sin(index * 1.7) * 0.035
+  const outage = index === 48 || index === 49 ? 0.58 : 1
+
+  return {
+    date: date.toISOString().slice(0, 10),
+    users: Math.round((17_400 + index * 82) * weekend * wobble * outage),
+  }
+})
+
+/** The outage the reference area marks, as the first and last day it covers. */
+export const outageWindow = { from: dailyActiveUsers[48].date, to: dailyActiveUsers[49].date }
+
+export type MrrStepId = 'start' | 'new' | 'expansion' | 'contraction' | 'churn' | 'end'
+
+export interface MrrStep {
+  id: MrrStepId
+  /** A change for the steps in between; the whole balance for the first and the last. */
+  value: number
+}
+
+/** How recurring revenue got from August to September: the bridge a waterfall draws. */
+export const mrrMovement: MrrStep[] = [
+  { id: 'start', value: 936_800 },
+  { id: 'new', value: 52_400 },
+  { id: 'expansion', value: 21_300 },
+  { id: 'contraction', value: -9_800 },
+  { id: 'churn', value: -25_400 },
+  { id: 'end', value: 975_300 },
+]
+
+export type ChannelId = 'email' | 'chat' | 'phone'
+
+export interface TicketWeek {
+  week: string
+  email: number
+  chat: number
+  phone: number
+}
+
+/** Support tickets opened each week, by the channel they came in through. */
+export const ticketsByWeek: TicketWeek[] = [
+  { week: 'W29', email: 182, chat: 214, phone: 64 },
+  { week: 'W30', email: 176, chat: 238, phone: 58 },
+  { week: 'W31', email: 194, chat: 251, phone: 61 },
+  { week: 'W32', email: 168, chat: 263, phone: 49 },
+  { week: 'W33', email: 201, chat: 342, phone: 88 },
+  { week: 'W34', email: 172, chat: 289, phone: 54 },
+  { week: 'W35', email: 159, chat: 297, phone: 47 },
+  { week: 'W36', email: 148, chat: 312, phone: 42 },
+]
+
+export interface CountrySessions {
+  /** ISO 3166 code; the chart names it in the reader's language with `Intl.DisplayNames`. */
+  code: string
+  sessions: number
+}
+
+/** Sessions over the last 30 days from the countries sending the most traffic. */
+export const sessionsByCountry: CountrySessions[] = [
+  { code: 'TR', sessions: 98_400 },
+  { code: 'US', sessions: 72_100 },
+  { code: 'DE', sessions: 41_800 },
+  { code: 'GB', sessions: 33_600 },
+  { code: 'NL', sessions: 21_900 },
+  { code: 'FR', sessions: 18_200 },
+  { code: 'IN', sessions: 14_700 },
+]
+
+export type BrowserId = 'chrome' | 'safari' | 'edge' | 'firefox' | 'other'
+
+export interface BrowserShare {
+  month: string
+  chrome: number
+  safari: number
+  edge: number
+  firefox: number
+  other: number
+}
+
+/** Sessions per browser; the chart stacks them to 100% so the mix reads, not the volume. */
+export const browserShareByMonth: BrowserShare[] = [
+  { month: '2026-04', chrome: 61_200, safari: 24_800, edge: 9_100, firefox: 5_400, other: 2_300 },
+  { month: '2026-05', chrome: 63_900, safari: 25_600, edge: 9_800, firefox: 5_200, other: 2_100 },
+  { month: '2026-06', chrome: 64_100, safari: 27_900, edge: 10_400, firefox: 4_900, other: 2_200 },
+  { month: '2026-07', chrome: 66_800, safari: 29_300, edge: 10_900, firefox: 4_700, other: 1_900 },
+  { month: '2026-08', chrome: 65_400, safari: 31_800, edge: 11_600, firefox: 4_500, other: 1_800 },
+  { month: '2026-09', chrome: 68_700, safari: 33_100, edge: 12_200, firefox: 4_300, other: 1_700 },
+]
+
+export type NpsGroupId = 'detractors' | 'passives' | 'promoters'
+
+/** Survey answers behind the net promoter score: promoters minus detractors, in percent. */
+export const npsResponses: Record<NpsGroupId, number> = {
+  detractors: 182,
+  passives: 346,
+  promoters: 612,
+}
+
+/**
+ * Sessions per weekday and hour. Office hours carry the load, with a lunch dip and a lighter
+ * weekend, which is the pattern a heatmap shows at a glance and a line chart hides.
+ */
+export const sessionsByHour: number[][] = Array.from({ length: 7 }, (_, day) =>
+  Array.from({ length: 24 }, (_, hour) => {
+    const weekend = day >= 5
+    const office = Math.exp(-((hour - 14) ** 2) / 18)
+    const lunch = hour === 12 || hour === 13 ? 0.82 : 1
+    const evening = Math.exp(-((hour - 21) ** 2) / 6) * 0.45
+
+    return Math.round((weekend ? 0.45 : 1) * (office * lunch + evening + 0.05) * 1_400)
+  }),
+)
+
+export interface Cohort {
+  month: string
+  size: number
+  /** Share still active after 0, 1, 2… months, in percent; newer cohorts have fewer months. */
+  retention: number[]
+}
+
+/** Monthly signup cohorts and how many of each are still active as the months pass. */
+export const retentionCohorts: Cohort[] = [
+  { month: '2026-04', size: 1_842, retention: [100, 62, 51, 46, 43, 41] },
+  { month: '2026-05', size: 1_967, retention: [100, 64, 54, 48, 45] },
+  { month: '2026-06', size: 2_104, retention: [100, 66, 55, 50] },
+  { month: '2026-07', size: 2_311, retention: [100, 69, 58] },
+  { month: '2026-08', size: 2_486, retention: [100, 71] },
+  { month: '2026-09', size: 2_652, retention: [100] },
+]

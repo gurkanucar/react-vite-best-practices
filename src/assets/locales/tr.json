@@ -661,7 +661,65 @@
       "sat": "Cmt",
       "sun": "Paz"
     },
-    "operations": "İşlem"
+    "operations": "İşlem",
+    "kpis": {
+      "mrr": "Aylık yinelenen gelir",
+      "activeUsers": "Günlük aktif kullanıcı",
+      "churn": "Aylık kayıp oranı",
+      "csat": "Müşteri memnuniyeti"
+    },
+    "vsLastPeriod": "geçen aya göre",
+    "dailyUsersTitle": "Son 90 günde günlük aktif kullanıcılar",
+    "dailyUsersBody": "Doksan gün; ortalama çizgiyle, ağustostaki kesinti gölgeli. Yakınlaştırmak için alttaki tutamaçları sürükleyin.",
+    "dailyUsers": "Aktif kullanıcı",
+    "average": "Ortalama",
+    "outage": "Kesinti",
+    "mrrBridgeTitle": "Gelir köprüsü",
+    "mrrBridgeBody": "Yinelenen gelirin ağustostan eylüle nasıl değiştiği.",
+    "mrrSteps": {
+      "start": "Ağustos",
+      "new": "Yeni",
+      "expansion": "Büyüme",
+      "contraction": "Küçülme",
+      "churn": "Kayıp",
+      "end": "Eylül"
+    },
+    "ticketsTitle": "Kanala göre destek talepleri",
+    "ticketsBody": "Her hafta açılan talepler, geldikleri kanala göre yığılmış.",
+    "channels": {
+      "email": "E-posta",
+      "chat": "Canlı sohbet",
+      "phone": "Telefon"
+    },
+    "countriesTitle": "En çok ziyaret eden ülkeler",
+    "countriesBody": "Son 30 günün oturumları.",
+    "sessions": "Oturum",
+    "browsersTitle": "Tarayıcı dağılımı",
+    "browsersBody": "Her tarayıcının oturumlardaki payı, %100'e yığılmış.",
+    "browsers": {
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "edge": "Edge",
+      "firefox": "Firefox",
+      "other": "Diğer"
+    },
+    "npsTitle": "Tavsiye anketi",
+    "npsBody": "Destekçiler eksi eleştirenler; {count} anket yanıtından.",
+    "npsGroups": {
+      "detractors": "Eleştirenler (0–6)",
+      "passives": "Pasifler (7–8)",
+      "promoters": "Destekçiler (9–10)"
+    },
+    "heatmapTitle": "Uygulama ne zaman kullanılıyor",
+    "heatmapBody": "Haftanın günü ve saate göre oturumlar.",
+    "heatmapCell": "{day} {hour}:00 · {count} oturum",
+    "fewer": "Az",
+    "more": "Çok",
+    "cohortsTitle": "Kayıt ayına göre elde tutma",
+    "cohortsBody": "Her ayın kayıtlarından sonraki aylarda hâlâ aktif olanların payı.",
+    "cohort": "Kohort",
+    "cohortSize": "Kullanıcı",
+    "monthIndex": "{index}. ay"
   },
   "files": {
     "title": "Dosya gezgini",

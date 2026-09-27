@@ -661,7 +661,65 @@
       "sat": "Sat",
       "sun": "Sun"
     },
-    "operations": "Operations"
+    "operations": "Operations",
+    "kpis": {
+      "mrr": "Monthly recurring revenue",
+      "activeUsers": "Daily active users",
+      "churn": "Monthly churn",
+      "csat": "Customer satisfaction"
+    },
+    "vsLastPeriod": "vs last month",
+    "dailyUsersTitle": "Daily active users, last 90 days",
+    "dailyUsersBody": "Ninety days with the average marked and the August outage shaded. Drag the handles below to zoom.",
+    "dailyUsers": "Active users",
+    "average": "Average",
+    "outage": "Outage",
+    "mrrBridgeTitle": "Revenue bridge",
+    "mrrBridgeBody": "How recurring revenue moved from August to September.",
+    "mrrSteps": {
+      "start": "August",
+      "new": "New",
+      "expansion": "Expansion",
+      "contraction": "Contraction",
+      "churn": "Churn",
+      "end": "September"
+    },
+    "ticketsTitle": "Support tickets by channel",
+    "ticketsBody": "Tickets opened each week, stacked by where they came in.",
+    "channels": {
+      "email": "Email",
+      "chat": "Live chat",
+      "phone": "Phone"
+    },
+    "countriesTitle": "Top countries",
+    "countriesBody": "Sessions over the last 30 days.",
+    "sessions": "Sessions",
+    "browsersTitle": "Browser mix",
+    "browsersBody": "Each browser's share of sessions, stacked to 100%.",
+    "browsers": {
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "edge": "Edge",
+      "firefox": "Firefox",
+      "other": "Other"
+    },
+    "npsTitle": "Promoter survey",
+    "npsBody": "Promoters minus detractors, from {count} survey answers.",
+    "npsGroups": {
+      "detractors": "Detractors (0–6)",
+      "passives": "Passives (7–8)",
+      "promoters": "Promoters (9–10)"
+    },
+    "heatmapTitle": "When people use the app",
+    "heatmapBody": "Sessions by weekday and hour of day.",
+    "heatmapCell": "{day} {hour}:00 · {count} sessions",
+    "fewer": "Fewer",
+    "more": "More",
+    "cohortsTitle": "Retention by signup month",
+    "cohortsBody": "The share of each month's signups still active after each following month.",
+    "cohort": "Cohort",
+    "cohortSize": "Users",
+    "monthIndex": "Month {index}"
   },
   "files": {
     "title": "File browser",

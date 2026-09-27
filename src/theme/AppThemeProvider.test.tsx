@@ -16,6 +16,8 @@ describe('AppThemeProvider', () => {
     expect(document.documentElement).toHaveAttribute('data-visual-theme', 'illustration')
   })
   it('tracks the operating-system color preference', () => {
+    // Light is the default; following the system is a choice the reader makes.
+    usePreferencesStore.setState({ colorMode: 'system' })
     let handler: ((event: MediaQueryListEvent) => void) | undefined
     const removeEventListener =
       vi.fn<(type: string, listener: EventListenerOrEventListenerObject) => void>()
