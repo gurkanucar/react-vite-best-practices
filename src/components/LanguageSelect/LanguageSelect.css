@@ -9,3 +9,19 @@
   height: auto;
   flex: none;
 }
+
+/*
+ * In the header the select sits among buttons, not form fields. Themes that tint fields,
+ * such as Gurkan's grey fill and rounder corners, would make it the odd one out there, so
+ * it takes the buttons' surface and radius instead. Forms keep the field look.
+ */
+/* Read on the header, where it is still the global radius the buttons use; inside the select
+   antd has already swapped the variable for the select's own. */
+.admin-header {
+  --admin-control-radius: var(--ant-border-radius);
+}
+
+.admin-header .language-select.ant-select {
+  border-radius: var(--admin-control-radius);
+  background: var(--ant-color-bg-container);
+}
