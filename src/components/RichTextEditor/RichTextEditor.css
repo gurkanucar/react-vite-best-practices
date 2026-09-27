@@ -1,0 +1,114 @@
+.rich-text-editor {
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border);
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-bg-container);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.rich-text-editor:focus-within {
+  border-color: var(--ant-color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ant-color-primary) 15%, transparent);
+}
+
+/* A failed `Form.Item` marks itself with a class, which spares the editor reading form context. */
+.rich-text-editor--error,
+.ant-form-item-has-error .rich-text-editor {
+  border-color: var(--ant-color-error);
+}
+
+.rich-text-editor--error:focus-within,
+.ant-form-item-has-error .rich-text-editor:focus-within {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ant-color-error) 15%, transparent);
+}
+
+.rich-text-editor--warning,
+.ant-form-item-has-warning .rich-text-editor {
+  border-color: var(--ant-color-warning);
+}
+
+.rich-text-editor--disabled {
+  background: var(--ant-color-bg-container-disabled);
+  color: var(--ant-color-text-disabled);
+}
+
+.rich-text-editor__toolbar {
+  min-height: 48px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.rich-text-editor__toolbar .ant-divider-vertical {
+  height: 24px;
+  margin-inline: 5px;
+}
+
+.rich-text-editor__style {
+  width: 138px;
+}
+
+.rich-text-editor__surface {
+  min-height: var(--rich-text-min-height, 320px);
+  padding: 16px 20px;
+  outline: none;
+}
+
+.rich-text-editor__surface:empty::before {
+  content: attr(data-placeholder);
+  color: var(--ant-color-text-placeholder);
+  pointer-events: none;
+}
+
+/* Shared by the editor and `RichTextView`, so saved text reads the way it was written. */
+.rich-text {
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.rich-text h2 {
+  margin-block: 24px 10px;
+  font-size: 1.4rem;
+}
+
+.rich-text h3 {
+  margin-block: 20px 8px;
+  font-size: 1.15rem;
+}
+
+.rich-text p {
+  margin-block: 0 8px;
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin-block: 0 8px;
+  padding-inline-start: 24px;
+}
+
+.rich-text a {
+  color: var(--ant-color-link);
+}
+
+.rich-text > :first-child {
+  margin-top: 0;
+}
+
+.rich-text > :last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 680px) {
+  .rich-text-editor__toolbar {
+    overflow-x: auto;
+  }
+
+  .rich-text-editor__surface {
+    min-height: min(var(--rich-text-min-height, 320px), 260px);
+  }
+}

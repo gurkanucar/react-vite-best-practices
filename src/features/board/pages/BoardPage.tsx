@@ -11,7 +11,7 @@ import {
   type DragStartEvent,
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import { Alert, App, Flex, Switch, Tooltip } from 'antd'
+import { App, Flex, Switch, Tooltip } from 'antd'
 import { useState } from 'react'
 import { LoadingState } from '@/components/LoadingState/LoadingState'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
@@ -54,7 +54,7 @@ export function BoardPage() {
     return (
       <div className="admin-page">
         {/* Commented out rather than deleted: the description is available, just not worth the space here. */}
-        <PageHeader title={messages.board.title} /* description={messages.board.description} */ />
+        {/* <PageHeader title={messages.board.title} /> */}
         <LoadingState />
       </div>
     )
@@ -138,7 +138,7 @@ export function BoardPage() {
   return (
     <div className="admin-page">
       <PageHeader
-        title={messages.board.title}
+        // title={messages.board.title}
         // Commented out rather than deleted: available, just not worth the space on this screen.
         // description={messages.board.description}
         extra={
@@ -157,7 +157,7 @@ export function BoardPage() {
         }
       />
 
-      <Alert showIcon type="info" title={messages.board.notice} />
+      {/* <Alert showIcon type="info" title={messages.board.notice} /> */}
 
       <DndContext
         sensors={sensors}

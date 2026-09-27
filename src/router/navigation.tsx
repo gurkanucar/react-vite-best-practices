@@ -6,6 +6,7 @@ import {
   BookOutlined,
   BulbOutlined,
   CalendarOutlined,
+  CheckSquareOutlined,
   MessageOutlined,
   CloudServerOutlined,
   CompassOutlined,
@@ -85,6 +86,7 @@ export function useNavigationSections(): NavigationSection[] {
         label: messages.navigation.workspace,
         children: [
           { key: '/board', icon: <ProjectOutlined />, label: messages.navigation.board },
+          { key: '/todos', icon: <CheckSquareOutlined />, label: messages.navigation.todos },
           { key: '/calendar', icon: <CalendarOutlined />, label: messages.navigation.calendar },
           { key: '/chat', icon: <MessageOutlined />, label: messages.navigation.chat },
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },

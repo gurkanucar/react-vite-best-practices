@@ -44,7 +44,8 @@
     "techParkPublication": "Create campus publication",
     "manageNews": "Manage news",
     "manageAnnouncements": "Manage announcements",
-    "chat": "Chat"
+    "chat": "Chat",
+    "todos": "Tasks"
   },
   "shell": {
     "product": "RVBP Console",
@@ -1504,5 +1505,131 @@
     "vote": "1 vote",
     "noVotes": "No votes yet",
     "duplicateOptions": "Options must be different."
+  },
+  "editor": {
+    "toolbar": "Formatting",
+    "style": "Text style",
+    "paragraph": "Paragraph",
+    "heading2": "Heading 2",
+    "heading3": "Heading 3",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "bullets": "Bulleted list",
+    "numbers": "Numbered list",
+    "link": "Add link",
+    "linkUrl": "Link address",
+    "insert": "Insert"
+  },
+  "todos": {
+    "title": "Tasks",
+    "description": "Plan the day: tag tasks, give them a priority and a due date, and keep formatted notes with each one.",
+    "newTask": "New task",
+    "editTask": "Edit task",
+    "quickAdd": "Add a task",
+    "quickAddPlaceholder": "Add a task… #tag sets a tag, !high the priority",
+    "lists": "Lists",
+    "tags": "Tags",
+    "noTags": "No tags yet",
+    "views": {
+      "all": "All tasks",
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "overdue": "Overdue",
+      "completed": "Completed",
+      "archived": "Archive"
+    },
+    "groups": {
+      "overdue": "Overdue",
+      "today": "Today",
+      "upcoming": "Upcoming",
+      "noDate": "No date",
+      "completed": "Completed",
+      "archived": "Archived"
+    },
+    "priorities": {
+      "urgent": "Urgent",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "stats": {
+      "open": "Open",
+      "today": "Due today",
+      "overdue": "Overdue",
+      "progress": "Done"
+    },
+    "search": "Search tasks",
+    "priority": "Priority",
+    "anyPriority": "Any priority",
+    "sortBy": "Sort by",
+    "sort": {
+      "due": "Due date",
+      "priority": "Priority",
+      "created": "Newest first",
+      "title": "Title (A–Z)"
+    },
+    "taskTitle": "Title",
+    "titlePlaceholder": "What needs doing?",
+    "titleRequired": "Give the task a title.",
+    "notes": "Notes",
+    "notesPlaceholder": "Add details, links or a checklist…",
+    "dueDate": "Due date",
+    "noDueDate": "No date",
+    "tagsPlaceholder": "Pick or type tags",
+    "subtasks": "Subtasks",
+    "addSubtask": "Add subtask",
+    "subtaskPlaceholder": "Subtask {index}",
+    "removeSubtask": "Remove subtask",
+    "subtaskCount": "{done}/{total} subtasks",
+    "completedField": "Completed",
+    "presets": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "nextWeek": "Next week"
+    },
+    "dueLabels": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "yesterday": "Yesterday"
+    },
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel",
+    "create": "Add task",
+    "more": "More actions",
+    "complete": "Mark “{title}” as done",
+    "reopen": "Mark “{title}” as not done",
+    "deleted": "Task deleted.",
+    "undo": "Undo",
+    "archive": "Archive",
+    "unarchive": "Restore from archive",
+    "archived": "Task archived.",
+    "unarchived": "Task restored from the archive.",
+    "archivedOn": "Archived {date}",
+    "archiveCompleted": "Archive completed",
+    "archivedCompleted": "{count} completed tasks archived.",
+    "emptyArchive": "Empty archive",
+    "emptyArchiveConfirm": "Permanently delete {count} archived tasks? This cannot be undone.",
+    "emptiedArchive": "Archive emptied.",
+    "created": "Task added.",
+    "saved": "Changes saved.",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details",
+    "empty": {
+      "all": "Nothing to do. Add a task above.",
+      "today": "Nothing due today.",
+      "upcoming": "Nothing planned ahead.",
+      "overdue": "Nothing overdue — nice.",
+      "completed": "No completed tasks yet.",
+      "filtered": "No tasks match these filters.",
+      "archived": "The archive is empty. Finished tasks you archive wait here."
+    },
+    "clearFilters": "Clear filters",
+    "reset": "Restore sample tasks",
+    "resetDone": "Sample tasks restored."
   }
 }

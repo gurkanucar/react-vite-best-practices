@@ -2,7 +2,7 @@ import { Flex, Typography } from 'antd'
 import type { ReactNode } from 'react'
 
 interface PageHeaderProps {
-  title: string
+  title?: string
   /** Optional: screens where the title carries enough leave it off to save the space. */
   description?: string
   extra?: ReactNode

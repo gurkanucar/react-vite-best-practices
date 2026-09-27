@@ -358,66 +358,6 @@ html[data-theme='dark'] .talent-page .page-heading h1 {
   text-align: center;
 }
 
-.showcase-editor {
-  overflow: hidden;
-  border: 1px solid var(--ant-color-border);
-  border-radius: var(--ant-border-radius-lg);
-  background: var(--ant-color-bg-container);
-}
-
-.showcase-editor:focus-within {
-  border-color: var(--ant-color-primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ant-color-primary) 15%, transparent);
-}
-
-.showcase-editor__toolbar {
-  min-height: 48px;
-  padding: 6px 8px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  border-bottom: 1px solid var(--ant-color-border-secondary);
-  background: var(--ant-color-fill-quaternary);
-}
-
-.showcase-editor__toolbar .ant-divider-vertical {
-  height: 24px;
-  margin-inline: 5px;
-}
-
-.showcase-editor__style {
-  width: 138px;
-}
-
-.showcase-editor__surface {
-  min-height: 320px;
-  padding: 22px;
-  outline: none;
-  line-height: 1.75;
-}
-
-.showcase-editor__surface:empty::before {
-  content: attr(data-placeholder);
-  color: var(--ant-color-text-placeholder);
-  pointer-events: none;
-}
-
-.showcase-editor__surface h2 {
-  margin-block: 24px 10px;
-  font-size: 1.4rem;
-}
-
-.showcase-editor__surface h3 {
-  margin-block: 20px 8px;
-  font-size: 1.15rem;
-}
-
-.showcase-editor__surface p:first-child,
-.showcase-editor__surface h2:first-child,
-.showcase-editor__surface h3:first-child {
-  margin-top: 0;
-}
-
 html[data-theme='dark'] .talent-detail-hero {
   border-color: var(--ant-color-border);
   background: var(--ant-color-bg-container);
@@ -479,14 +419,6 @@ html[data-theme='dark']
 
   .talent-detail-hero h1 {
     font-size: 1.75rem;
-  }
-
-  .showcase-editor__toolbar {
-    overflow-x: auto;
-  }
-
-  .showcase-editor__surface {
-    min-height: 260px;
   }
 }
 

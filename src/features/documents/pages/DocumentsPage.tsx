@@ -14,7 +14,7 @@ export function DocumentsPage() {
   return (
     <div className="admin-page">
       <PageHeader
-        title={messages.documents.title}
+        // title={messages.documents.title}
         // Commented out rather than deleted: available, just not worth the space on this screen.
         // description={messages.documents.description}
         extra={

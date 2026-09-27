@@ -8,6 +8,7 @@ import {
   BoardPage,
   CalendarPage,
   ChatPage,
+  TodoPage,
   ComponentsPage,
   CorporateAnnouncementDetailPage,
   CorporateAnnouncementsPage,
@@ -231,6 +232,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <ChatPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'todos',
+        element: (
+          <RouteSuspense>
+            <TodoPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

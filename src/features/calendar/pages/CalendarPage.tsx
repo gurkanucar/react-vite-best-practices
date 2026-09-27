@@ -1,7 +1,7 @@
 import { App, Card, Grid } from 'antd'
 import dayjs from 'dayjs'
 import { useState } from 'react'
-import { PageHeader } from '@/components/PageHeader/PageHeader'
+// import { PageHeader } from '@/components/PageHeader/PageHeader'
 import {
   AgendaView,
   CalendarToolbar,
@@ -90,9 +90,9 @@ export function CalendarPage() {
   return (
     <div className="admin-page">
       {/* Description commented out rather than deleted: not worth the space on this screen. */}
-      <PageHeader
-        title={messages.calendar.title} /* description={messages.calendar.description} */
-      />
+      {/* <PageHeader
+        title={messages.calendar.title} description={messages.calendar.description} 
+      /> */}
 
       <Card className="dashboard-panel calendar-panel">
         <CalendarToolbar

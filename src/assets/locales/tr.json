@@ -44,7 +44,8 @@
     "techParkPublication": "Kampüs yayını oluştur",
     "manageNews": "Haber yönetimi",
     "manageAnnouncements": "Duyuru yönetimi",
-    "chat": "Sohbet"
+    "chat": "Sohbet",
+    "todos": "Görevler"
   },
   "shell": {
     "product": "RVBP Konsolu",
@@ -1504,5 +1505,131 @@
     "vote": "1 oy",
     "noVotes": "Henüz oy yok",
     "duplicateOptions": "Seçenekler birbirinden farklı olmalı."
+  },
+  "editor": {
+    "toolbar": "Biçimlendirme",
+    "style": "Metin stili",
+    "paragraph": "Paragraf",
+    "heading2": "Başlık 2",
+    "heading3": "Başlık 3",
+    "bold": "Kalın",
+    "italic": "İtalik",
+    "underline": "Altı çizili",
+    "strikethrough": "Üstü çizili",
+    "bullets": "Madde işaretli liste",
+    "numbers": "Numaralı liste",
+    "link": "Bağlantı ekle",
+    "linkUrl": "Bağlantı adresi",
+    "insert": "Ekle"
+  },
+  "todos": {
+    "title": "Görevler",
+    "description": "Gününü planla: görevlere etiket, öncelik ve bitiş tarihi ver, her birine biçimli notlar ekle.",
+    "newTask": "Yeni görev",
+    "editTask": "Görevi düzenle",
+    "quickAdd": "Görev ekle",
+    "quickAddPlaceholder": "Görev ekle… #etiket etiket, !yüksek öncelik verir",
+    "lists": "Listeler",
+    "tags": "Etiketler",
+    "noTags": "Henüz etiket yok",
+    "views": {
+      "all": "Tüm görevler",
+      "today": "Bugün",
+      "upcoming": "Yaklaşan",
+      "overdue": "Gecikmiş",
+      "completed": "Tamamlanan",
+      "archived": "Arşiv"
+    },
+    "groups": {
+      "overdue": "Gecikmiş",
+      "today": "Bugün",
+      "upcoming": "Yaklaşan",
+      "noDate": "Tarihsiz",
+      "completed": "Tamamlanan",
+      "archived": "Arşivlenen"
+    },
+    "priorities": {
+      "urgent": "Acil",
+      "high": "Yüksek",
+      "medium": "Orta",
+      "low": "Düşük"
+    },
+    "stats": {
+      "open": "Açık",
+      "today": "Bugün bitecek",
+      "overdue": "Gecikmiş",
+      "progress": "Tamamlanan"
+    },
+    "search": "Görev ara",
+    "priority": "Öncelik",
+    "anyPriority": "Tüm öncelikler",
+    "sortBy": "Sırala",
+    "sort": {
+      "due": "Bitiş tarihi",
+      "priority": "Öncelik",
+      "created": "En yeni",
+      "title": "Başlık (A–Z)"
+    },
+    "taskTitle": "Başlık",
+    "titlePlaceholder": "Ne yapılması gerekiyor?",
+    "titleRequired": "Göreve bir başlık verin.",
+    "notes": "Notlar",
+    "notesPlaceholder": "Ayrıntı, bağlantı ya da liste ekleyin…",
+    "dueDate": "Bitiş tarihi",
+    "noDueDate": "Tarih yok",
+    "tagsPlaceholder": "Etiket seçin ya da yazın",
+    "subtasks": "Alt görevler",
+    "addSubtask": "Alt görev ekle",
+    "subtaskPlaceholder": "Alt görev {index}",
+    "removeSubtask": "Alt görevi kaldır",
+    "subtaskCount": "{done}/{total} alt görev",
+    "completedField": "Tamamlandı",
+    "presets": {
+      "today": "Bugün",
+      "tomorrow": "Yarın",
+      "nextWeek": "Gelecek hafta"
+    },
+    "dueLabels": {
+      "today": "Bugün",
+      "tomorrow": "Yarın",
+      "yesterday": "Dün"
+    },
+    "edit": "Düzenle",
+    "duplicate": "Kopyala",
+    "delete": "Sil",
+    "save": "Kaydet",
+    "cancel": "Vazgeç",
+    "create": "Görev ekle",
+    "more": "Diğer işlemler",
+    "complete": "“{title}” görevini tamamlandı yap",
+    "reopen": "“{title}” görevini yeniden aç",
+    "deleted": "Görev silindi.",
+    "undo": "Geri al",
+    "archive": "Arşivle",
+    "unarchive": "Arşivden çıkar",
+    "archived": "Görev arşivlendi.",
+    "unarchived": "Görev arşivden çıkarıldı.",
+    "archivedOn": "{date} arşivlendi",
+    "archiveCompleted": "Tamamlananları arşivle",
+    "archivedCompleted": "{count} tamamlanmış görev arşivlendi.",
+    "emptyArchive": "Arşivi boşalt",
+    "emptyArchiveConfirm": "{count} arşivlenmiş görev kalıcı olarak silinsin mi? Bu işlem geri alınamaz.",
+    "emptiedArchive": "Arşiv boşaltıldı.",
+    "created": "Görev eklendi.",
+    "saved": "Değişiklikler kaydedildi.",
+    "showDetails": "Ayrıntıları göster",
+    "hideDetails": "Ayrıntıları gizle",
+    "empty": {
+      "all": "Yapılacak bir şey yok. Yukarıdan görev ekleyin.",
+      "today": "Bugün bitecek görev yok.",
+      "upcoming": "İleriye planlanmış görev yok.",
+      "overdue": "Geciken görev yok — harika.",
+      "completed": "Henüz tamamlanan görev yok.",
+      "filtered": "Bu filtrelere uyan görev yok.",
+      "archived": "Arşiv boş. Arşivlediğiniz tamamlanmış görevler burada durur."
+    },
+    "clearFilters": "Filtreleri temizle",
+    "reset": "Örnek görevleri geri yükle",
+    "resetDone": "Örnek görevler geri yüklendi."
   }
 }

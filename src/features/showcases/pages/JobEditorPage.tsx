@@ -22,7 +22,7 @@ import dayjs, { type Dayjs } from 'dayjs'
 import { useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
-import { RichTextEditor } from '@/features/showcases/components'
+import { RichTextEditor } from '@/components/RichTextEditor'
 import { findShowcaseJob, showcaseJobs, talentCopy } from '@/features/showcases/data'
 import type { JobEmploymentType, JobStatus, JobWorkMode } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
@@ -194,8 +194,7 @@ export function JobEditorPage() {
                 </div>
                 <RichTextEditor
                   key={`${jobSlug ?? 'new'}-${language}`}
-                  initialValue={content}
-                  language={language}
+                  value={content}
                   placeholder={text.editorPlaceholder}
                   onChange={setContent}
                 />

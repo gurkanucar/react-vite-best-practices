@@ -21,6 +21,10 @@ export const BoardPage = lazy(async () => ({
 export const ChatPage = lazy(async () => ({
   default: (await import('@/features/chat/pages/ChatPage')).ChatPage,
 }))
+export const TodoPage = lazy(async () => ({
+  default: (await import('@/features/todos/pages/TodoPage')).TodoPage,
+}))
+
 export const CalendarPage = lazy(async () => ({
   default: (await import('@/features/calendar/pages/CalendarPage')).CalendarPage,
 }))
