@@ -13,4 +13,4 @@ export {
   roleLevelLabels,
 } from './techPark'
 export { techParkCopy, techParkLinks, techParkMonogram } from './techParkCopy'
-export { publicationEditorCopy, talentCopy } from './talentCopy'
+export { talentCopy } from './talentCopy'

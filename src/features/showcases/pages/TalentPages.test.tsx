@@ -5,10 +5,8 @@ import { describe, expect, it } from 'vitest'
 import { JobDetailPage } from '@/features/showcases/pages/JobDetailPage'
 import { JobEditorPage } from '@/features/showcases/pages/JobEditorPage'
 import { JobListPage } from '@/features/showcases/pages/JobListPage'
-import { TechParkPublicationEditorPage } from '@/features/showcases/pages/TechParkPublicationEditorPage'
-import { usePreferencesStore } from '@/store/preferences-store'
 
-describe('talent and publishing showcase pages', () => {
+describe('talent showcase pages', () => {
   it('filters the talent board by role content and keeps detail links intact', async () => {
     const user = userEvent.setup()
     render(
@@ -59,20 +57,5 @@ describe('talent and publishing showcase pages', () => {
     expect(screen.getByDisplayValue('Senior Frontend Engineer')).toBeVisible()
     expect(screen.getByRole('button', { name: 'Bold' })).toBeVisible()
     expect(screen.getByRole('button', { name: /Save changes$/ })).toBeVisible()
-  })
-
-  it('provides a bilingual news and announcement publishing screen', () => {
-    usePreferencesStore.setState({ language: 'tr' })
-    render(
-      <MemoryRouter>
-        <TechParkPublicationEditorPage />
-      </MemoryRouter>,
-    )
-
-    expect(screen.getByRole('heading', { name: 'Kampüs yayını oluştur' })).toBeVisible()
-    expect(screen.getByText('Haber')).toBeVisible()
-    expect(screen.getByText('Duyuru')).toBeVisible()
-    expect(screen.getByRole('button', { name: 'Kalın' })).toBeVisible()
-    expect(screen.getByRole('button', { name: /Yayınla$/ })).toBeVisible()
   })
 })

@@ -1,6 +1,7 @@
 {
   "navigation": {
     "workspace": "Çalışma alanı",
+    "contentManagement": "İçerik yönetimi",
     "dashboard": "Kontrol paneli",
     "components": "Bileşenler",
     "survey": "Anket",
@@ -40,7 +41,9 @@
     "corporateNews": "Kurumsal haberler",
     "corporateAnnouncements": "Duyurular",
     "talentBoard": "Yetenek ilanları",
-    "techParkPublication": "Kampüs yayını oluştur"
+    "techParkPublication": "Kampüs yayını oluştur",
+    "manageNews": "Haber yönetimi",
+    "manageAnnouncements": "Duyuru yönetimi"
   },
   "shell": {
     "product": "RVBP Konsolu",

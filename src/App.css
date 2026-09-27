@@ -1,6 +1,38 @@
 .admin-shell {
   min-height: 100vh;
   min-height: 100dvh;
+  isolation: isolate;
+}
+
+/*
+ * The theme image is painted on a viewport-sized fixed layer rather than on the workspace.
+ * On the workspace, `background-size: cover` rescaled the whole image on every frame the
+ * sidebar animated its width, which is what made opening and closing it stutter.
+ */
+.admin-shell::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  pointer-events: none;
+  background-image: var(--official-theme-background, none);
+  background-position: center;
+  background-size: cover;
+}
+
+/*
+ * The illustration image is the busiest of the five, and the page title and the tab bar
+ * sit straight on it rather than on a card. A wash of its own layout colour keeps them
+ * readable without hiding the drawing.
+ */
+.admin-shell[data-visual-theme='illustration']::before {
+  background-image:
+    linear-gradient(rgb(255 249 240 / 72%), rgb(255 249 240 / 72%)),
+    var(--official-theme-background, none);
+}
+
+html[data-theme='dark'] .admin-shell::before {
+  background-image: none;
 }
 
 /* The sidebar stays pinned while the page content scrolls. */
@@ -43,13 +75,7 @@
 
 .admin-workspace {
   min-width: 0;
-  background-image: var(--official-theme-background, none);
-  background-position: center;
-  background-size: cover;
-}
-
-html[data-theme='dark'] .admin-workspace {
-  background-image: none;
+  background: transparent;
 }
 
 .admin-header {

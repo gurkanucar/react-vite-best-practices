@@ -3,6 +3,7 @@ import {
   AccountPage,
   AdminLayout,
   AnalyticsPage,
+  AnnouncementsAdminPage,
   AssistantPage,
   BoardPage,
   CalendarPage,
@@ -19,6 +20,7 @@ import {
   JobDetailPage,
   JobEditorPage,
   JobListPage,
+  NewsAdminPage,
   DashboardPage,
   DentalClinicLandingPage,
   DocumentsPage,
@@ -31,6 +33,7 @@ import {
   PostEditPage,
   PostsListPage,
   ProfilePage,
+  PublicationEditorPage,
   ProductDetailPage,
   ProductsListPage,
   RegisterPage,
@@ -43,7 +46,6 @@ import {
   TechParkCompaniesPage,
   TechParkCompanyPage,
   TechParkLandingPage,
-  TechParkPublicationEditorPage,
   TourDetailPage,
   TourListPage,
 } from '@/router/LazyPages'
@@ -269,10 +271,37 @@ export const routes: RouteObject[] = [
         errorElement: adminErrorElement,
       },
       {
-        path: 'showcases/technopark/publications/new',
+        path: 'content/news',
         element: (
           <RouteSuspense>
-            <TechParkPublicationEditorPage />
+            <NewsAdminPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'content/announcements',
+        element: (
+          <RouteSuspense>
+            <AnnouncementsAdminPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'content/:publicationKind/new',
+        element: (
+          <RouteSuspense>
+            <PublicationEditorPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'content/:publicationKind/:slug/edit',
+        element: (
+          <RouteSuspense>
+            <PublicationEditorPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

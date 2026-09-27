@@ -31,13 +31,15 @@ const lightTokens: Tokens = {
   colorText: '#1c252e',
   colorTextBase: '#1c252e',
   colorTextSecondary: '#637381',
-  colorTextTertiary: '#919eab',
-  colorTextQuaternary: '#919eab',
-  colorTextDisabled: '#919eab',
+  // Each tier has to stay a step apart from its neighbours, or disabled reads as tertiary.
+  colorTextTertiary: '#7b8895',
+  colorTextQuaternary: '#b4bec8',
+  colorTextDisabled: '#b4bec8',
+  colorTextPlaceholder: '#919eab',
 
   colorBorder: '#dfe3e8',
-  colorBorderSecondary: '#f4f6f8',
-  colorSplit: '#f4f6f8',
+  colorBorderSecondary: '#e9edf0',
+  colorSplit: '#e9edf0',
   colorFillQuaternary: '#f9fafb',
   colorFillTertiary: '#f4f6f8',
   colorFillSecondary: `rgba(${palette.grey}, 0.12)`,
@@ -65,14 +67,15 @@ const darkTokens: Tokens = {
 
   colorText: '#ffffff',
   colorTextBase: '#ffffff',
-  colorTextSecondary: '#919eab',
-  colorTextTertiary: '#637381',
-  colorTextQuaternary: '#637381',
-  colorTextDisabled: '#637381',
+  colorTextSecondary: '#a8b3be',
+  colorTextTertiary: '#8491a0',
+  colorTextQuaternary: '#56636f',
+  colorTextDisabled: '#56636f',
+  colorTextPlaceholder: '#6c7a88',
 
-  colorBorder: `rgba(${palette.grey}, 0.24)`,
-  colorBorderSecondary: `rgba(${palette.grey}, 0.14)`,
-  colorSplit: `rgba(${palette.grey}, 0.14)`,
+  colorBorder: `rgba(${palette.grey}, 0.28)`,
+  colorBorderSecondary: `rgba(${palette.grey}, 0.16)`,
+  colorSplit: `rgba(${palette.grey}, 0.16)`,
   colorFillQuaternary: `rgba(${palette.grey}, 0.06)`,
   colorFillTertiary: `rgba(${palette.grey}, 0.1)`,
   colorFillSecondary: `rgba(${palette.grey}, 0.16)`,
@@ -109,6 +112,8 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
   const fieldBackground = dark ? `rgba(${palette.grey}, 0.08)` : '#f4f6f8'
   const fieldHoverBackground = dark ? `rgba(${palette.grey}, 0.12)` : '#eef1f4'
   const selectedBackground = dark ? 'rgba(24, 119, 242, 0.16)' : 'rgba(24, 119, 242, 0.08)'
+  // The primary blue is too dark to carry text on the dark surfaces; the link blue is not.
+  const selectedText = dark ? tokens.colorLink : palette.primary
 
   return {
     Layout: {
@@ -121,10 +126,9 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
       triggerColor: tokens.colorText,
     },
     Card: {
-      // The card is defined by its shadow, so the border is removed rather than softened.
       borderRadiusLG: 16,
       paddingLG: 24,
-      colorBorderSecondary: 'transparent',
+      colorBorderSecondary: tokens.colorBorderSecondary,
       boxShadowTertiary: tokens.boxShadow,
     },
     Menu: {
@@ -137,18 +141,18 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
       itemColor: tokens.colorTextSecondary,
       itemHoverColor: tokens.colorText,
       itemHoverBg: dark ? `rgba(${palette.grey}, 0.08)` : '#f4f6f8',
-      itemSelectedColor: tokens.colorText,
+      itemSelectedColor: selectedText,
       itemSelectedBg: selectedBackground,
       darkItemBg: 'transparent',
       darkSubMenuItemBg: 'transparent',
       darkItemColor: tokens.colorTextSecondary,
       darkItemHoverColor: tokens.colorText,
       darkItemHoverBg: `rgba(${palette.grey}, 0.08)`,
-      darkItemSelectedColor: tokens.colorText,
+      darkItemSelectedColor: selectedText,
       darkItemSelectedBg: 'rgba(24, 119, 242, 0.16)',
     },
     Table: {
-      headerBg: dark ? '#212b36' : '#f4f6f8',
+      headerBg: dark ? '#26323e' : '#edf1f4',
       headerColor: tokens.colorTextSecondary,
       headerSplitColor: 'transparent',
       rowHoverBg: dark ? `rgba(${palette.grey}, 0.08)` : '#f9fafb',
@@ -159,28 +163,28 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
     Input: {
       borderRadius: 10,
       colorBgContainer: fieldBackground,
-      colorBorder: 'transparent',
+      colorBorder: tokens.colorBorder,
       hoverBg: fieldHoverBackground,
       activeBg: fieldBackground,
-      hoverBorderColor: 'transparent',
+      hoverBorderColor: tokens.colorTextTertiary,
       activeBorderColor: palette.primary,
       activeShadow: '0 0 0 2px rgba(24, 119, 242, 0.12)',
     },
     InputNumber: {
       borderRadius: 10,
       colorBgContainer: fieldBackground,
-      colorBorder: 'transparent',
+      colorBorder: tokens.colorBorder,
       hoverBg: fieldHoverBackground,
       activeBg: fieldBackground,
-      hoverBorderColor: 'transparent',
+      hoverBorderColor: tokens.colorTextTertiary,
       activeBorderColor: palette.primary,
       activeShadow: '0 0 0 2px rgba(24, 119, 242, 0.12)',
     },
     Select: {
       borderRadius: 10,
       selectorBg: fieldBackground,
-      colorBorder: 'transparent',
-      hoverBorderColor: 'transparent',
+      colorBorder: tokens.colorBorder,
+      hoverBorderColor: tokens.colorTextTertiary,
       activeBorderColor: palette.primary,
       activeOutlineColor: 'rgba(24, 119, 242, 0.12)',
       optionActiveBg: fieldHoverBackground,
@@ -189,10 +193,10 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
     DatePicker: {
       borderRadius: 10,
       colorBgContainer: fieldBackground,
-      colorBorder: 'transparent',
+      colorBorder: tokens.colorBorder,
       hoverBg: fieldHoverBackground,
       activeBg: fieldBackground,
-      hoverBorderColor: 'transparent',
+      hoverBorderColor: tokens.colorTextTertiary,
       activeBorderColor: palette.primary,
       activeShadow: '0 0 0 2px rgba(24, 119, 242, 0.12)',
     },
@@ -212,7 +216,20 @@ function componentsFor(mode: ResolvedColorMode): NonNullable<ThemeConfig['compon
     },
     Segmented: {
       itemSelectedBg: tokens.colorBgContainer,
-      trackBg: dark ? `rgba(${palette.grey}, 0.12)` : '#f4f6f8',
+      trackBg: dark ? `rgba(${palette.grey}, 0.16)` : '#edf1f4',
+    },
+    Tabs: {
+      itemSelectedColor: selectedText,
+      itemHoverColor: selectedText,
+      itemActiveColor: selectedText,
+      inkBarColor: selectedText,
+    },
+    Collapse: {
+      headerBg: tokens.colorFillTertiary,
+      contentBg: tokens.colorBgContainer,
+    },
+    Descriptions: {
+      labelBg: tokens.colorFillTertiary,
     },
     Dropdown: {
       borderRadiusLG: 12,

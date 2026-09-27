@@ -1,6 +1,6 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Button, Flex, Grid, Layout, Menu, Tooltip, Typography } from 'antd'
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
 import { GlobalSearch } from '@/components/GlobalSearch/GlobalSearch'
@@ -16,6 +16,11 @@ import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
 import './App.css'
 
 const { Content, Footer, Header, Sider } = Layout
+const disabledMenuMotion = {
+  motionAppear: false,
+  motionEnter: false,
+  motionLeave: false,
+}
 
 function App() {
   const location = useLocation()
@@ -31,6 +36,20 @@ function App() {
   const backgroundStyle = backgroundImage
     ? ({ '--official-theme-background': `url(${backgroundImage})` } as CSSProperties)
     : undefined
+  const navigationItems = useMemo(
+    () =>
+      navigationSections.map((section) => ({
+        key: section.key,
+        icon: section.icon,
+        label: section.label,
+        children: section.children.map((entry) => ({
+          key: entry.key,
+          icon: entry.icon,
+          label: entry.label,
+        })),
+      })),
+    [navigationSections],
+  )
 
   useEffect(() => {
     const target = document.getElementById(location.hash.slice(1))
@@ -90,19 +109,11 @@ function App() {
       </Link>
       <Menu
         mode="inline"
+        motion={disabledMenuMotion}
         openKeys={openKeys}
         onOpenChange={(keys) => setOpenKeys(keys)}
         selectedKeys={[selectedNavigationKey]}
-        items={navigationSections.map((section) => ({
-          key: section.key,
-          icon: section.icon,
-          label: section.label,
-          children: section.children.map((entry) => ({
-            key: entry.key,
-            icon: entry.icon,
-            label: entry.label,
-          })),
-        }))}
+        items={navigationItems}
         onClick={({ key }) => {
           void navigate(key)
         }}
@@ -111,7 +122,7 @@ function App() {
   )
 
   return (
-    <Layout className="admin-shell">
+    <Layout className="admin-shell" data-visual-theme={visualTheme} style={backgroundStyle}>
       <Sider
         breakpoint="lg"
         className="admin-sider"
@@ -126,7 +137,7 @@ function App() {
         {navigation}
       </Sider>
 
-      <Layout className="admin-workspace" style={backgroundStyle}>
+      <Layout className="admin-workspace">
         <Header className="admin-header">
           <Flex className="admin-header__lead" align="center" gap={12}>
             <Tooltip title={collapsed ? messages.shell.expandMenu : messages.shell.collapseMenu}>

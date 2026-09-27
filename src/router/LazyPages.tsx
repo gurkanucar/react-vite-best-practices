@@ -182,7 +182,14 @@ export const JobEditorPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/JobEditorPage')).JobEditorPage,
 }))
 
-export const TechParkPublicationEditorPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/TechParkPublicationEditorPage'))
-    .TechParkPublicationEditorPage,
+export const PublicationEditorPage = lazy(async () => ({
+  default: (await import('@/features/content/pages/PublicationEditorPage')).PublicationEditorPage,
+}))
+
+export const NewsAdminPage = lazy(async () => ({
+  default: (await import('@/features/content/pages/PublicationAdminPage')).NewsAdminPage,
+}))
+
+export const AnnouncementsAdminPage = lazy(async () => ({
+  default: (await import('@/features/content/pages/PublicationAdminPage')).AnnouncementsAdminPage,
 }))

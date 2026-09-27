@@ -89,6 +89,8 @@ const useIllustrationTheme = () => {
         },
         components: {
           Button: {
+            // White on this green is 2.3:1; the theme's ink colour is what its outlines use.
+            primaryColor: '#2C2C2C',
             primaryShadow: 'none',
             dangerShadow: 'none',
             defaultShadow: 'none',
@@ -134,6 +136,13 @@ const useIllustrationTheme = () => {
             activeBarBorderWidth: 0,
             itemBg: 'transparent',
             subMenuItemBg: 'transparent',
+            // The brand green is a fill colour; as text it needs the darker step of the scale.
+            itemSelectedColor: '#237804',
+          },
+          Tabs: {
+            itemSelectedColor: '#237804',
+            itemHoverColor: '#237804',
+            itemActiveColor: '#237804',
           },
           Alert: {},
           Checkbox: {},

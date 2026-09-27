@@ -110,6 +110,8 @@ const useBootstrapTheme: UseTheme = () => {
           borderRadius: 4,
           borderRadiusLG: 6,
           colorInfo: '#3a87ad',
+          // Bootstrap's own alert-info text; the derived one reads at 3.3:1 on the alert.
+          colorInfoText: '#31708f',
         },
         components: {
           Tooltip: {

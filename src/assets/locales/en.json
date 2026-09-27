@@ -1,6 +1,7 @@
 {
   "navigation": {
     "workspace": "Workspace",
+    "contentManagement": "Content management",
     "dashboard": "Dashboard",
     "components": "Components",
     "survey": "Survey",
@@ -40,7 +41,9 @@
     "corporateNews": "Corporate news",
     "corporateAnnouncements": "Announcements",
     "talentBoard": "Talent board",
-    "techParkPublication": "Create campus publication"
+    "techParkPublication": "Create campus publication",
+    "manageNews": "Manage news",
+    "manageAnnouncements": "Manage announcements"
   },
   "shell": {
     "product": "RVBP Console",

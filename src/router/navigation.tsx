@@ -12,7 +12,6 @@ import {
   DatabaseOutlined,
   ExperimentOutlined,
   FileDoneOutlined,
-  FileAddOutlined,
   FilePdfOutlined,
   FileTextOutlined,
   FlagOutlined,
@@ -88,6 +87,23 @@ export function useNavigationSections(): NavigationSection[] {
           { key: '/calendar', icon: <CalendarOutlined />, label: messages.navigation.calendar },
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
+        ],
+      },
+      {
+        key: 'content',
+        icon: <FileTextOutlined />,
+        label: messages.navigation.contentManagement,
+        children: [
+          {
+            key: '/content/news',
+            icon: <ReadOutlined />,
+            label: messages.navigation.manageNews,
+          },
+          {
+            key: '/content/announcements',
+            icon: <NotificationOutlined />,
+            label: messages.navigation.manageAnnouncements,
+          },
         ],
       },
       {
@@ -198,11 +214,6 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/showcases/jobs',
             icon: <SolutionOutlined />,
             label: messages.navigation.talentBoard,
-          },
-          {
-            key: '/showcases/technopark/publications/new',
-            icon: <FileAddOutlined />,
-            label: messages.navigation.techParkPublication,
           },
           {
             key: '/showcases/dental-clinic',

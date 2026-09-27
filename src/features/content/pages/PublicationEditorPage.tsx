@@ -21,17 +21,17 @@ import {
   Select,
   Space,
   Switch,
-  Typography,
   Upload,
 } from 'antd'
 import dayjs, { type Dayjs } from 'dayjs'
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useMemo, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
-import { RichTextEditor } from '@/features/showcases/components'
-import { publicationEditorCopy } from '@/features/showcases/data'
+import { TiptapEditor } from '@/features/content/components'
+import { publicationEditorCopy } from '@/features/content/data'
+import { corporateAnnouncements, corporateNews } from '@/features/showcases/data'
+import { localize } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
-import '../talent.css'
 
 interface PublicationFormValues {
   type: 'news' | 'announcement'
@@ -46,44 +46,77 @@ interface PublicationFormValues {
   notify: boolean
 }
 
-export function TechParkPublicationEditorPage() {
+export function PublicationEditorPage() {
   const language = usePreferencesStore((state) => state.language)
   const text = publicationEditorCopy[language]
   const { message } = App.useApp()
   const navigate = useNavigate()
+  const { publicationKind, slug } = useParams<{
+    publicationKind?: string
+    slug?: string
+  }>()
+  const kind = publicationKind === 'announcements' ? 'announcements' : 'news'
+  const source = kind === 'news' ? corporateNews : corporateAnnouncements
+  const publication = useMemo(() => source.find((item) => item.slug === slug), [slug, source])
   const [form] = Form.useForm<PublicationFormValues>()
-  const [body, setBody] = useState('')
+  const [body, setBody] = useState(() =>
+    publication
+      ? publication.body.map((paragraph) => `<p>${localize(paragraph, language)}</p>`).join('')
+      : '',
+  )
+  const isEditing = Boolean(publication)
+  const listPath = `/content/${kind}`
 
-  const submit = (_values: PublicationFormValues) => {
+  const submit = (values: PublicationFormValues) => {
     void message.success(text.saved)
-    void navigate('/showcases/technopark')
+    void navigate(`/content/${values.type === 'announcement' ? 'announcements' : 'news'}`)
   }
 
+  const initialValues: PublicationFormValues = {
+    type: kind === 'news' ? 'news' : 'announcement',
+    headline: publication ? localize(publication.title, language) : '',
+    summary: publication ? localize(publication.summary, language) : '',
+    category: publication ? localize(publication.category, language) : '',
+    tags: publication?.tags?.map((tag) => localize(tag, language)) ?? [],
+    audience: 'everyone',
+    publishDate: publication ? dayjs(publication.date) : dayjs(),
+    featured: Boolean(publication?.coverImage),
+    notify: false,
+  }
+  const selectedType = Form.useWatch('type', form) ?? initialValues.type
+  const pageTitle =
+    selectedType === 'news'
+      ? isEditing
+        ? text.editNewsTitle
+        : text.createNewsTitle
+      : isEditing
+        ? text.editAnnouncementTitle
+        : text.createAnnouncementTitle
+
   return (
-    <div className="admin-page talent-page talent-form-page">
-      <PageHeader title={text.title} description={text.description} />
+    <div className="admin-page">
+      <PageHeader
+        title={pageTitle}
+        description={text.description}
+        extra={
+          <Link to={listPath}>
+            <Button icon={<ArrowLeftOutlined aria-hidden="true" />}>
+              {language === 'tr' ? 'Yayın listesine dön' : 'Back to publications'}
+            </Button>
+          </Link>
+        }
+      />
 
       <Form<PublicationFormValues>
         form={form}
         layout="vertical"
-        initialValues={{
-          type: 'news',
-          audience: 'everyone',
-          publishDate: dayjs(),
-          featured: true,
-          notify: false,
-          tags: [],
-        }}
+        initialValues={initialValues}
         onFinish={submit}
       >
-        <Row gutter={[20, 20]} align="top">
+        <Row gutter={[16, 16]} align="top">
           <Col xs={24} xl={16}>
-            <Space className="talent-form-stack" orientation="vertical" size={20}>
-              <Card className="talent-form-card" variant="borderless">
-                <div className="talent-form-card__heading">
-                  <Typography.Title level={3}>{text.content}</Typography.Title>
-                  <Typography.Text type="secondary">{text.contentHint}</Typography.Text>
-                </div>
+            <Flex vertical gap={16}>
+              <Card className="dashboard-panel" title={text.content}>
                 <Form.Item label={text.type} name="type">
                   <Segmented
                     block
@@ -98,7 +131,7 @@ export function TechParkPublicationEditorPage() {
                   name="headline"
                   rules={[{ required: true, message: text.required }]}
                 >
-                  <Input size="large" placeholder={text.headlinePlaceholder} />
+                  <Input placeholder={text.headlinePlaceholder} />
                 </Form.Item>
                 <Form.Item
                   label={text.summary}
@@ -119,14 +152,13 @@ export function TechParkPublicationEditorPage() {
                       name="category"
                       rules={[{ required: true, message: text.required }]}
                     >
-                      <Input size="large" placeholder={text.categoryPlaceholder} />
+                      <Input placeholder={text.categoryPlaceholder} />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={14}>
                     <Form.Item label={text.tags} name="tags">
                       <Select
                         mode="tags"
-                        size="large"
                         placeholder={text.tagsPlaceholder}
                         tokenSeparators={[',']}
                       />
@@ -134,9 +166,9 @@ export function TechParkPublicationEditorPage() {
                   </Col>
                 </Row>
                 <Form.Item label={text.body} required>
-                  <RichTextEditor
-                    key={language}
-                    initialValue={body}
+                  <TiptapEditor
+                    key={`${language}-${slug ?? 'new'}`}
+                    value={body}
                     language={language}
                     placeholder={text.editorPlaceholder}
                     onChange={setBody}
@@ -144,11 +176,7 @@ export function TechParkPublicationEditorPage() {
                 </Form.Item>
               </Card>
 
-              <Card className="talent-form-card" variant="borderless">
-                <div className="talent-form-card__heading">
-                  <Typography.Title level={3}>{text.media}</Typography.Title>
-                  <Typography.Text type="secondary">{text.mediaHint}</Typography.Text>
-                </div>
+              <Card className="dashboard-panel" title={text.media}>
                 <Form.Item label={text.coverImage}>
                   <Upload.Dragger
                     accept="image/png,image/jpeg"
@@ -157,7 +185,7 @@ export function TechParkPublicationEditorPage() {
                     showUploadList
                   >
                     <p className="ant-upload-drag-icon">
-                      <InboxOutlined />
+                      <InboxOutlined aria-hidden="true" />
                     </p>
                     <p className="ant-upload-text">{text.coverUpload}</p>
                     <p className="ant-upload-hint">{text.coverHelp}</p>
@@ -165,19 +193,17 @@ export function TechParkPublicationEditorPage() {
                 </Form.Item>
                 <Form.Item label={text.attachments}>
                   <Upload beforeUpload={() => false} multiple>
-                    <Button icon={<FileAddOutlined />}>{text.attachmentUpload}</Button>
+                    <Button icon={<FileAddOutlined aria-hidden="true" />}>
+                      {text.attachmentUpload}
+                    </Button>
                   </Upload>
                 </Form.Item>
               </Card>
-            </Space>
+            </Flex>
           </Col>
 
           <Col xs={24} xl={8}>
-            <Card className="talent-form-card talent-publish-card" variant="borderless">
-              <div className="talent-form-card__heading">
-                <Typography.Title level={3}>{text.settings}</Typography.Title>
-                <Typography.Text type="secondary">{text.settingsHint}</Typography.Text>
-              </div>
+            <Card className="dashboard-panel" title={text.settings}>
               <Form.Item label={text.audience} name="audience">
                 <Radio.Group>
                   <Space orientation="vertical">
@@ -192,10 +218,10 @@ export function TechParkPublicationEditorPage() {
                 name="publishDate"
                 rules={[{ required: true, message: text.required }]}
               >
-                <DatePicker className="full-width" showTime size="large" />
+                <DatePicker showTime style={{ width: '100%' }} />
               </Form.Item>
               <Form.Item label={text.expiryDate} name="expiryDate">
-                <DatePicker className="full-width" size="large" />
+                <DatePicker style={{ width: '100%' }} />
               </Form.Item>
               <Form.Item label={text.featured} name="featured" valuePropName="checked">
                 <Switch />
@@ -203,27 +229,18 @@ export function TechParkPublicationEditorPage() {
               <Form.Item label={text.notify} name="notify" valuePropName="checked">
                 <Switch />
               </Form.Item>
-              <Flex vertical gap={8}>
-                <Button block size="large" icon={<SaveOutlined />} onClick={form.submit}>
-                  {text.saveDraft}
-                </Button>
-                <Button block size="large" icon={<EyeOutlined />}>
-                  {text.preview}
-                </Button>
+              <Flex gap={8} wrap>
                 <Button
-                  block
-                  size="large"
                   type="primary"
-                  icon={<SendOutlined />}
+                  icon={<SendOutlined aria-hidden="true" />}
                   onClick={form.submit}
                 >
                   {text.publish}
                 </Button>
-                <Link to="/showcases/technopark">
-                  <Button block size="large" icon={<ArrowLeftOutlined />}>
-                    {language === 'tr' ? 'Teknoparka dön' : 'Back to Technopark'}
-                  </Button>
-                </Link>
+                <Button icon={<SaveOutlined aria-hidden="true" />} onClick={form.submit}>
+                  {text.saveDraft}
+                </Button>
+                <Button icon={<EyeOutlined aria-hidden="true" />}>{text.preview}</Button>
               </Flex>
             </Card>
           </Col>

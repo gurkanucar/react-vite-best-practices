@@ -26,7 +26,8 @@ describe('useGurkanTheme', () => {
     const { result } = renderHook(() => useGurkanTheme('light'))
 
     expect(result.current.theme?.components?.Input?.colorBgContainer).toBe('#f4f6f8')
-    expect(result.current.theme?.components?.Input?.colorBorder).toBe('transparent')
+    // A visible edge, so a field does not dissolve into the card around it.
+    expect(result.current.theme?.components?.Input?.colorBorder).toBe('#dfe3e8')
     expect(result.current.theme?.components?.Select?.optionSelectedBg).toBe(
       'rgba(24, 119, 242, 0.08)',
     )
