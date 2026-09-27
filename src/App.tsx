@@ -1,5 +1,5 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Button, Flex, Grid, Layout, Menu, Tooltip, Typography } from 'antd'
+import { Button, Flex, Grid, Layout, Menu, Tooltip, Typography, type MenuProps } from 'antd'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
@@ -16,10 +16,19 @@ import { officialThemeBackgrounds } from '@/theme/useOfficialTheme'
 import './App.css'
 
 const { Content, Footer, Header, Sider } = Layout
-const disabledMenuMotion = {
+/**
+ * A short fold for opening and shutting a section. It skips the first paint, so the section
+ * holding the current page is simply open on load instead of sliding open, which is why the
+ * motion was switched off before. The timing lives with the class names in App.css.
+ */
+const menuMotion: MenuProps['motion'] = {
+  motionName: 'admin-menu-fold',
   motionAppear: false,
-  motionEnter: false,
-  motionLeave: false,
+  motionDeadline: 400,
+  onEnterStart: () => ({ height: 0, opacity: 0 }),
+  onEnterActive: (node) => ({ height: node.scrollHeight, opacity: 1 }),
+  onLeaveStart: (node) => ({ height: node.offsetHeight }),
+  onLeaveActive: () => ({ height: 0, opacity: 0 }),
 }
 
 function App() {
@@ -109,7 +118,7 @@ function App() {
       </Link>
       <Menu
         mode="inline"
-        motion={disabledMenuMotion}
+        motion={menuMotion}
         openKeys={openKeys}
         onOpenChange={(keys) => setOpenKeys(keys)}
         selectedKeys={[selectedNavigationKey]}

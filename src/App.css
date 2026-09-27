@@ -59,6 +59,43 @@ html[data-theme='dark'] .admin-shell::before {
   text-decoration: none;
 }
 
+/*
+ * The brand is its own band, not the first menu row: a rule under it, level with the header's
+ * bottom edge, and some air before the menu. It stays put while a long menu scrolls beneath.
+ */
+.admin-sider .admin-brand {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-block-end: 8px;
+  border-block-end: var(--ant-line-width) solid var(--ant-color-border-secondary);
+  /* Whatever colour the theme gives the sider, so the scrolling menu never shows through. */
+  background: inherit;
+}
+
+.admin-sider > .ant-layout-sider-children {
+  background: inherit;
+}
+
+/*
+ * The fold `menuMotion` in App.tsx names: quick enough to feel like a response, not a show.
+ * antd gives `.ant-menu-sub` its own transition, so these selectors carry the sider class too.
+ */
+.admin-sider .ant-menu-sub.admin-menu-fold-enter-active,
+.admin-sider .ant-menu-sub.admin-menu-fold-leave-active {
+  overflow: hidden;
+  transition:
+    height 0.18s var(--ant-motion-ease-in-out),
+    opacity 0.18s var(--ant-motion-ease-in-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-sider .ant-menu-sub.admin-menu-fold-enter-active,
+  .admin-sider .ant-menu-sub.admin-menu-fold-leave-active {
+    transition: none;
+  }
+}
+
 .admin-brand img {
   width: 36px;
   height: 36px;
