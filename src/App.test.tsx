@@ -2,10 +2,34 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { routes } from '@/router/router'
 import { usePreferencesStore } from '@/store/preferences-store'
 import { AppThemeProvider } from '@/theme/AppThemeProvider'
+
+/**
+ * jsdom matches no media query, so the shell lays out as on a phone, with the menu in a
+ * closed drawer. Tests about the sidebar itself ask for a desktop screen instead.
+ */
+function showDesktopLayout() {
+  vi.spyOn(window, 'matchMedia').mockImplementation(
+    (query) =>
+      ({
+        matches: true,
+        media: query,
+        onchange: null,
+        addListener: () => undefined,
+        removeListener: () => undefined,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+        dispatchEvent: () => false,
+      }) as MediaQueryList,
+  )
+}
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 describe('admin application', () => {
   it('keeps the landing page separate from the dashboard', async () => {
@@ -34,6 +58,7 @@ describe('admin application', () => {
   }, 10_000)
 
   it('renders and navigates between routed pages', async () => {
+    showDesktopLayout()
     const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
     render(
       <AppThemeProvider>
@@ -82,6 +107,7 @@ describe('admin application', () => {
   })
 
   it('renders nested navigation and collapses the sidebar', async () => {
+    showDesktopLayout()
     const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
     render(
       <AppThemeProvider>
@@ -283,6 +309,7 @@ describe('admin application', () => {
 })
 
 it('uses the persistent sidebar on desktop screens', async () => {
+  showDesktopLayout()
   usePreferencesStore.setState({ visualTheme: 'illustration' })
   const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
   render(
@@ -291,4 +318,32 @@ it('uses the persistent sidebar on desktop screens', async () => {
     </AppThemeProvider>,
   )
   expect(await screen.findByRole('link', { name: /RVBP/ })).toBeInTheDocument()
+})
+
+it('opens the menu over the page on a phone and puts it away after navigating', async () => {
+  const user = userEvent.setup()
+  const router = createMemoryRouter(routes, { initialEntries: ['/dashboard'] })
+  render(
+    <AppThemeProvider>
+      <RouterProvider router={router} />
+    </AppThemeProvider>,
+  )
+
+  // No sider takes a column of the screen; the menu waits behind the header button.
+  const toggle = await screen.findByRole('button', { name: 'Expand the menu' })
+  expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
+  expect(screen.queryByRole('menuitem', { name: /Overview/ })).not.toBeInTheDocument()
+
+  await user.click(toggle)
+  expect(await screen.findByRole('dialog', { name: 'Main menu' })).toBeInTheDocument()
+
+  await user.click(screen.getByRole('menuitem', { name: /Workspace/ }))
+  await user.click(await screen.findByRole('menuitem', { name: /Tasks/ }))
+
+  expect(router.state.location.pathname).toBe('/todos')
+  await waitFor(() => expect(screen.queryByRole('dialog', { name: 'Main menu' })).toBeNull())
+  expect(screen.getByRole('button', { name: 'Expand the menu' })).toHaveAttribute(
+    'aria-expanded',
+    'false',
+  )
 })

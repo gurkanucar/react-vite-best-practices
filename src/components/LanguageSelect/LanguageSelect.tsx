@@ -14,7 +14,7 @@ function LanguageOption({ flag: Flag, label }: LanguageOptionProps) {
   return (
     <span className="language-option">
       <Flag aria-hidden="true" className="language-option__flag" />
-      <span>{label}</span>
+      <span className="language-option__label">{label}</span>
     </span>
   )
 }
@@ -28,6 +28,8 @@ export function LanguageSelect() {
     <Select
       aria-label={messages.shell.language}
       className="language-select"
+      // On a phone the select shrinks to its flag; the list keeps room for the names.
+      popupMatchSelectWidth={false}
       styles={{ root: { height: 'var(--ant-select-height)' } }}
       value={language}
       options={[

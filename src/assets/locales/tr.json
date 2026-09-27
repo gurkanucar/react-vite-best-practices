@@ -62,7 +62,8 @@
     "collapseMenu": "Menüyü daralt",
     "expandMenu": "Menüyü genişlet",
     "searchLabel": "Çalışma alanında ara",
-    "searchPlaceholder": "Sayfalarda ara"
+    "searchPlaceholder": "Sayfalarda ara",
+    "navigation": "Ana menü"
   },
   "landing": {
     "ready": "Production-ready altyapı",

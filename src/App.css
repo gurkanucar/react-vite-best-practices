@@ -40,6 +40,29 @@ html[data-theme='dark'] .admin-shell::before {
   --admin-bar-height: 56px;
 }
 
+/*
+ * The app's own chrome is for clicking, not copying: a double click or a drag over the menu,
+ * the header or a page title should not paint a text selection across them. Inputs inside
+ * (the header search) are form controls and keep their selection.
+ */
+.admin-sider,
+.admin-drawer,
+.admin-header,
+.page-heading {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.admin-header :is(input, textarea) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* On a phone the menu lives in a drawer; the sider's background keeps it the same surface. */
+.admin-drawer .ant-drawer-body {
+  background: var(--ant-layout-sider-bg, var(--ant-color-bg-container));
+}
+
 /* The sidebar stays pinned while the page content scrolls. */
 .admin-sider {
   position: sticky;
@@ -63,7 +86,8 @@ html[data-theme='dark'] .admin-shell::before {
  * The brand is its own band, not the first menu row: a rule under it, level with the header's
  * bottom edge, and some air before the menu. It stays put while a long menu scrolls beneath.
  */
-.admin-sider .admin-brand {
+.admin-sider .admin-brand,
+.admin-drawer .admin-brand {
   position: sticky;
   top: 0;
   z-index: 1;
@@ -81,8 +105,8 @@ html[data-theme='dark'] .admin-shell::before {
  * The fold `menuMotion` in App.tsx names: quick enough to feel like a response, not a show.
  * antd gives `.ant-menu-sub` its own transition, so these selectors carry the sider class too.
  */
-.admin-sider .ant-menu-sub.admin-menu-fold-enter-active,
-.admin-sider .ant-menu-sub.admin-menu-fold-leave-active {
+:is(.admin-sider, .admin-drawer) .ant-menu-sub.admin-menu-fold-enter-active,
+:is(.admin-sider, .admin-drawer) .ant-menu-sub.admin-menu-fold-leave-active {
   overflow: hidden;
   transition:
     height 0.18s var(--ant-motion-ease-in-out),
@@ -90,8 +114,8 @@ html[data-theme='dark'] .admin-shell::before {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .admin-sider .ant-menu-sub.admin-menu-fold-enter-active,
-  .admin-sider .ant-menu-sub.admin-menu-fold-leave-active {
+  :is(.admin-sider, .admin-drawer) .ant-menu-sub.admin-menu-fold-enter-active,
+  :is(.admin-sider, .admin-drawer) .ant-menu-sub.admin-menu-fold-leave-active {
     transition: none;
   }
 }
@@ -330,8 +354,13 @@ html[data-theme='dark'] .admin-shell::before {
     padding: 16px;
   }
 
+  /* A phone has room for the flag alone; the list still names each language. */
   .admin-header__actions .language-select {
-    width: 96px;
+    width: 68px;
+  }
+
+  .admin-header .language-select .ant-select-content .language-option__label {
+    display: none;
   }
 
   /* Both pieces fit on one line even on a phone; stacking them only made the footer taller. */

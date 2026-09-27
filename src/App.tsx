@@ -1,5 +1,5 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
-import { Button, Flex, Grid, Layout, Menu, Tooltip, Typography, type MenuProps } from 'antd'
+import { Button, Drawer, Flex, Grid, Layout, Menu, Tooltip, Typography, type MenuProps } from 'antd'
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router'
 import { AppVersion } from '@/components/AppVersion/AppVersion'
@@ -36,9 +36,19 @@ function App() {
   const navigate = useNavigate()
   const messages = useMessages()
   const [collapsed, setCollapsed] = useState(false)
-  // On a narrow screen an icon rail is still a column of wasted width, so the sider
-  // collapses to nothing instead and the header button is the only way back.
+  /**
+   * On a narrow screen the menu is a drawer over the page rather than a column beside it: a
+   * sider opened there took 280px from a 390px screen and crushed the page into what was left.
+   */
   const isDesktop = Grid.useBreakpoint().lg ?? false
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [lastPathname, setLastPathname] = useState(location.pathname)
+  // Arriving somewhere puts the drawer away, however the reader got there.
+  if (lastPathname !== location.pathname) {
+    setLastPathname(location.pathname)
+    setDrawerOpen(false)
+  }
+  const menuOpen = isDesktop ? !collapsed : drawerOpen
   const navigationSections = useNavigationSections()
   const visualTheme = usePreferencesStore((state) => state.visualTheme)
   const backgroundImage = officialThemeBackgrounds[visualTheme]
@@ -101,15 +111,17 @@ function App() {
     }
   }
 
+  // The drawer is always full width, so only the desktop rail ever draws the narrow brand.
+  const railCollapsed = isDesktop && collapsed
   const navigation = (
     <>
       <Link
-        className={`admin-brand${collapsed ? ' admin-brand--collapsed' : ''}`}
+        className={`admin-brand${railCollapsed ? ' admin-brand--collapsed' : ''}`}
         to="/dashboard"
         aria-label={`${messages.shell.product} home`}
       >
         <img src="/favicon.svg" alt="" width="42" height="42" />
-        {!collapsed && (
+        {!railCollapsed && (
           <span>
             <Typography.Text strong>{messages.shell.product}</Typography.Text>
             <Typography.Text type="secondary">{messages.shell.workspace}</Typography.Text>
@@ -124,6 +136,8 @@ function App() {
         selectedKeys={[selectedNavigationKey]}
         items={navigationItems}
         onClick={({ key }) => {
+          // Also closes on the page already open, where the pathname does not change.
+          setDrawerOpen(false)
           void navigate(key)
         }}
       />
@@ -132,30 +146,43 @@ function App() {
 
   return (
     <Layout className="admin-shell" data-visual-theme={visualTheme} style={backgroundStyle}>
-      <Sider
-        breakpoint="lg"
-        className="admin-sider"
-        collapsed={collapsed}
-        collapsedWidth={isDesktop ? 80 : 0}
-        collapsible
-        theme="light"
-        trigger={null}
-        width={280}
-        onCollapse={setCollapsed}
-      >
-        {navigation}
-      </Sider>
+      {isDesktop ? (
+        <Sider
+          className="admin-sider"
+          collapsed={collapsed}
+          collapsedWidth={80}
+          collapsible
+          theme="light"
+          trigger={null}
+          width={280}
+        >
+          {navigation}
+        </Sider>
+      ) : (
+        <Drawer
+          open={drawerOpen}
+          placement="left"
+          size={280}
+          closable={false}
+          onClose={() => setDrawerOpen(false)}
+          className="admin-drawer"
+          styles={{ body: { padding: 0 } }}
+          aria-label={messages.shell.navigation}
+        >
+          {navigation}
+        </Drawer>
+      )}
 
       <Layout className="admin-workspace">
         <Header className="admin-header">
           <Flex className="admin-header__lead" align="center" gap={12}>
-            <Tooltip title={collapsed ? messages.shell.expandMenu : messages.shell.collapseMenu}>
+            <Tooltip title={menuOpen ? messages.shell.collapseMenu : messages.shell.expandMenu}>
               <Button
-                aria-expanded={!collapsed}
-                aria-label={collapsed ? messages.shell.expandMenu : messages.shell.collapseMenu}
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                aria-expanded={menuOpen}
+                aria-label={menuOpen ? messages.shell.collapseMenu : messages.shell.expandMenu}
+                icon={menuOpen ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
                 type="text"
-                onClick={() => setCollapsed(!collapsed)}
+                onClick={() => (isDesktop ? setCollapsed(!collapsed) : setDrawerOpen(!drawerOpen))}
               />
             </Tooltip>
 
