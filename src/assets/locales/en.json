@@ -38,7 +38,9 @@
     "dentalLanding": "Dental clinic",
     "corporateLanding": "Corporate website",
     "corporateNews": "Corporate news",
-    "corporateAnnouncements": "Announcements"
+    "corporateAnnouncements": "Announcements",
+    "talentBoard": "Talent board",
+    "techParkPublication": "Create campus publication"
   },
   "shell": {
     "product": "RVBP Console",

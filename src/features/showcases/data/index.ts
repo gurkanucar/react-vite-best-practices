@@ -1,4 +1,5 @@
 export { corporateAnnouncements, corporateNews } from './publications'
+export { findShowcaseJob, showcaseJobs } from './jobs'
 export {
   campusSectorShare,
   campusStatistics,
@@ -12,3 +13,4 @@ export {
   roleLevelLabels,
 } from './techPark'
 export { techParkCopy, techParkLinks, techParkMonogram } from './techParkCopy'
+export { publicationEditorCopy, talentCopy } from './talentCopy'

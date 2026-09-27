@@ -1,0 +1,450 @@
+.talent-page {
+  --talent-ink: #10213b;
+  --talent-blue: #3157d5;
+  --talent-amber: #f0a93a;
+  --talent-line: color-mix(in srgb, var(--ant-color-border) 78%, transparent);
+  max-width: 1320px;
+  margin-inline: auto;
+}
+
+.talent-page .page-heading h1 {
+  color: var(--talent-ink);
+  letter-spacing: -0.035em;
+}
+
+html[data-theme='dark'] .talent-page .page-heading h1 {
+  color: var(--ant-color-text-heading);
+}
+
+.talent-overview {
+  position: relative;
+  margin-block: 22px 18px;
+  padding: 24px 28px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--talent-ink);
+}
+
+.talent-overview::after {
+  position: absolute;
+  top: -88px;
+  right: -40px;
+  width: 260px;
+  height: 260px;
+  content: '';
+  border: 46px solid rgb(240 169 58 / 14%);
+  border-radius: 50%;
+}
+
+.talent-overview .ant-col:not(:first-child) {
+  border-inline-start: 1px solid rgb(255 255 255 / 14%);
+}
+
+.talent-overview .ant-statistic {
+  position: relative;
+  z-index: 1;
+  padding-inline: 16px;
+}
+
+.talent-overview .ant-statistic-title {
+  color: rgb(255 255 255 / 62%);
+}
+
+.talent-overview .ant-statistic-content {
+  color: #fff;
+  font-size: 1.75rem;
+  font-weight: 650;
+}
+
+.talent-filterbar {
+  margin-bottom: 10px;
+  border: 1px solid var(--talent-line);
+  box-shadow: none;
+}
+
+.talent-filterbar .ant-card-body {
+  padding: 14px;
+}
+
+.talent-filterbar__search {
+  width: min(100%, 400px);
+}
+
+.talent-filterbar__select {
+  min-width: 170px;
+}
+
+.talent-filterbar__sort {
+  min-width: 160px;
+}
+
+.talent-result-count {
+  min-height: 48px;
+}
+
+.talent-job-card {
+  height: 100%;
+  border: 1px solid var(--talent-line);
+  box-shadow: 0 8px 28px rgb(16 33 59 / 5%);
+}
+
+.talent-job-card .ant-avatar {
+  flex: none;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.talent-job-card h3 {
+  margin: 2px 0 0;
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.talent-job-card a {
+  color: inherit;
+}
+
+.talent-job-card a:hover h3 {
+  color: var(--ant-color-primary);
+}
+
+.talent-job-card__summary {
+  min-height: 48px;
+  margin-block: 20px 16px;
+}
+
+.talent-job-card__facts .ant-tag {
+  margin-inline-end: 0;
+}
+
+.talent-job-card__footer {
+  margin: 20px -24px -24px;
+  padding: 14px 18px 14px 24px;
+  border-top: 1px solid var(--talent-line);
+}
+
+.talent-job-card__footer .ant-btn {
+  padding-inline: 0;
+}
+
+.talent-pagination {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.talent-detail-actions {
+  margin-bottom: 18px;
+}
+
+.talent-status-tag {
+  min-height: 32px;
+  padding: 5px 12px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+}
+
+.talent-detail-hero {
+  position: relative;
+  padding: 34px;
+  overflow: hidden;
+  border-radius: 24px 24px 8px 8px;
+  background:
+    linear-gradient(110deg, rgb(255 255 255 / 98%), rgb(244 247 255 / 94%)),
+    var(--ant-color-bg-container);
+  border: 1px solid #dfe5f5;
+}
+
+.talent-detail-hero::after {
+  position: absolute;
+  right: -54px;
+  bottom: -98px;
+  width: 260px;
+  height: 260px;
+  content: '';
+  border: 36px solid rgb(49 87 213 / 8%);
+  border-radius: 48% 52% 44% 56%;
+  transform: rotate(18deg);
+}
+
+.talent-detail-hero > .ant-flex {
+  position: relative;
+  z-index: 1;
+}
+
+.talent-detail-hero .ant-avatar {
+  flex: none;
+  border-radius: 19px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.talent-detail-hero h1 {
+  margin-block: 4px 12px;
+  color: var(--talent-ink);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.045em;
+}
+
+.talent-detail-layout {
+  margin-top: 20px;
+}
+
+.talent-detail-content,
+.talent-facts,
+.talent-company-card {
+  border: 1px solid var(--talent-line);
+  box-shadow: 0 10px 34px rgb(16 33 59 / 5%);
+}
+
+.talent-detail-content section + section {
+  margin-top: 42px;
+  padding-top: 36px;
+  border-top: 1px solid var(--talent-line);
+}
+
+.talent-detail-content h2 {
+  margin-bottom: 16px;
+  color: var(--talent-ink);
+  font-size: 1.35rem;
+}
+
+.talent-detail-content p,
+.talent-detail-list {
+  max-width: 760px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.talent-detail-list {
+  margin: 0;
+  padding-inline-start: 20px;
+}
+
+.talent-detail-list li + li {
+  margin-top: 10px;
+}
+
+.talent-detail-aside {
+  position: sticky;
+  top: calc(var(--ant-layout-header-height) + 20px);
+}
+
+.talent-facts h3,
+.talent-company-card h4 {
+  color: var(--talent-ink);
+}
+
+.talent-facts dl {
+  margin-block: 22px;
+}
+
+.talent-facts dl > div {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 10px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--talent-line);
+}
+
+.talent-facts dt {
+  color: var(--talent-blue);
+  font-size: 18px;
+}
+
+.talent-facts dd {
+  margin: 0;
+}
+
+.talent-facts dd span,
+.talent-facts dd strong {
+  display: block;
+}
+
+.talent-facts dd span {
+  margin-bottom: 2px;
+  color: var(--ant-color-text-secondary);
+  font-size: 0.82rem;
+}
+
+.talent-company-card {
+  margin-top: 16px;
+}
+
+.talent-company-card h4 {
+  margin: 0;
+}
+
+.talent-company-card p {
+  margin: 18px 0 0;
+}
+
+.talent-form-page {
+  max-width: 1220px;
+}
+
+.talent-form-stack {
+  width: 100%;
+}
+
+.talent-form-card {
+  border: 1px solid var(--talent-line);
+  box-shadow: 0 10px 34px rgb(16 33 59 / 5%);
+}
+
+.talent-form-card__heading {
+  margin-bottom: 26px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--talent-line);
+}
+
+.talent-form-card__heading h3 {
+  margin-bottom: 4px;
+  color: var(--talent-ink);
+}
+
+.talent-publish-card {
+  position: sticky;
+  top: calc(var(--ant-layout-header-height) + 20px);
+}
+
+.talent-publish-card .ant-radio-group {
+  width: 100%;
+}
+
+.talent-publish-card .ant-radio-button-wrapper {
+  width: 50%;
+  text-align: center;
+}
+
+.showcase-editor {
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border);
+  border-radius: var(--ant-border-radius-lg);
+  background: var(--ant-color-bg-container);
+}
+
+.showcase-editor:focus-within {
+  border-color: var(--ant-color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ant-color-primary) 15%, transparent);
+}
+
+.showcase-editor__toolbar {
+  min-height: 48px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.showcase-editor__toolbar .ant-divider-vertical {
+  height: 24px;
+  margin-inline: 5px;
+}
+
+.showcase-editor__style {
+  width: 138px;
+}
+
+.showcase-editor__surface {
+  min-height: 320px;
+  padding: 22px;
+  outline: none;
+  line-height: 1.75;
+}
+
+.showcase-editor__surface:empty::before {
+  content: attr(data-placeholder);
+  color: var(--ant-color-text-placeholder);
+  pointer-events: none;
+}
+
+.showcase-editor__surface h2 {
+  margin-block: 24px 10px;
+  font-size: 1.4rem;
+}
+
+.showcase-editor__surface h3 {
+  margin-block: 20px 8px;
+  font-size: 1.15rem;
+}
+
+.showcase-editor__surface p:first-child,
+.showcase-editor__surface h2:first-child,
+.showcase-editor__surface h3:first-child {
+  margin-top: 0;
+}
+
+html[data-theme='dark'] .talent-detail-hero {
+  border-color: var(--ant-color-border);
+  background: var(--ant-color-bg-container);
+}
+
+html[data-theme='dark']
+  :is(
+    .talent-detail-hero h1,
+    .talent-detail-content h2,
+    .talent-facts h3,
+    .talent-company-card h4,
+    .talent-form-card__heading h3
+  ) {
+  color: var(--ant-color-text-heading);
+}
+
+@media (max-width: 992px) {
+  .talent-detail-aside,
+  .talent-publish-card {
+    position: static;
+  }
+}
+
+@media (max-width: 680px) {
+  .talent-overview {
+    padding: 16px;
+  }
+
+  .talent-overview .ant-col:nth-child(3) {
+    border-inline-start: 0;
+  }
+
+  .talent-overview .ant-statistic {
+    padding: 8px;
+  }
+
+  .talent-filterbar__search,
+  .talent-filterbar__select,
+  .talent-filterbar__sort {
+    width: 100%;
+  }
+
+  .talent-filterbar .ant-flex,
+  .talent-filterbar .ant-flex > .ant-flex {
+    width: 100%;
+  }
+
+  .talent-job-card__footer .ant-space {
+    gap: 8px !important;
+  }
+
+  .talent-detail-hero {
+    padding: 24px;
+  }
+
+  .talent-detail-hero > .ant-flex {
+    align-items: flex-start;
+  }
+
+  .talent-detail-hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .showcase-editor__toolbar {
+    overflow-x: auto;
+  }
+
+  .showcase-editor__surface {
+    min-height: 260px;
+  }
+}

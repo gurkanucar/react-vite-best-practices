@@ -38,7 +38,9 @@
     "dentalLanding": "Diş kliniği",
     "corporateLanding": "Kurumsal web sitesi",
     "corporateNews": "Kurumsal haberler",
-    "corporateAnnouncements": "Duyurular"
+    "corporateAnnouncements": "Duyurular",
+    "talentBoard": "Yetenek ilanları",
+    "techParkPublication": "Kampüs yayını oluştur"
   },
   "shell": {
     "product": "RVBP Konsolu",

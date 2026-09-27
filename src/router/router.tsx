@@ -16,6 +16,9 @@ import {
   ExamPage,
   ExamResultsPage,
   FlashcardsPage,
+  JobDetailPage,
+  JobEditorPage,
+  JobListPage,
   DashboardPage,
   DentalClinicLandingPage,
   DocumentsPage,
@@ -40,6 +43,7 @@ import {
   TechParkCompaniesPage,
   TechParkCompanyPage,
   TechParkLandingPage,
+  TechParkPublicationEditorPage,
   TourDetailPage,
   TourListPage,
 } from '@/router/LazyPages'
@@ -260,6 +264,51 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <TechParkCompanyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/publications/new',
+        element: (
+          <RouteSuspense>
+            <TechParkPublicationEditorPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/jobs',
+        element: (
+          <RouteSuspense>
+            <JobListPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/jobs/new',
+        element: (
+          <RouteSuspense>
+            <JobEditorPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/jobs/:jobSlug/edit',
+        element: (
+          <RouteSuspense>
+            <JobEditorPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/jobs/:jobSlug',
+        element: (
+          <RouteSuspense>
+            <JobDetailPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

@@ -12,6 +12,7 @@ import {
   DatabaseOutlined,
   ExperimentOutlined,
   FileDoneOutlined,
+  FileAddOutlined,
   FilePdfOutlined,
   FileTextOutlined,
   FlagOutlined,
@@ -32,6 +33,7 @@ import {
   SettingOutlined,
   ShopOutlined,
   ShoppingOutlined,
+  SolutionOutlined,
   TagOutlined,
   TeamOutlined,
   TrophyOutlined,
@@ -191,6 +193,16 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/showcases/technopark',
             icon: <RocketOutlined />,
             label: messages.navigation.techParkLanding,
+          },
+          {
+            key: '/showcases/jobs',
+            icon: <SolutionOutlined />,
+            label: messages.navigation.talentBoard,
+          },
+          {
+            key: '/showcases/technopark/publications/new',
+            icon: <FileAddOutlined />,
+            label: messages.navigation.techParkPublication,
           },
           {
             key: '/showcases/dental-clinic',

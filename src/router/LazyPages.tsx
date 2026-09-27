@@ -169,3 +169,20 @@ export const TechParkCompanyPage = lazy(async () => ({
 export const TechParkLandingPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/TechParkLandingPage')).TechParkLandingPage,
 }))
+
+export const JobListPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/JobListPage')).JobListPage,
+}))
+
+export const JobDetailPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/JobDetailPage')).JobDetailPage,
+}))
+
+export const JobEditorPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/JobEditorPage')).JobEditorPage,
+}))
+
+export const TechParkPublicationEditorPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TechParkPublicationEditorPage'))
+    .TechParkPublicationEditorPage,
+}))

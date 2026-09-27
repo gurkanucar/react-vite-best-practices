@@ -9,3 +9,7 @@ export {
 export { TechParkCompaniesPage } from './TechParkCompaniesPage'
 export { TechParkCompanyPage } from './TechParkCompanyPage'
 export { TechParkLandingPage } from './TechParkLandingPage'
+export { JobListPage } from './JobListPage'
+export { JobDetailPage } from './JobDetailPage'
+export { JobEditorPage } from './JobEditorPage'
+export { TechParkPublicationEditorPage } from './TechParkPublicationEditorPage'
