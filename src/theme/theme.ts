@@ -24,9 +24,9 @@ export interface ThemePreferences {
 }
 
 export const defaultThemePreferences: ThemePreferences = {
-  colorMode: 'system',
+  colorMode: 'light',
   compact: false,
-  visualTheme: 'ant-design',
+  visualTheme: 'gurkan',
 }
 
 export function resolveColorMode(
