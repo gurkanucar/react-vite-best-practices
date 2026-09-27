@@ -7,6 +7,12 @@
   overscroll-behavior: contain;
 }
 
+.pdf-viewer__pages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .pdf-viewer__page {
   display: flex;
   justify-content: center;

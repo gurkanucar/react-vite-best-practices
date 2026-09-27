@@ -1,4 +1,4 @@
-import { LeftOutlined, RightOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons'
+import { ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons'
 import { Alert, Button, Card, Flex, Tooltip, Typography } from 'antd'
 import { useEffect, useRef, useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
@@ -50,9 +50,43 @@ export function PdfViewer({ file, title }: PdfViewerProps) {
     return () => observer.disconnect()
   }, [])
 
-  const goToPage = (target: number) => {
-    setPage(Math.min(Math.max(target, 1), pageCount || 1))
-  }
+  /*
+   * Every page is rendered and the reader scrolls through them, so the indicator follows
+   * the page that fills most of the viewport instead of being driven by buttons.
+   */
+  useEffect(() => {
+    const viewport = viewportRef.current
+    if (!viewport || pageCount === 0 || typeof IntersectionObserver === 'undefined') {
+      return undefined
+    }
+
+    const visibility = new Map<number, number>()
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          visibility.set(
+            Number((entry.target as HTMLElement).dataset.page),
+            entry.intersectionRatio,
+          )
+        }
+
+        let mostVisible = 1
+        let highestRatio = -1
+        for (const [pageNumber, ratio] of visibility) {
+          if (ratio > highestRatio) {
+            mostVisible = pageNumber
+            highestRatio = ratio
+          }
+        }
+        setPage(mostVisible)
+      },
+      { root: viewport, threshold: [0, 0.25, 0.5, 0.75, 1] },
+    )
+
+    viewport.querySelectorAll('.pdf-viewer__page').forEach((element) => observer.observe(element))
+
+    return () => observer.disconnect()
+  }, [pageCount])
 
   const changeZoom = (delta: number) =>
     setZoom((current) =>
@@ -65,27 +99,11 @@ export function PdfViewer({ file, title }: PdfViewerProps) {
       title={title}
       extra={
         <Flex align="center" gap={8} wrap>
-          <Tooltip title={messages.documents.previousPage}>
-            <Button
-              aria-label={messages.documents.previousPage}
-              disabled={page <= 1}
-              icon={<LeftOutlined aria-hidden="true" />}
-              onClick={() => goToPage(page - 1)}
-            />
-          </Tooltip>
           <Typography.Text aria-live="polite">
             {messages.documents.pageOf
               .replace('{page}', String(page))
               .replace('{total}', String(pageCount || 1))}
           </Typography.Text>
-          <Tooltip title={messages.documents.nextPage}>
-            <Button
-              aria-label={messages.documents.nextPage}
-              disabled={page >= pageCount}
-              icon={<RightOutlined aria-hidden="true" />}
-              onClick={() => goToPage(page + 1)}
-            />
-          </Tooltip>
 
           <Tooltip title={messages.documents.zoomOut}>
             <Button
@@ -118,8 +136,16 @@ export function PdfViewer({ file, title }: PdfViewerProps) {
           }}
         >
           {pageCount > 0 && (
-            <div className="pdf-viewer__page">
-              <Page pageNumber={page} width={pageWidth * zoom} loading={<LoadingState />} />
+            <div className="pdf-viewer__pages">
+              {Array.from({ length: pageCount }, (_, index) => (
+                <div className="pdf-viewer__page" data-page={index + 1} key={index + 1}>
+                  <Page
+                    pageNumber={index + 1}
+                    width={pageWidth * zoom}
+                    loading={<LoadingState />}
+                  />
+                </div>
+              ))}
             </div>
           )}
         </Document>

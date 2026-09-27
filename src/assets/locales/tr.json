@@ -548,8 +548,6 @@
     "notice": "Dosya API istemcisi üzerinden istenir; kimlik doğrulamalı bir uç nokta da aynı şekilde çalışır.",
     "sampleTitle": "Sürüm raporu",
     "download": "İndir",
-    "previousPage": "Önceki sayfa",
-    "nextPage": "Sonraki sayfa",
     "pageOf": "Sayfa {page} / {total}",
     "zoomIn": "Yakınlaştır",
     "zoomOut": "Uzaklaştır",

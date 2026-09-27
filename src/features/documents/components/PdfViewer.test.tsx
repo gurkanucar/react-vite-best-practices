@@ -27,7 +27,7 @@ vi.mock('react-pdf', () => ({
 }))
 
 describe('PdfViewer', () => {
-  it('renders only the active responsive page and pages through the document', async () => {
+  it('renders every page of the document in one scrollable column', async () => {
     const user = userEvent.setup()
     const { PdfViewer } = await import('@/features/documents/components/PdfViewer')
 
@@ -39,15 +39,15 @@ describe('PdfViewer', () => {
 
     fireEvent.click(screen.getByTestId('load-pdf'))
 
-    expect(screen.getAllByTestId('pdf-page')).toHaveLength(1)
-    expect(screen.getByTestId('pdf-page')).toHaveAttribute('data-page-number', '1')
+    const pages = screen.getAllByTestId('pdf-page')
+    expect(pages.map((page) => page.dataset.pageNumber)).toEqual(['1', '2', '3'])
     expect(screen.getByText('Page 1 of 3')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Next page' })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Next page' }))
-    expect(screen.getByTestId('pdf-page')).toHaveAttribute('data-page-number', '2')
-
-    const initialWidth = Number(screen.getByTestId('pdf-page').dataset.width)
+    const initialWidth = Number(pages[0].dataset.width)
     await user.click(screen.getByRole('button', { name: 'Zoom in' }))
-    expect(Number(screen.getByTestId('pdf-page').dataset.width)).toBeGreaterThan(initialWidth)
+    for (const page of screen.getAllByTestId('pdf-page')) {
+      expect(Number(page.dataset.width)).toBeGreaterThan(initialWidth)
+    }
   })
 })

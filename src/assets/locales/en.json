@@ -548,8 +548,6 @@
     "notice": "The file is requested through the API client, so an authenticated endpoint would work the same way.",
     "sampleTitle": "Release report",
     "download": "Download",
-    "previousPage": "Previous page",
-    "nextPage": "Next page",
     "pageOf": "Page {page} of {total}",
     "zoomIn": "Zoom in",
     "zoomOut": "Zoom out",
