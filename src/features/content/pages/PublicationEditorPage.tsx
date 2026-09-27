@@ -29,7 +29,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { TiptapEditor } from '@/features/content/components'
 import { publicationEditorCopy } from '@/features/content/data'
-import { corporateAnnouncements, corporateNews } from '@/features/showcases/data'
+import { campusAnnouncements, corporateNews } from '@/features/showcases/data'
 import { localize } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
 
@@ -56,7 +56,7 @@ export function PublicationEditorPage() {
     slug?: string
   }>()
   const kind = publicationKind === 'announcements' ? 'announcements' : 'news'
-  const source = kind === 'news' ? corporateNews : corporateAnnouncements
+  const source = kind === 'news' ? corporateNews : campusAnnouncements
   const publication = useMemo(() => source.find((item) => item.slug === slug), [slug, source])
   const [form] = Form.useForm<PublicationFormValues>()
   const [body, setBody] = useState(() =>

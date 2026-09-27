@@ -1,9 +1,4 @@
-import climateNetwork from '@/features/showcases/assets/climate-network.svg'
-import communityCampus from '@/features/showcases/assets/community-campus.svg'
-import innovationLab from '@/features/showcases/assets/innovation-lab.svg'
-import talentStudio from '@/features/showcases/assets/talent-studio.svg'
 import type {
-  CampusUpdate,
   CompanySector,
   CompanyStage,
   LocalizedText,
@@ -2552,109 +2547,6 @@ export const campusSectorShare: { sector: CompanySector; share: number }[] = [
   { sector: 'health', share: 15 },
   { sector: 'mobility', share: 12 },
   { sector: 'robotics', share: 9 },
-]
-
-export const campusUpdates: CampusUpdate[] = [
-  {
-    id: 'winter-cohort-applications',
-    kind: 'announcement',
-    title: {
-      en: 'Winter residency applications close on October 18',
-      tr: 'Kış dönemi yerleşim başvuruları 18 Ekim’de kapanıyor',
-    },
-    summary: {
-      en: 'Eighteen places are open for teams with a working prototype and a named industrial partner.',
-      tr: 'Çalışan prototipi ve belirlenmiş bir sanayi ortağı olan ekipler için on sekiz yer açık.',
-    },
-    category: { en: 'Applications', tr: 'Başvurular' },
-    date: '2026-09-11',
-  },
-  {
-    id: 'lab-block-c-opens',
-    kind: 'news',
-    title: {
-      en: 'Laboratory block C opens with a shared clean room',
-      tr: 'C laboratuvar bloğu ortak temiz odayla açıldı',
-    },
-    summary: {
-      en: 'An ISO 7 clean room, two electronics benches, and a materials testing bay are now bookable.',
-      tr: 'ISO 7 temiz oda, iki elektronik tezgâhı ve bir malzeme test alanı artık rezerve edilebiliyor.',
-    },
-    category: { en: 'Campus', tr: 'Kampüs' },
-    date: '2026-09-04',
-    image: {
-      src: innovationLab,
-      alt: { en: 'The new laboratory block', tr: 'Yeni laboratuvar bloğu' },
-    },
-  },
-  {
-    id: 'aurora-orbital-contract',
-    kind: 'news',
-    title: {
-      en: 'Aurora Orbital signs its first export contract in Asia',
-      tr: 'Aurora Orbital Asya’daki ilk ihracat sözleşmesini imzaladı',
-    },
-    summary: {
-      en: 'The resident company will supply ground station software to a regional satellite operator.',
-      tr: 'Yerleşik şirket bölgesel bir uydu operatörüne yer istasyonu yazılımı sağlayacak.',
-    },
-    category: { en: 'Residents', tr: 'Yerleşikler' },
-    date: '2026-08-27',
-    image: {
-      src: climateNetwork,
-      alt: { en: 'Ground station coverage map', tr: 'Yer istasyonu kapsama haritası' },
-    },
-  },
-  {
-    id: 'maintenance-window',
-    kind: 'announcement',
-    title: {
-      en: 'Planned power maintenance in buildings A and B',
-      tr: 'A ve B binalarında planlı elektrik bakımı',
-    },
-    summary: {
-      en: 'Supply will switch to generators between 02:00 and 05:00 on September 21. Labs stay powered.',
-      tr: '21 Eylül 02:00–05:00 arasında besleme jeneratöre geçecek. Laboratuvarların enerjisi kesilmeyecek.',
-    },
-    category: { en: 'Operations', tr: 'Operasyon' },
-    date: '2026-08-22',
-  },
-  {
-    id: 'investor-day',
-    kind: 'news',
-    title: {
-      en: 'Autumn investor day brings 60 funds to the campus',
-      tr: 'Sonbahar yatırımcı günü kampüse 60 fon getiriyor',
-    },
-    summary: {
-      en: 'Twenty-four resident teams will present, with one-to-one meetings booked through the campus app.',
-      tr: 'Yirmi dört yerleşik ekip sunum yapacak; birebir görüşmeler kampüs uygulamasından planlanıyor.',
-    },
-    category: { en: 'Programs', tr: 'Programlar' },
-    date: '2026-08-14',
-    image: {
-      src: talentStudio,
-      alt: { en: 'Teams presenting on investor day', tr: 'Yatırımcı gününde sunum yapan ekipler' },
-    },
-  },
-  {
-    id: 'campus-open-day',
-    kind: 'announcement',
-    title: {
-      en: 'Open day for students on October 4',
-      tr: '4 Ekim’de öğrencilere açık gün',
-    },
-    summary: {
-      en: 'Lab tours, a hiring fair with 31 resident companies, and evening talks from four founders.',
-      tr: 'Laboratuvar turları, 31 yerleşik şirketle kariyer fuarı ve dört kurucudan akşam konuşmaları.',
-    },
-    category: { en: 'Community', tr: 'Topluluk' },
-    date: '2026-08-05',
-    image: {
-      src: communityCampus,
-      alt: { en: 'The campus public realm', tr: 'Kampüs kamusal alanı' },
-    },
-  },
 ]
 
 export const roleLevelLabels: Record<RoleLevel, LocalizedText> = {

@@ -19,7 +19,7 @@ import {
   Typography,
 } from 'antd'
 import { useParams } from 'react-router'
-import { PublicSiteShell, ShowcasePreviewFrame } from '@/features/showcases/components'
+import { ShowcasePreviewFrame, TechParkSiteShell } from '@/features/showcases/components'
 import {
   companySectorAccents,
   companySectorLabels,
@@ -29,7 +29,6 @@ import {
   residentCompanies,
   roleLevelLabels,
   techParkCopy,
-  techParkLinks,
   techParkMonogram,
 } from '@/features/showcases/data'
 import { localize } from '@/features/showcases/types'
@@ -323,17 +322,7 @@ export function TechParkCompanyPage({ standalone = false }: TechParkCompanyPageP
     </section>
   )
 
-  const page = (
-    <PublicSiteShell
-      brand="Aurora Tech Park"
-      tagline={{ en: techParkCopy.en.tagline, tr: techParkCopy.tr.tagline }}
-      className="techpark-site"
-      primary="#3157d5"
-      links={techParkLinks(rootPath)}
-    >
-      {body}
-    </PublicSiteShell>
-  )
+  const page = <TechParkSiteShell rootPath={rootPath}>{body}</TechParkSiteShell>
 
   return (
     <ShowcasePreviewFrame

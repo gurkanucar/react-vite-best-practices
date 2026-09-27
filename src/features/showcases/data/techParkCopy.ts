@@ -7,7 +7,7 @@ import type { LocalizedText } from '@/features/showcases/types'
 export const techParkCopy = {
   en: {
     tagline: 'Technology campus',
-    nav: ['Campus', 'Programs', 'Companies', 'Contact'],
+    nav: ['Campus', 'Announcements', 'Programs', 'Companies', 'Contact'],
     eyebrow: 'Build what comes next',
     title: 'Where ambitious technology companies become category leaders.',
     description:
@@ -87,17 +87,15 @@ export const techParkCopy = {
     founded: 'Founded',
     people: 'people',
     hiring: 'Hiring',
-    updatesTitle: 'News and announcements',
-    updatesDescription: 'What changed on campus this month.',
-    allUpdates: 'All updates',
-    news: 'News',
-    announcement: 'Announcement',
+    updatesTitle: 'Campus announcements',
+    updatesDescription: 'The latest deadlines, events and service notices from the campus desk.',
+    allUpdates: 'All announcements',
     ctaTitle: 'Bring your next breakthrough to Aurora.',
     ctaText: 'Applications for the winter residency cohort close on October 18.',
   },
   tr: {
     tagline: 'Teknoloji kampüsü',
-    nav: ['Kampüs', 'Programlar', 'Şirketler', 'İletişim'],
+    nav: ['Kampüs', 'Duyurular', 'Programlar', 'Şirketler', 'İletişim'],
     eyebrow: 'Geleceği burada kurun',
     title: 'İddialı teknoloji şirketlerinin kategori liderine dönüştüğü yer.',
     description:
@@ -181,11 +179,9 @@ export const techParkCopy = {
     founded: 'Kuruluş',
     people: 'kişi',
     hiring: 'İşe alıyor',
-    updatesTitle: 'Haberler ve duyurular',
-    updatesDescription: 'Bu ay kampüste neler değişti.',
-    allUpdates: 'Tüm güncellemeler',
-    news: 'Haber',
-    announcement: 'Duyuru',
+    updatesTitle: 'Kampüs duyuruları',
+    updatesDescription: 'Kampüs masasından son tarihler, etkinlikler ve servis duyuruları.',
+    allUpdates: 'Tüm duyurular',
     ctaTitle: 'Sıradaki büyük fikrinizi Aurora’ya taşıyın.',
     ctaText: 'Kış dönemi yerleşim programı başvuruları 18 Ekim’de kapanıyor.',
   },
@@ -199,6 +195,7 @@ export const techParkCopy = {
 export function techParkLinks(rootPath: string): { href: string; label: LocalizedText }[] {
   const targets = [
     rootPath,
+    `${rootPath}/announcements`,
     `${rootPath}#section-1`,
     `${rootPath}/companies`,
     `${rootPath}#section-3`,

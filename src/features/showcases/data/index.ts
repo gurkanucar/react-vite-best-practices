@@ -1,9 +1,8 @@
-export { corporateAnnouncements, corporateNews } from './publications'
+export { campusAnnouncements, corporateNews } from './publications'
 export { findShowcaseJob, showcaseJobs } from './jobs'
 export {
   campusSectorShare,
   campusStatistics,
-  campusUpdates,
   companySectorAccents,
   companySectorLabels,
   companySectorRoles,

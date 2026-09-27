@@ -27,7 +27,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { PageHeader } from '@/components/PageHeader/PageHeader'
 import { publicationAdminCopy } from '@/features/content/data'
-import { corporateAnnouncements, corporateNews } from '@/features/showcases/data'
+import { campusAnnouncements, corporateNews } from '@/features/showcases/data'
 import { localize, type Publication } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
 
@@ -49,7 +49,9 @@ export function PublicationAdminPage({ kind }: PublicationAdminPageProps) {
   const text = publicationAdminCopy[language]
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState<PublicationStatus | 'all'>('all')
-  const source = kind === 'news' ? corporateNews : corporateAnnouncements
+  const source = kind === 'news' ? corporateNews : campusAnnouncements
+  const publicPath =
+    kind === 'news' ? '/showcases/corporate/news' : '/showcases/technopark/announcements'
 
   const publications = useMemo(
     () =>
@@ -135,7 +137,7 @@ export function PublicationAdminPage({ kind }: PublicationAdminPageProps) {
           {
             key: 'view',
             icon: <EyeOutlined />,
-            label: <Link to={`/showcases/corporate/${kind}/${publication.slug}`}>{text.view}</Link>,
+            label: <Link to={`${publicPath}/${publication.slug}`}>{text.view}</Link>,
           },
           {
             key: 'edit',

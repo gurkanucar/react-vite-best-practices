@@ -9,10 +9,10 @@ interface CorporateSiteShellProps {
 export function CorporateSiteShell({ children, standalone }: CorporateSiteShellProps) {
   const root = standalone ? '/preview/corporate' : '/showcases/corporate'
   const labels = {
-    en: ['Company', 'News', 'Announcements', 'Contact'],
-    tr: ['Şirket', 'Haberler', 'Duyurular', 'İletişim'],
+    en: ['Company', 'News', 'Contact'],
+    tr: ['Şirket', 'Haberler', 'İletişim'],
   }
-  const paths = [root, `${root}/news`, `${root}/announcements`, `${root}#contact`]
+  const paths = [root, `${root}/news`, `${root}#contact`]
 
   return (
     <PublicSiteShell

@@ -2,7 +2,6 @@ import {
   ArrowRightOutlined,
   ExperimentOutlined,
   GlobalOutlined,
-  PictureOutlined,
   RocketOutlined,
   SafetyCertificateOutlined,
 } from '@ant-design/icons'
@@ -19,16 +18,19 @@ import {
   Tag,
   Typography,
 } from 'antd'
-import { PublicSiteShell, ShowcasePreviewFrame } from '@/features/showcases/components'
 import {
+  AnnouncementCard,
+  ShowcasePreviewFrame,
+  TechParkSiteShell,
+} from '@/features/showcases/components'
+import {
+  campusAnnouncements,
   campusSectorShare,
   campusStatistics,
-  campusUpdates,
   companySectorAccents,
   companySectorLabels,
   residentCompanies,
   techParkCopy,
-  techParkLinks,
   techParkMonogram,
 } from '@/features/showcases/data'
 import { localize } from '@/features/showcases/types'
@@ -45,6 +47,9 @@ interface TechParkLandingPageProps {
  */
 const stripCompanies = residentCompanies.slice(0, 21)
 
+/** The notices list newest first, so the front page shows what the campus desk posted last. */
+const latestAnnouncements = campusAnnouncements.slice(0, 3)
+
 const capabilityIcons = [
   <ExperimentOutlined key="lab" />,
   <RocketOutlined key="rocket" />,
@@ -55,12 +60,6 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
   const language = usePreferencesStore((state) => state.language)
   const text = techParkCopy[language]
   const rootPath = standalone ? '/preview/technopark' : '/showcases/technopark'
-
-  const dateFormatter = new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
 
   const companyChips = stripCompanies.map((company) => (
     // A link inside a moving track is only usable because hovering pauses the animation.
@@ -82,13 +81,7 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
   ))
 
   const page = (
-    <PublicSiteShell
-      brand="Aurora Tech Park"
-      tagline={{ en: techParkCopy.en.tagline, tr: techParkCopy.tr.tagline }}
-      className="techpark-site"
-      primary="#3157d5"
-      links={techParkLinks(rootPath)}
-    >
+    <TechParkSiteShell rootPath={rootPath}>
       <section className="showcase-hero techpark-hero">
         <div className="showcase-hero__copy">
           <Tag color="blue" variant="filled" icon={<SafetyCertificateOutlined />}>
@@ -123,49 +116,20 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
       <section className="showcase-section techpark-updates">
         <Flex justify="space-between" align="end" gap={16} wrap>
           <Typography.Title level={2}>{text.updatesTitle}</Typography.Title>
-          <Button type="link" icon={<ArrowRightOutlined />} iconPlacement="end">
+          <Button
+            type="link"
+            href={`${rootPath}/announcements`}
+            icon={<ArrowRightOutlined />}
+            iconPlacement="end"
+          >
             {text.allUpdates}
           </Button>
         </Flex>
         <Typography.Paragraph type="secondary">{text.updatesDescription}</Typography.Paragraph>
-        <Row gutter={[20, 20]}>
-          {campusUpdates.map((update) => (
-            <Col xs={24} lg={8} key={update.id}>
-              <Card className="techpark-update" variant="borderless">
-                {update.image ? (
-                  <img
-                    className="techpark-update__cover"
-                    src={update.image.src}
-                    alt={localize(update.image.alt, language)}
-                    loading="lazy"
-                  />
-                ) : (
-                  /*
-                   * Not every notice comes with a picture, and a card that simply lost its
-                   * top would sit shorter than its neighbours in the same row. The stand-in
-                   * keeps the rhythm and says plainly that there is no image, rather than
-                   * pretending to be one.
-                   */
-                  <div className="techpark-update__cover techpark-update__cover--empty">
-                    <PictureOutlined />
-                  </div>
-                )}
-                <Flex gap={8} align="center" wrap>
-                  <Tag color={update.kind === 'announcement' ? 'orange' : 'blue'} variant="filled">
-                    {update.kind === 'announcement' ? text.announcement : text.news}
-                  </Tag>
-                  <Typography.Text type="secondary">
-                    {localize(update.category, language)}
-                  </Typography.Text>
-                </Flex>
-                <Typography.Title level={4}>{localize(update.title, language)}</Typography.Title>
-                <Typography.Paragraph type="secondary">
-                  {localize(update.summary, language)}
-                </Typography.Paragraph>
-                <Typography.Text type="secondary" className="techpark-update__date">
-                  <time dateTime={update.date}>{dateFormatter.format(new Date(update.date))}</time>
-                </Typography.Text>
-              </Card>
+        <Row gutter={[24, 24]}>
+          {latestAnnouncements.map((item) => (
+            <Col xs={24} md={12} xl={8} key={item.slug}>
+              <AnnouncementCard item={item} detailPath={`${rootPath}/announcements/${item.slug}`} />
             </Col>
           ))}
         </Row>
@@ -316,7 +280,7 @@ export function TechParkLandingPage({ standalone = false }: TechParkLandingPageP
           </Button>
         </Space>
       </section>
-    </PublicSiteShell>
+    </TechParkSiteShell>
   )
 
   return (

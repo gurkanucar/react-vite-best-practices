@@ -358,7 +358,7 @@ export const corporateNews: Publication[] = [
   },
 ]
 
-export const corporateAnnouncements: Publication[] = [
+export const campusAnnouncements: Publication[] = [
   {
     slug: 'extraordinary-general-meeting',
     title: {

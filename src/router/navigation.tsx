@@ -234,11 +234,6 @@ export function useNavigationSections(): NavigationSection[] {
             icon: <ReadOutlined />,
             label: messages.navigation.corporateNews,
           },
-          {
-            key: '/showcases/corporate/announcements',
-            icon: <NotificationOutlined />,
-            label: messages.navigation.corporateAnnouncements,
-          },
         ],
       },
       {

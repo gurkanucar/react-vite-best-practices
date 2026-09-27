@@ -26,12 +26,14 @@ import {
 import type { ReactNode } from 'react'
 import { useParams, useSearchParams } from 'react-router'
 import {
-  AnnouncementSiteShell,
+  AnnouncementCard,
   CorporateSiteShell,
+  PublicationTags,
   ShowcasePreviewFrame,
+  TechParkSiteShell,
 } from '@/features/showcases/components'
-import { corporateAnnouncements, corporateNews } from '@/features/showcases/data'
-import { localize, type Publication } from '@/features/showcases/types'
+import { campusAnnouncements, corporateNews } from '@/features/showcases/data'
+import { formatPublicationDate, localize, type Publication } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
 import '../showcases.css'
 
@@ -52,7 +54,6 @@ const labels = {
     announcementsDescription:
       'Deadlines, campus operations, programs, and service updates for the Aurora community.',
     read: 'Read article',
-    view: 'View announcement',
     back: 'Back to all',
     notFound: 'This publication could not be found.',
     newsHome: 'Northstar Group',
@@ -75,7 +76,6 @@ const labels = {
     announcementsDescription:
       'Aurora topluluğu için tarihler, kampüs operasyonları, programlar ve servis güncellemeleri.',
     read: 'Haberi oku',
-    view: 'Duyuruyu görüntüle',
     back: 'Tümüne dön',
     notFound: 'Bu yayın bulunamadı.',
     newsHome: 'Northstar Group',
@@ -95,21 +95,14 @@ const labels = {
 }
 
 function dataFor(kind: PublicationKind): Publication[] {
-  return kind === 'news' ? corporateNews : corporateAnnouncements
+  return kind === 'news' ? corporateNews : campusAnnouncements
 }
 
 function pathsFor(kind: PublicationKind, standalone: boolean) {
   const routeRoot = standalone ? '/preview' : '/showcases'
+  // News belongs to Northstar's site; announcements are the tech park's own notices.
   const home = kind === 'news' ? `${routeRoot}/corporate` : `${routeRoot}/technopark`
-  return { home, list: `${routeRoot}/corporate/${kind}` }
-}
-
-function formatDate(date: string, language: 'en' | 'tr'): string {
-  return new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date(`${date}T12:00:00`))
+  return { home, list: `${home}/${kind}` }
 }
 
 function PublicationSite({
@@ -124,21 +117,9 @@ function PublicationSite({
   return kind === 'news' ? (
     <CorporateSiteShell standalone={standalone}>{children}</CorporateSiteShell>
   ) : (
-    <AnnouncementSiteShell standalone={standalone}>{children}</AnnouncementSiteShell>
-  )
-}
-
-function PublicationTags({ publication }: { publication: Publication }) {
-  const language = usePreferencesStore((state) => state.language)
-
-  if (!publication.tags?.length) return null
-
-  return (
-    <Flex className="publication-tags" gap={6} wrap>
-      {publication.tags.map((tag) => (
-        <Tag key={tag.en}>{localize(tag, language)}</Tag>
-      ))}
-    </Flex>
+    <TechParkSiteShell rootPath={pathsFor(kind, standalone).home} className="announcement-site">
+      {children}
+    </TechParkSiteShell>
   )
 }
 
@@ -179,7 +160,7 @@ function NewsCard({
           <Flex className="publication-card__meta" gap={8} align="center" wrap>
             <Tag color="volcano">{localize(item.category, language)}</Tag>
             <Typography.Text type="secondary">
-              <CalendarOutlined /> {formatDate(item.date, language)}
+              <CalendarOutlined /> {formatPublicationDate(item.date, language)}
             </Typography.Text>
           </Flex>
           <Typography.Title level={lead ? 2 : 3}>{localize(item.title, language)}</Typography.Title>
@@ -191,65 +172,6 @@ function NewsCard({
             {text.read}
           </Button>
         </div>
-      </div>
-    </Card>
-  )
-}
-
-function AnnouncementCard({ item, detailPath }: { item: Publication; detailPath: string }) {
-  const language = usePreferencesStore((state) => state.language)
-  const text = labels[language]
-
-  return (
-    <Card className="announcement-card">
-      {item.coverImage ? (
-        <Image
-          rootClassName="announcement-card__cover-wrap"
-          className="announcement-card__cover"
-          src={item.coverImage.src}
-          alt={localize(item.coverImage.alt, language)}
-          preview={{
-            cover: (
-              <Space size={6}>
-                <PictureOutlined /> {text.previewImage}
-              </Space>
-            ),
-          }}
-        />
-      ) : (
-        <div className="announcement-card__placeholder" aria-hidden="true">
-          <BellOutlined />
-        </div>
-      )}
-      <div className="announcement-card__content">
-        <Flex className="announcement-card__meta" justify="space-between" gap={8} wrap>
-          <Tag color="geekblue">{localize(item.category, language)}</Tag>
-          <Typography.Text type="secondary">
-            <CalendarOutlined /> {formatDate(item.date, language)}
-          </Typography.Text>
-        </Flex>
-        <Typography.Title level={3}>{localize(item.title, language)}</Typography.Title>
-        <Typography.Paragraph type="secondary">
-          {localize(item.summary, language)}
-        </Typography.Paragraph>
-        <PublicationTags publication={item} />
-        <Flex className="announcement-card__footer" align="center" justify="space-between" gap={12}>
-          <Typography.Text type="secondary">
-            {item.attachments?.length ? (
-              <>
-                <PaperClipOutlined /> {item.attachments.length}
-              </>
-            ) : null}
-          </Typography.Text>
-          <Button
-            href={detailPath}
-            type="primary"
-            icon={<ArrowRightOutlined />}
-            iconPlacement="end"
-          >
-            {text.view}
-          </Button>
-        </Flex>
       </div>
     </Card>
   )
@@ -367,7 +289,7 @@ function PublicationListPage({ kind, standalone = false }: PublicationPageProps)
   return (
     <ShowcasePreviewFrame
       standalone={standalone}
-      standalonePath={`/preview/corporate/${kind}`}
+      standalonePath={pathsFor(kind, true).list}
       title={{
         en: kind === 'news' ? 'Corporate news' : 'Tech park announcements',
         tr: kind === 'news' ? labels.tr.news : labels.tr.announcements,
@@ -485,7 +407,7 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
             <Typography.Paragraph>{localize(publication.summary, language)}</Typography.Paragraph>
             <Space separator="·" wrap>
               <Typography.Text type="secondary">
-                {formatDate(publication.date, language)}
+                {formatPublicationDate(publication.date, language)}
               </Typography.Text>
               {publication.readingTime && (
                 <Typography.Text type="secondary">
@@ -552,7 +474,7 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
   return (
     <ShowcasePreviewFrame
       standalone={standalone}
-      standalonePath={`/preview/corporate/${kind}/${slug ?? ''}`}
+      standalonePath={`${pathsFor(kind, true).list}/${slug ?? ''}`}
       title={{
         en: kind === 'news' ? 'News detail' : 'Announcement detail',
         tr: `${listTitle} detayı`,
@@ -577,13 +499,13 @@ export function CorporateNewsDetailPage({
   return <PublicationDetailPage kind="news" standalone={standalone} />
 }
 
-export function CorporateAnnouncementsPage({
+export function TechParkAnnouncementsPage({
   standalone = false,
 }: Omit<PublicationPageProps, 'kind'>) {
   return <PublicationListPage kind="announcements" standalone={standalone} />
 }
 
-export function CorporateAnnouncementDetailPage({
+export function TechParkAnnouncementDetailPage({
   standalone = false,
 }: Omit<PublicationPageProps, 'kind'>) {
   return <PublicationDetailPage kind="announcements" standalone={standalone} />

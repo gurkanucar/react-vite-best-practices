@@ -6,15 +6,17 @@ This feature demonstrates that a product can keep Ant Design as its interaction 
 
 Each example has two route families:
 
-| Admin preview                              | Standalone website                       |
-| ------------------------------------------ | ---------------------------------------- |
-| `/showcases/technopark`                    | `/preview/technopark`                    |
-| `/showcases/dental-clinic`                 | `/preview/dental-clinic`                 |
-| `/showcases/corporate`                     | `/preview/corporate`                     |
-| `/showcases/corporate/news`                | `/preview/corporate/news`                |
-| `/showcases/corporate/news/:slug`          | `/preview/corporate/news/:slug`          |
-| `/showcases/corporate/announcements`       | `/preview/corporate/announcements`       |
-| `/showcases/corporate/announcements/:slug` | `/preview/corporate/announcements/:slug` |
+| Admin preview                               | Standalone website                        |
+| ------------------------------------------- | ----------------------------------------- |
+| `/showcases/technopark`                     | `/preview/technopark`                     |
+| `/showcases/dental-clinic`                  | `/preview/dental-clinic`                  |
+| `/showcases/corporate`                      | `/preview/corporate`                      |
+| `/showcases/corporate/news`                 | `/preview/corporate/news`                 |
+| `/showcases/corporate/news/:slug`           | `/preview/corporate/news/:slug`           |
+| `/showcases/technopark/announcements`       | `/preview/technopark/announcements`       |
+| `/showcases/technopark/announcements/:slug` | `/preview/technopark/announcements/:slug` |
+
+Announcements are the tech park's own notices, so they live under its routes and share its site header (`TechParkSiteShell`). The old `/corporate/announcements` addresses redirect there. The tech park front page shows the three newest notices with the same `AnnouncementCard` the list uses, so the two never drift apart.
 
 The admin route renders a normal `PageHeader` with an **Open in a new tab** action. The `/preview` route skips `App.tsx` entirely, so the admin sidebar, header, and footer are never mounted. The public website keeps only its own site header and content.
 
@@ -45,7 +47,7 @@ Both collections contain ten bilingual records and show six records per page. An
 
 ```text
 /preview/corporate/news?page=2
-/preview/corporate/announcements?page=2
+/preview/technopark/announcements?page=2
 ```
 
 Keeping `page` in the URL makes a result page bookmarkable, shareable, and compatible with browser back/forward navigation. Page `1` removes the parameter to keep the canonical URL clean. Invalid or out-of-range values fall back to the nearest valid page in the UI.

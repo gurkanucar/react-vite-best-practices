@@ -49,27 +49,16 @@ export const ComponentsPage = lazy(async () => ({
   default: (await import('@/pages/ComponentsPage')).ComponentsPage,
 }))
 
-export const CorporateAnnouncementDetailPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/CorporatePublicationPages'))
-    .CorporateAnnouncementDetailPage,
-}))
-
-export const CorporateAnnouncementsPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/CorporatePublicationPages'))
-    .CorporateAnnouncementsPage,
-}))
-
 export const CorporateLandingPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/CorporateLandingPage')).CorporateLandingPage,
 }))
 
 export const CorporateNewsDetailPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/CorporatePublicationPages'))
-    .CorporateNewsDetailPage,
+  default: (await import('@/features/showcases/pages/PublicationPages')).CorporateNewsDetailPage,
 }))
 
 export const CorporateNewsPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/CorporatePublicationPages')).CorporateNewsPage,
+  default: (await import('@/features/showcases/pages/PublicationPages')).CorporateNewsPage,
 }))
 
 export const DashboardPage = lazy(async () => ({
@@ -163,6 +152,15 @@ export const TourListPage = lazy(async () => ({
 
 export const SurveyPage = lazy(async () => ({
   default: (await import('@/pages/SurveyPage')).SurveyPage,
+}))
+
+export const TechParkAnnouncementDetailPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PublicationPages'))
+    .TechParkAnnouncementDetailPage,
+}))
+
+export const TechParkAnnouncementsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PublicationPages')).TechParkAnnouncementsPage,
 }))
 
 export const TechParkCompaniesPage = lazy(async () => ({

@@ -3,17 +3,16 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import {
-  campusUpdates,
+  campusAnnouncements,
   companySectorRoles,
-  corporateAnnouncements,
   corporateNews,
   residentCompanies,
 } from '@/features/showcases/data'
 import {
-  CorporateAnnouncementDetailPage,
-  CorporateAnnouncementsPage,
   CorporateNewsPage,
-} from '@/features/showcases/pages/CorporatePublicationPages'
+  TechParkAnnouncementDetailPage,
+  TechParkAnnouncementsPage,
+} from '@/features/showcases/pages/PublicationPages'
 import { TechParkCompaniesPage } from '@/features/showcases/pages/TechParkCompaniesPage'
 import { TechParkCompanyPage } from '@/features/showcases/pages/TechParkCompanyPage'
 import { TechParkLandingPage } from '@/features/showcases/pages/TechParkLandingPage'
@@ -55,7 +54,7 @@ describe('showcase pages', () => {
     ).toHaveClass('techpark-cta__description')
   })
 
-  it('puts news and announcements above the fold, with a stand-in for the ones with no picture', () => {
+  it('puts the latest announcements above the fold, in the announcement list design', () => {
     const { container } = render(
       <MemoryRouter>
         <TechParkLandingPage standalone />
@@ -70,11 +69,15 @@ describe('showcase pages', () => {
     expect(sections.indexOf(updates as Element)).toBe(1)
     expect(sections.indexOf(updates as Element)).toBeLessThan(sections.indexOf(metrics as Element))
 
-    const withPicture = campusUpdates.filter((update) => update.image)
-    expect(withPicture.length).toBeGreaterThan(0)
-    expect(withPicture.length).toBeLessThan(campusUpdates.length)
-    expect(container.querySelectorAll('.techpark-update__cover--empty')).toHaveLength(
-      campusUpdates.length - withPicture.length,
+    const latest = campusAnnouncements[0]!
+    expect(updates?.querySelectorAll('.announcement-card')).toHaveLength(3)
+    expect(screen.getAllByRole('link', { name: /View announcement$/ })[0]).toHaveAttribute(
+      'href',
+      `/preview/technopark/announcements/${latest.slug}`,
+    )
+    expect(screen.getByRole('link', { name: /All announcements$/ })).toHaveAttribute(
+      'href',
+      '/preview/technopark/announcements',
     )
   })
 
@@ -280,10 +283,10 @@ describe('showcase pages', () => {
 
   it('supports optional publication media and downloadable attachments', () => {
     expect(corporateNews).toHaveLength(10)
-    expect(corporateAnnouncements).toHaveLength(10)
+    expect(campusAnnouncements).toHaveLength(10)
     expect(corporateNews.some((publication) => !publication.coverImage)).toBe(true)
-    expect(corporateAnnouncements.some((publication) => publication.gallery?.length)).toBe(true)
-    expect(corporateAnnouncements.some((publication) => publication.attachments?.length)).toBe(true)
+    expect(campusAnnouncements.some((publication) => publication.gallery?.length)).toBe(true)
+    expect(campusAnnouncements.some((publication) => publication.attachments?.length)).toBe(true)
   })
 
   it('paginates publication data through the URL search parameter', () => {
@@ -305,12 +308,12 @@ describe('showcase pages', () => {
   it('uses the Aurora design for announcements and renders detail assets', () => {
     const { container } = render(
       <MemoryRouter
-        initialEntries={['/preview/corporate/announcements/planned-service-maintenance']}
+        initialEntries={['/preview/technopark/announcements/planned-service-maintenance']}
       >
         <Routes>
           <Route
-            path="/preview/corporate/announcements/:slug"
-            element={<CorporateAnnouncementDetailPage standalone />}
+            path="/preview/technopark/announcements/:slug"
+            element={<TechParkAnnouncementDetailPage standalone />}
           />
         </Routes>
       </MemoryRouter>,
@@ -325,13 +328,15 @@ describe('showcase pages', () => {
     expect(screen.getByAltText('Network operations center')).toBeVisible()
   })
 
-  it('shows announcements as a separate modern paginated example', () => {
+  it('shows the tech park announcements as a modern paginated list', () => {
     const { container } = render(
-      <MemoryRouter initialEntries={['/preview/corporate/announcements']}>
-        <CorporateAnnouncementsPage standalone />
+      <MemoryRouter initialEntries={['/preview/technopark/announcements']}>
+        <TechParkAnnouncementsPage standalone />
       </MemoryRouter>,
     )
 
+    // Part of the tech park site now: its header, not a separate one.
+    expect(container.querySelector('.techpark-site')).toBeInTheDocument()
     expect(container.querySelector('.publication-hero--modern')).toBeInTheDocument()
     expect(
       screen.getByText(

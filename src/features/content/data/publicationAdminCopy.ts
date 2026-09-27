@@ -4,7 +4,7 @@ export const publicationAdminCopy = {
     announcementsTitle: 'Announcement management',
     newsDescription: 'Create, review, and publish stories shown on the corporate news site.',
     announcementsDescription:
-      'Manage operational notices and announcements shown on the corporate website.',
+      'Manage operational notices and announcements shown on the tech park website.',
     addNews: 'Add news',
     addAnnouncement: 'Add announcement',
     searchNews: 'Search news',
@@ -31,7 +31,7 @@ export const publicationAdminCopy = {
     announcementsTitle: 'Duyuru yönetimi',
     newsDescription: 'Kurumsal haber sitesinde gösterilen içerikleri oluşturun ve yayınlayın.',
     announcementsDescription:
-      'Kurumsal web sitesinde gösterilen operasyonel bildirim ve duyuruları yönetin.',
+      'Teknopark web sitesinde gösterilen operasyonel bildirim ve duyuruları yönetin.',
     addNews: 'Haber ekle',
     addAnnouncement: 'Duyuru ekle',
     searchNews: 'Haberlerde ara',

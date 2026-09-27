@@ -10,8 +10,6 @@ import {
   ChatPage,
   TodoPage,
   ComponentsPage,
-  CorporateAnnouncementDetailPage,
-  CorporateAnnouncementsPage,
   CorporateLandingPage,
   CorporateNewsDetailPage,
   CorporateNewsPage,
@@ -45,12 +43,15 @@ import {
   ShopOrderPage,
   ShopProductPage,
   SurveyPage,
+  TechParkAnnouncementDetailPage,
+  TechParkAnnouncementsPage,
   TechParkCompaniesPage,
   TechParkCompanyPage,
   TechParkLandingPage,
   TourDetailPage,
   TourListPage,
 } from '@/router/LazyPages'
+import { AnnouncementRedirect } from '@/router/AnnouncementRedirect'
 import { RouteSuspense } from '@/router/RouteSuspense'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
 
@@ -130,6 +131,24 @@ export const routes: RouteObject[] = [
     errorElement: standaloneErrorElement,
   },
   {
+    path: '/preview/technopark/announcements',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkAnnouncementsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/technopark/announcements/:slug',
+    element: (
+      <RouteSuspense fullPage>
+        <TechParkAnnouncementDetailPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
     path: '/preview/dental-clinic',
     element: (
       <RouteSuspense fullPage>
@@ -165,23 +184,10 @@ export const routes: RouteObject[] = [
     ),
     errorElement: standaloneErrorElement,
   },
-  {
-    path: '/preview/corporate/announcements',
-    element: (
-      <RouteSuspense fullPage>
-        <CorporateAnnouncementsPage standalone />
-      </RouteSuspense>
-    ),
-    errorElement: standaloneErrorElement,
-  },
+  { path: '/preview/corporate/announcements', element: <AnnouncementRedirect root="/preview" /> },
   {
     path: '/preview/corporate/announcements/:slug',
-    element: (
-      <RouteSuspense fullPage>
-        <CorporateAnnouncementDetailPage standalone />
-      </RouteSuspense>
-    ),
-    errorElement: standaloneErrorElement,
+    element: <AnnouncementRedirect root="/preview" />,
   },
   {
     element: (
@@ -286,6 +292,24 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <TechParkCompanyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/announcements',
+        element: (
+          <RouteSuspense>
+            <TechParkAnnouncementsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/technopark/announcements/:slug',
+        element: (
+          <RouteSuspense>
+            <TechParkAnnouncementDetailPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,
@@ -400,21 +424,11 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'showcases/corporate/announcements',
-        element: (
-          <RouteSuspense>
-            <CorporateAnnouncementsPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
+        element: <AnnouncementRedirect root="/showcases" />,
       },
       {
         path: 'showcases/corporate/announcements/:slug',
-        element: (
-          <RouteSuspense>
-            <CorporateAnnouncementDetailPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
+        element: <AnnouncementRedirect root="/showcases" />,
       },
       {
         path: 'posts',

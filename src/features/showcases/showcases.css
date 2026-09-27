@@ -182,7 +182,6 @@
 
 :is(
   .showcase-feature-card,
-  .techpark-update,
   .techpark-company,
   .techpark-stat,
   .corporate-story-card,
@@ -197,7 +196,6 @@
 
 :is(
   .showcase-feature-card,
-  .techpark-update,
   .techpark-company,
   .corporate-story-card,
   .publication-card,
@@ -651,38 +649,6 @@
 
 .techpark-updates .ant-typography + .ant-row {
   margin-top: 28px;
-}
-
-.techpark-update {
-  height: 100%;
-  border: 1px solid #e3e8f7;
-  box-shadow: none;
-}
-
-.techpark-update__cover {
-  width: 100%;
-  height: auto;
-  margin-bottom: 18px;
-  display: block;
-  aspect-ratio: 16 / 9;
-  border-radius: 14px;
-  object-fit: cover;
-  background: #eef2fb;
-}
-
-.techpark-update__cover--empty {
-  display: grid;
-  place-items: center;
-  color: #a6b4d4;
-  font-size: 30px;
-}
-
-.techpark-update h4 {
-  margin-block: 14px 8px;
-}
-
-.techpark-update__date {
-  font-size: 0.85rem;
 }
 
 .techpark-site .showcase-cta {

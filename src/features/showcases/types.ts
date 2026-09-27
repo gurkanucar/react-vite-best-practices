@@ -77,24 +77,6 @@ export interface ResidentCompany {
   projects: { name: string; year: number; summary: LocalizedText }[]
 }
 
-/**
- * A teaser, not an article: the landing page shows the headline and the date, and a real
- * site would link each one to a detail route of its own.
- */
-export interface CampusUpdate {
-  id: string
-  kind: 'news' | 'announcement'
-  title: LocalizedText
-  summary: LocalizedText
-  category: LocalizedText
-  date: string
-  /**
-   * Optional on purpose. Most newsrooms have a picture for the launch and nothing for the
-   * maintenance notice, so the card has to look finished either way.
-   */
-  image?: PublicationImage
-}
-
 export type RoleLevel = 'junior' | 'mid' | 'senior'
 
 /**
@@ -143,4 +125,12 @@ export interface ShowcaseJob {
   expiresAt: string
   applicants: number
   status: JobStatus
+}
+
+export function formatPublicationDate(date: string, language: 'en' | 'tr'): string {
+  return new Intl.DateTimeFormat(language === 'tr' ? 'tr-TR' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(`${date}T12:00:00`))
 }

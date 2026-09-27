@@ -1,14 +1,13 @@
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { Avatar, Button, Card, Col, Divider, Flex, Row, Select, Space, Tag, Typography } from 'antd'
 import { useMemo, useState } from 'react'
-import { PublicSiteShell, ShowcasePreviewFrame } from '@/features/showcases/components'
+import { ShowcasePreviewFrame, TechParkSiteShell } from '@/features/showcases/components'
 import {
   companySectorAccents,
   companySectorLabels,
   companyStageLabels,
   residentCompanies,
   techParkCopy,
-  techParkLinks,
   techParkMonogram,
 } from '@/features/showcases/data'
 import { useInfiniteList } from '@/features/showcases/hooks'
@@ -47,13 +46,7 @@ export function TechParkCompaniesPage({ standalone = false }: TechParkCompaniesP
     .sort((first, second) => first.label.localeCompare(second.label, language))
 
   const page = (
-    <PublicSiteShell
-      brand="Aurora Tech Park"
-      tagline={{ en: techParkCopy.en.tagline, tr: techParkCopy.tr.tagline }}
-      className="techpark-site"
-      primary="#3157d5"
-      links={techParkLinks(rootPath)}
-    >
+    <TechParkSiteShell rootPath={rootPath}>
       <section className="showcase-section techpark-directory-hero">
         <Button type="link" href={rootPath} icon={<ArrowLeftOutlined />}>
           {text.backToCampus}
@@ -138,7 +131,7 @@ export function TechParkCompaniesPage({ standalone = false }: TechParkCompaniesP
           )}
         </Flex>
       </section>
-    </PublicSiteShell>
+    </TechParkSiteShell>
   )
 
   return (
