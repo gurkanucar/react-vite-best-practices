@@ -15,6 +15,15 @@ describe('useGurkanTheme', () => {
     expect(dark.current.theme?.token?.colorPrimary).toBe(light.current.theme?.token?.colorPrimary)
   })
 
+  it('draws tooltips on a surface their light text reads on, in both modes', () => {
+    const { result: light } = renderHook(() => useGurkanTheme('light'))
+    const { result: dark } = renderHook(() => useGurkanTheme('dark'))
+
+    // The tooltip text is white in both modes; a white spotlight made it invisible.
+    expect(light.current.theme?.token?.colorBgSpotlight).toBe('#212b36')
+    expect(dark.current.theme?.token?.colorBgSpotlight).toBe('#454f5b')
+  })
+
   it('keeps its shape tokens in both modes', () => {
     const { result } = renderHook(() => useGurkanTheme('dark'))
 

@@ -63,7 +63,9 @@ const darkTokens: Tokens = {
   colorBgContainer: '#1c252e',
   colorBgElevated: '#212b36',
   colorBgLayout: '#141a21',
-  colorBgSpotlight: '#ffffff',
+  // Tooltips keep light text in both modes, so the dark one needs a grey that text reads
+  // on and that still lifts off the page; white here left the text invisible.
+  colorBgSpotlight: '#454f5b',
 
   colorText: '#ffffff',
   colorTextBase: '#ffffff',
