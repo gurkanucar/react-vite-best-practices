@@ -1,7 +1,12 @@
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import { eventsInRange } from '@/features/calendar/data'
-import { applyChanges, type CalendarView, type EventChange } from '@/features/calendar/types'
+import {
+  applyChanges,
+  type CalendarEvent,
+  type CalendarView,
+  type EventOverride,
+} from '@/features/calendar/types'
 
 export interface CalendarRange {
   /** The days the view draws, in order. */
@@ -52,10 +57,22 @@ export function calendarRange(view: CalendarView, date: dayjs.Dayjs): CalendarRa
  */
 const CHANGE_MARGIN_DAYS = 42
 
+/** What the reader has done to the schedule, laid over the generated events. */
+export interface CalendarEdits {
+  /** Moves, resizes and edits, by event id; a created event is edited the same way. */
+  changes?: Record<string, EventOverride>
+  created?: CalendarEvent[]
+  deleted?: string[]
+}
+
+const noEvents: CalendarEvent[] = []
+const noIds: string[] = []
+const noChanges: Record<string, EventOverride> = {}
+
 export function useCalendarRange(
   view: CalendarView,
   date: dayjs.Dayjs,
-  changes: Record<string, EventChange> = {},
+  { changes = noChanges, created = noEvents, deleted = noIds }: CalendarEdits = {},
 ) {
   const key = `${view}:${date.format('YYYY-MM-DD')}`
 
@@ -68,12 +85,16 @@ export function useCalendarRange(
           range.end.add(CHANGE_MARGIN_DAYS, 'day'),
         )
       : eventsInRange(range.start, range.end)
-    const events = applyChanges(generated, changes).filter(
-      (event) => !dayjs(event.start).isAfter(range.end) && !dayjs(event.end).isBefore(range.start),
+    const removed = new Set(deleted)
+    const events = applyChanges([...generated, ...created], changes).filter(
+      (event) =>
+        !removed.has(event.id) &&
+        !dayjs(event.start).isAfter(range.end) &&
+        !dayjs(event.end).isBefore(range.start),
     )
 
     return { ...range, events }
     // The dayjs instance is a new object every render; its formatted value is not.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key, changes])
+  }, [key, changes, created, deleted])
 }

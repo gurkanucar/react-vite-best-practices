@@ -1,9 +1,18 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import dayjs from 'dayjs'
 import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import { CalendarPage } from '@/features/calendar/pages/CalendarPage'
 import { AppThemeProvider } from '@/theme/AppThemeProvider'
+
+/**
+ * The test setup gives every generated id the same value, so a modal cannot be found by the
+ * title it is labelled with; it is found by text only it contains instead.
+ */
+async function dialogWith(text: string): Promise<HTMLElement> {
+  const [match] = await screen.findAllByText(text)
+  return match!.closest<HTMLElement>('[role="dialog"]')!
+}
 
 function renderAt(search: string) {
   return render(
@@ -174,5 +183,53 @@ describe('CalendarPage', () => {
     )
 
     expect(bands).toHaveLength(1)
+  })
+
+  it('adds an event from the toolbar, then edits and deletes it', async () => {
+    renderAt('?view=day&date=2026-09-12')
+
+    // Not today, so the new event starts at nine on the day being looked at.
+    fireEvent.click(screen.getByRole('button', { name: 'New event' }))
+    const form = await dialogWith('Title')
+    expect(within(form).getByDisplayValue('2026-09-12')).toBeInTheDocument()
+    expect(within(form).getByDisplayValue('09:00')).toBeInTheDocument()
+
+    fireEvent.change(within(form).getByLabelText('Title'), { target: { value: 'Board prep' } })
+    fireEvent.click(within(form).getByRole('button', { name: 'Save' }))
+    const block = await screen.findByRole('button', { name: /Board prep/ })
+    expect(block).toHaveTextContent('09:00 – 10:00')
+
+    fireEvent.click(block)
+    const detail = await dialogWith('12 September 2026 09:00 – 10:00')
+    fireEvent.click(within(detail).getByRole('button', { name: 'Edit' }))
+    const editForm = await dialogWith('Edit event')
+    fireEvent.change(within(editForm).getByLabelText('Title'), {
+      target: { value: 'Board rehearsal' },
+    })
+    fireEvent.click(within(editForm).getByRole('button', { name: 'Save' }))
+    expect(await screen.findByRole('button', { name: /Board rehearsal/ })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: /Board rehearsal/ }))
+    const second = await dialogWith('12 September 2026 09:00 – 10:00')
+    fireEvent.click(within(second).getByRole('button', { name: 'Delete' }))
+    const confirm = (await screen.findByText('Delete this event?')).closest<HTMLElement>(
+      '.ant-popover',
+    )!
+    fireEvent.click(within(confirm).getByRole('button', { name: 'Delete' }))
+    await waitFor(() =>
+      expect(screen.queryByRole('button', { name: /Board rehearsal/ })).not.toBeInTheDocument(),
+    )
+  })
+
+  it('edits a generated event, keeping its translated title as the starting text', async () => {
+    renderAt('?view=day&date=2026-09-09')
+
+    fireEvent.click(screen.getAllByRole('button', { name: /Architecture sync/ })[0]!)
+    const detail = await screen.findByRole('dialog')
+    fireEvent.click(within(detail).getByRole('button', { name: 'Edit' }))
+
+    const form = await dialogWith('Edit event')
+    expect(within(form).getByDisplayValue('Architecture sync')).toBeInTheDocument()
+    expect(within(form).getByDisplayValue('Room 2')).toBeInTheDocument()
   })
 })

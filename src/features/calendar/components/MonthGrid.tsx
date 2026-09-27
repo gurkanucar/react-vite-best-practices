@@ -11,7 +11,13 @@ import {
 } from '@dnd-kit/core'
 import { Flex, Grid, Popover, Typography } from 'antd'
 import dayjs from 'dayjs'
-import { useRef, useState, type CSSProperties } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { eventTimeRange, eventTitle } from '@/features/calendar/components/eventText'
 import {
   categoryTokens,
@@ -38,6 +44,21 @@ interface MonthGridProps {
   /** Drag a timed event onto another day; off on touch screens. */
   interactive: boolean
   onChangeEvent: (event: CalendarEvent, change: EventChange) => void
+  /** Press on an empty part of a day and drag across the days an all-day event should cover. */
+  onCreateRange?: (from: string, to: string) => void
+}
+
+/** The two ends of a sweep across the month, as `YYYY-MM-DD`; either may be the later one. */
+interface DaySweep {
+  anchor: string
+  current: string
+}
+
+function sweptDays(sweep: DaySweep | null): [string, string] | null {
+  if (!sweep) return null
+  return sweep.anchor <= sweep.current
+    ? [sweep.anchor, sweep.current]
+    : [sweep.current, sweep.anchor]
 }
 
 function sortForDay(events: CalendarEvent[]): CalendarEvent[] {
@@ -155,9 +176,11 @@ function DayCell({
   onSelectEvent,
   onOpenDay,
   interactive,
+  selected,
 }: {
   day: dayjs.Dayjs
   month: dayjs.Dayjs
+  selected: boolean
   weekLanes: number
   dayEvents: CalendarEvent[]
   onSelectEvent: (eventId: string) => void
@@ -185,9 +208,11 @@ function DayCell({
         !day.isSame(month, 'month') && 'calendar-month__cell--outside',
         day.isSame(dayjs(), 'day') && 'calendar-month__cell--today',
         isOver && 'calendar-month__cell--over',
+        selected && 'calendar-month__cell--selected',
       ]
         .filter(Boolean)
         .join(' ')}
+      data-day={day.format('YYYY-MM-DD')}
     >
       <button
         type="button"
@@ -224,8 +249,10 @@ function WeekRow({
   onSelectEvent,
   onOpenDay,
   interactive,
+  swept,
 }: {
   week: dayjs.Dayjs[]
+  swept: [string, string] | null
   month: dayjs.Dayjs
   events: CalendarEvent[]
   onSelectEvent: (eventId: string) => void
@@ -247,6 +274,7 @@ function WeekRow({
             key={iso}
             day={day}
             month={month}
+            selected={swept !== null && iso >= swept[0] && iso <= swept[1]}
             weekLanes={lanes}
             dayEvents={sortForDay(events.filter((event) => occursOn(event, iso)))}
             onSelectEvent={onSelectEvent}
@@ -293,8 +321,12 @@ export function MonthGrid({
   onOpenDay,
   interactive,
   onChangeEvent,
+  onCreateRange,
 }: MonthGridProps) {
   const [dragged, setDragged] = useState<CalendarEvent | null>(null)
+  const [sweep, setSweep] = useState<DaySweep | null>(null)
+  const sweepRef = useRef<DaySweep | null>(null)
+  const selecting = interactive && onCreateRange !== undefined
   const suppressClick = useRef(false)
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }))
   const weeks = Array.from({ length: days.length / 7 }, (_, index) =>
@@ -326,6 +358,54 @@ export function MonthGrid({
     if (!suppressClick.current) onSelectEvent(eventId)
   }
 
+  const updateSweep = (next: DaySweep | null) => {
+    sweepRef.current = next
+    setSweep(next)
+  }
+
+  const dayUnder = (x: number, y: number) =>
+    document.elementFromPoint(x, y)?.closest<HTMLElement>('[data-day]')?.dataset.day
+
+  const sweeping = sweep !== null
+
+  useEffect(() => {
+    if (!sweeping) return
+    // The release can land outside the grid, so it is listened for on the window.
+    const finish = () => {
+      const days = sweptDays(sweepRef.current)
+      updateSweep(null)
+      if (days) onCreateRange?.(days[0], days[1])
+    }
+    window.addEventListener('pointerup', finish)
+    return () => window.removeEventListener('pointerup', finish)
+    // Registered once per sweep; the latest ends are read from the ref.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sweeping])
+
+  /*
+   * Unlike a day column, a sweep crosses cells, so there is no single element to capture
+   * the pointer on: the cell under it is looked up from the point instead.
+   */
+  const sweepHandlers = selecting
+    ? {
+        onPointerDown: (pointerEvent: ReactPointerEvent<HTMLDivElement>) => {
+          if (pointerEvent.button !== 0) return
+          // Chips, bands, day numbers and "+N more" keep their own clicks and drags.
+          if ((pointerEvent.target as Element).closest('button, a, [role="presentation"]')) return
+          const day = dayUnder(pointerEvent.clientX, pointerEvent.clientY)
+          if (!day) return
+          pointerEvent.preventDefault()
+          updateSweep({ anchor: day, current: day })
+        },
+        onPointerMove: (pointerEvent: ReactPointerEvent<HTMLDivElement>) => {
+          const current = sweepRef.current
+          if (!current) return
+          const day = dayUnder(pointerEvent.clientX, pointerEvent.clientY)
+          if (day && day !== current.current) updateSweep({ ...current, current: day })
+        },
+      }
+    : {}
+
   return (
     <DndContext
       sensors={sensors}
@@ -346,7 +426,10 @@ export function MonthGrid({
           ))}
         </div>
 
-        <div className="calendar-month__grid">
+        <div
+          className={`calendar-month__grid${selecting ? ' calendar-month__grid--selectable' : ''}`}
+          {...sweepHandlers}
+        >
           {weeks.map((week) => (
             <WeekRow
               key={week[0]!.toString()}
@@ -356,6 +439,7 @@ export function MonthGrid({
               onSelectEvent={select}
               onOpenDay={onOpenDay}
               interactive={interactive}
+              swept={sweptDays(sweep)}
             />
           ))}
         </div>

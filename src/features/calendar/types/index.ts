@@ -6,8 +6,10 @@ export type EventCategory = 'meeting' | 'focus' | 'review' | 'release' | 'person
 
 export interface CalendarEvent {
   id: string
-  /** A translation key under `calendar.events`. */
-  titleId: string
+  /** A translation key under `calendar.events`, for the generated schedule. */
+  titleId?: string
+  /** Free text, for an event someone added or edited; wins over `titleId`. */
+  title?: string
   category: EventCategory
   /**
    * Local ISO instants, `YYYY-MM-DDTHH:mm`. An all-day event may end on a later date than
@@ -179,6 +181,12 @@ export interface EventChange {
   end: string
 }
 
+/** Everything the event form edits: an event without the id it is stored under. */
+export type EventDraft = Omit<CalendarEvent, 'id' | 'titleId'>
+
+/** A move, a resize or a full edit, laid over the event it belongs to. */
+export type EventOverride = Partial<Omit<CalendarEvent, 'id'>>
+
 /** Drag and resize snap to this, which is also the smallest step a reader can aim for. */
 export const SNAP_MINUTES = 15
 
@@ -195,6 +203,39 @@ function shiftStamp(stamp: string, days: number, minutes: number): string {
   date.setMinutes(date.getMinutes() + minutes)
 
   return formatStamp(date)
+}
+
+/** `YYYY-MM-DD` plus minutes from midnight, as the local stamp events are stored in. */
+export function stampAt(day: string, minutes: number): string {
+  const pad = (value: number) => String(value).padStart(2, '0')
+  const clamped = Math.min(Math.max(minutes, 0), 24 * 60 - 1)
+
+  return `${day}T${pad(Math.floor(clamped / 60))}:${pad(clamped % 60)}`
+}
+
+/**
+ * The slot under a point on the time axis, rounded down to a snap step: pressing anywhere
+ * inside 09:00–09:15 means 09:00, the way a paper diary is read.
+ */
+export function slotAt(pixels: number): number {
+  const minutes = (pixels / HOUR_HEIGHT) * 60
+  const slot = Math.floor(minutes / SNAP_MINUTES) * SNAP_MINUTES
+
+  return Math.min(Math.max(slot, 0), 24 * 60 - SNAP_MINUTES)
+}
+
+/**
+ * The range a press-and-drag covers between two slots, in either direction. Both slots are
+ * included, so a drag from 09:00 to 10:15 books until 10:30. A press without a drag means
+ * the default hour, clipped at midnight.
+ */
+export function selectionRange(anchor: number, current: number): { start: number; end: number } {
+  if (anchor === current) return { start: anchor, end: Math.min(anchor + 60, 24 * 60 - 1) }
+
+  const start = Math.min(anchor, current)
+  const end = Math.min(Math.max(anchor, current) + SNAP_MINUTES, 24 * 60 - 1)
+
+  return { start, end }
 }
 
 /** Rounds a pixel distance on the time axis to whole snap steps, in minutes. */
@@ -232,7 +273,7 @@ export function resizeEvent(event: CalendarEvent, minutes: number): EventChange 
 
 export function applyChanges(
   events: CalendarEvent[],
-  changes: Record<string, EventChange>,
+  changes: Record<string, EventOverride>,
 ): CalendarEvent[] {
   return events.map((event) => (changes[event.id] ? { ...event, ...changes[event.id] } : event))
 }
@@ -292,4 +333,26 @@ export function limitLanes(
   flush()
 
   return { visible, hidden }
+}
+
+/** The draft a selected stretch of a day opens with, between two minutes from midnight. */
+export function draftAt(day: string, startMinutes: number, endMinutes: number): EventDraft {
+  return {
+    title: '',
+    category: 'meeting',
+    start: stampAt(day, startMinutes),
+    end: stampAt(day, endMinutes),
+    attendees: [],
+  }
+}
+
+export function allDayDraft(from: string, to: string): EventDraft {
+  return {
+    title: '',
+    category: 'personal',
+    allDay: true,
+    start: `${isoDate(from)}T00:00`,
+    end: `${isoDate(to)}T23:59`,
+    attendees: [],
+  }
 }

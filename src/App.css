@@ -753,6 +753,27 @@ html[data-theme='dark'] .admin-shell::before {
   background: color-mix(in srgb, var(--ant-color-primary) 4%, transparent);
 }
 
+/* Empty hours can be swept out with the mouse to add an event. */
+.calendar-daycolumn--selectable {
+  cursor: cell;
+  user-select: none;
+}
+
+.calendar-selection {
+  position: absolute;
+  z-index: 4;
+  inset-inline: 2px;
+  padding: 4px 8px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ant-color-primary);
+  pointer-events: none;
+  border: 1px dashed var(--ant-color-primary);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--ant-color-primary) 14%, transparent);
+}
+
 .calendar-hour-slot {
   height: var(--hour-height);
   border-bottom: 1px solid var(--ant-color-split);
@@ -847,6 +868,15 @@ html[data-theme='dark'] .admin-shell::before {
 
 .calendar-month__cell--over {
   background: var(--ant-color-primary-bg);
+}
+
+.calendar-month__grid--selectable .calendar-month__cell {
+  cursor: cell;
+  user-select: none;
+}
+
+.calendar-month__cell--selected {
+  background: color-mix(in srgb, var(--ant-color-primary) 14%, transparent);
 }
 
 .calendar-month__band-space {

@@ -148,18 +148,18 @@ export function PublicationEditorPage() {
         : text.createAnnouncementTitle
 
   const refreshTabErrors = () => {
-    setLanguagesWithErrors(
-      contentLanguages.filter((contentLanguage) =>
-        form
-          .getFieldsError()
-          .some(
-            (field) =>
-              field.errors.length > 0 &&
-              field.name[0] === 'content' &&
-              field.name[1] === contentLanguage,
-          ),
-      ),
+    const next = contentLanguages.filter((contentLanguage) =>
+      form
+        .getFieldsError()
+        .some(
+          (field) =>
+            field.errors.length > 0 &&
+            field.name[0] === 'content' &&
+            field.name[1] === contentLanguage,
+        ),
     )
+    // Field meta changes on every keystroke; only a different set of languages re-renders.
+    setLanguagesWithErrors((current) => (current.join() === next.join() ? current : next))
   }
 
   const regenerateSlug = (contentLanguage: Language) => {

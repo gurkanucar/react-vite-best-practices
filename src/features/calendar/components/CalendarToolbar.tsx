@@ -1,6 +1,7 @@
 import {
   CalendarOutlined,
   LeftOutlined,
+  PlusOutlined,
   ProjectOutlined,
   RightOutlined,
   ScheduleOutlined,
@@ -24,11 +25,12 @@ interface CalendarToolbarProps {
   onViewChange: (view: CalendarView) => void
   onStep: (direction: -1 | 1) => void
   onToday: () => void
+  onCreate: () => void
 }
 
 /**
- * Three groups — view, range, today — laid out with the grid rather than CSS, so on a
- * phone the range moves to its own row on top and the other two share the one below.
+ * Three groups — view, range, actions — laid out with the grid rather than CSS, so on a
+ * phone each gets its own row, the range on top.
  */
 export function CalendarToolbar({
   view,
@@ -36,6 +38,7 @@ export function CalendarToolbar({
   onViewChange,
   onStep,
   onToday,
+  onCreate,
 }: CalendarToolbarProps) {
   const messages = useMessages()
   // Icons next to the labels only where there is room for both.
@@ -63,7 +66,7 @@ export function CalendarToolbar({
         </Flex>
       </Col>
 
-      <Col xs={{ span: 18, order: 2 }} md={{ span: 8, order: 1 }}>
+      <Col xs={{ span: 24, order: 2 }} md={{ span: 8, order: 1 }}>
         <Segmented<CalendarView>
           value={view}
           onChange={onViewChange}
@@ -75,9 +78,17 @@ export function CalendarToolbar({
         />
       </Col>
 
-      <Col xs={{ span: 6, order: 3 }} md={{ span: 8, order: 3 }}>
-        <Flex justify="end">
+      <Col xs={{ span: 24, order: 3 }} md={{ span: 8, order: 3 }}>
+        <Flex justify="end" gap={8}>
           <Button onClick={onToday}>{messages.calendar.today}</Button>
+          <Button
+            type="primary"
+            icon={<PlusOutlined aria-hidden="true" />}
+            onClick={onCreate}
+            aria-label={messages.calendar.newEvent}
+          >
+            {showIcons ? messages.calendar.newEvent : null}
+          </Button>
         </Flex>
       </Col>
     </Row>

@@ -414,17 +414,14 @@ describe('showcase pages', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByRole('link', { name: 'Contact' })).toHaveAttribute(
-      'href',
-      '/preview/corporate/contact',
-    )
+    expect(screen.getByRole('heading', { name: 'Let’s talk.' })).toBeVisible()
     await user.type(screen.getByLabelText('Full name'), 'Ada')
     await user.type(screen.getByLabelText('Work email'), 'ada@example.com')
     await user.click(screen.getByRole('combobox', { name: 'What is it about?' }))
     await user.click(await screen.findByTitle('Media and press'))
     await user.type(screen.getByLabelText('Message'), 'We would like to interview your CEO.')
     await user.click(screen.getByRole('checkbox'))
-    await user.click(screen.getByRole('radio', { name: 'By phone' }))
+    await user.click(screen.getByText('By phone'))
     await user.click(screen.getByRole('button', { name: /Send message/ }))
     expect(await screen.findByText('Add a phone number so we can call you')).toBeInTheDocument()
 

@@ -7,6 +7,9 @@ import {
   minutesFromMidnight,
   moveEvent,
   resizeEvent,
+  selectionRange,
+  slotAt,
+  stampAt,
   snapMinutes,
   occursOn,
   spanInDays,
@@ -231,5 +234,27 @@ describe('moving and resizing', () => {
     const [changed] = applyChanges([standup], { s: { start: 'x', end: 'y' } })
 
     expect(changed).toMatchObject({ id: 's', start: 'x', end: 'y' })
+  })
+
+  describe('sweeping out a new event', () => {
+    it('reads the slot under the pointer, rounded down to a quarter hour', () => {
+      // 52px an hour: 9.9 hours down is 09:54, which is inside the 09:45 slot.
+      expect(slotAt(9.9 * 52)).toBe(9 * 60 + 45)
+      expect(slotAt(-20)).toBe(0)
+      expect(slotAt(30 * 52)).toBe(24 * 60 - 15)
+    })
+
+    it('covers both ends of a drag in either direction, and an hour for a plain press', () => {
+      expect(selectionRange(540, 600)).toEqual({ start: 540, end: 615 })
+      expect(selectionRange(600, 540)).toEqual({ start: 540, end: 615 })
+      expect(selectionRange(540, 540)).toEqual({ start: 540, end: 600 })
+      // A press late in the evening stops at the end of the day.
+      expect(selectionRange(23 * 60 + 30, 23 * 60 + 30).end).toBe(24 * 60 - 1)
+    })
+
+    it('writes minutes back as a local stamp', () => {
+      expect(stampAt('2026-09-14', 9 * 60 + 5)).toBe('2026-09-14T09:05')
+      expect(stampAt('2026-09-14', 24 * 60)).toBe('2026-09-14T23:59')
+    })
   })
 })

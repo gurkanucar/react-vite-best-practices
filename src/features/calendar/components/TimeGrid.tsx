@@ -9,7 +9,13 @@ import {
 } from '@dnd-kit/core'
 import { Button, Flex, Popover, Typography } from 'antd'
 import dayjs from 'dayjs'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+} from 'react'
 import { EventBlock, OVERFLOW_RESERVE } from '@/features/calendar/components/EventBlock'
 import { eventTimeRange, eventTitle } from '@/features/calendar/components/eventText'
 import {
@@ -21,7 +27,10 @@ import {
   moveEvent,
   occursOn,
   resizeEvent,
+  selectionRange,
+  slotAt,
   snapMinutes,
+  stampAt,
   type CalendarEvent,
   type EventChange,
   type HiddenCluster,
@@ -44,6 +53,15 @@ interface TimeGridProps {
   /** Drag to move and drag the bottom edge to resize; off on touch screens. */
   interactive: boolean
   onChangeEvent: (event: CalendarEvent, change: EventChange) => void
+  /** Press on an empty stretch of a day and drag over the hours it should take. */
+  onCreateRange?: (day: string, startMinutes: number, endMinutes: number) => void
+}
+
+/** The hours being swept out on one day column, as slot starts in minutes. */
+interface Selection {
+  day: string
+  anchor: number
+  current: number
 }
 
 interface DragState {
@@ -121,6 +139,7 @@ export function TimeGrid({
   onSelectEvent,
   interactive,
   onChangeEvent,
+  onCreateRange,
 }: TimeGridProps) {
   const messages = useMessages()
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -129,6 +148,7 @@ export function TimeGrid({
   // The click that ends a drag should not also open the event.
   const suppressClick = useRef(false)
   const [drag, setDrag] = useState<DragState | null>(null)
+  const [selection, setSelection] = useState<Selection | null>(null)
   // A few pixels of travel before a press becomes a drag, so a click still opens the event.
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 4 } }))
 
@@ -206,6 +226,44 @@ export function TimeGrid({
     setDrag(null)
     if (change.end !== resized.end) onChangeEvent(resized, change)
   }
+
+  const selecting = interactive && onCreateRange !== undefined
+
+  const slotUnder = (pointerEvent: ReactPointerEvent<HTMLDivElement>) =>
+    slotAt(pointerEvent.clientY - pointerEvent.currentTarget.getBoundingClientRect().top)
+
+  /*
+   * Sweeping out new hours is plain pointer capture on the column, like the resize handle:
+   * the press starts on empty grid, which no draggable owns, and capture keeps the moves
+   * coming even when the pointer strays over an event block or out of the column.
+   */
+  const selectionHandlers = (day: string) =>
+    selecting
+      ? {
+          onPointerDown: (pointerEvent: ReactPointerEvent<HTMLDivElement>) => {
+            if (pointerEvent.button !== 0) return
+            // Events, their resize handles and the "+N" markers keep their own gestures.
+            if ((pointerEvent.target as Element).closest('button')) return
+            pointerEvent.preventDefault()
+            // Missing where there is no real pointer, jsdom included.
+            pointerEvent.currentTarget.setPointerCapture?.(pointerEvent.pointerId)
+            const slot = slotUnder(pointerEvent)
+            setSelection({ day, anchor: slot, current: slot })
+          },
+          onPointerMove: (pointerEvent: ReactPointerEvent<HTMLDivElement>) => {
+            if (selection?.day !== day) return
+            const slot = slotUnder(pointerEvent)
+            if (slot !== selection.current) setSelection({ ...selection, current: slot })
+          },
+          onPointerUp: () => {
+            if (selection?.day !== day) return
+            const { start, end } = selectionRange(selection.anchor, selection.current)
+            setSelection(null)
+            onCreateRange?.(day, start, end)
+          },
+          onPointerCancel: () => setSelection(null),
+        }
+      : {}
 
   const select = (eventId: string) => {
     if (!suppressClick.current) onSelectEvent(eventId)
@@ -315,12 +373,22 @@ export function TimeGrid({
             {days.map((day) => {
               const { visible, hidden } = limitLanes(layoutDay(eventsOn(displayed, day)), maxLanes)
               const isToday = day.isSame(dayjs(), 'day')
-              const ghostHere = ghost && occursOn(ghost, day.format('YYYY-MM-DD'))
+              const iso = day.format('YYYY-MM-DD')
+              const ghostHere = ghost && occursOn(ghost, iso)
+              const swept =
+                selection?.day === iso ? selectionRange(selection.anchor, selection.current) : null
 
               return (
                 <div
                   key={day.toString()}
-                  className={`calendar-daycolumn${isToday ? ' calendar-daycolumn--today' : ''}`}
+                  className={[
+                    'calendar-daycolumn',
+                    isToday && 'calendar-daycolumn--today',
+                    selecting && 'calendar-daycolumn--selectable',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  {...selectionHandlers(iso)}
                 >
                   {HOURS.map((hour) => (
                     <div key={hour} className="calendar-hour-slot" />
@@ -361,6 +429,20 @@ export function TimeGrid({
                       onSelect={() => undefined}
                       positioned={{ ...layoutDay([ghost])[0]!, lane: 0, lanes: 1 }}
                     />
+                  )}
+
+                  {swept && (
+                    <div
+                      className="calendar-selection"
+                      aria-hidden="true"
+                      style={{
+                        top: (swept.start / 60) * HOUR_HEIGHT,
+                        height: ((swept.end - swept.start) / 60) * HOUR_HEIGHT - 2,
+                      }}
+                    >
+                      {dayjs(stampAt(iso, swept.start)).format('HH:mm')} –{' '}
+                      {dayjs(stampAt(iso, swept.end)).format('HH:mm')}
+                    </div>
                   )}
 
                   {isToday && <NowIndicator />}

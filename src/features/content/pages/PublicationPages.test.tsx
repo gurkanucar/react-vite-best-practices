@@ -5,6 +5,8 @@ import { NewsAdminPage } from '@/features/content/pages/PublicationAdminPage'
 import { PublicationEditorPage } from '@/features/content/pages/PublicationEditorPage'
 import { usePreferencesStore } from '@/store/preferences-store'
 
+// Two editors put dozens of toolbar buttons on the page, and a role query computes styles
+// for every one of them; label and text queries find the same controls without that cost.
 describe('content management pages', () => {
   it('provides a bilingual news and announcement publishing screen', () => {
     usePreferencesStore.setState({ language: 'tr' })
@@ -20,10 +22,10 @@ describe('content management pages', () => {
     expect(screen.getByText('Haber')).toBeVisible()
     expect(screen.getByText('Duyuru')).toBeVisible()
     // One editor per content language, both mounted so either can fail validation.
-    expect(screen.getAllByRole('button', { name: 'Kalın' })).toHaveLength(2)
+    expect(screen.getAllByLabelText('Kalın')).toHaveLength(2)
     expect(screen.getByRole('tab', { name: /Türkçe/ })).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByRole('tab', { name: /İngilizce/ })).toBeVisible()
-    expect(screen.getByRole('button', { name: /Yayınla$/ })).toBeVisible()
+    expect(screen.getByText('Yayınla')).toBeVisible()
   })
 
   it('lists news in an Ant Design management table with create and edit routes', () => {
@@ -71,7 +73,7 @@ describe('content management pages', () => {
     expect(
       screen.getByDisplayValue('northstar-dusuk-karbonlu-veri-merkezinin-insasina-basladi'),
     ).toBeInTheDocument()
-    expect(screen.getAllByRole('button', { name: 'Bold' })).toHaveLength(2)
+    expect(screen.getAllByLabelText('Bold')).toHaveLength(2)
     expect(
       screen.getByLabelText('Write the full story or announcement here. (English)'),
     ).toHaveAttribute('contenteditable', 'true')
@@ -100,7 +102,7 @@ describe('content management pages', () => {
     fireEvent.change(englishHeadline!, { target: { value: 'Open Day moved to Friday' } })
     expect(englishSlug).toHaveValue('open-day')
 
-    fireEvent.click(screen.getByRole('button', { name: 'Generate from headline (English)' }))
+    fireEvent.click(screen.getByLabelText('Generate from headline (English)'))
     expect(englishSlug).toHaveValue('open-day-moved-to-friday')
   })
 
@@ -127,7 +129,7 @@ describe('content management pages', () => {
       await screen.findByText('Another publication already uses this slug'),
     ).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: /Publish$/ }))
+    fireEvent.click(screen.getByText('Publish'))
     await waitFor(() =>
       expect(screen.getByRole('tab', { name: /English/ })).toHaveAttribute('aria-selected', 'true'),
     )

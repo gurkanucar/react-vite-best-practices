@@ -1002,6 +1002,10 @@
   margin-top: 0;
 }
 
+.corporate-contact-page__aside a {
+  color: var(--ant-color-primary);
+}
+
 .corporate-office {
   padding: 16px 0;
   display: grid;

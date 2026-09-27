@@ -3,7 +3,11 @@ import type { CalendarEvent } from '@/features/calendar/types'
 import type { Messages } from '@/i18n/messages'
 
 export function eventTitle(messages: Messages, event: CalendarEvent): string {
-  return messages.calendar.events[event.titleId as keyof Messages['calendar']['events']]
+  return (
+    event.title ??
+    messages.calendar.events[event.titleId as keyof Messages['calendar']['events']] ??
+    ''
+  )
 }
 
 export function eventTimeRange(event: CalendarEvent): string {
