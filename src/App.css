@@ -35,6 +35,11 @@ html[data-theme='dark'] .admin-shell::before {
   background-image: none;
 }
 
+/* One height for the header row and the brand beside it, so their bottom edges line up. */
+.admin-shell {
+  --admin-bar-height: 56px;
+}
+
 /* The sidebar stays pinned while the page content scrolls. */
 .admin-sider {
   position: sticky;
@@ -46,8 +51,8 @@ html[data-theme='dark'] .admin-shell::before {
 }
 
 .admin-brand {
-  min-height: 72px;
-  padding: 16px 20px;
+  min-height: var(--admin-bar-height);
+  padding: 4px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -55,8 +60,8 @@ html[data-theme='dark'] .admin-shell::before {
 }
 
 .admin-brand img {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 }
 
 .admin-brand strong,
@@ -76,6 +81,12 @@ html[data-theme='dark'] .admin-shell::before {
 .admin-workspace {
   min-width: 0;
   background: transparent;
+}
+
+/* Two classes, so the height wins over antd's own header rule whatever order the styles load in. */
+.admin-workspace .admin-header {
+  height: var(--admin-bar-height);
+  line-height: var(--admin-bar-height);
 }
 
 .admin-header {
@@ -263,6 +274,12 @@ html[data-theme='dark'] .admin-shell::before {
   gap: 16px;
 }
 
+/* antd's footer is 24px tall on each side and 50px in; this keeps it a slim line under the page. */
+.admin-workspace .admin-footer {
+  padding: 10px 24px;
+  font-size: var(--ant-font-size-sm);
+}
+
 @media (max-width: 720px) {
   .admin-content {
     padding: 16px;
@@ -272,9 +289,11 @@ html[data-theme='dark'] .admin-shell::before {
     width: 96px;
   }
 
-  .admin-footer {
-    align-items: flex-start;
-    flex-direction: column;
+  /* Both pieces fit on one line even on a phone; stacking them only made the footer taller. */
+  .admin-workspace .admin-footer {
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    padding-inline: 16px;
   }
 }
 

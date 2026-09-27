@@ -7,17 +7,27 @@
   overflow: hidden;
 }
 
+/*
+ * The chat fills the screen under the header, as a messenger does: the viewport less the
+ * header and the page padding above and below. The footer sits just past the fold.
+ */
 .chat-layout {
   display: grid;
   grid-template-columns: minmax(280px, 340px) 1fr;
-  height: min(780px, calc(100vh - 220px));
+  height: calc(100dvh - var(--admin-bar-height, 56px) - 48px);
   min-height: 520px;
 }
 
 .chat-layout--single {
   grid-template-columns: minmax(0, 1fr);
-  height: calc(100dvh - 200px);
   min-height: 460px;
+}
+
+/* Narrow screens pad the page by 16px instead of 24px. */
+@media (max-width: 720px) {
+  .chat-layout {
+    height: calc(100dvh - var(--admin-bar-height, 56px) - 32px);
+  }
 }
 
 /* ---------- Conversation list ---------- */

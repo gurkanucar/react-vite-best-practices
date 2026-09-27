@@ -131,7 +131,7 @@ function App() {
         collapsible
         theme="light"
         trigger={null}
-        width={252}
+        width={280}
         onCollapse={setCollapsed}
       >
         {navigation}
