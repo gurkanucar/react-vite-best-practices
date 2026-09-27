@@ -180,7 +180,8 @@ html[data-theme='dark'] .admin-shell::before {
 
 /* The figure is what the card is for, so it outweighs its label; even digits keep cards aligned. */
 .metric-panel .ant-statistic-content,
-.kpi-card .ant-statistic-content {
+.kpi-card .ant-statistic-content,
+.todo-stats .ant-statistic-content {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
