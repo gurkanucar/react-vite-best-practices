@@ -12,6 +12,40 @@
   background: #fff;
 }
 
+@keyframes showcase-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes showcase-header-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes showcase-orbit {
+  to {
+    rotate: 1turn;
+  }
+}
+
+.public-showcase main {
+  animation: showcase-page-enter 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 .showcase-preview-frame .public-showcase {
   min-height: 0;
 }
@@ -31,6 +65,7 @@
   display: flex;
   align-items: center;
   gap: 24px;
+  animation: showcase-header-enter 420ms ease-out both;
 }
 
 .public-showcase__brand {
@@ -53,6 +88,16 @@
   border-radius: 10px 10px 10px 2px;
   background: var(--ant-color-primary);
   box-shadow: inset -8px -8px 0 rgb(255 255 255 / 18%);
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 280ms ease;
+}
+
+.public-showcase__brand:hover .public-showcase__brand-mark {
+  transform: rotate(-6deg) scale(1.04);
+  box-shadow:
+    inset -8px -8px 0 rgb(255 255 255 / 18%),
+    0 8px 20px color-mix(in srgb, var(--ant-color-primary) 22%, transparent);
 }
 
 .public-showcase__nav {
@@ -60,6 +105,17 @@
   display: flex;
   justify-content: center;
   gap: 4px;
+}
+
+.public-showcase__nav .ant-btn {
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.public-showcase__nav .ant-btn:hover {
+  transform: translateY(-2px);
 }
 
 .public-showcase__mobile-menu {
@@ -122,6 +178,34 @@
 
 .showcase-feature-card {
   height: 100%;
+}
+
+:is(
+  .showcase-feature-card,
+  .techpark-update,
+  .techpark-company,
+  .techpark-stat,
+  .corporate-story-card,
+  .publication-card,
+  .announcement-card
+) {
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+:is(
+  .showcase-feature-card,
+  .techpark-update,
+  .techpark-company,
+  .corporate-story-card,
+  .publication-card,
+  .announcement-card
+):hover {
+  transform: translateY(-5px);
+  border-color: color-mix(in srgb, var(--ant-color-primary) 30%, var(--ant-color-border));
+  box-shadow: 0 18px 44px rgb(28 37 46 / 12%);
 }
 
 .showcase-feature-card__icon {
@@ -211,12 +295,15 @@
   border: 1px solid #7990eb;
   border-radius: 50%;
   transform: rotate(28deg);
+  animation: showcase-orbit 34s linear infinite;
 }
 
 .techpark-orbit--two {
   width: 92%;
   height: 45%;
   transform: rotate(-34deg);
+  animation-direction: reverse;
+  animation-duration: 42s;
 }
 
 .techpark-signal {
@@ -837,11 +924,24 @@
   flex-direction: column;
 }
 
-.publication-card__cover {
+.publication-card__cover-wrap {
   width: calc(100% + 48px);
-  aspect-ratio: 16 / 8;
   margin: -24px -24px 24px;
+  display: block;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+}
+
+.publication-card__cover {
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.publication-card:hover .publication-card__cover {
+  transform: scale(1.035);
 }
 
 .publication-card__content {
@@ -871,7 +971,7 @@
   gap: 40px;
 }
 
-.publication-card--lead .publication-card__cover {
+.publication-card--lead .publication-card__cover-wrap {
   grid-column: 2;
   grid-row: 1;
   width: calc(100% + 24px);
@@ -947,14 +1047,24 @@
   flex-direction: column;
 }
 
-.announcement-card__cover,
+.announcement-card__cover-wrap,
 .announcement-card__placeholder {
   width: 100%;
+  display: block;
   aspect-ratio: 16 / 8;
+  overflow: hidden;
 }
 
 .announcement-card__cover {
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.announcement-card:hover .announcement-card__cover {
+  transform: scale(1.035);
 }
 
 .announcement-card__placeholder {
@@ -1014,16 +1124,28 @@
   margin-top: 20px;
 }
 
-.publication-detail__cover,
+.publication-detail__cover-wrap,
 .publication-detail__visual {
   width: 100%;
   height: 420px;
   border-radius: 2px 60px 2px 2px;
 }
 
+.publication-detail__cover-wrap {
+  display: block;
+  overflow: hidden;
+}
+
 .publication-detail__cover {
+  width: 100%;
+  height: 100%;
   display: block;
   object-fit: cover;
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.publication-detail__cover-wrap:hover .publication-detail__cover {
+  transform: scale(1.025);
 }
 
 .publication-detail__visual {
@@ -1116,7 +1238,7 @@
   justify-content: flex-start;
 }
 
-.publication-detail--modern .publication-detail__cover,
+.publication-detail--modern .publication-detail__cover-wrap,
 .publication-detail--modern .publication-detail__visual {
   border-radius: 32px;
 }
@@ -1174,12 +1296,12 @@
     grid-template-columns: 1fr;
   }
 
-  .publication-card--lead .publication-card__cover,
+  .publication-card--lead .publication-card__cover-wrap,
   .publication-card--lead .publication-card__content {
     grid-column: 1;
   }
 
-  .publication-card--lead .publication-card__cover {
+  .publication-card--lead .publication-card__cover-wrap {
     grid-row: 1;
     width: calc(100% + 48px);
     height: auto;
@@ -1235,8 +1357,24 @@
     text-align: left;
   }
 
-  .publication-detail__cover,
+  .publication-detail__cover-wrap,
   .publication-detail__visual {
     height: 280px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-showcase *,
+  .public-showcase *::before,
+  .public-showcase *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  :is(.publication-card, .announcement-card, .publication-detail__cover-wrap):hover
+    :is(.publication-card__cover, .announcement-card__cover, .publication-detail__cover) {
+    transform: none;
   }
 }

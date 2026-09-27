@@ -64,6 +64,7 @@ const labels = {
     visualUpdates: 'Visual updates',
     attachments: 'Attachments',
     gallery: 'Image gallery',
+    previewImage: 'Preview image',
     download: 'Download',
     showing: (start: number, end: number, total: number) => `Showing ${start}–${end} of ${total}`,
   },
@@ -86,6 +87,7 @@ const labels = {
     visualUpdates: 'Görsel içerikli',
     attachments: 'Ek dosyalar',
     gallery: 'Görsel galeri',
+    previewImage: 'Görseli büyüt',
     download: 'İndir',
     showing: (start: number, end: number, total: number) =>
       `${total} kaydın ${start}–${end} arası gösteriliyor`,
@@ -159,10 +161,18 @@ function NewsCard({
     >
       <div className="publication-card__layout">
         {item.coverImage && (
-          <img
+          <Image
+            rootClassName="publication-card__cover-wrap"
             className="publication-card__cover"
             src={item.coverImage.src}
             alt={localize(item.coverImage.alt, language)}
+            preview={{
+              cover: (
+                <Space size={6}>
+                  <PictureOutlined /> {text.previewImage}
+                </Space>
+              ),
+            }}
           />
         )}
         <div className="publication-card__content">
@@ -193,10 +203,18 @@ function AnnouncementCard({ item, detailPath }: { item: Publication; detailPath:
   return (
     <Card className="announcement-card">
       {item.coverImage ? (
-        <img
+        <Image
+          rootClassName="announcement-card__cover-wrap"
           className="announcement-card__cover"
           src={item.coverImage.src}
           alt={localize(item.coverImage.alt, language)}
+          preview={{
+            cover: (
+              <Space size={6}>
+                <PictureOutlined /> {text.previewImage}
+              </Space>
+            ),
+          }}
         />
       ) : (
         <div className="announcement-card__placeholder" aria-hidden="true">
@@ -372,22 +390,20 @@ function PublicationGallery({ publication }: { publication: Publication }) {
       <Divider titlePlacement="start">
         <PictureOutlined /> {text.gallery}
       </Divider>
-      <Image.PreviewGroup>
-        <Row gutter={[16, 16]}>
-          {publication.gallery.map((image) => (
-            <Col xs={24} sm={12} key={`${publication.slug}-${image.src}`}>
-              <figure>
-                <Image src={image.src} alt={localize(image.alt, language)} />
-                {image.caption && (
-                  <Typography.Text type="secondary">
-                    {localize(image.caption, language)}
-                  </Typography.Text>
-                )}
-              </figure>
-            </Col>
-          ))}
-        </Row>
-      </Image.PreviewGroup>
+      <Row gutter={[16, 16]}>
+        {publication.gallery.map((image) => (
+          <Col xs={24} sm={12} key={`${publication.slug}-${image.src}`}>
+            <figure>
+              <Image src={image.src} alt={localize(image.alt, language)} />
+              {image.caption && (
+                <Typography.Text type="secondary">
+                  {localize(image.caption, language)}
+                </Typography.Text>
+              )}
+            </figure>
+          </Col>
+        ))}
+      </Row>
     </section>
   )
 }
@@ -480,38 +496,48 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
             <PublicationTags publication={publication} />
           </div>
 
-          {publication.coverImage ? (
-            <img
-              className="publication-detail__cover"
-              src={publication.coverImage.src}
-              alt={localize(publication.coverImage.alt, language)}
-            />
-          ) : (
-            <div className="publication-detail__visual" aria-hidden="true">
-              <span>{isNews ? 'NORTHSTAR / 2026' : 'AURORA / CAMPUS UPDATE'}</span>
-            </div>
-          )}
+          <Image.PreviewGroup>
+            {publication.coverImage ? (
+              <Image
+                rootClassName="publication-detail__cover-wrap"
+                className="publication-detail__cover"
+                src={publication.coverImage.src}
+                alt={localize(publication.coverImage.alt, language)}
+                preview={{
+                  cover: (
+                    <Space size={6}>
+                      <PictureOutlined /> {text.previewImage}
+                    </Space>
+                  ),
+                }}
+              />
+            ) : (
+              <div className="publication-detail__visual" aria-hidden="true">
+                <span>{isNews ? 'NORTHSTAR / 2026' : 'AURORA / CAMPUS UPDATE'}</span>
+              </div>
+            )}
 
-          <div
-            className={
-              publication.attachments?.length
-                ? 'publication-detail__content publication-detail__content--with-aside'
-                : 'publication-detail__content'
-            }
-          >
-            <div className="publication-detail__body">
-              {publication.body.map((paragraph) => (
-                <Typography.Paragraph key={paragraph.en}>
-                  {localize(paragraph, language)}
-                </Typography.Paragraph>
-              ))}
-              <PublicationGallery publication={publication} />
-              <Button href={paths.list} icon={<ArrowLeftOutlined />}>
-                {text.back} {listTitle.toLocaleLowerCase(language === 'tr' ? 'tr-TR' : 'en-GB')}
-              </Button>
+            <div
+              className={
+                publication.attachments?.length
+                  ? 'publication-detail__content publication-detail__content--with-aside'
+                  : 'publication-detail__content'
+              }
+            >
+              <div className="publication-detail__body">
+                {publication.body.map((paragraph) => (
+                  <Typography.Paragraph key={paragraph.en}>
+                    {localize(paragraph, language)}
+                  </Typography.Paragraph>
+                ))}
+                <PublicationGallery publication={publication} />
+                <Button href={paths.list} icon={<ArrowLeftOutlined />}>
+                  {text.back} {listTitle.toLocaleLowerCase(language === 'tr' ? 'tr-TR' : 'en-GB')}
+                </Button>
+              </div>
+              <PublicationAttachments publication={publication} />
             </div>
-            <PublicationAttachments publication={publication} />
-          </div>
+          </Image.PreviewGroup>
         </article>
       ) : (
         <div className="publication-empty">

@@ -263,6 +263,21 @@ describe('showcase pages', () => {
     )
   })
 
+  it('opens publication cover images in the same full-screen preview used by galleries', async () => {
+    const user = userEvent.setup()
+    render(
+      <MemoryRouter>
+        <CorporateNewsPage standalone />
+      </MemoryRouter>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Low-carbon data center campus' }))
+
+    expect(
+      await screen.findByRole('dialog', { name: 'Low-carbon data center campus' }),
+    ).toBeInTheDocument()
+  })
+
   it('supports optional publication media and downloadable attachments', () => {
     expect(corporateNews).toHaveLength(10)
     expect(corporateAnnouncements).toHaveLength(10)
