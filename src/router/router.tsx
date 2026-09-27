@@ -7,6 +7,7 @@ import {
   AssistantPage,
   BoardPage,
   CalendarPage,
+  ChatPage,
   ComponentsPage,
   CorporateAnnouncementDetailPage,
   CorporateAnnouncementsPage,
@@ -221,6 +222,15 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <CalendarPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'chat',
+        element: (
+          <RouteSuspense>
+            <ChatPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

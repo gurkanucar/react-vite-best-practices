@@ -6,6 +6,7 @@ import {
   BookOutlined,
   BulbOutlined,
   CalendarOutlined,
+  MessageOutlined,
   CloudServerOutlined,
   CompassOutlined,
   DashboardOutlined,
@@ -85,6 +86,7 @@ export function useNavigationSections(): NavigationSection[] {
         children: [
           { key: '/board', icon: <ProjectOutlined />, label: messages.navigation.board },
           { key: '/calendar', icon: <CalendarOutlined />, label: messages.navigation.calendar },
+          { key: '/chat', icon: <MessageOutlined />, label: messages.navigation.chat },
           { key: '/files', icon: <HddOutlined />, label: messages.navigation.files },
           { key: '/documents', icon: <FilePdfOutlined />, label: messages.navigation.documents },
         ],

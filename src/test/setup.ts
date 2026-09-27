@@ -36,6 +36,27 @@ Object.defineProperty(globalThis, 'ResizeObserver', {
   value: ResizeObserverMock,
 })
 
+// @ant-design/x's Bubble.List watches its scroll position with one. It never reports an
+// intersection here; code that needs one to fire has to offer another way, as the
+// infinite lists' "Load more" button does.
+class IntersectionObserverMock implements IntersectionObserver {
+  readonly root = null
+  readonly rootMargin = '0px'
+  readonly scrollMargin = '0px'
+  readonly thresholds = [0]
+  disconnect() {}
+  observe() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return []
+  }
+  unobserve() {}
+}
+
+Object.defineProperty(globalThis, 'IntersectionObserver', {
+  writable: true,
+  value: IntersectionObserverMock,
+})
+
 beforeEach(() => {
   window.localStorage.clear()
   usePreferencesStore.setState(initialPreferences)
