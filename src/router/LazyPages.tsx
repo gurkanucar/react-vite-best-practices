@@ -459,3 +459,66 @@ export const CityPlacePage = lazy(async () => ({
 export const CityEventsPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/CityEventsPage')).CityEventsPage,
 }))
+
+export const EsportsHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EsportsHomePage')).EsportsHomePage,
+}))
+
+export const EsportsTournamentsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EsportsTournamentsPage'))
+    .EsportsTournamentsPage,
+}))
+
+export const EsportsTournamentPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EsportsTournamentPage')).EsportsTournamentPage,
+}))
+
+export const EsportsMatchPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EsportsMatchPage')).EsportsMatchPage,
+}))
+
+export const EsportsTeamPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EsportsTeamPage')).EsportsTeamPage,
+}))
+
+export const EsportsLeaderboardPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EsportsLeaderboardPage'))
+    .EsportsLeaderboardPage,
+}))
+
+export const MagazineHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/MagazineHomePage')).MagazineHomePage,
+}))
+
+export const MagazineArticlePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/MagazineArticlePage')).MagazineArticlePage,
+}))
+
+export const MagazineTopicPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/MagazineTopicPage')).MagazineTopicPage,
+}))
+
+export const MagazineAuthorPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/MagazineAuthorPage')).MagazineAuthorPage,
+}))
+
+export const MagazineBookmarksPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/MagazineBookmarksPage')).MagazineBookmarksPage,
+}))
+
+export const SongContestHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/SongContestHomePage')).SongContestHomePage,
+}))
+
+export const SongContestLivePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/SongContestLivePage')).SongContestLivePage,
+}))
+
+export const SongContestResultsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/SongContestResultsPage'))
+    .SongContestResultsPage,
+}))
+
+export const SongContestantPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/SongContestantPage')).SongContestantPage,
+}))

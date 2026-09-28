@@ -52,6 +52,9 @@ import {
   BellOutlined,
   HeartOutlined,
   EnvironmentOutlined,
+  CrownOutlined,
+  ProfileOutlined,
+  SoundOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
@@ -309,6 +312,21 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/showcases/city',
             icon: <EnvironmentOutlined />,
             label: messages.navigation.cityGuide,
+          },
+          {
+            key: '/showcases/esports',
+            icon: <CrownOutlined />,
+            label: messages.navigation.tournaments,
+          },
+          {
+            key: '/showcases/magazine',
+            icon: <ProfileOutlined />,
+            label: messages.navigation.magazine,
+          },
+          {
+            key: '/showcases/song-contest',
+            icon: <SoundOutlined />,
+            label: messages.navigation.songContest,
           },
           {
             key: '/showcases/corporate',

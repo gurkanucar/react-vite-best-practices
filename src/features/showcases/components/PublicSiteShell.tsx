@@ -13,8 +13,8 @@ import {
 } from 'antd'
 import GB from 'country-flag-icons/react/3x2/GB'
 import TR from 'country-flag-icons/react/3x2/TR'
-import type { ReactNode } from 'react'
-import { Link, useLocation } from 'react-router'
+import type { MouseEvent, ReactNode } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { useShowcaseTheme } from '@/features/showcases/hooks'
 import { usePreferencesStore } from '@/store/preferences-store'
 
@@ -36,6 +36,8 @@ interface PublicSiteShellProps {
   footer?: ReactNode
   /** Offer the light/dark switch. Only for a site whose styles have a dark side. */
   colorModeToggle?: boolean
+  /** Always use the dark palette, for a site that is dark by design such as a stage. */
+  alwaysDark?: boolean
 }
 
 const lightTokens = {
@@ -78,6 +80,15 @@ function currentLink(links: SiteLink[], pathname: string): string | undefined {
     .sort((a, b) => b.href.length - a.href.length)[0]?.href
 }
 
+/** A plain left click, the only kind the router should take over from the browser. */
+function isPlainClick(event: MouseEvent) {
+  return (
+    !event.defaultPrevented &&
+    event.button === 0 &&
+    !(event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+  )
+}
+
 export function PublicSiteShell({
   brand,
   children,
@@ -88,6 +99,7 @@ export function PublicSiteShell({
   homeHref,
   footer,
   colorModeToggle = false,
+  alwaysDark = false,
 }: PublicSiteShellProps) {
   const language = usePreferencesStore((state) => state.language)
   const setLanguage = usePreferencesStore((state) => state.setLanguage)
@@ -95,8 +107,9 @@ export function PublicSiteShell({
   const toggleColorMode = useShowcaseTheme((state) => state.toggleColorMode)
   const isDesktop = Grid.useBreakpoint().md ?? false
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const active = currentLink(links, pathname)
-  const dark = colorModeToggle && storedMode === 'dark'
+  const dark = alwaysDark || (colorModeToggle && storedMode === 'dark')
   // The flag of the language a click switches to, which is what the button offers.
   const NextFlag = language === 'tr' ? GB : TR
   const nextLanguageLabel = language === 'tr' ? 'Switch to English' : 'Türkçeye geç'
@@ -151,6 +164,12 @@ export function PublicSiteShell({
                     key={item.href}
                     type="text"
                     href={item.href}
+                    // Keep the real href for new tabs, but move inside the app without a reload.
+                    onClick={(event) => {
+                      if (!item.href.startsWith('/') || !isPlainClick(event)) return
+                      event.preventDefault()
+                      void navigate(item.href)
+                    }}
                     className={current ? 'is-active' : undefined}
                     aria-current={current ? 'page' : undefined}
                   >
@@ -165,7 +184,7 @@ export function PublicSiteShell({
                 selectedKeys: active ? [active] : [],
                 items: links.map((item) => ({
                   key: item.href,
-                  label: <a href={item.href}>{item.label[language]}</a>,
+                  label: <Link to={item.href}>{item.label[language]}</Link>,
                 })),
               }}
               trigger={['click']}

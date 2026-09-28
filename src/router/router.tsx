@@ -115,6 +115,21 @@ import {
   CityExplorePage,
   CityPlacePage,
   CityEventsPage,
+  EsportsHomePage,
+  EsportsTournamentsPage,
+  EsportsTournamentPage,
+  EsportsMatchPage,
+  EsportsTeamPage,
+  EsportsLeaderboardPage,
+  MagazineHomePage,
+  MagazineArticlePage,
+  MagazineTopicPage,
+  MagazineAuthorPage,
+  MagazineBookmarksPage,
+  SongContestHomePage,
+  SongContestLivePage,
+  SongContestResultsPage,
+  SongContestantPage,
 } from '@/router/LazyPages'
 import { AnnouncementRedirect } from '@/router/AnnouncementRedirect'
 import { RouteSuspense } from '@/router/RouteSuspense'
@@ -760,6 +775,141 @@ const pageRoutes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <CityEventsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/esports',
+    element: (
+      <RouteSuspense fullPage>
+        <EsportsHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/esports/tournaments',
+    element: (
+      <RouteSuspense fullPage>
+        <EsportsTournamentsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/esports/tournaments/:tournamentId',
+    element: (
+      <RouteSuspense fullPage>
+        <EsportsTournamentPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/esports/matches/:matchId',
+    element: (
+      <RouteSuspense fullPage>
+        <EsportsMatchPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/esports/teams/:teamId',
+    element: (
+      <RouteSuspense fullPage>
+        <EsportsTeamPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/esports/leaderboard',
+    element: (
+      <RouteSuspense fullPage>
+        <EsportsLeaderboardPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/magazine',
+    element: (
+      <RouteSuspense fullPage>
+        <MagazineHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/magazine/articles/:articleSlug',
+    element: (
+      <RouteSuspense fullPage>
+        <MagazineArticlePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/magazine/topics/:topicId',
+    element: (
+      <RouteSuspense fullPage>
+        <MagazineTopicPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/magazine/authors/:authorId',
+    element: (
+      <RouteSuspense fullPage>
+        <MagazineAuthorPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/magazine/bookmarks',
+    element: (
+      <RouteSuspense fullPage>
+        <MagazineBookmarksPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/song-contest',
+    element: (
+      <RouteSuspense fullPage>
+        <SongContestHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/song-contest/live',
+    element: (
+      <RouteSuspense fullPage>
+        <SongContestLivePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/song-contest/results',
+    element: (
+      <RouteSuspense fullPage>
+        <SongContestResultsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/song-contest/contestants/:contestantId',
+    element: (
+      <RouteSuspense fullPage>
+        <SongContestantPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -1599,6 +1749,141 @@ const pageRoutes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <CityEventsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/esports',
+        element: (
+          <RouteSuspense>
+            <EsportsHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/esports/tournaments',
+        element: (
+          <RouteSuspense>
+            <EsportsTournamentsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/esports/tournaments/:tournamentId',
+        element: (
+          <RouteSuspense>
+            <EsportsTournamentPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/esports/matches/:matchId',
+        element: (
+          <RouteSuspense>
+            <EsportsMatchPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/esports/teams/:teamId',
+        element: (
+          <RouteSuspense>
+            <EsportsTeamPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/esports/leaderboard',
+        element: (
+          <RouteSuspense>
+            <EsportsLeaderboardPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/magazine',
+        element: (
+          <RouteSuspense>
+            <MagazineHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/magazine/articles/:articleSlug',
+        element: (
+          <RouteSuspense>
+            <MagazineArticlePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/magazine/topics/:topicId',
+        element: (
+          <RouteSuspense>
+            <MagazineTopicPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/magazine/authors/:authorId',
+        element: (
+          <RouteSuspense>
+            <MagazineAuthorPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/magazine/bookmarks',
+        element: (
+          <RouteSuspense>
+            <MagazineBookmarksPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/song-contest',
+        element: (
+          <RouteSuspense>
+            <SongContestHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/song-contest/live',
+        element: (
+          <RouteSuspense>
+            <SongContestLivePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/song-contest/results',
+        element: (
+          <RouteSuspense>
+            <SongContestResultsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/song-contest/contestants/:contestantId',
+        element: (
+          <RouteSuspense>
+            <SongContestantPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,
