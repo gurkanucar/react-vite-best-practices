@@ -30,6 +30,8 @@ export interface Publication {
   tags?: LocalizedText[]
   attachments?: PublicationAttachment[]
   gallery?: PublicationImage[]
+  /** The tech park's feed mixes stories with notices that ask the reader to act. */
+  type?: 'news' | 'announcement'
 }
 
 export function localize(value: LocalizedText, language: Language): string {
@@ -92,39 +94,6 @@ export interface SectorRole {
   level: RoleLevel
   summary: LocalizedText
   skills: LocalizedText[]
-}
-
-export type JobEmploymentType = 'fullTime' | 'partTime' | 'contract' | 'internship'
-export type JobWorkMode = 'onSite' | 'hybrid' | 'remote'
-export type JobStatus = 'published' | 'draft' | 'closed'
-
-/**
- * A complete vacancy used by the talent-board showcase. Unlike the short sector roles on
- * company profiles, these records carry the operational metadata needed by list, detail,
- * create, and edit screens.
- */
-export interface ShowcaseJob {
-  slug: string
-  title: LocalizedText
-  company: string
-  companyInitials: string
-  companyColor: string
-  location: LocalizedText
-  department: LocalizedText
-  employmentType: JobEmploymentType
-  workMode: JobWorkMode
-  experience: LocalizedText
-  salary: LocalizedText
-  summary: LocalizedText
-  description: LocalizedText[]
-  responsibilities: LocalizedText[]
-  qualifications: LocalizedText[]
-  benefits: LocalizedText[]
-  skills: string[]
-  postedAt: string
-  expiresAt: string
-  applicants: number
-  status: JobStatus
 }
 
 export function formatPublicationDate(date: string, language: 'en' | 'tr'): string {

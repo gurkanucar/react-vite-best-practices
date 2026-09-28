@@ -18,7 +18,9 @@ Each example has two route families:
 
 Each website has one entry in the admin menu. Inner pages such as Northstar's newsroom or a tech park article are reached from the site's own header, and the menu highlights the site they belong to.
 
-Announcements are the tech park's own notices, so they live under its routes and share its site header (`TechParkSiteShell`). The old `/corporate/announcements` addresses redirect there. The tech park front page shows the three newest notices with the same `AnnouncementCard` the list uses, so the two never drift apart.
+The tech park's feed lives under its routes and shares its site header (`TechParkSiteShell`). The old `/corporate/announcements` addresses redirect there. The tech park front page shows the three newest items with the same `AnnouncementCard` the list uses, so the two never drift apart.
+
+The feed mixes two kinds of item, marked by `Publication.type`: **news** tells residents what happened on campus (a clean room opening, an investment round, a demo day), and an **announcement** asks them to do something by a date (monthly R&D personnel declarations under Law No. 4691, an incubation call, a power cut in one building, holiday hours). The content is invented but written the way a Turkish technology development zone publishes it, and it names the campus's own companies, buildings, programmes and staff so every page of the site tells the same story. A `Segmented` filter (All / News / Announcements, with counts) narrows the list and keeps the choice in `?type=`.
 
 The admin route renders a normal `PageHeader` with an **Open in a new tab** action. The `/preview` route skips `App.tsx` entirely, so the admin sidebar, header, and footer are never mounted. The public website keeps only its own site header and content.
 
@@ -39,20 +41,21 @@ showcases/
 Publications share one typed `Publication` model and route machinery, but intentionally use two different visual examples:
 
 - **News** keeps Northstar's warm, editorial corporate design. Its first item is presented as the lead story.
-- **Announcements** use Aurora Tech Park's modern navy, cobalt, and cyan identity with a campus status summary and denser card grid.
+- **The tech park feed** uses Aurora Tech Park's modern navy, cobalt, and cyan identity with a summary of news, announcements and attachments, a type filter, and a denser card grid. Each card says whether it is news or an announcement.
 
 This is enough reuse to prevent duplicate data and routing logic without forcing unrelated brands into the same visual template.
 
 ## Publication content and pagination
 
-Both collections contain ten bilingual records and show six records per page. Ant Design's `Pagination` component synchronizes the selected page with the URL:
+Northstar's newsroom holds ten bilingual records and the tech park feed twenty (ten news, ten announcements); both show six per page. Ant Design's `Pagination` component synchronizes the selected page with the URL:
 
 ```text
 /preview/corporate/news?page=2
 /preview/technopark/announcements?page=2
+/preview/technopark/announcements?type=news
 ```
 
-Keeping `page` in the URL makes a result page bookmarkable, shareable, and compatible with browser back/forward navigation. Page `1` removes the parameter to keep the canonical URL clean. Invalid or out-of-range values fall back to the nearest valid page in the UI.
+Changing the type filter returns to the first page. Keeping `page` in the URL makes a result page bookmarkable, shareable, and compatible with browser back/forward navigation. Page `1` removes the parameter to keep the canonical URL clean. Invalid or out-of-range values fall back to the nearest valid page in the UI.
 
 The shared `Publication` type supports these optional fields:
 
@@ -62,6 +65,7 @@ interface Publication {
   tags?: LocalizedText[]
   attachments?: PublicationAttachment[]
   gallery?: PublicationImage[]
+  type?: 'news' | 'announcement'
 }
 ```
 

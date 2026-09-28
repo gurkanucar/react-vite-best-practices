@@ -1,0 +1,12 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Aurora Tech Park//Campus desk//EN
+BEGIN:VEVENT
+UID:grant-info-day-20261008@aurora-techpark.example
+DTSTAMP:20260910T090000Z
+DTSTART:20261008T070000Z
+DTEND:20261008T100000Z
+SUMMARY:TÜBİTAK and KOSGEB support programmes — information day
+LOCATION:Block A conference hall\, Aurora Tech Park
+END:VEVENT
+END:VCALENDAR

@@ -83,7 +83,7 @@ describe('showcase pages', () => {
       'href',
       `/preview/technopark/announcements/${latest.slug}`,
     )
-    expect(screen.getByRole('link', { name: /All announcements$/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /All news & announcements$/ })).toHaveAttribute(
       'href',
       '/preview/technopark/announcements',
     )
@@ -291,7 +291,11 @@ describe('showcase pages', () => {
 
   it('supports optional publication media and downloadable attachments', () => {
     expect(corporateNews).toHaveLength(10)
-    expect(campusAnnouncements).toHaveLength(10)
+    expect(campusAnnouncements).toHaveLength(20)
+    // The tech park's feed mixes stories and notices, and says which each one is.
+    expect(campusAnnouncements.every((publication) => publication.type)).toBe(true)
+    expect(campusAnnouncements.some((publication) => publication.type === 'news')).toBe(true)
+    expect(campusAnnouncements.some((publication) => !publication.coverImage)).toBe(true)
     expect(corporateNews.some((publication) => !publication.coverImage)).toBe(true)
     expect(campusAnnouncements.some((publication) => publication.gallery?.length)).toBe(true)
     expect(campusAnnouncements.some((publication) => publication.attachments?.length)).toBe(true)
@@ -316,7 +320,7 @@ describe('showcase pages', () => {
   it('uses the Aurora design for announcements and renders detail assets', () => {
     const { container } = render(
       <MemoryRouter
-        initialEntries={['/preview/technopark/announcements/planned-service-maintenance']}
+        initialEntries={['/preview/technopark/announcements/block-c-power-maintenance']}
       >
         <Routes>
           <Route
@@ -328,12 +332,14 @@ describe('showcase pages', () => {
     )
 
     expect(container.querySelector('.announcement-site')).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Planned service maintenance' })).toBeVisible()
-    expect(screen.getByRole('link', { name: 'Download: Maintenance schedule' })).toHaveAttribute(
-      'href',
-      '/showcase-attachments/maintenance-window.csv',
-    )
-    expect(screen.getByAltText('Network operations center')).toBeVisible()
+    expect(
+      screen.getByRole('heading', { name: 'Planned power maintenance in Block C on October 10' }),
+    ).toBeVisible()
+    expect(
+      screen.getByRole('link', { name: 'Download: Maintenance schedule by floor' }),
+    ).toHaveAttribute('href', '/showcase-attachments/maintenance-window.csv')
+    expect(screen.getByAltText('Block C plant room')).toBeVisible()
+    expect(screen.getByText('Announcement')).toBeVisible()
   })
 
   it('shows the tech park announcements as a modern paginated list', () => {
@@ -348,10 +354,28 @@ describe('showcase pages', () => {
     expect(container.querySelector('.publication-hero--modern')).toBeInTheDocument()
     expect(
       screen.getByText(
-        'Deadlines, campus operations, programs, and service updates for the Aurora community.',
+        'Stories from the campus, and the deadlines, calls and service notices resident companies need to act on.',
       ),
     ).toHaveClass('publication-hero__description')
-    expect(screen.getAllByRole('link', { name: /View announcement$/ })).toHaveLength(6)
+    expect(container.querySelectorAll('.announcement-card')).toHaveLength(6)
+  })
+
+  it('narrows the tech park feed to news or announcements from the address', () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/preview/technopark/announcements?type=news']}>
+        <TechParkAnnouncementsPage standalone />
+      </MemoryRouter>,
+    )
+
+    expect(screen.getByText('News (10)')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /View announcement$/ })).not.toBeInTheDocument()
+    expect(container.querySelectorAll('.announcement-card')).toHaveLength(6)
+
+    fireEvent.click(screen.getByText('Announcements (10)'))
+    expect(screen.queryByRole('link', { name: /Read story$/ })).not.toBeInTheDocument()
+    expect(
+      screen.getByText('September R&D personnel declarations due by October 5'),
+    ).toBeInTheDocument()
   })
 
   it('marks the page being shown in the site header', () => {

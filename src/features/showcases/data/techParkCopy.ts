@@ -7,7 +7,7 @@ import type { LocalizedText } from '@/features/showcases/types'
 export const techParkCopy = {
   en: {
     tagline: 'Technology campus',
-    nav: ['About', 'Programs', 'Companies', 'Announcements', 'Team', 'Contact'],
+    nav: ['About', 'Programs', 'Companies', 'News', 'Team', 'Contact'],
     eyebrow: 'Build what comes next',
     title: 'Where ambitious technology companies become category leaders.',
     description:
@@ -87,15 +87,16 @@ export const techParkCopy = {
     founded: 'Founded',
     people: 'people',
     hiring: 'Hiring',
-    updatesTitle: 'Campus announcements',
-    updatesDescription: 'The latest deadlines, events and service notices from the campus desk.',
-    allUpdates: 'All announcements',
+    updatesTitle: 'News & announcements',
+    updatesDescription:
+      'What happened on campus, and the deadlines, calls and notices resident companies need to act on.',
+    allUpdates: 'All news & announcements',
     ctaTitle: 'Bring your next breakthrough to Aurora.',
     ctaText: 'Applications for the winter residency cohort close on October 18.',
   },
   tr: {
     tagline: 'Teknoloji kampüsü',
-    nav: ['Hakkımızda', 'Programlar', 'Şirketler', 'Duyurular', 'Ekibimiz', 'İletişim'],
+    nav: ['Hakkımızda', 'Programlar', 'Şirketler', 'Haberler', 'Ekibimiz', 'İletişim'],
     eyebrow: 'Geleceği burada kurun',
     title: 'İddialı teknoloji şirketlerinin kategori liderine dönüştüğü yer.',
     description:
@@ -179,9 +180,10 @@ export const techParkCopy = {
     founded: 'Kuruluş',
     people: 'kişi',
     hiring: 'İşe alıyor',
-    updatesTitle: 'Kampüs duyuruları',
-    updatesDescription: 'Kampüs masasından son tarihler, etkinlikler ve servis duyuruları.',
-    allUpdates: 'Tüm duyurular',
+    updatesTitle: 'Haberler ve duyurular',
+    updatesDescription:
+      'Kampüste olup bitenler; bölge firmalarını ilgilendiren son tarihler, çağrılar ve duyurular.',
+    allUpdates: 'Tüm haber ve duyurular',
     ctaTitle: 'Sıradaki büyük fikrinizi Aurora’ya taşıyın.',
     ctaText: 'Kış dönemi yerleşim programı başvuruları 18 Ekim’de kapanıyor.',
   },

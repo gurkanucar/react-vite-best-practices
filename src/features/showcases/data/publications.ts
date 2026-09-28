@@ -358,49 +358,52 @@ export const corporateNews: Publication[] = [
   },
 ]
 
+/**
+ * Aurora Tech Park's own feed: stories about what happened on campus (`news`) and notices that
+ * ask residents to do something by a date (`announcement`). Newest first.
+ */
 export const campusAnnouncements: Publication[] = [
   {
-    slug: 'extraordinary-general-meeting',
+    slug: 'september-personnel-declarations',
+    type: 'announcement',
     title: {
-      en: 'Extraordinary General Meeting information',
-      tr: 'Olağanüstü Genel Kurul bilgilendirmesi',
+      en: 'September R&D personnel declarations due by October 5',
+      tr: 'Eylül dönemi Ar-Ge personel bildirimleri için son gün 5 Ekim',
     },
     summary: {
-      en: 'Meeting agenda, participation instructions, and proxy documents are now available.',
-      tr: 'Toplantı gündemi, katılım bilgileri ve vekâlet belgeleri yayımlandı.',
+      en: 'Resident companies must submit September personnel lists and working-time records through the resident portal.',
+      tr: 'Bölge firmalarının eylül ayı personel listelerini ve çalışma süresi kayıtlarını firma portalı üzerinden iletmesi gerekiyor.',
     },
     body: [
       {
-        en: 'The Extraordinary General Meeting will be held on October 14, 2026 at 10:00 at Northstar Campus, Istanbul.',
-        tr: 'Olağanüstü Genel Kurul 14 Ekim 2026 saat 10.00’da Northstar Kampüs, İstanbul adresinde gerçekleştirilecektir.',
+        en: 'Under Law No. 4691 on Technology Development Zones, the income tax withholding incentive and the employer insurance premium support for R&D and support staff are applied on the basis of monthly declarations. The management company forwards the zone’s consolidated list to the Ministry of Industry and Technology each month.',
+        tr: '4691 sayılı Teknoloji Geliştirme Bölgeleri Kanunu kapsamında Ar-Ge ve destek personeline uygulanan gelir vergisi stopajı teşviki ile sigorta primi işveren hissesi desteği, aylık bildirimler esas alınarak uygulanmaktadır. Yönetici şirket, bölgenin toplu listesini her ay Sanayi ve Teknoloji Bakanlığına iletmektedir.',
       },
       {
-        en: 'Shareholders may attend in person or appoint a representative by following the instructions included in the meeting information pack.',
-        tr: 'Pay sahipleri toplantıya bizzat katılabilir veya bilgilendirme dosyasındaki adımları izleyerek temsilci atayabilir.',
+        en: 'September declarations, including days worked outside the zone and remote-working ratios, must be entered in the resident portal by Monday, October 5 at 17:00. Late or incomplete declarations may mean the incentives cannot be applied for that month.',
+        tr: 'Bölge dışında geçirilen günler ve uzaktan çalışma oranları dahil eylül ayı bildirimlerinin 5 Ekim Pazartesi saat 17.00’ye kadar firma portalına girilmesi gerekmektedir. Geç ya da eksik yapılan bildirimler, ilgili ay için teşviklerin uygulanamamasına yol açabilir.',
+      },
+      {
+        en: 'Questions about the form can be sent to Burak Öztürk, Exemption Specialist, at exemptions@aurora-techpark.example.',
+        tr: 'Formla ilgili sorularınızı Muafiyet Uzmanı Burak Öztürk’e exemptions@aurora-techpark.example adresinden iletebilirsiniz.',
       },
     ],
-    category: { en: 'Investor relations', tr: 'Yatırımcı ilişkileri' },
-    date: '2026-09-10',
-    coverImage: {
-      src: innovationLab,
-      alt: {
-        en: 'Northstar meeting and innovation hall',
-        tr: 'Northstar toplantı ve inovasyon salonu',
-      },
-    },
+    category: { en: 'Exemptions & reporting', tr: 'Muafiyet ve bildirimler' },
+    date: '2026-09-25',
     tags: [
-      { en: 'General meeting', tr: 'Genel kurul' },
-      { en: 'Shareholders', tr: 'Pay sahipleri' },
+      { en: 'Law No. 4691', tr: '4691 sayılı Kanun' },
+      { en: 'Deadline', tr: 'Son tarih' },
+      { en: 'Resident companies', tr: 'Bölge firmaları' },
     ],
     attachments: [
       {
-        name: { en: 'Meeting agenda', tr: 'Toplantı gündemi' },
-        href: '/showcase-attachments/general-meeting-agenda.txt',
-        format: 'TXT',
+        name: { en: 'Personnel declaration template', tr: 'Personel bildirim şablonu' },
+        href: '/showcase-attachments/personnel-declaration-template.csv',
+        format: 'CSV',
         size: '1 KB',
       },
       {
-        name: { en: 'Information document', tr: 'Bilgilendirme belgesi' },
+        name: { en: 'Monthly declaration guide', tr: 'Aylık bildirim rehberi' },
         href: '/sample-report.pdf',
         format: 'PDF',
         size: '42 KB',
@@ -408,95 +411,370 @@ export const campusAnnouncements: Publication[] = [
     ],
   },
   {
-    slug: 'planned-service-maintenance',
-    title: { en: 'Planned service maintenance', tr: 'Planlı servis bakımı' },
+    slug: 'block-c-power-maintenance',
+    type: 'announcement',
+    title: {
+      en: 'Planned power maintenance in Block C on October 10',
+      tr: 'C Blok’ta 10 Ekim’de planlı elektrik bakımı',
+    },
     summary: {
-      en: 'Partner portals will be briefly unavailable during infrastructure maintenance.',
-      tr: 'Altyapı bakımı sırasında iş ortağı portalları kısa süreliğine erişime kapalı olacak.',
+      en: 'Mains power in Block C will be off on Saturday morning while the main distribution panel is serviced.',
+      tr: 'Ana dağıtım panosunun bakımı nedeniyle C Blok’ta cumartesi sabahı şebeke elektriği kesilecek.',
     },
     body: [
       {
-        en: 'Partner portals will be unavailable between 01:00 and 03:00 UTC on September 20 while network infrastructure is upgraded.',
-        tr: 'Ağ altyapısı güncellenirken iş ortağı portalları 20 Eylül tarihinde 04.00–06.00 arasında erişime kapalı olacaktır.',
+        en: 'Mains power in Block C will be cut on Saturday, October 10 between 08:00 and 14:00 for the annual maintenance of the main distribution panel and the transformer protection relays.',
+        tr: 'C Blok’ta ana dağıtım panosu ve trafo koruma rölelerinin yıllık bakımı için 10 Ekim Cumartesi günü 08.00–14.00 saatleri arasında şebeke elektriği kesilecektir.',
       },
       {
-        en: 'No customer action is required. Workloads and queued transactions will resume automatically after the maintenance window.',
-        tr: 'Müşterilerin işlem yapması gerekmemektedir. İş yükleri ve sıradaki işlemler bakım penceresinden sonra otomatik olarak devam edecektir.',
+        en: 'The shared clean room and the server room stay on generator power throughout. Offices, meeting rooms and the ground-floor kitchen will be without power, and the lifts will not run.',
+        tr: 'Ortak temiz oda ve sunucu odası bakım süresince jeneratörden beslenecektir. Ofisler, toplantı salonları ve zemin kattaki mutfak enerjisiz kalacak, asansörler çalışmayacaktır.',
+      },
+      {
+        en: 'Please shut down test rigs and any equipment that does not tolerate a hard power cut by Friday evening. Teams that need an exception should write to the facilities desk by October 7.',
+        tr: 'Test düzeneklerinizi ve ani enerji kesintisinden etkilenebilecek cihazlarınızı cuma akşamı kapatmanızı rica ederiz. İstisna talebi olan ekiplerin 7 Ekim’e kadar teknik işler birimine yazması gerekmektedir.',
       },
     ],
-    category: { en: 'Service notice', tr: 'Servis bildirimi' },
-    date: '2026-09-07',
+    category: { en: 'Campus services', tr: 'Kampüs hizmetleri' },
+    date: '2026-09-24',
     coverImage: {
-      src: mobilityGrid,
-      alt: { en: 'Connected service infrastructure', tr: 'Bağlantılı servis altyapısı' },
+      src: dataCenter,
+      alt: { en: 'Block C plant room', tr: 'C Blok teknik hacmi' },
     },
     tags: [
+      { en: 'Block C', tr: 'C Blok' },
       { en: 'Maintenance', tr: 'Bakım' },
-      { en: 'Digital services', tr: 'Dijital servisler' },
     ],
     attachments: [
       {
-        name: { en: 'Maintenance schedule', tr: 'Bakım takvimi' },
+        name: { en: 'Maintenance schedule by floor', tr: 'Kat bazında bakım takvimi' },
         href: '/showcase-attachments/maintenance-window.csv',
         format: 'CSV',
         size: '1 KB',
       },
     ],
+  },
+  {
+    slug: 'shared-clean-room-expansion',
+    type: 'news',
+    title: {
+      en: 'The shared clean room in Block C doubles in size',
+      tr: 'C Blok’taki ortak temiz oda iki katına çıktı',
+    },
+    summary: {
+      en: 'A second ISO 7 hall adds 180 m² of bookable space; Cellwise Bio is the first team to move a production line in.',
+      tr: 'ISO 7 sınıfındaki ikinci salon 180 m² rezerve edilebilir alan ekliyor; buraya üretim hattını taşıyan ilk ekip Cellwise Bio oldu.',
+    },
+    body: [
+      {
+        en: 'The second hall of the shared clean room opened on September 22. Built to ISO 7, it adds 180 m² to the existing space, with its own gowning room, a pass-through for materials and continuous particle monitoring.',
+        tr: 'Ortak temiz odanın ikinci salonu 22 Eylül’de hizmete girdi. ISO 7 sınıfında inşa edilen salon mevcut alana 180 m² ekliyor; ayrı soyunma odası, malzeme geçiş kabini ve sürekli partikül izleme sistemiyle donatıldı.',
+      },
+      {
+        en: 'Cellwise Bio has moved the assembly line for its benchtop cytometer into the new hall. “Until now we booked the room by the hour and packed up every evening,” says the company’s operations lead. “A fixed line means we can plan production, not just prototypes.”',
+        tr: 'Cellwise Bio, masaüstü sitometresinin montaj hattını yeni salona taşıdı. Şirketin operasyon sorumlusu, “Şimdiye kadar odayı saatlik kiralıyor, her akşam toparlıyorduk. Sabit bir hat, yalnızca prototip değil üretim planlayabileceğimiz anlamına geliyor.” diyor.',
+      },
+      {
+        en: 'The remaining capacity is open to every resident company through the prototype laboratory booking system. Users need the updated laboratory safety training before their first session.',
+        tr: 'Kalan kapasite, prototip laboratuvarları rezervasyon sistemi üzerinden tüm bölge firmalarının kullanımına açık. İlk kullanımdan önce güncel laboratuvar güvenliği eğitiminin tamamlanması gerekiyor.',
+      },
+    ],
+    category: { en: 'Infrastructure', tr: 'Altyapı' },
+    date: '2026-09-23',
+    readingTime: { en: '3 min read', tr: '3 dk okuma' },
+    coverImage: {
+      src: innovationLab,
+      alt: { en: 'The new clean room hall', tr: 'Yeni temiz oda salonu' },
+    },
+    tags: [
+      { en: 'Clean room', tr: 'Temiz oda' },
+      { en: 'Cellwise Bio', tr: 'Cellwise Bio' },
+      { en: 'Laboratories', tr: 'Laboratuvarlar' },
+    ],
     gallery: [
       {
         src: innovationLab,
-        alt: { en: 'Network operations center', tr: 'Ağ operasyon merkezi' },
-        caption: { en: 'Operations monitoring room', tr: 'Operasyon izleme odası' },
+        alt: { en: 'Assembly benches in the clean room', tr: 'Temiz odadaki montaj tezgâhları' },
+        caption: { en: 'Cellwise Bio’s assembly line', tr: 'Cellwise Bio montaj hattı' },
       },
       {
         src: dataCenter,
-        alt: { en: 'Primary data center', tr: 'Birincil veri merkezi' },
-        caption: { en: 'Primary infrastructure campus', tr: 'Birincil altyapı kampüsü' },
+        alt: {
+          en: 'Air handling plant for the clean room',
+          tr: 'Temiz oda iklimlendirme santrali',
+        },
+        caption: { en: 'The new air handling plant', tr: 'Yeni iklimlendirme santrali' },
       },
     ],
   },
   {
-    slug: 'office-closure-holiday',
-    title: { en: 'Public holiday office schedule', tr: 'Resmî tatil çalışma düzeni' },
+    slug: 'republic-day-working-hours',
+    type: 'announcement',
+    title: {
+      en: 'Working hours for Republic Day, October 29',
+      tr: '29 Ekim Cumhuriyet Bayramı çalışma düzeni',
+    },
     summary: {
-      en: 'Customer operations remain available while corporate offices follow the holiday schedule.',
-      tr: 'Müşteri operasyonları devam ederken kurumsal ofisler tatil düzenini uygulayacak.',
+      en: 'The management office closes at 13:00 on October 28 and stays closed on October 29.',
+      tr: 'Yönetim ofisi 28 Ekim’de saat 13.00’te kapanacak, 29 Ekim’de hizmet vermeyecek.',
     },
     body: [
       {
-        en: 'Corporate offices will be closed on October 29. Critical operations and the customer support line will continue without interruption.',
-        tr: 'Kurumsal ofisler 29 Ekim tarihinde kapalı olacaktır. Kritik operasyonlar ve müşteri destek hattı kesintisiz devam edecektir.',
+        en: 'October 28 is the eve of Republic Day and a half-day holiday: the management office, the reception desk and the laboratory booking desk will close at 13:00. On Thursday, October 29 the offices are closed, and normal hours resume on Friday, October 30.',
+        tr: '28 Ekim Çarşamba günü Cumhuriyet Bayramı arifesi olması nedeniyle yarım gündür; yönetim ofisi, danışma ve laboratuvar rezervasyon masası saat 13.00’te kapanacaktır. 29 Ekim Perşembe günü ofislerimiz kapalı olacak, 30 Ekim Cuma günü normal çalışma düzenine dönülecektir.',
       },
       {
-        en: 'Regular office hours resume on October 30. Digital support requests can be submitted at any time through the partner portal.',
-        tr: 'Normal çalışma düzeni 30 Ekim’de devam edecektir. Dijital destek talepleri iş ortağı portalı üzerinden her zaman iletilebilir.',
+        en: 'Security and card access to the buildings continue around the clock. No laboratory bookings are taken for the afternoon of October 28 or for October 29, and the campus shuttle runs its weekend timetable on both days.',
+        tr: 'Güvenlik hizmeti ve binalara kartlı giriş kesintisiz devam edecektir. 28 Ekim öğleden sonrası ve 29 Ekim için laboratuvar rezervasyonu alınmayacak, kampüs servisi her iki gün hafta sonu tarifesiyle çalışacaktır.',
+      },
+      {
+        en: 'We wish the whole Aurora community a happy 103rd anniversary of the Republic.',
+        tr: 'Cumhuriyetimizin 103. yıl dönümünü tüm Aurora topluluğuyla birlikte kutlarız.',
       },
     ],
-    category: { en: 'Corporate', tr: 'Kurumsal' },
-    date: '2026-08-31',
+    category: { en: 'Working hours', tr: 'Çalışma düzeni' },
+    date: '2026-09-21',
     tags: [
+      { en: 'Public holiday', tr: 'Resmî tatil' },
       { en: 'Office hours', tr: 'Çalışma saatleri' },
-      { en: 'Customer support', tr: 'Müşteri desteği' },
+    ],
+  },
+  {
+    slug: 'winter-incubation-call',
+    type: 'announcement',
+    title: {
+      en: 'Winter incubation cohort: applications close October 18',
+      tr: 'Kuluçka programı kış dönemi başvuruları 18 Ekim’de kapanıyor',
+    },
+    summary: {
+      en: 'Twelve places for companies under three years old with a working prototype.',
+      tr: 'Çalışan prototipi olan, üç yaşından küçük şirketler için on iki kontenjan.',
+    },
+    body: [
+      {
+        en: 'Applications are open for the winter cohort of the incubation programme. Selected companies get a subsidised office for two years, booked hours in the prototype laboratories, a named mentor from industry and the tax exemptions of the zone from their first day.',
+        tr: 'Kuluçka programının kış dönemi başvuruları açıldı. Seçilen şirketler iki yıl boyunca indirimli ofis, prototip laboratuvarlarında ayrılmış kullanım saatleri, sanayiden atanmış bir mentor ve ilk günden itibaren bölgenin vergi muafiyetlerinden yararlanacak.',
+      },
+      {
+        en: 'Companies must be under three years old, have a working prototype and at least one founder working full time on the product. Projects are assessed for technological novelty, commercial potential and team capability.',
+        tr: 'Başvuracak şirketlerin üç yaşından küçük olması, çalışan bir prototipe sahip olması ve en az bir kurucunun tam zamanlı olarak ürün üzerinde çalışması gerekmektedir. Projeler teknolojik yenilik, ticari potansiyel ve ekip yetkinliği açısından değerlendirilecektir.',
+      },
+      {
+        en: 'The deadline is Sunday, October 18 at 23:59. Shortlisted teams will pitch to the evaluation committee on November 4. For questions, contact Zeynep Kılıç, Venture Office Coordinator, at ventures@aurora-techpark.example.',
+        tr: 'Son başvuru tarihi 18 Ekim Pazar saat 23.59’dur. Ön elemeyi geçen ekipler 4 Kasım’da değerlendirme kuruluna sunum yapacaktır. Sorularınız için Girişim Ofisi Koordinatörü Zeynep Kılıç’a ventures@aurora-techpark.example adresinden ulaşabilirsiniz.',
+      },
+    ],
+    category: { en: 'Programs', tr: 'Programlar' },
+    date: '2026-09-18',
+    coverImage: {
+      src: talentStudio,
+      alt: {
+        en: 'Founders working in the shared studio',
+        tr: 'Ortak stüdyoda çalışan girişimciler',
+      },
+    },
+    tags: [
+      { en: 'Incubation', tr: 'Kuluçka' },
+      { en: 'Call for applications', tr: 'Başvuru çağrısı' },
+      { en: 'Deadline', tr: 'Son tarih' },
+    ],
+    attachments: [
+      {
+        name: { en: 'Application form', tr: 'Başvuru formu' },
+        href: '/sample-report.pdf',
+        format: 'PDF',
+        size: '42 KB',
+      },
+      {
+        name: { en: 'Eligibility criteria', tr: 'Başvuru koşulları' },
+        href: '/showcase-attachments/incubation-eligibility.txt',
+        format: 'TXT',
+        size: '1 KB',
+      },
+    ],
+  },
+  {
+    slug: 'sablon-ai-seed-round',
+    type: 'news',
+    title: {
+      en: 'Sablon AI raises a $2.4 million seed round',
+      tr: 'Sablon AI 2,4 milyon dolarlık tohum yatırım aldı',
+    },
+    summary: {
+      en: 'The fourteen-person document AI team, on campus since January, will use the round to grow its insurance pilots.',
+      tr: 'Ocak ayından bu yana kampüste olan on dört kişilik belge yapay zekâsı ekibi, yatırımı sigorta pilotlarını büyütmek için kullanacak.',
+    },
+    body: [
+      {
+        en: 'Sablon AI, which builds models that read contracts, filings and forms and return structured fields with a confidence score for each, has closed a $2.4 million seed round led by a regional technology fund, with participation from two angel investors from the tech park network.',
+        tr: 'Sözleşme, dilekçe ve formları okuyup her alan için güven skoruyla birlikte yapılandırılmış veri üreten modeller geliştiren Sablon AI, bölgesel bir teknoloji fonunun liderliğinde, teknopark ağından iki melek yatırımcının da katıldığı 2,4 milyon dolarlık tohum yatırım turunu tamamladı.',
+      },
+      {
+        en: 'The company joined the incubation programme in January. Its insurance intake pilot now processes claim forms for two insurers, and the round will fund new hires in machine learning and a Frankfurt sales office next year.',
+        tr: 'Şirket ocak ayında kuluçka programına katıldı. Sigorta başvuru pilotu bugün iki sigorta şirketinin hasar formlarını işliyor; yatırım, makine öğrenmesi alanındaki yeni işe alımları ve gelecek yıl açılacak Frankfurt satış ofisini finanse edecek.',
+      },
+    ],
+    category: { en: 'Startups', tr: 'Girişimler' },
+    date: '2026-09-15',
+    readingTime: { en: '2 min read', tr: '2 dk okuma' },
+    tags: [
+      { en: 'Investment', tr: 'Yatırım' },
+      { en: 'Sablon AI', tr: 'Sablon AI' },
+      { en: 'Artificial intelligence', tr: 'Yapay zekâ' },
+    ],
+  },
+  {
+    slug: 'grant-info-day-october',
+    type: 'announcement',
+    title: {
+      en: 'TÜBİTAK and KOSGEB support programmes: information day on October 8',
+      tr: 'TÜBİTAK ve KOSGEB destekleri bilgilendirme günü 8 Ekim’de',
+    },
+    summary: {
+      en: 'A morning on public R&D support calls, followed by one-to-one sessions with the incentives team.',
+      tr: 'Kamu Ar-Ge destek çağrılarına ayrılmış bir sabah ve ardından teşvik ekibiyle birebir görüşmeler.',
+    },
+    body: [
+      {
+        en: 'The R&D support desk is holding an information day on Thursday, October 8, from 10:00 to 13:00 in the Block A conference hall. Sessions cover the application process for TÜBİTAK TEYDEB industrial R&D programmes, including 1501 and 1507, and KOSGEB’s R&D, innovation and industrial application support.',
+        tr: 'Ar-Ge destek masası, 8 Ekim Perşembe günü 10.00–13.00 saatleri arasında A Blok konferans salonunda bilgilendirme günü düzenliyor. Oturumlarda 1501 ve 1507 başta olmak üzere TÜBİTAK TEYDEB sanayi Ar-Ge destek programlarının başvuru süreçleri ile KOSGEB Ar-Ge, İnovasyon ve Endüstriyel Uygulama Destek Programı ele alınacak.',
+      },
+      {
+        en: 'In the afternoon, Deniz Yalçın, R&D Incentives Specialist, will hold 20-minute one-to-one sessions to look at specific project ideas. Places are limited and booked in order of registration.',
+        tr: 'Öğleden sonra Ar-Ge Teşvikleri Uzmanı Deniz Yalçın, somut proje fikirlerini değerlendirmek üzere 20 dakikalık birebir görüşmeler yapacak. Kontenjan sınırlı olup randevular kayıt sırasına göre verilecektir.',
+      },
+      {
+        en: 'Current call dates and conditions are those published by the programme owners; please check their official pages before applying.',
+        tr: 'Güncel çağrı tarihleri ve koşulları için programları yürüten kurumların resmî duyuruları esas alınmalıdır; başvuru öncesinde bu sayfaları kontrol etmenizi öneririz.',
+      },
+    ],
+    category: { en: 'Grants & incentives', tr: 'Destek ve teşvikler' },
+    date: '2026-09-10',
+    coverImage: {
+      src: communityCampus,
+      alt: { en: 'The Block A conference hall', tr: 'A Blok konferans salonu' },
+    },
+    tags: [
+      { en: 'TÜBİTAK', tr: 'TÜBİTAK' },
+      { en: 'KOSGEB', tr: 'KOSGEB' },
+      { en: 'Event', tr: 'Etkinlik' },
+    ],
+    attachments: [
+      {
+        name: { en: 'Add to calendar', tr: 'Takvime ekle' },
+        href: '/showcase-attachments/grant-info-day.ics',
+        format: 'ICS',
+        size: '1 KB',
+      },
+    ],
+  },
+  {
+    slug: 'scale-up-demo-day',
+    type: 'news',
+    title: {
+      en: 'Nine companies pitch at the scale-up programme’s demo day',
+      tr: 'Hızlandırma programı demo gününde dokuz şirket sahneye çıktı',
+    },
+    summary: {
+      en: 'More than forty investors and plant managers came to campus; three industrial pilots were agreed on the day.',
+      tr: 'Kampüse kırkı aşkın yatırımcı ve fabrika yöneticisi geldi; gün içinde üç sanayi pilotu için anlaşma sağlandı.',
+    },
+    body: [
+      {
+        en: 'The summer cohort of the twelve-week scale-up programme closed with a demo day on September 3. Nine resident companies presented to regional investors and to production managers from the partner factories in the organised industrial zone.',
+        tr: 'On iki haftalık hızlandırma programının yaz dönemi, 3 Eylül’de düzenlenen demo günüyle tamamlandı. Dokuz bölge firması; bölge yatırımcılarına ve organize sanayi bölgesindeki ortak fabrikaların üretim yöneticilerine sunum yaptı.',
+      },
+      {
+        en: 'Halcyon Robotics agreed a three-month picking pilot with a grocery distributor, and Hasat Robotics will run its harvest platform in two orchards next season. A third pilot, between Medira Labs and a regional hospital laboratory, starts in November.',
+        tr: 'Halcyon Robotics bir gıda dağıtım firmasıyla üç aylık bir toplama pilotu için anlaştı; Hasat Robotics ise hasat platformunu önümüzdeki sezon iki meyve bahçesinde çalıştıracak. Medira Labs ile bölgedeki bir hastane laboratuvarı arasındaki üçüncü pilot kasım ayında başlıyor.',
+      },
+      {
+        en: 'Applications for the next cohort open in January.',
+        tr: 'Bir sonraki dönemin başvuruları ocak ayında açılacak.',
+      },
+    ],
+    category: { en: 'Acceleration', tr: 'Hızlandırma' },
+    date: '2026-09-04',
+    readingTime: { en: '3 min read', tr: '3 dk okuma' },
+    coverImage: {
+      src: communityCampus,
+      alt: { en: 'Demo day in the campus plaza', tr: 'Kampüs meydanında demo günü' },
+    },
+    tags: [
+      { en: 'Demo day', tr: 'Demo günü' },
+      { en: 'Halcyon Robotics', tr: 'Halcyon Robotics' },
+      { en: 'Hasat Robotics', tr: 'Hasat Robotics' },
+    ],
+    gallery: [
+      {
+        src: communityCampus,
+        alt: { en: 'Audience at the demo day', tr: 'Demo günü izleyicileri' },
+        caption: { en: 'The pitch stage in the plaza', tr: 'Meydandaki sunum sahnesi' },
+      },
+      {
+        src: talentStudio,
+        alt: {
+          en: 'Investor meetings after the pitches',
+          tr: 'Sunumların ardından yatırımcı görüşmeleri',
+        },
+        caption: { en: 'Afternoon investor meetings', tr: 'Öğleden sonraki yatırımcı görüşmeleri' },
+      },
+    ],
+  },
+  {
+    slug: 'prototype-lab-safety-training',
+    type: 'announcement',
+    title: {
+      en: 'Laboratory safety training required before October 15',
+      tr: 'Laboratuvar güvenliği eğitimi 15 Ekim’e kadar tamamlanmalı',
+    },
+    summary: {
+      en: 'Everyone who books the prototype laboratories or the clean room needs the updated module.',
+      tr: 'Prototip laboratuvarlarını ya da temiz odayı kullanan herkesin güncellenen modülü tamamlaması gerekiyor.',
+    },
+    body: [
+      {
+        en: 'The laboratory safety module has been updated for the new clean room hall. It covers booking rules, gowning, chemical and waste handling, incident reporting and after-hours access.',
+        tr: 'Laboratuvar güvenliği modülü, yeni temiz oda salonu için güncellendi. Modül; rezervasyon kuralları, temiz oda kıyafet prosedürü, kimyasal ve atık yönetimi, olay bildirimi ve mesai dışı erişim konularını kapsıyor.',
+      },
+      {
+        en: 'The online module takes about 40 minutes and ends with a short test. Laboratory access on campus cards will be suspended from October 15 for users who have not completed it.',
+        tr: 'Çevrim içi modül yaklaşık 40 dakika sürüyor ve kısa bir sınavla tamamlanıyor. Modülü 15 Ekim’e kadar tamamlamayan kullanıcıların kampüs kartlarındaki laboratuvar erişimi askıya alınacaktır.',
+      },
+    ],
+    category: { en: 'Laboratories', tr: 'Laboratuvarlar' },
+    date: '2026-08-26',
+    coverImage: {
+      src: innovationLab,
+      alt: { en: 'Aurora prototype laboratory', tr: 'Aurora prototip laboratuvarı' },
+    },
+    tags: [
+      { en: 'Laboratories', tr: 'Laboratuvarlar' },
+      { en: 'Required training', tr: 'Zorunlu eğitim' },
     ],
   },
   {
     slug: 'aurora-campus-open-day',
-    title: { en: 'Aurora Campus Open Day registrations', tr: 'Aurora Kampüs Açık Gün kayıtları' },
+    type: 'announcement',
+    title: {
+      en: 'Aurora Open Day on October 3: registration is open',
+      tr: 'Aurora Açık Gün 3 Ekim’de: kayıtlar açıldı',
+    },
     summary: {
-      en: 'Founders, researchers, and students can now register for laboratory tours and company sessions.',
-      tr: 'Girişimciler, araştırmacılar ve öğrenciler laboratuvar turları ile şirket oturumlarına kayıt olabilir.',
+      en: 'Laboratory tours, resident-company demos and programme sessions for students, researchers and founders.',
+      tr: 'Öğrenciler, araştırmacılar ve girişimciler için laboratuvar turları, firma demoları ve program oturumları.',
     },
     body: [
       {
-        en: 'The open day includes guided laboratory visits, resident-company demonstrations, and short sessions about campus application programs.',
-        tr: 'Açık gün programında rehberli laboratuvar ziyaretleri, yerleşik şirket demoları ve kampüs başvuru programları hakkında kısa oturumlar yer alıyor.',
+        en: 'The campus opens its doors on Saturday, October 3, from 10:00 to 17:00. The day includes guided tours of the prototype laboratories and the clean room, demonstrations by resident companies and short sessions on the pre-incubation and incubation programmes.',
+        tr: 'Kampüs, 3 Ekim Cumartesi günü 10.00–17.00 saatleri arasında kapılarını açıyor. Programda prototip laboratuvarları ve temiz odaya rehberli turlar, bölge firmalarının ürün demoları ile ön kuluçka ve kuluçka programları hakkında kısa oturumlar yer alıyor.',
       },
       {
-        en: 'Registration is free and required for every visitor. Capacity for laboratory tours is limited.',
-        tr: 'Kayıt ücretsizdir ve her ziyaretçi için zorunludur. Laboratuvar turlarının kapasitesi sınırlıdır.',
+        en: 'Aurora University students can meet the resident companies that are hiring interns this year. Registration is free but required, and laboratory tours are limited to fifteen people each.',
+        tr: 'Aurora Üniversitesi öğrencileri bu yıl stajyer alacak bölge firmalarıyla tanışabilecek. Katılım ücretsizdir ancak kayıt zorunludur; laboratuvar turları on beşer kişilik gruplarla yapılacaktır.',
       },
     ],
-    category: { en: 'Campus', tr: 'Kampüs' },
+    category: { en: 'Events', tr: 'Etkinlikler' },
     date: '2026-08-20',
     coverImage: {
       src: communityCampus,
@@ -528,65 +806,73 @@ export const campusAnnouncements: Publication[] = [
     ],
   },
   {
-    slug: 'prototype-lab-safety-training',
+    slug: 'aurora-orbital-export-contract',
+    type: 'news',
     title: {
-      en: 'Prototype laboratory safety training schedule',
-      tr: 'Prototip laboratuvarı güvenlik eğitim takvimi',
+      en: 'Aurora Orbital signs its first export contract',
+      tr: 'Aurora Orbital ilk ihracat sözleşmesini imzaladı',
     },
     summary: {
-      en: 'New and returning laboratory users must complete the updated safety module before October.',
-      tr: 'Yeni ve mevcut laboratuvar kullanıcıları ekim ayından önce güncel güvenlik modülünü tamamlamalıdır.',
+      en: 'The ground station software company will run the ground network of a regional satellite operator in Asia.',
+      tr: 'Yer istasyonu yazılımı geliştiren şirket, Asya’daki bölgesel bir uydu operatörünün yer ağını yönetecek.',
     },
     body: [
       {
-        en: 'The updated module covers booking rules, protective equipment, incident reporting, and after-hours access procedures.',
-        tr: 'Güncel modül rezervasyon kuralları, koruyucu ekipman, olay bildirimi ve mesai dışı erişim prosedürlerini kapsıyor.',
+        en: 'Aurora Orbital, on campus since 2017, has signed a five-year contract to supply ground station software to a regional satellite operator in Asia. The software will schedule passes for three constellations from a single operations centre.',
+        tr: '2017’den bu yana kampüste bulunan Aurora Orbital, Asya’daki bölgesel bir uydu operatörüne yer istasyonu yazılımı sağlamak için beş yıllık bir sözleşme imzaladı. Yazılım, üç ayrı takımyıldızın geçişlerini tek bir operasyon merkezinden planlayacak.',
       },
       {
-        en: 'Existing access cards remain active until September 30. Completion records sync automatically with campus access.',
-        tr: 'Mevcut erişim kartları 30 Eylül’e kadar aktif kalacaktır. Tamamlama kayıtları kampüs erişimiyle otomatik eşitlenir.',
+        en: 'The company’s engineers will spend the first quarter of 2027 on site for the rollout. Aurora Orbital also works with Orbit Materials, two buildings away, on a composite payload fairing section.',
+        tr: 'Şirketin mühendisleri kurulum için 2027’nin ilk çeyreğini sahada geçirecek. Aurora Orbital, iki bina ötedeki Orbit Materials ile kompozit bir faydalı yük kaportası üzerinde de birlikte çalışıyor.',
       },
     ],
-    category: { en: 'Safety', tr: 'Güvenlik' },
-    date: '2026-08-11',
+    category: { en: 'Exports', tr: 'İhracat' },
+    date: '2026-08-18',
+    readingTime: { en: '2 min read', tr: '2 dk okuma' },
     coverImage: {
-      src: innovationLab,
-      alt: { en: 'Aurora prototype laboratory', tr: 'Aurora prototip laboratuvarı' },
+      src: climateNetwork,
+      alt: { en: 'A satellite ground network', tr: 'Uydu yer ağı' },
     },
     tags: [
-      { en: 'Laboratories', tr: 'Laboratuvarlar' },
-      { en: 'Required training', tr: 'Zorunlu eğitim' },
+      { en: 'Space systems', tr: 'Uzay sistemleri' },
+      { en: 'Export', tr: 'İhracat' },
+      { en: 'Aurora Orbital', tr: 'Aurora Orbital' },
     ],
   },
   {
-    slug: 'resident-company-reporting-window',
+    slug: 'admission-committee-results-august',
+    type: 'announcement',
     title: {
-      en: 'Quarterly resident company reporting window',
-      tr: 'Çeyreklik yerleşik şirket raporlama dönemi',
+      en: 'Evaluation committee results: seven new companies admitted',
+      tr: 'Değerlendirme kurulu sonuçları: yedi yeni firma bölgeye kabul edildi',
     },
     summary: {
-      en: 'Company administrators can submit employment, export, and R&D indicators until September 5.',
-      tr: 'Şirket yöneticileri istihdam, ihracat ve Ar-Ge göstergelerini 5 Eylül’e kadar iletebilir.',
+      en: 'Eleven project applications were reviewed at the committee’s July meeting.',
+      tr: 'Kurulun temmuz toplantısında on bir proje başvurusu değerlendirildi.',
     },
     body: [
       {
-        en: 'The quarterly form is available in the partner portal. Saved drafts from the previous reporting cycle have been carried forward.',
-        tr: 'Çeyreklik form iş ortağı portalında erişime açıldı. Önceki raporlama dönemindeki taslaklar yeni döneme aktarıldı.',
+        en: 'At its July 30 meeting, the evaluation committee reviewed eleven R&D project applications. Seven companies were admitted to the zone, two were asked to resubmit with a revised project plan and two applications were declined.',
+        tr: 'Değerlendirme kurulu 30 Temmuz’daki toplantısında on bir Ar-Ge projesi başvurusunu inceledi. Yedi firma bölgeye kabul edildi, iki firmadan proje planını revize ederek yeniden başvurması istendi, iki başvuru ise uygun bulunmadı.',
       },
       {
-        en: 'Reporting guidance and validation rules are available inside each form section.',
-        tr: 'Raporlama rehberi ve doğrulama kuralları formun her bölümünde görülebilir.',
+        en: 'Admitted companies will receive their lease offers from the management office within ten working days. Their projects become eligible for the zone’s exemptions from the date the lease is signed and the company is registered at its campus address.',
+        tr: 'Kabul edilen firmalara kira teklifleri on iş günü içinde yönetim ofisi tarafından iletilecektir. Projeler, kira sözleşmesinin imzalanması ve firmanın kampüs adresinde tescil edilmesiyle birlikte bölge muafiyetlerinden yararlanmaya başlayacaktır.',
+      },
+      {
+        en: 'The next committee meeting is on October 28. Applications submitted by October 14 will be on its agenda.',
+        tr: 'Kurulun bir sonraki toplantısı 28 Ekim’de yapılacaktır. 14 Ekim’e kadar yapılan başvurular bu toplantının gündemine alınacaktır.',
       },
     ],
-    category: { en: 'Resident companies', tr: 'Yerleşik şirketler' },
-    date: '2026-08-01',
+    category: { en: 'Admissions', tr: 'Firma kabul' },
+    date: '2026-08-05',
     tags: [
-      { en: 'Reporting', tr: 'Raporlama' },
-      { en: 'Deadline', tr: 'Son tarih' },
+      { en: 'Evaluation committee', tr: 'Değerlendirme kurulu' },
+      { en: 'New companies', tr: 'Yeni firmalar' },
     ],
     attachments: [
       {
-        name: { en: 'Reporting guide', tr: 'Raporlama rehberi' },
+        name: { en: 'Project application guide', tr: 'Proje başvuru rehberi' },
         href: '/sample-report.pdf',
         format: 'PDF',
         size: '42 KB',
@@ -594,120 +880,279 @@ export const campusAnnouncements: Publication[] = [
     ],
   },
   {
-    slug: 'north-gate-access-change',
+    slug: 'ai-and-security-training-series',
+    type: 'announcement',
     title: {
-      en: 'North gate access route changes',
-      tr: 'Kuzey kapısı erişim rotası değişiklikleri',
+      en: 'Autumn training series on applied AI and cybersecurity',
+      tr: 'Uygulamalı yapay zekâ ve siber güvenlik eğitim serisi',
     },
     summary: {
-      en: 'Vehicle access will move to the temporary east lane during road improvements.',
-      tr: 'Yol iyileştirme çalışmaları sırasında araç erişimi geçici doğu şeridine taşınacak.',
+      en: 'Six Wednesday sessions from October 14, led by engineers from resident companies.',
+      tr: '14 Ekim’den itibaren bölge firmalarının mühendislerinin vereceği altı çarşamba oturumu.',
     },
     body: [
       {
-        en: 'The temporary route starts August 5 and is expected to remain in place for three weeks. Pedestrian access is unchanged.',
-        tr: 'Geçici rota 5 Ağustos’ta başlayacak ve üç hafta boyunca uygulanacaktır. Yaya erişimi değişmeyecektir.',
+        en: 'The series runs on Wednesdays from 16:00 to 18:00 between October 14 and November 25 in the Block E training room, with no session on October 28, the eve of Republic Day. Engineers from Lumen Analytics, Cipherline and Sablon AI will cover monitoring models in production, securing machine-learning pipelines and incident response for small teams.',
+        tr: 'Seri, 14 Ekim–25 Kasım tarihleri arasında çarşamba günleri 16.00–18.00 saatlerinde E Blok eğitim salonunda yapılacak; Cumhuriyet Bayramı arifesi olan 28 Ekim’de oturum olmayacak. Lumen Analytics, Cipherline ve Sablon AI mühendisleri; canlı ortamdaki modellerin izlenmesi, makine öğrenmesi hatlarının güvenliği ve küçük ekipler için olay müdahalesi konularını anlatacak.',
       },
       {
-        en: 'Delivery drivers should follow the blue campus signs and allow additional time during the morning peak.',
-        tr: 'Teslimat sürücüleri mavi kampüs yönlendirmelerini izlemeli ve sabah yoğunluğunda ek süre ayırmalıdır.',
+        en: 'The training is free for employees of resident companies. Registration closes on October 7; participants who attend at least five sessions receive a certificate.',
+        tr: 'Eğitimler bölge firmalarının çalışanları için ücretsizdir. Kayıtlar 7 Ekim’de kapanacak; en az beş oturuma katılanlara katılım belgesi verilecektir.',
       },
     ],
-    category: { en: 'Campus operations', tr: 'Kampüs operasyonları' },
-    date: '2026-07-29',
-    coverImage: {
-      src: mobilityGrid,
-      alt: { en: 'Aurora campus access routes', tr: 'Aurora kampüs erişim rotaları' },
-    },
+    category: { en: 'Training', tr: 'Eğitim' },
+    date: '2026-07-28',
     tags: [
-      { en: 'Access', tr: 'Erişim' },
-      { en: 'Traffic', tr: 'Trafik' },
+      { en: 'Artificial intelligence', tr: 'Yapay zekâ' },
+      { en: 'Cybersecurity', tr: 'Siber güvenlik' },
+      { en: 'Training', tr: 'Eğitim' },
+    ],
+    attachments: [
+      {
+        name: { en: 'Session schedule', tr: 'Oturum takvimi' },
+        href: '/showcase-attachments/training-series.csv',
+        format: 'CSV',
+        size: '1 KB',
+      },
     ],
   },
   {
-    slug: 'seed-fund-office-hours',
+    slug: 'university-industry-matchmaking',
+    type: 'news',
     title: {
-      en: 'Seed fund office hours in August',
-      tr: 'Ağustos ayı tohum fonu görüşme saatleri',
+      en: 'University–industry matchmaking day leads to fourteen project agreements',
+      tr: 'Üniversite–sanayi eşleştirme günü on dört proje ön mutabakatıyla tamamlandı',
     },
     summary: {
-      en: 'Resident founders can reserve twenty-minute sessions with the investment team.',
-      tr: 'Yerleşik girişimciler yatırım ekibiyle yirmi dakikalık görüşmeler için rezervasyon yapabilir.',
+      en: '58 academics and 37 companies held 126 one-to-one meetings in a single day.',
+      tr: '58 akademisyen ve 37 firma bir günde 126 ikili görüşme gerçekleştirdi.',
     },
     body: [
       {
-        en: 'Office hours are intended for early feedback on fundraising plans, investor materials, and capital strategy.',
-        tr: 'Görüşme saatleri fon toplama planı, yatırımcı materyalleri ve sermaye stratejisi hakkında erken geri bildirim için düzenlenmektedir.',
+        en: 'The matchmaking day, organised with the Aurora University Technology Transfer Office on July 15, paired faculty members with companies from the zone and the organised industrial zone around specific technical problems submitted in advance.',
+        tr: 'Aurora Üniversitesi Teknoloji Transfer Ofisi ile birlikte 15 Temmuz’da düzenlenen eşleştirme gününde öğretim üyeleri, teknopark ve organize sanayi bölgesindeki firmalarla önceden iletilen teknik problemler üzerinden bir araya geldi.',
       },
       {
-        en: 'Sessions are advisory and do not form part of the fund’s formal investment process.',
-        tr: 'Oturumlar danışmanlık niteliğindedir ve fonun resmî yatırım sürecinin bir parçası değildir.',
+        en: 'Fourteen pairs agreed to prepare joint project applications, most of them in materials, energy storage and agricultural sensing. “The problems came from the factory floor, which made the conversations very concrete,” says Assoc. Prof. Dr. Elif Tunalı from the Technology Transfer Office.',
+        tr: 'On dört eşleşme ortak proje başvurusu hazırlama konusunda mutabık kaldı; projelerin çoğu ileri malzeme, enerji depolama ve tarımsal algılama alanlarında. Teknoloji Transfer Ofisi’nden Doç. Dr. Elif Tunalı, “Problemler doğrudan üretim sahasından geldiği için görüşmeler çok somut ilerledi.” diyor.',
       },
     ],
-    category: { en: 'Funding', tr: 'Fonlama' },
-    date: '2026-07-17',
+    category: { en: 'University–industry', tr: 'Üniversite–sanayi' },
+    date: '2026-07-16',
+    readingTime: { en: '2 min read', tr: '2 dk okuma' },
     coverImage: {
       src: talentStudio,
-      alt: { en: 'Founder investment sessions', tr: 'Girişimci yatırım görüşmeleri' },
+      alt: {
+        en: 'One-to-one meetings at the matchmaking day',
+        tr: 'Eşleştirme gününde ikili görüşmeler',
+      },
     },
     tags: [
-      { en: 'Founders', tr: 'Girişimciler' },
-      { en: 'Investment', tr: 'Yatırım' },
+      { en: 'Technology transfer', tr: 'Teknoloji transferi' },
+      { en: 'Aurora University', tr: 'Aurora Üniversitesi' },
     ],
   },
   {
-    slug: 'energy-monitoring-dashboard-release',
+    slug: 'energy-report-2025',
+    type: 'news',
     title: {
-      en: 'Campus energy dashboard release',
-      tr: 'Kampüs enerji paneli kullanıma açıldı',
+      en: 'Campus energy report: consumption per square metre down 11%',
+      tr: 'Kampüs enerji raporu: metrekare başına tüketim yüzde 11 azaldı',
     },
     summary: {
-      en: 'Resident teams can now view building-level electricity and emissions indicators.',
-      tr: 'Yerleşik ekipler artık bina bazlı elektrik ve emisyon göstergelerini görüntüleyebilir.',
+      en: 'Rooftop solar on Block B and a storage pilot by Nordwind Energy did most of the work.',
+      tr: 'Düşüşün büyük kısmı B Blok’taki çatı güneş santrali ve Nordwind Energy’nin depolama pilotundan geldi.',
     },
     body: [
       {
-        en: 'The dashboard refreshes every fifteen minutes and compares current use with building baselines and seasonal targets.',
-        tr: 'Panel her on beş dakikada bir güncellenir; güncel kullanımı bina referansları ve mevsimsel hedeflerle karşılaştırır.',
+        en: 'The 2025 energy and sustainability report shows electricity use per square metre falling by 11% on the previous year, while the number of people on campus grew. The rooftop solar plant on Block B covered 18% of the campus’s daytime demand.',
+        tr: '2025 yılı enerji ve sürdürülebilirlik raporuna göre kampüsteki çalışan sayısı artarken metrekare başına elektrik tüketimi bir önceki yıla göre yüzde 11 azaldı. B Blok’taki çatı güneş santrali kampüsün gündüz talebinin yüzde 18’ini karşıladı.',
       },
       {
-        en: 'Company administrators can export monthly records from the sustainability section of the partner portal.',
-        tr: 'Şirket yöneticileri aylık kayıtları iş ortağı portalının sürdürülebilirlik bölümünden dışa aktarabilir.',
+        en: 'In a pilot with resident company Nordwind Energy, the campus ran on stored wind power for six consecutive winter nights. Building-level consumption for every block is now visible to resident companies on the campus energy dashboard.',
+        tr: 'Bölge firması Nordwind Energy ile yürütülen pilot çalışmada kampüs, üst üste altı kış gecesi boyunca depolanmış rüzgâr enerjisiyle çalıştı. Her bloğun tüketimi artık kampüs enerji paneli üzerinden bölge firmalarının erişimine açık.',
       },
     ],
-    category: { en: 'Digital services', tr: 'Dijital servisler' },
+    category: { en: 'Sustainability', tr: 'Sürdürülebilirlik' },
     date: '2026-07-02',
+    readingTime: { en: '4 min read', tr: '4 dk okuma' },
     coverImage: {
       src: climateNetwork,
       alt: { en: 'Campus energy network', tr: 'Kampüs enerji ağı' },
     },
     tags: [
       { en: 'Energy', tr: 'Enerji' },
-      { en: 'Dashboard', tr: 'Panel' },
+      { en: 'Nordwind Energy', tr: 'Nordwind Energy' },
+    ],
+    attachments: [
+      {
+        name: {
+          en: '2025 energy and sustainability report',
+          tr: '2025 enerji ve sürdürülebilirlik raporu',
+        },
+        href: '/sample-report.pdf',
+        format: 'PDF',
+        size: '42 KB',
+      },
     ],
   },
   {
     slug: 'shuttle-summer-schedule',
-    title: { en: 'Campus shuttle summer schedule', tr: 'Kampüs servisi yaz tarifesi' },
+    type: 'announcement',
+    title: { en: 'Campus shuttle summer timetable', tr: 'Kampüs servisi yaz tarifesi' },
     summary: {
-      en: 'Evening departures will run every thirty minutes from July 1 through August 31.',
-      tr: 'Akşam seferleri 1 Temmuz–31 Ağustos arasında otuz dakikada bir yapılacak.',
+      en: 'From July 1 to August 31, evening shuttles to the city centre run every 30 minutes.',
+      tr: '1 Temmuz–31 Ağustos arasında şehir merkezine akşam seferleri 30 dakikada bir yapılacak.',
     },
     body: [
       {
-        en: 'Morning routes remain unchanged. The last weekday departure from the campus moves to 22:30 during the summer period.',
-        tr: 'Sabah rotaları değişmemektedir. Yaz döneminde kampüsten son hafta içi kalkışı 22.30’a alınmıştır.',
+        en: 'Morning routes from the city centre and the intercity bus terminal are unchanged. During the summer, evening departures from the campus run every 30 minutes and the last weekday departure moves to 22:30.',
+        tr: 'Şehir merkezi ve otogardan kalkan sabah seferlerinde değişiklik yoktur. Yaz döneminde kampüsten akşam seferleri 30 dakikada bir yapılacak, hafta içi son kalkış 22.30’a alınacaktır.',
       },
       {
-        en: 'Live vehicle locations and accessibility details remain available in the campus mobile application.',
-        tr: 'Canlı araç konumları ve erişilebilirlik ayrıntıları kampüs mobil uygulamasında yer almaya devam edecektir.',
+        en: 'Live shuttle locations and accessible vehicles are shown in the campus mobile app.',
+        tr: 'Servislerin canlı konumları ve erişilebilir araçlar kampüs mobil uygulamasında görüntülenebilir.',
       },
     ],
-    category: { en: 'Transportation', tr: 'Ulaşım' },
+    category: { en: 'Transport', tr: 'Ulaşım' },
     date: '2026-06-24',
     tags: [
       { en: 'Shuttle', tr: 'Servis' },
-      { en: 'Schedule', tr: 'Tarife' },
+      { en: 'Timetable', tr: 'Tarife' },
+    ],
+  },
+  {
+    slug: 'orbit-materials-patent',
+    type: 'news',
+    title: {
+      en: 'Orbit Materials granted a patent for its high-temperature composite',
+      tr: 'Orbit Materials yüksek sıcaklık kompoziti için patent aldı',
+    },
+    summary: {
+      en: 'The resin system keeps its stiffness above 200°C; an international application is under way.',
+      tr: '200°C’nin üzerinde rijitliğini koruyan reçine sistemi için uluslararası başvuru süreci de devam ediyor.',
+    },
+    body: [
+      {
+        en: 'Orbit Materials has been granted a patent by the Turkish Patent and Trademark Office for the resin system behind its structural composite, which keeps its stiffness above 200°C. The company has also filed an international application under the Patent Cooperation Treaty.',
+        tr: 'Orbit Materials, 200°C’nin üzerinde rijitliğini koruyan yapısal kompozitinin temelindeki reçine sistemi için Türk Patent ve Marka Kurumu’ndan patent aldı. Şirket, Patent İşbirliği Antlaşması kapsamında uluslararası başvurusunu da yaptı.',
+      },
+      {
+        en: 'The application was prepared with support from the Aurora University Technology Transfer Office. It is the tech park’s twelfth patent grant this year.',
+        tr: 'Başvuru, Aurora Üniversitesi Teknoloji Transfer Ofisi’nin desteğiyle hazırlandı. Bu, teknopark firmalarının bu yıl aldığı on ikinci patent oldu.',
+      },
+    ],
+    category: { en: 'Intellectual property', tr: 'Fikrî mülkiyet' },
+    date: '2026-06-10',
+    readingTime: { en: '2 min read', tr: '2 dk okuma' },
+    tags: [
+      { en: 'Patent', tr: 'Patent' },
+      { en: 'Advanced materials', tr: 'İleri malzeme' },
+      { en: 'Orbit Materials', tr: 'Orbit Materials' },
+    ],
+  },
+  {
+    slug: 'field-data-hackathon',
+    type: 'news',
+    title: {
+      en: '24 teams, 36 hours: the Field Data hackathon',
+      tr: '24 takım, 36 saat: Tarladan Veriye hackathonu',
+    },
+    summary: {
+      en: 'The winning team predicted irrigation needs from a season of soil probe data.',
+      tr: 'Birinci olan takım, bir sezonluk toprak sensörü verisinden sulama ihtiyacını tahmin etti.',
+    },
+    body: [
+      {
+        en: 'The agritech hackathon on May 16–17 brought 112 students and young engineers to campus. Teams worked on a full season of anonymised soil moisture data shared by Terrafield from its field trial across eleven farms.',
+        tr: '16–17 Mayıs’ta düzenlenen tarım teknolojileri hackathonu kampüse 112 öğrenci ve genç mühendisi getirdi. Takımlar, Terrafield’ın on bir çiftlikte yürüttüğü saha denemesinden paylaştığı bir sezonluk anonim toprak nemi verisi üzerinde çalıştı.',
+      },
+      {
+        en: 'The winning team’s model predicted irrigation needs three days ahead. The top three teams earn direct entry to the pre-incubation programme’s autumn intake.',
+        tr: 'Birinci takımın modeli sulama ihtiyacını üç gün önceden tahmin etti. İlk üç takım, ön kuluçka programının sonbahar dönemine doğrudan kabul hakkı kazandı.',
+      },
+    ],
+    category: { en: 'Events', tr: 'Etkinlikler' },
+    date: '2026-05-18',
+    readingTime: { en: '2 min read', tr: '2 dk okuma' },
+    coverImage: {
+      src: mobilityGrid,
+      alt: { en: 'Teams at work during the hackathon', tr: 'Hackathon sırasında çalışan takımlar' },
+    },
+    tags: [
+      { en: 'Hackathon', tr: 'Hackathon' },
+      { en: 'Agritech', tr: 'Tarım teknolojisi' },
+      { en: 'Terrafield', tr: 'Terrafield' },
+    ],
+  },
+  {
+    slug: 'international-delegation-visit',
+    type: 'news',
+    title: {
+      en: 'Technology transfer delegation from Germany and the Netherlands visits campus',
+      tr: 'Almanya ve Hollanda’dan teknoloji transferi heyeti kampüsü ziyaret etti',
+    },
+    summary: {
+      en: 'Sixteen representatives of clusters and research institutes met agricultural robotics and materials companies.',
+      tr: 'Küme ve araştırma enstitülerinden on altı temsilci tarım robotiği ve ileri malzeme firmalarıyla görüştü.',
+    },
+    body: [
+      {
+        en: 'A sixteen-person delegation of cluster managers and applied research institutes visited the tech park on April 21. The programme included the robotics hall in Block B, Hasat Robotics’ orchard platform and a round table on joint applications to European research programmes.',
+        tr: 'Küme yöneticileri ve uygulamalı araştırma enstitülerinden oluşan on altı kişilik heyet 21 Nisan’da teknoparkı ziyaret etti. Programda B Blok’taki robotik test salonu, Hasat Robotics’in meyve bahçesi platformu ve Avrupa araştırma programlarına ortak başvurular üzerine bir yuvarlak masa toplantısı yer aldı.',
+      },
+      {
+        en: 'Four resident companies agreed follow-up meetings, and a return visit by Aurora companies is planned for the spring.',
+        tr: 'Dört bölge firması takip görüşmeleri için anlaştı; Aurora firmalarının karşı ziyaretinin ilkbaharda yapılması planlanıyor.',
+      },
+    ],
+    category: { en: 'International', tr: 'Uluslararası' },
+    date: '2026-04-22',
+    readingTime: { en: '2 min read', tr: '2 dk okuma' },
+    tags: [
+      { en: 'Delegation', tr: 'Heyet ziyareti' },
+      { en: 'Robotics', tr: 'Robotik' },
+    ],
+  },
+  {
+    slug: 'annual-activity-report-2025',
+    type: 'news',
+    title: {
+      en: '2025 activity report: 148 companies, 3,200 R&D professionals',
+      tr: '2025 faaliyet raporu: 148 firma, 3.200 Ar-Ge çalışanı',
+    },
+    summary: {
+      en: 'Eighteen new companies, 34 export markets and 286 active patents across the zone.',
+      tr: 'Bölgede on sekiz yeni firma, 34 ihracat pazarı ve 286 aktif patent.',
+    },
+    body: [
+      {
+        en: 'The tech park’s 2025 activity report counts 148 resident companies at year end, eighteen of them new, and 3,200 people working in R&D and support roles. Companies on campus exported to 34 countries and held 286 active patents.',
+        tr: 'Teknoparkın 2025 faaliyet raporuna göre yıl sonunda bölgede 18’i yeni olmak üzere 148 firma ve Ar-Ge ile destek pozisyonlarında 3.200 çalışan bulunuyor. Kampüs firmaları 34 ülkeye ihracat yaptı ve 286 aktif patente sahip.',
+      },
+      {
+        en: 'The figures feed into the Ministry of Industry and Technology’s annual performance assessment of technology development zones. The full report, including sector breakdowns, is available to download.',
+        tr: 'Bu veriler, Sanayi ve Teknoloji Bakanlığının teknoloji geliştirme bölgelerine yönelik yıllık performans değerlendirmesine de esas oluyor. Sektör kırılımlarını içeren raporun tamamı indirilebilir.',
+      },
+    ],
+    category: { en: 'Performance', tr: 'Performans' },
+    date: '2026-04-06',
+    readingTime: { en: '3 min read', tr: '3 dk okuma' },
+    coverImage: {
+      src: dataCenter,
+      alt: { en: 'Campus in numbers', tr: 'Rakamlarla kampüs' },
+    },
+    tags: [
+      { en: 'Annual report', tr: 'Faaliyet raporu' },
+      { en: 'Statistics', tr: 'İstatistik' },
+    ],
+    attachments: [
+      {
+        name: { en: '2025 activity report', tr: '2025 faaliyet raporu' },
+        href: '/sample-report.pdf',
+        format: 'PDF',
+        size: '42 KB',
+      },
     ],
   },
 ]

@@ -19,6 +19,7 @@ import {
   Image,
   Pagination,
   Row,
+  Segmented,
   Space,
   Tag,
   Typography,
@@ -39,6 +40,15 @@ import '../showcases.css'
 
 type PublicationKind = 'news' | 'announcements'
 
+/** The tech park's feed can be narrowed to its stories or to its notices. */
+type FeedFilter = 'all' | 'news' | 'announcement'
+
+const FEED_FILTERS: FeedFilter[] = ['all', 'news', 'announcement']
+
+function feedFilterFrom(value: string | null): FeedFilter {
+  return value === 'news' || value === 'announcement' ? value : 'all'
+}
+
 interface PublicationPageProps {
   kind: PublicationKind
   standalone?: boolean
@@ -49,20 +59,22 @@ const PAGE_SIZE = 6
 const labels = {
   en: {
     news: 'Newsroom',
-    announcements: 'Campus announcements',
+    announcements: 'News & announcements',
     newsDescription: 'Reporting on the decisions, people, and projects moving our group forward.',
     announcementsDescription:
-      'Deadlines, campus operations, programs, and service updates for the Aurora community.',
+      'Stories from the campus, and the deadlines, calls and service notices resident companies need to act on.',
     read: 'Read article',
     back: 'Back to all',
+    backTo: (list: string) => `Back to ${list.toLocaleLowerCase('en-GB')}`,
     notFound: 'This publication could not be found.',
     newsHome: 'Northstar Group',
     announcementHome: 'Aurora Tech Park',
     mediaCenter: 'Media center',
     campusDesk: 'Campus desk',
-    activeNotices: 'Active notices',
+    feed: { all: 'All', news: 'News', announcement: 'Announcements' },
+    feedLabel: 'Show',
+    type: { news: 'News', announcement: 'Announcement' },
     withAttachments: 'With attachments',
-    visualUpdates: 'Visual updates',
     attachments: 'Attachments',
     gallery: 'Image gallery',
     previewImage: 'Preview image',
@@ -71,20 +83,22 @@ const labels = {
   },
   tr: {
     news: 'Haberler',
-    announcements: 'Kampüs duyuruları',
+    announcements: 'Haberler ve duyurular',
     newsDescription: 'Grubumuzu ileri taşıyan kararlar, insanlar ve projelerden haberler.',
     announcementsDescription:
-      'Aurora topluluğu için tarihler, kampüs operasyonları, programlar ve servis güncellemeleri.',
+      'Kampüsten haberler; bölge firmalarını ilgilendiren son tarihler, çağrılar ve hizmet duyuruları.',
     read: 'Haberi oku',
     back: 'Tümüne dön',
+    backTo: (list: string) => `${list} sayfasına dön`,
     notFound: 'Bu yayın bulunamadı.',
     newsHome: 'Northstar Group',
     announcementHome: 'Aurora Teknopark',
     mediaCenter: 'Medya merkezi',
     campusDesk: 'Kampüs masası',
-    activeNotices: 'Aktif duyuru',
+    feed: { all: 'Tümü', news: 'Haberler', announcement: 'Duyurular' },
+    feedLabel: 'Göster',
+    type: { news: 'Haber', announcement: 'Duyuru' },
     withAttachments: 'Ek dosyalı',
-    visualUpdates: 'Görsel içerikli',
     attachments: 'Ek dosyalar',
     gallery: 'Görsel galeri',
     previewImage: 'Görseli büyüt',
@@ -180,9 +194,15 @@ function NewsCard({
 function PublicationListPage({ kind, standalone = false }: PublicationPageProps) {
   const language = usePreferencesStore((state) => state.language)
   const text = labels[language]
-  const publications = dataFor(kind)
   const paths = pathsFor(kind, standalone)
   const [searchParams, setSearchParams] = useSearchParams()
+  const isNews = kind === 'news'
+  const everything = dataFor(kind)
+  const feedFilter = isNews ? 'all' : feedFilterFrom(searchParams.get('type'))
+  const publications =
+    feedFilter === 'all' ? everything : everything.filter((item) => item.type === feedFilter)
+  const countOf = (filter: FeedFilter) =>
+    filter === 'all' ? everything.length : everything.filter((item) => item.type === filter).length
   const requestedPage = Number(searchParams.get('page'))
   const pageCount = Math.max(1, Math.ceil(publications.length / PAGE_SIZE))
   const currentPage =
@@ -195,7 +215,14 @@ function PublicationListPage({ kind, standalone = false }: PublicationPageProps)
     kind === 'news' ? labels.en.newsDescription : labels.en.announcementsDescription
   const turkishDescription =
     kind === 'news' ? labels.tr.newsDescription : labels.tr.announcementsDescription
-  const isNews = kind === 'news'
+
+  const changeFeed = (filter: FeedFilter) => {
+    const nextSearchParams = new URLSearchParams(searchParams)
+    if (filter === 'all') nextSearchParams.delete('type')
+    else nextSearchParams.set('type', filter)
+    nextSearchParams.delete('page')
+    setSearchParams(nextSearchParams)
+  }
 
   const changePage = (page: number) => {
     const nextSearchParams = new URLSearchParams(searchParams)
@@ -224,23 +251,21 @@ function PublicationListPage({ kind, standalone = false }: PublicationPageProps)
           <Row className="announcement-overview" gutter={[16, 16]}>
             <Col xs={8}>
               <Card size="small">
-                <Typography.Text type="secondary">{text.activeNotices}</Typography.Text>
-                <Typography.Title level={3}>{publications.length}</Typography.Title>
+                <Typography.Text type="secondary">{text.feed.news}</Typography.Text>
+                <Typography.Title level={3}>{countOf('news')}</Typography.Title>
+              </Card>
+            </Col>
+            <Col xs={8}>
+              <Card size="small">
+                <Typography.Text type="secondary">{text.feed.announcement}</Typography.Text>
+                <Typography.Title level={3}>{countOf('announcement')}</Typography.Title>
               </Card>
             </Col>
             <Col xs={8}>
               <Card size="small">
                 <Typography.Text type="secondary">{text.withAttachments}</Typography.Text>
                 <Typography.Title level={3}>
-                  {publications.filter((item) => item.attachments?.length).length}
-                </Typography.Title>
-              </Card>
-            </Col>
-            <Col xs={8}>
-              <Card size="small">
-                <Typography.Text type="secondary">{text.visualUpdates}</Typography.Text>
-                <Typography.Title level={3}>
-                  {publications.filter((item) => item.coverImage).length}
+                  {everything.filter((item) => item.attachments?.length).length}
                 </Typography.Title>
               </Card>
             </Col>
@@ -249,6 +274,19 @@ function PublicationListPage({ kind, standalone = false }: PublicationPageProps)
       </section>
 
       <section className="showcase-section publication-grid">
+        {!isNews && (
+          <div className="announcement-filter">
+            <Segmented<FeedFilter>
+              aria-label={text.feedLabel}
+              value={feedFilter}
+              onChange={changeFeed}
+              options={FEED_FILTERS.map((filter) => ({
+                value: filter,
+                label: `${text.feed[filter]} (${countOf(filter)})`,
+              }))}
+            />
+          </div>
+        )}
         <Row gutter={[24, 24]}>
           {visiblePublications.map((item, index) => {
             const detailPath = `${paths.list}/${item.slug}`
@@ -291,7 +329,7 @@ function PublicationListPage({ kind, standalone = false }: PublicationPageProps)
       standalone={standalone}
       standalonePath={pathsFor(kind, true).list}
       title={{
-        en: kind === 'news' ? 'Corporate news' : 'Tech park announcements',
+        en: kind === 'news' ? 'Corporate news' : 'Tech park news & announcements',
         tr: kind === 'news' ? labels.tr.news : labels.tr.announcements,
       }}
       description={{ en: englishDescription, tr: turkishDescription }}
@@ -400,9 +438,16 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
             ]}
           />
           <div className="publication-detail__heading">
-            <Tag color={isNews ? 'volcano' : 'geekblue'}>
-              {localize(publication.category, language)}
-            </Tag>
+            <Flex gap={8} wrap>
+              {publication.type && (
+                <Tag color={publication.type === 'news' ? 'cyan' : 'gold'} variant="solid">
+                  {text.type[publication.type]}
+                </Tag>
+              )}
+              <Tag color={isNews ? 'volcano' : 'geekblue'}>
+                {localize(publication.category, language)}
+              </Tag>
+            </Flex>
             <Typography.Title>{localize(publication.title, language)}</Typography.Title>
             <Typography.Paragraph>{localize(publication.summary, language)}</Typography.Paragraph>
             <Space separator="·" wrap>
@@ -454,7 +499,7 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
                 ))}
                 <PublicationGallery publication={publication} />
                 <Button href={paths.list} icon={<ArrowLeftOutlined />}>
-                  {text.back} {listTitle.toLocaleLowerCase(language === 'tr' ? 'tr-TR' : 'en-GB')}
+                  {text.backTo(listTitle)}
                 </Button>
               </div>
               <PublicationAttachments publication={publication} />
@@ -476,8 +521,8 @@ function PublicationDetailPage({ kind, standalone = false }: PublicationPageProp
       standalone={standalone}
       standalonePath={`${pathsFor(kind, true).list}/${slug ?? ''}`}
       title={{
-        en: kind === 'news' ? 'News detail' : 'Announcement detail',
-        tr: `${listTitle} detayı`,
+        en: kind === 'news' ? 'News detail' : 'Tech park publication',
+        tr: kind === 'news' ? 'Haber detayı' : 'Haber ve duyuru detayı',
       }}
       description={{
         en: 'A standalone publication detail with optional media, tags, and downloadable files.',

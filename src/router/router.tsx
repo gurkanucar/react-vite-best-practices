@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from 'react-router'
+import { createBrowserRouter, Navigate, type RouteObject } from 'react-router'
 import {
   AccountPage,
   AdminLayout,
@@ -26,9 +26,6 @@ import {
   ExamPage,
   ExamResultsPage,
   FlashcardsPage,
-  JobDetailPage,
-  JobEditorPage,
-  JobListPage,
   NewsAdminPage,
   DashboardPage,
   DentalClinicLandingPage,
@@ -47,6 +44,15 @@ import {
   ProductsListPage,
   RegisterPage,
   RestaurantMenuPage,
+  TalentEmployerPage,
+  TalentPostJobPage,
+  TalentApplicationsPage,
+  TalentCompaniesPage,
+  TalentCompanyPage,
+  TalentHomePage,
+  TalentJobPage,
+  TalentJobsPage,
+  TalentProfilePage,
   AgencyCaseStudyPage,
   AgencyContactPage,
   AgencyHomePage,
@@ -538,6 +544,96 @@ export const routes: RouteObject[] = [
     errorElement: standaloneErrorElement,
   },
   {
+    path: '/preview/talent',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/jobs',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentJobsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/jobs/:jobId',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentJobPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/companies',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentCompaniesPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/companies/:companyId',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentCompanyPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/profile',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentProfilePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/applications',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentApplicationsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/employer',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentEmployerPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/employer/new',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentPostJobPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/talent/employer/:jobId/edit',
+    element: (
+      <RouteSuspense fullPage>
+        <TalentPostJobPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
     path: '/preview/restaurant',
     element: (
       <RouteSuspense fullPage>
@@ -858,39 +954,19 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'showcases/jobs',
-        element: (
-          <RouteSuspense>
-            <JobListPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
+        element: <Navigate to="/showcases/talent/employer" replace />,
       },
       {
         path: 'showcases/jobs/new',
-        element: (
-          <RouteSuspense>
-            <JobEditorPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
+        element: <Navigate to="/showcases/talent/employer/new" replace />,
       },
       {
         path: 'showcases/jobs/:jobSlug/edit',
-        element: (
-          <RouteSuspense>
-            <JobEditorPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
+        element: <Navigate to="/showcases/talent/employer" replace />,
       },
       {
         path: 'showcases/jobs/:jobSlug',
-        element: (
-          <RouteSuspense>
-            <JobDetailPage />
-          </RouteSuspense>
-        ),
-        errorElement: adminErrorElement,
+        element: <Navigate to="/showcases/talent/employer" replace />,
       },
       {
         path: 'showcases/dental-clinic',
@@ -1185,6 +1261,96 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <AgencyContactPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent',
+        element: (
+          <RouteSuspense>
+            <TalentHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/jobs',
+        element: (
+          <RouteSuspense>
+            <TalentJobsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/jobs/:jobId',
+        element: (
+          <RouteSuspense>
+            <TalentJobPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/companies',
+        element: (
+          <RouteSuspense>
+            <TalentCompaniesPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/companies/:companyId',
+        element: (
+          <RouteSuspense>
+            <TalentCompanyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/profile',
+        element: (
+          <RouteSuspense>
+            <TalentProfilePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/applications',
+        element: (
+          <RouteSuspense>
+            <TalentApplicationsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/employer',
+        element: (
+          <RouteSuspense>
+            <TalentEmployerPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/employer/new',
+        element: (
+          <RouteSuspense>
+            <TalentPostJobPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/talent/employer/:jobId/edit',
+        element: (
+          <RouteSuspense>
+            <TalentPostJobPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

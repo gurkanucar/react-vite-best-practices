@@ -242,6 +242,43 @@ export const AgencyContactPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/AgencyContactPage')).AgencyContactPage,
 }))
 
+export const TalentHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentHomePage')).TalentHomePage,
+}))
+
+export const TalentJobsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentJobsPage')).TalentJobsPage,
+}))
+
+export const TalentJobPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentJobPage')).TalentJobPage,
+}))
+
+export const TalentCompaniesPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentCompaniesPage')).TalentCompaniesPage,
+}))
+
+export const TalentCompanyPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentCompanyPage')).TalentCompanyPage,
+}))
+
+export const TalentProfilePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentProfilePage')).TalentProfilePage,
+}))
+
+export const TalentApplicationsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentApplicationsPage'))
+    .TalentApplicationsPage,
+}))
+
+export const TalentEmployerPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentEmployerPage')).TalentEmployerPage,
+}))
+
+export const TalentPostJobPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/TalentPostJobPage')).TalentPostJobPage,
+}))
+
 export const FilesPage = lazy(async () => ({
   default: (await import('@/features/files/pages/FilesPage')).FilesPage,
 }))
@@ -357,18 +394,6 @@ export const TechParkCompanyPage = lazy(async () => ({
 
 export const TechParkLandingPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/TechParkLandingPage')).TechParkLandingPage,
-}))
-
-export const JobListPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/JobListPage')).JobListPage,
-}))
-
-export const JobDetailPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/JobDetailPage')).JobDetailPage,
-}))
-
-export const JobEditorPage = lazy(async () => ({
-  default: (await import('@/features/showcases/pages/JobEditorPage')).JobEditorPage,
 }))
 
 export const PublicationEditorPage = lazy(async () => ({

@@ -1,5 +1,4 @@
 export { campusAnnouncements, corporateNews } from './publications'
-export { findShowcaseJob, showcaseJobs } from './jobs'
 export {
   campusSectorShare,
   campusStatistics,
@@ -27,4 +26,3 @@ export {
   type TeamMember,
   type TechParkProgram,
 } from './techParkPagesCopy'
-export { talentCopy } from './talentCopy'

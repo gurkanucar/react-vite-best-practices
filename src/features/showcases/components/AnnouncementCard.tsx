@@ -3,14 +3,23 @@ import {
   BellOutlined,
   CalendarOutlined,
   PaperClipOutlined,
+  ReadOutlined,
 } from '@ant-design/icons'
 import { Button, Card, Flex, Tag, Typography } from 'antd'
 import { formatPublicationDate, localize, type Publication } from '@/features/showcases/types'
 import { usePreferencesStore } from '@/store/preferences-store'
 
 const labels = {
-  en: { view: 'View announcement' },
-  tr: { view: 'Duyuruyu görüntüle' },
+  en: {
+    view: 'View announcement',
+    read: 'Read story',
+    type: { news: 'News', announcement: 'Announcement' },
+  },
+  tr: {
+    view: 'Duyuruyu görüntüle',
+    read: 'Haberi oku',
+    type: { news: 'Haber', announcement: 'Duyuru' },
+  },
 }
 
 export function PublicationTags({ publication }: { publication: Publication }) {
@@ -31,6 +40,7 @@ export function PublicationTags({ publication }: { publication: Publication }) {
 export function AnnouncementCard({ item, detailPath }: { item: Publication; detailPath: string }) {
   const language = usePreferencesStore((state) => state.language)
   const text = labels[language]
+  const isStory = item.type === 'news'
 
   return (
     <Card className="announcement-card">
@@ -51,12 +61,19 @@ export function AnnouncementCard({ item, detailPath }: { item: Publication; deta
         </a>
       ) : (
         <div className="announcement-card__placeholder" aria-hidden="true">
-          <BellOutlined />
+          {isStory ? <ReadOutlined /> : <BellOutlined />}
         </div>
       )}
       <div className="announcement-card__content">
         <Flex className="announcement-card__meta" justify="space-between" gap={8} wrap>
-          <Tag color="geekblue">{localize(item.category, language)}</Tag>
+          <Flex gap={6} wrap>
+            {item.type && (
+              <Tag color={isStory ? 'cyan' : 'gold'} variant="solid">
+                {text.type[item.type]}
+              </Tag>
+            )}
+            <Tag color="geekblue">{localize(item.category, language)}</Tag>
+          </Flex>
           <Typography.Text type="secondary">
             <CalendarOutlined /> {formatPublicationDate(item.date, language)}
           </Typography.Text>
@@ -80,7 +97,7 @@ export function AnnouncementCard({ item, detailPath }: { item: Publication; deta
             icon={<ArrowRightOutlined />}
             iconPlacement="end"
           >
-            {text.view}
+            {isStory ? text.read : text.view}
           </Button>
         </Flex>
       </div>

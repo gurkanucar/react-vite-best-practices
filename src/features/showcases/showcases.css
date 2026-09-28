@@ -1187,6 +1187,12 @@
   color: rgb(255 255 255 / 78%);
 }
 
+.announcement-filter {
+  max-width: 100%;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
 .announcement-overview {
   margin-top: 40px;
 }

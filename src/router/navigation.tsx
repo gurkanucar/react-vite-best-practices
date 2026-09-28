@@ -1,5 +1,6 @@
 import {
   AppstoreOutlined,
+  SearchOutlined,
   HighlightOutlined,
   HomeOutlined,
   VideoCameraOutlined,
@@ -41,7 +42,6 @@ import {
   SettingOutlined,
   ShopOutlined,
   ShoppingOutlined,
-  SolutionOutlined,
   TagOutlined,
   TeamOutlined,
   TrophyOutlined,
@@ -238,9 +238,9 @@ export function useNavigationSections(): NavigationSection[] {
             label: messages.navigation.techParkLanding,
           },
           {
-            key: '/showcases/jobs',
-            icon: <SolutionOutlined />,
-            label: messages.navigation.talentBoard,
+            key: '/showcases/talent',
+            icon: <SearchOutlined />,
+            label: messages.navigation.talentPlatform,
           },
           {
             key: '/showcases/restaurant',

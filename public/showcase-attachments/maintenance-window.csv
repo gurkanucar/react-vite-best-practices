@@ -1,4 +1,6 @@
-service,start_utc,end_utc,expected_impact
-Partner portal,2026-09-20T01:00:00Z,2026-09-20T03:00:00Z,Unavailable
-Public API,2026-09-20T01:30:00Z,2026-09-20T02:15:00Z,Intermittent
-Status page,2026-09-20T01:00:00Z,2026-09-20T03:00:00Z,Available
+building,area,start_local,end_local,power,notes
+Block C,Offices (floors 1-4),2026-10-10 08:00,2026-10-10 14:00,Off,Shut down test rigs by Friday evening
+Block C,Meeting rooms and kitchen,2026-10-10 08:00,2026-10-10 14:00,Off,
+Block C,Lifts,2026-10-10 08:00,2026-10-10 14:00,Off,Use the stairs
+Block C,Shared clean room,2026-10-10 08:00,2026-10-10 14:00,Generator,Bookings continue as planned
+Block C,Server room,2026-10-10 08:00,2026-10-10 14:00,Generator,UPS tested on October 9
