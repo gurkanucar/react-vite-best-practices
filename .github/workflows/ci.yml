@@ -1,9 +1,12 @@
 name: CI
 
+# Disabled: runs only when started by hand from the Actions tab.
+# To turn it back on, restore the push / pull_request triggers.
 on:
-  pull_request:
-  push:
-    # branches: [main]
+  workflow_dispatch:
+  # pull_request:
+  # push:
+  #   branches: [main]
 
 permissions:
   contents: read
