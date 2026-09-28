@@ -37,6 +37,8 @@
 }
 
 .public-showcase main {
+  /* The site can sit beside the app's sidebar, so the hero reads its own width, not the viewport's. */
+  container: showcase / inline-size;
   animation: showcase-page-enter 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -184,14 +186,31 @@
 .showcase-hero__copy {
   position: relative;
   z-index: 1;
+  container-type: inline-size;
 }
 
 .showcase-hero__copy h1 {
   max-width: 760px;
   margin-block: 20px;
-  font-size: clamp(2.7rem, 5vw, 5.2rem);
+  /*
+   * Sized from the column, so the longest word still fits on its line: Turkish has long ones
+   * ("güvenebileceğiniz"), and a heading this large must never break inside a word.
+   */
+  font-size: clamp(2rem, 12cqi, 5.2rem);
   line-height: 0.98;
   letter-spacing: -0.055em;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@container showcase (max-width: 1080px) {
+  .showcase-hero,
+  .corporate-hero {
+    min-height: 0;
+    padding-block: 56px;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
 .showcase-hero__copy > p {
@@ -1506,10 +1525,6 @@
 
   .public-showcase__brand > span:last-child span:last-child {
     display: none;
-  }
-
-  .showcase-hero__copy h1 {
-    font-size: 2.65rem;
   }
 
   .showcase-cta {
