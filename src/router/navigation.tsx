@@ -49,6 +49,9 @@ import {
   BuildOutlined,
   CustomerServiceOutlined,
   ToolOutlined,
+  BellOutlined,
+  HeartOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons'
 import { useMemo, type ReactNode } from 'react'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
@@ -291,6 +294,21 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/showcases/agency',
             icon: <HighlightOutlined />,
             label: messages.navigation.creativeAgency,
+          },
+          {
+            key: '/showcases/reminders',
+            icon: <BellOutlined />,
+            label: messages.navigation.specialDays,
+          },
+          {
+            key: '/showcases/pets',
+            icon: <HeartOutlined />,
+            label: messages.navigation.petAdoption,
+          },
+          {
+            key: '/showcases/city',
+            icon: <EnvironmentOutlined />,
+            label: messages.navigation.cityGuide,
           },
           {
             key: '/showcases/corporate',

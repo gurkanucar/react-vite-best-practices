@@ -102,6 +102,19 @@ import {
   TechParkTeamPage,
   TourDetailPage,
   TourListPage,
+  RemindersHomePage,
+  RemindersCalendarPage,
+  ReminderDetailPage,
+  PetsHomePage,
+  PetsListPage,
+  PetDetailPage,
+  PetApplyPage,
+  PetsFavoritesPage,
+  CityHomePage,
+  CityOverviewPage,
+  CityExplorePage,
+  CityPlacePage,
+  CityEventsPage,
 } from '@/router/LazyPages'
 import { AnnouncementRedirect } from '@/router/AnnouncementRedirect'
 import { RouteSuspense } from '@/router/RouteSuspense'
@@ -629,6 +642,123 @@ export const routes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <TalentPostJobPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/reminders',
+    element: (
+      <RouteSuspense fullPage>
+        <RemindersHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/reminders/calendar',
+    element: (
+      <RouteSuspense fullPage>
+        <RemindersCalendarPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/reminders/:reminderId',
+    element: (
+      <RouteSuspense fullPage>
+        <ReminderDetailPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/pets',
+    element: (
+      <RouteSuspense fullPage>
+        <PetsHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/pets/animals',
+    element: (
+      <RouteSuspense fullPage>
+        <PetsListPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/pets/animals/:petId',
+    element: (
+      <RouteSuspense fullPage>
+        <PetDetailPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/pets/apply/:petId',
+    element: (
+      <RouteSuspense fullPage>
+        <PetApplyPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/pets/favorites',
+    element: (
+      <RouteSuspense fullPage>
+        <PetsFavoritesPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/city',
+    element: (
+      <RouteSuspense fullPage>
+        <CityHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/city/:cityId',
+    element: (
+      <RouteSuspense fullPage>
+        <CityOverviewPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/city/:cityId/explore',
+    element: (
+      <RouteSuspense fullPage>
+        <CityExplorePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/city/:cityId/places/:placeId',
+    element: (
+      <RouteSuspense fullPage>
+        <CityPlacePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/city/:cityId/events',
+    element: (
+      <RouteSuspense fullPage>
+        <CityEventsPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -1351,6 +1481,123 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <TalentPostJobPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/reminders',
+        element: (
+          <RouteSuspense>
+            <RemindersHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/reminders/calendar',
+        element: (
+          <RouteSuspense>
+            <RemindersCalendarPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/reminders/:reminderId',
+        element: (
+          <RouteSuspense>
+            <ReminderDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/pets',
+        element: (
+          <RouteSuspense>
+            <PetsHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/pets/animals',
+        element: (
+          <RouteSuspense>
+            <PetsListPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/pets/animals/:petId',
+        element: (
+          <RouteSuspense>
+            <PetDetailPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/pets/apply/:petId',
+        element: (
+          <RouteSuspense>
+            <PetApplyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/pets/favorites',
+        element: (
+          <RouteSuspense>
+            <PetsFavoritesPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/city',
+        element: (
+          <RouteSuspense>
+            <CityHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/city/:cityId',
+        element: (
+          <RouteSuspense>
+            <CityOverviewPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/city/:cityId/explore',
+        element: (
+          <RouteSuspense>
+            <CityExplorePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/city/:cityId/places/:placeId',
+        element: (
+          <RouteSuspense>
+            <CityPlacePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/city/:cityId/events',
+        element: (
+          <RouteSuspense>
+            <CityEventsPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,

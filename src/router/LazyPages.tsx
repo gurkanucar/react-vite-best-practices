@@ -407,3 +407,55 @@ export const NewsAdminPage = lazy(async () => ({
 export const AnnouncementsAdminPage = lazy(async () => ({
   default: (await import('@/features/content/pages/PublicationAdminPage')).AnnouncementsAdminPage,
 }))
+
+export const RemindersHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/RemindersHomePage')).RemindersHomePage,
+}))
+
+export const RemindersCalendarPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/RemindersCalendarPage')).RemindersCalendarPage,
+}))
+
+export const ReminderDetailPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/ReminderDetailPage')).ReminderDetailPage,
+}))
+
+export const PetsHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PetsHomePage')).PetsHomePage,
+}))
+
+export const PetsListPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PetsListPage')).PetsListPage,
+}))
+
+export const PetDetailPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PetDetailPage')).PetDetailPage,
+}))
+
+export const PetApplyPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PetApplyPage')).PetApplyPage,
+}))
+
+export const PetsFavoritesPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PetsFavoritesPage')).PetsFavoritesPage,
+}))
+
+export const CityHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CityHomePage')).CityHomePage,
+}))
+
+export const CityOverviewPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CityOverviewPage')).CityOverviewPage,
+}))
+
+export const CityExplorePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CityExplorePage')).CityExplorePage,
+}))
+
+export const CityPlacePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CityPlacePage')).CityPlacePage,
+}))
+
+export const CityEventsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CityEventsPage')).CityEventsPage,
+}))
