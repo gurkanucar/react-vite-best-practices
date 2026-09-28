@@ -114,6 +114,66 @@ export const RestaurantMenuPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/RestaurantMenuPage')).RestaurantMenuPage,
 }))
 
+export const SaasLandingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/SaasLandingPage')).SaasLandingPage,
+}))
+
+export const SaasPricingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/SaasPricingPage')).SaasPricingPage,
+}))
+
+export const HotelLandingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/HotelLandingPage')).HotelLandingPage,
+}))
+
+export const HotelRoomsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/HotelRoomsPage')).HotelRoomsPage,
+}))
+
+export const HotelRoomPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/HotelRoomPage')).HotelRoomPage,
+}))
+
+export const HotelBookingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/HotelBookingPage')).HotelBookingPage,
+}))
+
+export const StoreHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/StoreHomePage')).StoreHomePage,
+}))
+
+export const StoreProductPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/StoreProductPage')).StoreProductPage,
+}))
+
+export const StoreCheckoutPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/StoreCheckoutPage')).StoreCheckoutPage,
+}))
+
+export const PartsHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PartsHomePage')).PartsHomePage,
+}))
+
+export const PartsCatalogPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PartsCatalogPage')).PartsCatalogPage,
+}))
+
+export const PartsProductPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PartsProductPage')).PartsProductPage,
+}))
+
+export const PartsCheckoutPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PartsCheckoutPage')).PartsCheckoutPage,
+}))
+
+export const PartsOrdersPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PartsOrdersPage')).PartsOrdersPage,
+}))
+
+export const PartsOrderPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/PartsOrderPage')).PartsOrderPage,
+}))
+
 export const FilesPage = lazy(async () => ({
   default: (await import('@/features/files/pages/FilesPage')).FilesPage,
 }))

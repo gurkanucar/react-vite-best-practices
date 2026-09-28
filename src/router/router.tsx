@@ -47,6 +47,21 @@ import {
   ProductsListPage,
   RegisterPage,
   RestaurantMenuPage,
+  PartsCatalogPage,
+  PartsCheckoutPage,
+  PartsHomePage,
+  PartsOrderPage,
+  PartsOrdersPage,
+  PartsProductPage,
+  HotelBookingPage,
+  HotelLandingPage,
+  HotelRoomPage,
+  HotelRoomsPage,
+  SaasLandingPage,
+  SaasPricingPage,
+  StoreCheckoutPage,
+  StoreHomePage,
+  StoreProductPage,
   RouteErrorPage,
   SettingsPage,
   ShopInvoicePage,
@@ -213,6 +228,141 @@ export const routes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <PublicFormPage />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/saas',
+    element: (
+      <RouteSuspense fullPage>
+        <SaasLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/saas/pricing',
+    element: (
+      <RouteSuspense fullPage>
+        <SaasPricingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/hotel',
+    element: (
+      <RouteSuspense fullPage>
+        <HotelLandingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/hotel/rooms',
+    element: (
+      <RouteSuspense fullPage>
+        <HotelRoomsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/hotel/rooms/:roomId',
+    element: (
+      <RouteSuspense fullPage>
+        <HotelRoomPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/hotel/book',
+    element: (
+      <RouteSuspense fullPage>
+        <HotelBookingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/store',
+    element: (
+      <RouteSuspense fullPage>
+        <StoreHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/store/products/:productId',
+    element: (
+      <RouteSuspense fullPage>
+        <StoreProductPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/store/checkout',
+    element: (
+      <RouteSuspense fullPage>
+        <StoreCheckoutPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/parts',
+    element: (
+      <RouteSuspense fullPage>
+        <PartsHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/parts/catalog',
+    element: (
+      <RouteSuspense fullPage>
+        <PartsCatalogPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/parts/products/:partId',
+    element: (
+      <RouteSuspense fullPage>
+        <PartsProductPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/parts/checkout',
+    element: (
+      <RouteSuspense fullPage>
+        <PartsCheckoutPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/parts/orders',
+    element: (
+      <RouteSuspense fullPage>
+        <PartsOrdersPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/parts/orders/:orderId',
+    element: (
+      <RouteSuspense fullPage>
+        <PartsOrderPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -577,6 +727,141 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <DentalClinicLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/saas',
+        element: (
+          <RouteSuspense>
+            <SaasLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/saas/pricing',
+        element: (
+          <RouteSuspense>
+            <SaasPricingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/hotel',
+        element: (
+          <RouteSuspense>
+            <HotelLandingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/hotel/rooms',
+        element: (
+          <RouteSuspense>
+            <HotelRoomsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/hotel/rooms/:roomId',
+        element: (
+          <RouteSuspense>
+            <HotelRoomPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/hotel/book',
+        element: (
+          <RouteSuspense>
+            <HotelBookingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/store',
+        element: (
+          <RouteSuspense>
+            <StoreHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/store/products/:productId',
+        element: (
+          <RouteSuspense>
+            <StoreProductPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/store/checkout',
+        element: (
+          <RouteSuspense>
+            <StoreCheckoutPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/parts',
+        element: (
+          <RouteSuspense>
+            <PartsHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/parts/catalog',
+        element: (
+          <RouteSuspense>
+            <PartsCatalogPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/parts/products/:partId',
+        element: (
+          <RouteSuspense>
+            <PartsProductPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/parts/checkout',
+        element: (
+          <RouteSuspense>
+            <PartsCheckoutPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/parts/orders',
+        element: (
+          <RouteSuspense>
+            <PartsOrdersPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/parts/orders/:orderId',
+        element: (
+          <RouteSuspense>
+            <PartsOrderPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,
