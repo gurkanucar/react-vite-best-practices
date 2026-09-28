@@ -174,6 +174,74 @@ export const PartsOrderPage = lazy(async () => ({
   default: (await import('@/features/showcases/pages/PartsOrderPage')).PartsOrderPage,
 }))
 
+export const CinemaHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CinemaHomePage')).CinemaHomePage,
+}))
+
+export const CinemaMoviePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CinemaMoviePage')).CinemaMoviePage,
+}))
+
+export const CinemaBookingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CinemaBookingPage')).CinemaBookingPage,
+}))
+
+export const CinemaTicketsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/CinemaTicketsPage')).CinemaTicketsPage,
+}))
+
+export const EstateHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EstateHomePage')).EstateHomePage,
+}))
+
+export const EstateListingsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EstateListingsPage')).EstateListingsPage,
+}))
+
+export const EstateListingPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EstateListingPage')).EstateListingPage,
+}))
+
+export const EstateComparePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EstateComparePage')).EstateComparePage,
+}))
+
+export const EventHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EventHomePage')).EventHomePage,
+}))
+
+export const EventSchedulePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EventSchedulePage')).EventSchedulePage,
+}))
+
+export const EventSpeakersPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EventSpeakersPage')).EventSpeakersPage,
+}))
+
+export const EventSpeakerPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EventSpeakerPage')).EventSpeakerPage,
+}))
+
+export const EventTicketsPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/EventTicketsPage')).EventTicketsPage,
+}))
+
+export const AgencyHomePage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/AgencyHomePage')).AgencyHomePage,
+}))
+
+export const AgencyWorkPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/AgencyWorkPage')).AgencyWorkPage,
+}))
+
+export const AgencyCaseStudyPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/AgencyCaseStudyPage')).AgencyCaseStudyPage,
+}))
+
+export const AgencyContactPage = lazy(async () => ({
+  default: (await import('@/features/showcases/pages/AgencyContactPage')).AgencyContactPage,
+}))
+
 export const FilesPage = lazy(async () => ({
   default: (await import('@/features/files/pages/FilesPage')).FilesPage,
 }))

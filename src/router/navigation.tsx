@@ -1,5 +1,8 @@
 import {
   AppstoreOutlined,
+  HighlightOutlined,
+  HomeOutlined,
+  VideoCameraOutlined,
   ApiOutlined,
   BankOutlined,
   BgColorsOutlined,
@@ -268,6 +271,26 @@ export function useNavigationSections(): NavigationSection[] {
             key: '/showcases/parts',
             icon: <CarOutlined />,
             label: messages.navigation.autoParts,
+          },
+          {
+            key: '/showcases/cinema',
+            icon: <VideoCameraOutlined />,
+            label: messages.navigation.cinemaTickets,
+          },
+          {
+            key: '/showcases/estate',
+            icon: <HomeOutlined />,
+            label: messages.navigation.realEstate,
+          },
+          {
+            key: '/showcases/event',
+            icon: <CalendarOutlined />,
+            label: messages.navigation.conference,
+          },
+          {
+            key: '/showcases/agency',
+            icon: <HighlightOutlined />,
+            label: messages.navigation.creativeAgency,
           },
           {
             key: '/showcases/corporate',

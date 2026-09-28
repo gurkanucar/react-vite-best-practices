@@ -47,6 +47,23 @@ import {
   ProductsListPage,
   RegisterPage,
   RestaurantMenuPage,
+  AgencyCaseStudyPage,
+  AgencyContactPage,
+  AgencyHomePage,
+  AgencyWorkPage,
+  CinemaBookingPage,
+  CinemaHomePage,
+  CinemaMoviePage,
+  CinemaTicketsPage,
+  EstateComparePage,
+  EstateHomePage,
+  EstateListingPage,
+  EstateListingsPage,
+  EventHomePage,
+  EventSchedulePage,
+  EventSpeakerPage,
+  EventSpeakersPage,
+  EventTicketsPage,
   PartsCatalogPage,
   PartsCheckoutPage,
   PartsHomePage,
@@ -363,6 +380,159 @@ export const routes: RouteObject[] = [
     element: (
       <RouteSuspense fullPage>
         <PartsOrderPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/cinema',
+    element: (
+      <RouteSuspense fullPage>
+        <CinemaHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/cinema/movies/:movieId',
+    element: (
+      <RouteSuspense fullPage>
+        <CinemaMoviePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/cinema/book/:showtimeId',
+    element: (
+      <RouteSuspense fullPage>
+        <CinemaBookingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/cinema/tickets',
+    element: (
+      <RouteSuspense fullPage>
+        <CinemaTicketsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/estate',
+    element: (
+      <RouteSuspense fullPage>
+        <EstateHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/estate/listings',
+    element: (
+      <RouteSuspense fullPage>
+        <EstateListingsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/estate/listings/:listingId',
+    element: (
+      <RouteSuspense fullPage>
+        <EstateListingPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/estate/compare',
+    element: (
+      <RouteSuspense fullPage>
+        <EstateComparePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/event',
+    element: (
+      <RouteSuspense fullPage>
+        <EventHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/event/schedule',
+    element: (
+      <RouteSuspense fullPage>
+        <EventSchedulePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/event/speakers',
+    element: (
+      <RouteSuspense fullPage>
+        <EventSpeakersPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/event/speakers/:speakerId',
+    element: (
+      <RouteSuspense fullPage>
+        <EventSpeakerPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/event/tickets',
+    element: (
+      <RouteSuspense fullPage>
+        <EventTicketsPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/agency',
+    element: (
+      <RouteSuspense fullPage>
+        <AgencyHomePage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/agency/work',
+    element: (
+      <RouteSuspense fullPage>
+        <AgencyWorkPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/agency/work/:caseId',
+    element: (
+      <RouteSuspense fullPage>
+        <AgencyCaseStudyPage standalone />
+      </RouteSuspense>
+    ),
+    errorElement: standaloneErrorElement,
+  },
+  {
+    path: '/preview/agency/contact',
+    element: (
+      <RouteSuspense fullPage>
+        <AgencyContactPage standalone />
       </RouteSuspense>
     ),
     errorElement: standaloneErrorElement,
@@ -862,6 +1032,159 @@ export const routes: RouteObject[] = [
         element: (
           <RouteSuspense>
             <PartsOrderPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/cinema',
+        element: (
+          <RouteSuspense>
+            <CinemaHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/cinema/movies/:movieId',
+        element: (
+          <RouteSuspense>
+            <CinemaMoviePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/cinema/book/:showtimeId',
+        element: (
+          <RouteSuspense>
+            <CinemaBookingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/cinema/tickets',
+        element: (
+          <RouteSuspense>
+            <CinemaTicketsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/estate',
+        element: (
+          <RouteSuspense>
+            <EstateHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/estate/listings',
+        element: (
+          <RouteSuspense>
+            <EstateListingsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/estate/listings/:listingId',
+        element: (
+          <RouteSuspense>
+            <EstateListingPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/estate/compare',
+        element: (
+          <RouteSuspense>
+            <EstateComparePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/event',
+        element: (
+          <RouteSuspense>
+            <EventHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/event/schedule',
+        element: (
+          <RouteSuspense>
+            <EventSchedulePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/event/speakers',
+        element: (
+          <RouteSuspense>
+            <EventSpeakersPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/event/speakers/:speakerId',
+        element: (
+          <RouteSuspense>
+            <EventSpeakerPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/event/tickets',
+        element: (
+          <RouteSuspense>
+            <EventTicketsPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/agency',
+        element: (
+          <RouteSuspense>
+            <AgencyHomePage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/agency/work',
+        element: (
+          <RouteSuspense>
+            <AgencyWorkPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/agency/work/:caseId',
+        element: (
+          <RouteSuspense>
+            <AgencyCaseStudyPage />
+          </RouteSuspense>
+        ),
+        errorElement: adminErrorElement,
+      },
+      {
+        path: 'showcases/agency/contact',
+        element: (
+          <RouteSuspense>
+            <AgencyContactPage />
           </RouteSuspense>
         ),
         errorElement: adminErrorElement,
