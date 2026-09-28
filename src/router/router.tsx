@@ -118,6 +118,7 @@ import {
 } from '@/router/LazyPages'
 import { AnnouncementRedirect } from '@/router/AnnouncementRedirect'
 import { RouteSuspense } from '@/router/RouteSuspense'
+import { RootLayout } from '@/router/RootLayout'
 import { FEATURE_FLAGS } from '@/config/featureFlags'
 
 const standaloneErrorElement = (
@@ -131,7 +132,7 @@ const adminErrorElement = (
   </RouteSuspense>
 )
 
-export const routes: RouteObject[] = [
+const pageRoutes: RouteObject[] = [
   {
     path: '/',
     element: (
@@ -1851,5 +1852,8 @@ export const routes: RouteObject[] = [
     errorElement: standaloneErrorElement,
   },
 ]
+
+// One pathless parent so scroll restoration covers every page, admin and standalone alike.
+export const routes: RouteObject[] = [{ element: <RootLayout />, children: pageRoutes }]
 
 export const router = createBrowserRouter(routes)
